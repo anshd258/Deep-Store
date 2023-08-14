@@ -1,11 +1,20 @@
-
 import 'package:flutter/material.dart';
+import 'package:partner/UI/screens/widget/ownerOngoingcard.dart';
 
 class ScreenSetup extends StatelessWidget {
-  const ScreenSetup({super.key, this.appBar});
+  ScreenSetup({super.key, this.appBar});
   final PreferredSizeWidget? appBar;
+  List values = [1, 2, 3, 4, 5, 6, 7];
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            children: values.map((e) => ownerOngoingcards()).toList(),
+          ),
+        ),
+      ),
+    );
   }
 }
