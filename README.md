@@ -3,12 +3,11 @@ new user-partner project based on bloc.
 
 
 # Customer
-    - Customer
-    - other resources.
+    - add details
+
 # Partner
-    - Partner
-    - other resources.
+    - add details
+
 # Commom
-    - common
-        container common assets, widgets and services.
-    - other packages.
+    - container common assets, widgets and services.
+
