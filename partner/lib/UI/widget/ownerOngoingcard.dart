@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:partner/Constants/SizesEnum.dart';
-import 'package:partner/Constants/componentsEnum.dart';
+import 'package:partner/constants/SizesEnum.dart';
+import 'package:partner/constants/componentsEnum.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../Constants/PotraitSizes.dart';
+import '../../constants/PotraitSizes.dart';
 
 class ownerOngoingcards extends StatelessWidget {
   const ownerOngoingcards({super.key});
