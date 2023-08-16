@@ -12,7 +12,7 @@ class ScreenSetup extends StatelessWidget {
     return CustomTabView(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: SvgPicture.asset('assets/icon.svg'),
+        leading: const Icon(NavBarIcons.account,color: Colors.blue,),
         title:  Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
