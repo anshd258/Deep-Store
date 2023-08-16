@@ -7,7 +7,11 @@ class AppSetup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
+        theme: ThemeData(
+          textTheme: const TextTheme(
+            ///TODO: setup text themes
+          )
+        ),
         onGenerateRoute: (settings) =>
             AppRouter().onGenerateRoute(settings),
       );
