@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../UI/screens/screen.setup.dart';
 
 class AppRouter {
