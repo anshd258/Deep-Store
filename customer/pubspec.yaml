@@ -69,4 +69,4 @@ flutter:
   fonts:
     - family:  NavBarIcons
       fonts:
-       - asset: ../common/fonts/NavBarIcons.ttf
+       - asset: fonts/NavBarIcons.ttf
