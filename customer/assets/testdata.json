@@ -1,0 +1,84 @@
+{
+  "foodItems": [
+    {
+      "foodID": 1,
+      "name": "Burger",
+      "description": "Delicious burger with cheese and veggies",
+      "price": 8,
+      "addOns": {
+        "Extra Cheese": 1,
+        "Bacon": 2
+      },
+      "images": [
+        "https://images.unsplash.com/photo-1550547660-d9450f859349?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1530554764233-e79e16c91d08?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+      ]
+    },
+    {
+      "foodID": 2,
+      "name": "Pizza",
+      "description": "Classic Margherita pizza with fresh tomatoes",
+      "price": 12,
+      "addOns": {
+        "Extra Cheese": 1,
+        "Pepperoni": 2
+      },
+      "images": [
+        "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGl6emF8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGl6emF8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+      ]
+    }
+  ],
+  "rideItems": [
+    {
+      "id": 1,
+      "name": "City Car",
+      "nos": 4,
+      "price": 25,
+      "images": [
+        "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2l0eSUyMGNhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1541443131876-44b03de101c5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2l0eSUyMGNhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+      ],
+      "description": "Compact car for city travel"
+    },
+    {
+      "id": 2,
+      "name": "SUV",
+      "nos": 7,
+      "price": 40,
+      "images": [
+        "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3V2fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3V2fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+      ],
+      "description": "Spacious SUV for family trips"
+    }
+  ],
+  "rentalItems": [
+    {
+      "id": 1,
+      "name": "Beach House",
+      "price": 150,
+      "images": [
+        "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YmVhY2glMjBob3VzZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1499955085172-a104c9463ece?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhY2glMjBob3VzZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+      ],
+      "description": "Relaxing beachfront house"
+    },
+    {
+      "id": 2,
+      "name": "Mountain Cabin",
+      "price": 120,
+      "images": [
+        "https://images.unsplash.com/photo-1517824806704-9040b037703b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bW91bnRhaW4lMjBjYWJpbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        "https://images.unsplash.com/photo-1533575770077-052fa2c609fc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bW91bnRhaW4lMjBjYWJpbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+      ],
+      "description": "Cozy cabin in the mountains"
+    }
+  ],
+  "user": {
+    "userID": 123,
+    "name": "John Doe",
+    "contactNo": "123-456-7890"
+  },
+  "providerID": 456
+}

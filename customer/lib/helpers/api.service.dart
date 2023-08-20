@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:customer/models/apiresponse.dart';
+import 'package:customer/middleware/models/apiresponse.dart';
 import 'package:http/http.dart' as http;
 import 'package:customer/helpers/constants.dart';
 

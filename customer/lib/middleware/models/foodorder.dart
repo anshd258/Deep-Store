@@ -1,4 +1,4 @@
-import 'package:customer/models/food.dart';
+import 'package:customer/middleware/models/food.dart';
 
 enum RequestStatus { pending, ongoing, success, failed }
 
@@ -12,8 +12,15 @@ class FoodOrder {
   final List<Food> items;
   final DateTime eta;
 
-  FoodOrder(this.id, this.status, this.taxes, this.charges, this.discount,
-      this.totalPrice, this.items, this.eta);
+  FoodOrder(
+      {required this.id,
+      required this.status,
+      required this.taxes,
+      required this.charges,
+      required this.discount,
+      required this.totalPrice,
+      required this.items,
+      required this.eta});
 
   Map<String, dynamic> toJson() {
     return {
@@ -30,14 +37,16 @@ class FoodOrder {
 
   factory FoodOrder.fromJson(Map<String, dynamic> json) {
     return FoodOrder(
-      json['id'],
-      _mapIntToRequestStatus(json['status']),
-      json['taxes'],
-      json['charges'],
-      json['discount'],
-      json['totalPrice'],
-      (json['items'] as List<dynamic>).map((foodJson) => Food.fromJson(foodJson)).toList(),
-      DateTime.parse(json['eta']),
+      id: json['id'],
+      status: _mapIntToRequestStatus(json['status']),
+      taxes: json['taxes'],
+      charges: json['charges'],
+      discount: json['discount'],
+      totalPrice: json['totalPrice'],
+      items: (json['items'] as List<dynamic>)
+          .map((foodJson) => Food.fromJson(foodJson))
+          .toList(),
+      eta: DateTime.parse(json['eta']),
     );
   }
 
