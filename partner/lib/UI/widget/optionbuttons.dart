@@ -6,11 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/Constants/filterEnum.dart';
 import 'package:partner/middleware/filter_cubit_cubit.dart';
 
-import 'FilterContainer.dart';
 
 class OptionsButton extends StatefulWidget {
-  value e;
-  value selectede;
+  final value e;
+  final value selectede;
 
   OptionsButton({
     super.key,
@@ -45,23 +44,23 @@ class _OptionsButtonState extends State<OptionsButton>
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
+          borderRadius: const BorderRadius.all(
             Radius.circular(100),
           ),
           color: Colors.grey,
           gradient: widget.e == widget.selectede
-              ? LinearGradient(colors: [
+              ? const LinearGradient(colors: [
                   Color.fromRGBO(32, 171, 154, 1),
                   Color.fromRGBO(34, 150, 199, 1)
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight)
-              : LinearGradient(colors: [
+              : const LinearGradient(colors: [
                   Colors.grey,
                   Colors.grey,
                 ], begin: Alignment.bottomCenter, end: Alignment.topRight),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         alignment: Alignment.center,
-        constraints: BoxConstraints(minHeight: 33, minWidth: 60),
+        constraints: const BoxConstraints(minHeight: 33, minWidth: 60),
         child: Text(
           widget.e.name,
           style: GoogleFonts.lato(
@@ -75,6 +74,6 @@ class _OptionsButtonState extends State<OptionsButton>
     )
         .animate(controller: ctr)
         .elevation(borderRadius: BorderRadius.circular(30), begin: 0, end: 5)
-        .scaleXY(begin: 1, end: 1.1, duration: Duration(microseconds: 10));
+        .scaleXY(begin: 1, end: 1.1, duration: const Duration(microseconds: 10));
   }
 }

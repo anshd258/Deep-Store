@@ -18,7 +18,7 @@ class CustomTabView extends StatefulWidget {
 
 class _CustomTabViewState extends State<CustomTabView>
     with SingleTickerProviderStateMixin {
-  int index = 0;
+  int index = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +35,13 @@ class _CustomTabViewState extends State<CustomTabView>
               });
             },
             selectedLabelStyle: GoogleFonts.lato(
-                color: const Color.fromRGBO(34, 34, 34, 0.6), height: 1.5,fontWeight: FontWeight.w600),
+                color: const Color.fromRGBO(34, 34, 34, 0.6),
+                height: 1.5,
+                fontWeight: FontWeight.w600),
             unselectedLabelStyle: GoogleFonts.lato(
-                color: const Color.fromRGBO(34, 34, 34, 0.6), height: 1.5,fontWeight: FontWeight.w600),
+                color: const Color.fromRGBO(34, 34, 34, 0.6),
+                height: 1.5,
+                fontWeight: FontWeight.w600),
             type: BottomNavigationBarType.fixed,
             currentIndex: index,
             selectedItemColor: Colors.blue,

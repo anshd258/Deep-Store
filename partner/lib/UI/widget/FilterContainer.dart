@@ -27,7 +27,7 @@ class _FilterWidgetState extends State<FilterWidget>
         children: [
           Container(
             width: 200,
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             child: Text(
               "Ongoing requests",
               style:
@@ -36,14 +36,14 @@ class _FilterWidgetState extends State<FilterWidget>
           ),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(vertical: 15),
+            margin: const EdgeInsets.symmetric(vertical: 15),
             child: Row(
               children: [
                 BlocBuilder<FilterCubitCubit, FilterCubitState>(
                   builder: (context, state) {
                     return Container(
-                      constraints: BoxConstraints(maxWidth: 220, maxHeight: 33),
-                      margin: EdgeInsets.symmetric(horizontal: 16),
+                      constraints: const BoxConstraints(maxWidth: 220, maxHeight: 33),
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: value.values.map((e) {
