@@ -34,10 +34,26 @@ class ScreenSetup extends StatelessWidget {
         ),
       ),
       screens: const [
+        Column(children: [
+
        FilterWidget(),
             RidesBody(),
-                  FilterWidget(),
-            RidesBody()
+        ],),
+        Column(children: [
+
+       FilterWidget(),
+            RidesBody(),
+        ],),
+        Column(children: [
+
+       FilterWidget(),
+            RidesBody(),
+        ],),
+        Column(children: [
+
+       FilterWidget(),
+            RidesBody(),
+        ],),
       ],
       items: [
         BottomNavigationBarItem(
