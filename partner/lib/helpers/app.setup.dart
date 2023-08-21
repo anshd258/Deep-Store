@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:partner/middleware/filter_cubit_cubit.dart';
 import 'app.router.dart';
 
 class AppSetup extends StatelessWidget {
@@ -6,10 +8,15 @@ class AppSetup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return BlocProvider(
+      create: (context) => FilterCubitCubit(),
+      child: 
+     MaterialApp(
+          
+            onGenerateRoute: (settings) =>
+                AppRouter().onGenerateRoute(settings),
+          ),
       
-        onGenerateRoute: (settings) =>
-            AppRouter().onGenerateRoute(settings),
-      );
+    );
   }
 }
