@@ -15,7 +15,6 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
   Widget build(BuildContext context) {
     print('building widget');
     return Scaffold(
-    
       body: SingleChildScrollView(
         child: Wrap(
           runSpacing: 10.0,
@@ -70,10 +69,11 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
                       ),
                     ),
                     child: CheckboxListTile(
-                      activeColor: Colors.orange,
+                      activeColor: Colors.blue,
                       title: Text(name),
                       subtitle: Text('Rs. $price'),
-                      value: selecteditems.contains(addons.elementAt(index).key),
+                      value:
+                          selecteditems.contains(addons.elementAt(index).key),
                       onChanged: (status) {
                         if (status ?? false) {
                           selecteditems.add(addons.elementAt(index).key);
@@ -95,11 +95,21 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
           ],
         ),
       ),
-        bottomNavigationBar: ElevatedButton(
-        child: const Text('Add to Cart'),
-        onPressed: () async {
-          // add item to cart.
-        },
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [
+          Color.fromRGBO(32, 171, 154, 1),
+          Color.fromRGBO(34, 150, 199, 1),
+        ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+        child: ElevatedButton(
+          style: ButtonStyle(
+              elevation: MaterialStatePropertyAll(0),
+              backgroundColor: MaterialStatePropertyAll(Colors.transparent)),
+          child: const Text('Add to Cart'),
+          onPressed: () async {
+            // add item to cart.
+          },
+        ),
       ),
     );
     ;

@@ -39,33 +39,98 @@ class ScreenSetup extends StatelessWidget {
           ],
         ),
       ),
-      screens:  const [
+      screens: const [
         RentalSelect(),
         FoodSelect(),
-        TwoItemTabView(child1: RideSelect(),child2: RentalSelect(),tab1: Tab(text: 'rent a ride'),tab2: Tab(text: 'book a ride',),),
-        TwoItemTabView(child1: RideSelect(),child2: RentalSelect(),tab1: Tab(text: 'rent a ride'),tab2: Tab(text: 'book a ride',),)
-    
+        TwoItemTabView(
+          child1: RideSelect(),
+          child2: RentalSelect(),
+          tab1: Tab(text: 'rent a ride'),
+          tab2: Tab(
+            text: 'book a ride',
+          ),
+        ),
+        TwoItemTabView(
+          child1: RideSelect(),
+          child2: RentalSelect(),
+          tab1: Tab(text: 'rent a ride'),
+          tab2: Tab(
+            text: 'book a ride',
+          ),
+        )
       ],
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(
+          activeIcon: ShaderMask(
+            shaderCallback: (Rect bounds) {
+              return const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromRGBO(47, 251, 227, 1),
+                  Color.fromRGBO(29, 172, 157, 1),
+                ],
+              ).createShader(Rect.fromLTWH(0, 0, 300, 300));
+            },
+            child: const Icon(NavBarIcons.home),
+          ),
+          icon: const Icon(
             NavBarIcons.home,
           ),
           label: 'Home',
         ),
         BottomNavigationBarItem(
+          activeIcon: ShaderMask(
+            shaderCallback: (Rect bounds) {
+              return const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromRGBO(47, 251, 227, 1),
+                  Color.fromRGBO(29, 172, 157, 1),
+                ],
+              ).createShader(Rect.fromLTWH(0, 0, 300, 300));
+            },
+            child: const Icon(NavBarIcons.burger),
+          ),
           icon: Icon(
             NavBarIcons.burger,
           ),
           label: 'Food',
         ),
         BottomNavigationBarItem(
+          activeIcon: ShaderMask(
+            shaderCallback: (Rect bounds) {
+              return const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromRGBO(47, 251, 227, 1),
+                  Color.fromRGBO(29, 172, 157, 1),
+                ],
+              ).createShader(Rect.fromLTWH(0, 0, 300, 300));
+            },
+            child: const Icon(NavBarIcons.ride),
+          ),
           icon: Icon(
             NavBarIcons.ride,
           ),
           label: 'Rides',
         ),
         BottomNavigationBarItem(
+          activeIcon: ShaderMask(
+            shaderCallback: (Rect bounds) {
+              return const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromRGBO(47, 251, 227, 1),
+                  Color.fromRGBO(29, 172, 157, 1),
+                ],
+              ).createShader(Rect.fromLTWH(0, 0, 300, 300));
+            },
+            child: const Icon(NavBarIcons.account),
+          ),
           icon: Icon(
             NavBarIcons.account,
           ),

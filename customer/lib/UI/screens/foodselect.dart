@@ -43,7 +43,7 @@ class FoodSelect extends StatelessWidget {
                                         child: SquicircleContainer(
                                           width: 300,
                                           height: 600,
-                                          child: FoodDetailSelector(food: food),
+                                          child: FoodDetailSelector(  food: food),
                                         ),
                                       );
                                     });
