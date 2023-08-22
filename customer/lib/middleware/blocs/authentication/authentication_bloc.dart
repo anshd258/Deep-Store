@@ -10,8 +10,11 @@ class AuthenticationBloc
   AuthenticationBloc() : super(const AuthenticationInitial(null)) {
     on<AuthenticationEvent>((event, emit) {});
     on<UpdateAuthenticationEvent>((event, emit) {
+
+
+
       ///emitting dummy data.
-      emit(UpdateAuthenticationState(User(01, "Hemant", "9340765396")));
+      emit(LoginEvent(User(01, "Hemant", "9340765396")));
     });
   }
 }

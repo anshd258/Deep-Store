@@ -1,2 +1,2 @@
-enum RequestStatus{pending,ongoing, success, failed}
+enum RequestStatus{cart, pending,ongoing, success, failed}
 enum QueryType{get,post}

@@ -62,7 +62,7 @@ class FoodSelect extends StatelessWidget {
                           child: CircularProgressIndicator.adaptive());
                 }),
               ),
-              CartTile()
+              // CartTile()
               ////////////////////
             ],
           );

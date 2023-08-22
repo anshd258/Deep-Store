@@ -1,6 +1,6 @@
 import 'package:common/common.dart';
 import 'package:customer/presentation/screens/account/account.dart';
-import 'package:customer/presentation/screens/authentication.dart';
+import 'package:customer/presentation/screens/authentication/authentication.dart';
 import 'package:customer/presentation/screens/home/home.dart';
 import 'package:customer/presentation/screens/rental/rentalselect.dart';
 import 'package:customer/presentation/screens/ride/rideselect.dart';
