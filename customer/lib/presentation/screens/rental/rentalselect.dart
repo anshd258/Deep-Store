@@ -1,4 +1,4 @@
-import 'package:customer/UI/widgets/itemcard.dart';
+import 'package:customer/presentation/widgets/itemcard.dart';
 import 'package:customer/middleware/blocs/data/data_bloc.dart';
 import 'package:customer/data/models/rental.dart';
 import 'package:flutter/material.dart';

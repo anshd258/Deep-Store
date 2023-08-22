@@ -1,4 +1,4 @@
-import 'package:customer/UI/widgets/squicircle.dart';
+import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:flutter/material.dart';
 
 class ServiceCard extends StatefulWidget {

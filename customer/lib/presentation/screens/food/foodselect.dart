@@ -1,6 +1,6 @@
-import 'package:customer/UI/widgets/carttile.dart';
-import 'package:customer/UI/widgets/itemcard.dart';
-import 'package:customer/UI/widgets/squicircle.dart';
+import 'package:customer/presentation/widgets/carttile.dart';
+import 'package:customer/presentation/widgets/itemcard.dart';
+import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:customer/middleware/blocs/data/data_bloc.dart';
 import 'package:customer/data/models/food.dart';
 import 'package:flutter/material.dart';

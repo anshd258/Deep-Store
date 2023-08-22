@@ -1,9 +1,9 @@
 import 'package:common/common.dart';
-import 'package:customer/UI/screens/account/account.dart';
-import 'package:customer/UI/screens/authentication.dart';
-import 'package:customer/UI/screens/home/home.dart';
-import 'package:customer/UI/screens/rental/rentalselect.dart';
-import 'package:customer/UI/screens/ride/rideselect.dart';
+import 'package:customer/presentation/screens/account/account.dart';
+import 'package:customer/presentation/screens/authentication.dart';
+import 'package:customer/presentation/screens/home/home.dart';
+import 'package:customer/presentation/screens/rental/rentalselect.dart';
+import 'package:customer/presentation/screens/ride/rideselect.dart';
 import 'package:customer/middleware/blocs/data/data_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
