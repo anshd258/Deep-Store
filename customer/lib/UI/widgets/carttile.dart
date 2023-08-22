@@ -1,9 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../middleware/blocs/data/data_bloc.dart';
-import '../../middleware/models/foodorder.dart';
+import '../../data/models/foodorder.dart';
 
 class CartTile extends StatelessWidget {
   const CartTile({super.key});
@@ -62,6 +61,5 @@ class CartTile extends StatelessWidget {
         );
       },
     );
-    ;
   }
 }

@@ -1,6 +1,6 @@
-import 'package:customer/middleware/models/food.dart';
+import 'package:customer/data/models/food.dart';
 
-enum RequestStatus { pending, ongoing, success, failed }
+enum RequestStatus { cart ,pending, ongoing, success, failed }
 
 class FoodOrder {
   final int id;

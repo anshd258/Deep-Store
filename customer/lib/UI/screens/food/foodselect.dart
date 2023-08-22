@@ -1,10 +1,12 @@
-import 'package:customer/UI/screens/fooddetail.dart';
+import 'package:customer/UI/widgets/carttile.dart';
 import 'package:customer/UI/widgets/itemcard.dart';
 import 'package:customer/UI/widgets/squicircle.dart';
 import 'package:customer/middleware/blocs/data/data_bloc.dart';
-import 'package:customer/middleware/models/food.dart';
+import 'package:customer/data/models/food.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'fooddetailselector.dart';
 
 class FoodSelect extends StatelessWidget {
   const FoodSelect({super.key});
@@ -43,7 +45,7 @@ class FoodSelect extends StatelessWidget {
                                         child: SquicircleContainer(
                                           width: 300,
                                           height: 600,
-                                          child: FoodDetailSelector(  food: food),
+                                          child: FoodDetailSelector(food: food),
                                         ),
                                       );
                                     });
@@ -60,6 +62,7 @@ class FoodSelect extends StatelessWidget {
                           child: CircularProgressIndicator.adaptive());
                 }),
               ),
+              CartTile()
               ////////////////////
             ],
           );

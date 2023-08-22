@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../middleware/models/food.dart';
+import '../../../data/models/food.dart';
+
 
 class FoodDetailSelector extends StatefulWidget {
   const FoodDetailSelector({super.key, required this.food});
@@ -96,13 +97,13 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
         ),
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
           Color.fromRGBO(32, 171, 154, 1),
           Color.fromRGBO(34, 150, 199, 1),
         ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
         child: ElevatedButton(
-          style: ButtonStyle(
+          style: const ButtonStyle(
               elevation: MaterialStatePropertyAll(0),
               backgroundColor: MaterialStatePropertyAll(Colors.transparent)),
           child: const Text('Add to Cart'),
@@ -112,6 +113,5 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
         ),
       ),
     );
-    ;
   }
 }

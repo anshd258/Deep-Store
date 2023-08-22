@@ -1,8 +1,8 @@
-import 'package:customer/helpers/constants.dart';
+import 'package:customer/middleware/helpers/constants.dart';
 import 'ride.dart';
 import 'user.dart';
 
-class RentalRequest {
+class RideRequest {
   final int rideId;
   final User user;
   final Ride ride;
@@ -10,7 +10,7 @@ class RentalRequest {
   final String dropOffLocation;
   final RequestStatus status;
 
-  RentalRequest(this.rideId, this.user, this.ride, this.pickupLocation, this.dropOffLocation, this.status);
+  RideRequest(this.rideId, this.user, this.ride, this.pickupLocation, this.dropOffLocation, this.status);
 
   Map<String, dynamic> toJson() {
     return {
@@ -23,12 +23,12 @@ class RentalRequest {
     };
   }
 
-  factory RentalRequest.fromJson(Map<String, dynamic> json) {
-    return RentalRequest._fromJson(json);
+  factory RideRequest.fromJson(Map<String, dynamic> json) {
+    return RideRequest._fromJson(json);
   }
 
-  static RentalRequest _fromJson(Map<String, dynamic> json) {
-    return RentalRequest(
+  static RideRequest _fromJson(Map<String, dynamic> json) {
+    return RideRequest(
       json['rideId'],
       User.fromJson(json['user']),
       Ride.fromJson(json['ride']),
