@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/Constants/filterEnum.dart';
 import 'package:partner/middleware/filter_cubit_cubit.dart';
 
-
 class OptionsButton extends StatefulWidget {
   final value e;
   final value selectede;
@@ -24,10 +23,14 @@ class OptionsButton extends StatefulWidget {
 class _OptionsButtonState extends State<OptionsButton>
     with SingleTickerProviderStateMixin {
   AnimationController? ctr;
+  late final value val;
+  late final value selected;
   @override
   void initState() {
     ctr = AnimationController(vsync: this, lowerBound: 0, upperBound: 1);
     ctr!.stop();
+    val = widget.e;
+    selected = widget.selectede;
     super.initState();
   }
 
@@ -48,7 +51,7 @@ class _OptionsButtonState extends State<OptionsButton>
             Radius.circular(100),
           ),
           color: Colors.grey,
-          gradient: widget.e == widget.selectede
+          gradient: val == selected
               ? const LinearGradient(colors: [
                   Color.fromRGBO(32, 171, 154, 1),
                   Color.fromRGBO(34, 150, 199, 1)
@@ -62,18 +65,17 @@ class _OptionsButtonState extends State<OptionsButton>
         alignment: Alignment.center,
         constraints: const BoxConstraints(minHeight: 33, minWidth: 60),
         child: Text(
-          widget.e.name,
+          val.name,
           style: GoogleFonts.lato(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: widget.e == widget.selectede
-                  ? Colors.white
-                  : Colors.grey.shade700),
+              color: val == selected ? Colors.white : Colors.grey.shade700),
         ),
       ),
     )
         .animate(controller: ctr)
         .elevation(borderRadius: BorderRadius.circular(30), begin: 0, end: 5)
-        .scaleXY(begin: 1, end: 1.1, duration: const Duration(microseconds: 10));
+        .scaleXY(
+            begin: 1, end: 1.1, duration: const Duration(microseconds: 10));
   }
 }
