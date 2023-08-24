@@ -15,9 +15,10 @@ class ApiResponse {
   final List<RideRequest>? rideRequests;
   final List<RentalRequest>? rentalRequests;
 
-  final String? token;
   final User user;
   final int providerID;
+
+  // we can add params like status code, error message, tokens etc
 
   ApiResponse({
     this.foodItems,
@@ -26,12 +27,10 @@ class ApiResponse {
     this.foodOrders,
     this.rideRequests,
     this.rentalRequests,
-    this.token,
     required this.user,
     required this.providerID,
   });
 
-  // Convert ApiResponse object to a Map (JSON representation)
   Map<String, dynamic> toJson() {
     return {
       'foodItems': foodItems?.map((item) => item.toJson()).toList(),
@@ -40,13 +39,11 @@ class ApiResponse {
       'foodOrders': foodOrders?.map((order) => order.toJson()).toList(),
       'rideRequests': rideRequests?.map((request) => request.toJson()).toList(),
       'rentalRequests': rentalRequests?.map((request) => request.toJson()).toList(),
-      'token': token,
       'user': user.toJson(),
       'providerID': providerID,
     };
   }
 
-  // Create an ApiResponse object from a JSON map
   factory ApiResponse.fromJson(Map<String, dynamic> json) {
     return ApiResponse(
       foodItems: (json['foodItems'] as List<dynamic>?)?.map((item) => Food.fromJson(item)).toList(),
@@ -55,7 +52,6 @@ class ApiResponse {
       foodOrders: (json['foodOrders'] as List<dynamic>?)?.map((order) => FoodOrder.fromJson(order)).toList(),
       rideRequests: (json['rideRequests'] as List<dynamic>?)?.map((request) => RideRequest.fromJson(request)).toList(),
       rentalRequests: (json['rentalRequests'] as List<dynamic>?)?.map((request) => RentalRequest.fromJson(request)).toList(),
-      token: json['token'],
       user: User.fromJson(json['user']),
       providerID: json['providerID'],
     );

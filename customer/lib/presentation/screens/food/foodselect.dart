@@ -1,11 +1,9 @@
-import 'package:customer/presentation/widgets/carttile.dart';
+import 'package:customer/middleware/blocs/products/products_bloc.dart';
 import 'package:customer/presentation/widgets/itemcard.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
-import 'package:customer/middleware/blocs/data/data_bloc.dart';
 import 'package:customer/data/models/food.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'fooddetailselector.dart';
 
 class FoodSelect extends StatelessWidget {
@@ -14,22 +12,20 @@ class FoodSelect extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator.adaptive(
       onRefresh: () async {
-        print('starting refresh');
-        context.read<DataBloc>().add(UpdateDataEvent());
+        context.read<ProductsBloc>().add(UpdateFoodListEvent());
       },
-      child: BlocBuilder<DataBloc, DataState>(
+      child: BlocBuilder<ProductsBloc, ProductsState>(
         builder: (context, state) {
           return Column(
             children: [
               Expanded(
                 child: Builder(builder: (context) {
                   List<Food>? foodList =
-                      context.read<DataBloc>().state.foodList;
+                      context.read<ProductsBloc>().state.foodList;
                   return foodList != null
                       ? ListView.builder(
                           itemCount: foodList.length,
                           itemBuilder: (context, index) {
-                            /// display the data here
                             Food food = foodList[index];
                             return ServiceCard(
                               name: food.name,
@@ -49,12 +45,6 @@ class FoodSelect extends StatelessWidget {
                                         ),
                                       );
                                     });
-
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             FoodDetailSelector(food: food)));
                               },
                             );
                           })
