@@ -4,6 +4,8 @@ import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:customer/data/models/food.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../middleware/blocs/cart/cart_bloc.dart';
+import 'carttile.dart';
 import 'fooddetailselector.dart';
 
 class FoodSelect extends StatelessWidget {
@@ -52,7 +54,15 @@ class FoodSelect extends StatelessWidget {
                           child: CircularProgressIndicator.adaptive());
                 }),
               ),
-              // CartTile()
+              BlocBuilder<CartBloc, CartState>(
+                builder: (context, state) {
+                  print('------');
+                  print('${state.cartOrder}');
+                  return CartTile(
+                    cart: state.cartOrder,
+                  );
+                },
+              )
               ////////////////////
             ],
           );

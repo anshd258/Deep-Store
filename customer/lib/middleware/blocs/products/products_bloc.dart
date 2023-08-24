@@ -22,7 +22,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
        String data = await rootBundle.loadString('assets/testdata.json');
       ApiResponse response = ApiResponse.fromJson(json.decode(data));
-      await Future.delayed(const Duration(milliseconds: 1000));
+      await Future.delayed(const Duration(milliseconds: 100));
 
 
       emit(UpdateProductState(
@@ -36,7 +36,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
 
        String data = await rootBundle.loadString('assets/testdata.json');
       ApiResponse response = ApiResponse.fromJson(json.decode(data));
-      await Future.delayed(const Duration(milliseconds: 1000));
+      await Future.delayed(const Duration(milliseconds: 100));
 
 
       emit(UpdateProductState(
@@ -46,7 +46,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<UpdateRideListEvent>((event, emit) async{
        String data = await rootBundle.loadString('assets/testdata.json');
       ApiResponse response = ApiResponse.fromJson(json.decode(data));
-      await Future.delayed(const Duration(milliseconds: 1000));
+      await Future.delayed(const Duration(milliseconds: 100));
 
 
       emit(UpdateProductState(
@@ -56,7 +56,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<UpdateRentalListEvent>((event, emit) async{
        String data = await rootBundle.loadString('assets/testdata.json');
       ApiResponse response = ApiResponse.fromJson(json.decode(data));
-      await Future.delayed(const Duration(milliseconds: 1000));
+      await Future.delayed(const Duration(milliseconds: 100));
 
 
       emit(UpdateProductState(

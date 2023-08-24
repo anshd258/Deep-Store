@@ -9,5 +9,5 @@ sealed class CartState {
 final class CartInitial extends CartState {}
 
 final class UpdateCartState extends CartState {
-  UpdateCartState(FoodOrder foodOrder);
+  const UpdateCartState({super.cartOrder});
 }

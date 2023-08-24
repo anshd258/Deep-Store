@@ -1,7 +1,8 @@
+import 'package:customer/middleware/blocs/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/food.dart';
-
 
 class FoodDetailSelector extends StatefulWidget {
   const FoodDetailSelector({super.key, required this.food});
@@ -14,15 +15,25 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
   List<String> selecteditems = [];
   @override
   Widget build(BuildContext context) {
-    print('building widget');
     return Scaffold(
       body: SingleChildScrollView(
         child: Wrap(
           runSpacing: 10.0,
           alignment: WrapAlignment.center,
           children: [
-            Image.network(widget.food.images[1],
-                fit: BoxFit.cover, height: 200),
+            SizedBox(
+              height: 200,
+              child: Image.network(
+                widget.food.images[0],
+                fit: BoxFit.cover,
+                height: 200,
+                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
+                    frame == null
+                        ? const Center(
+                            child: CircularProgressIndicator.adaptive())
+                        : child,
+              ),
+            ),
             Row(
               children: [
                 Text(
@@ -109,6 +120,14 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
           child: const Text('Add to Cart'),
           onPressed: () async {
             // add item to cart.
+            Map<String, int> selectedAddons = {
+              for (var key in selecteditems) key: widget.food.addOns[key] ?? 0
+            };
+            print('step 1');
+            context
+                .read<CartBloc>()
+                .add(AddItemToCartEvent(widget.food, 1,selectedAddons ));
+            Navigator.pop(context);
           },
         ),
       ),
