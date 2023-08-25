@@ -1,5 +1,4 @@
 import 'package:customer/middleware/blocs/cart/cart_bloc.dart';
-import 'package:customer/middleware/blocs/products/products_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

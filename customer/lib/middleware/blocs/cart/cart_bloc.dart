@@ -57,14 +57,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       /// for now I am simulating a order.
 
       if (state.cartOrder == null) {
-        print('trying to add item t cart');
-        print('trying to add item to cart');
-        print('trying to add item  cart');
-        print('trying to add item to cart');
-        print(
-            'trying to add item t cart ${event.food.price + event.selectedAddons.values.fold(0, (previousValue, element) => previousValue + element)}');
-        print('trying to add item  cart');
-        print('trying to add item to cart');
+
         emit(UpdateCartState(
             cartOrder: FoodOrder(
                 charges: 0,

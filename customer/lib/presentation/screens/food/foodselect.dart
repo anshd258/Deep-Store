@@ -1,4 +1,3 @@
-import 'package:customer/middleware/blocs/authentication/authentication_bloc.dart';
 import 'package:customer/middleware/blocs/products/products_bloc.dart';
 import 'package:customer/presentation/widgets/itemcard.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
@@ -60,8 +59,6 @@ class FoodSelect extends StatelessWidget {
               ),
               BlocBuilder<CartBloc, CartState>(
                 builder: (context, state) {
-                  print('------');
-                  print('${state.cartOrder}');
                   return CartTile(
                     cart: state.cartOrder,
                   );
