@@ -1,3 +1,4 @@
+import 'package:customer/middleware/blocs/authentication/authentication_bloc.dart';
 import 'package:customer/middleware/blocs/products/products_bloc.dart';
 import 'package:customer/presentation/widgets/itemcard.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
@@ -21,9 +22,9 @@ class FoodSelect extends StatelessWidget {
           return Column(
             children: [
               Expanded(
-                child: Builder(builder: (context) {
+                child: Builder(builder: (outerContext) {
                   List<Food>? foodList =
-                      context.read<ProductsBloc>().state.foodList;
+                      outerContext.read<ProductsBloc>().state.foodList;
                   return foodList != null
                       ? ListView.builder(
                           itemCount: foodList.length,
@@ -43,10 +44,13 @@ class FoodSelect extends StatelessWidget {
                                         child: SquicircleContainer(
                                           width: 300,
                                           height: 600,
-                                          child: FoodDetailSelector(food: food),
+                                          child:
+                                              FoodDetailSelector(food: food, outerContext: outerContext,),
                                         ),
                                       );
                                     });
+                              
+                              
                               },
                             );
                           })

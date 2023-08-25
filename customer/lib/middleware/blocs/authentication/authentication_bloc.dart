@@ -7,14 +7,11 @@ part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  AuthenticationBloc() : super(const AuthenticationInitial(null)) {
+  final User user;
+  AuthenticationBloc(this.user) : super( AuthenticationInitial(user)) {
     on<AuthenticationEvent>((event, emit) {});
     on<UpdateAuthenticationEvent>((event, emit) {
-
-
-
-      ///emitting dummy data.
-      emit(LoginEvent(User(01, "Hemant", "9340765396")));
+      /// update auth status here.
     });
   }
 }

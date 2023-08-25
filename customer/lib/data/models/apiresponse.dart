@@ -6,10 +6,13 @@ import 'ride.dart';
 import 'riderequest.dart';
 import 'user.dart';
 
+
 class ApiResponse {
   final List<Food>? foodItems;
   final List<Ride>? rideItems;
   final List<Rental>? rentalItems;
+
+  final FoodOrder? foodOrder;
 
   final List<FoodOrder>? foodOrders;
   final List<RideRequest>? rideRequests;
@@ -18,12 +21,11 @@ class ApiResponse {
   final User user;
   final int providerID;
 
-  // we can add params like status code, error message, tokens etc
-
   ApiResponse({
     this.foodItems,
     this.rideItems,
     this.rentalItems,
+    this.foodOrder,
     this.foodOrders,
     this.rideRequests,
     this.rentalRequests,
@@ -36,6 +38,7 @@ class ApiResponse {
       'foodItems': foodItems?.map((item) => item.toJson()).toList(),
       'rideItems': rideItems?.map((item) => item.toJson()).toList(),
       'rentalItems': rentalItems?.map((item) => item.toJson()).toList(),
+      'foodOrder': foodOrder?.toJson(), 
       'foodOrders': foodOrders?.map((order) => order.toJson()).toList(),
       'rideRequests': rideRequests?.map((request) => request.toJson()).toList(),
       'rentalRequests': rentalRequests?.map((request) => request.toJson()).toList(),
@@ -49,6 +52,7 @@ class ApiResponse {
       foodItems: (json['foodItems'] as List<dynamic>?)?.map((item) => Food.fromJson(item)).toList(),
       rideItems: (json['rideItems'] as List<dynamic>?)?.map((item) => Ride.fromJson(item)).toList(),
       rentalItems: (json['rentalItems'] as List<dynamic>?)?.map((item) => Rental.fromJson(item)).toList(),
+      foodOrder: json.containsKey('foodOrder') ? FoodOrder.fromJson(json['foodOrder']) : null,
       foodOrders: (json['foodOrders'] as List<dynamic>?)?.map((order) => FoodOrder.fromJson(order)).toList(),
       rideRequests: (json['rideRequests'] as List<dynamic>?)?.map((request) => RideRequest.fromJson(request)).toList(),
       rentalRequests: (json['rentalRequests'] as List<dynamic>?)?.map((request) => RentalRequest.fromJson(request)).toList(),
@@ -57,4 +61,3 @@ class ApiResponse {
     );
   }
 }
-

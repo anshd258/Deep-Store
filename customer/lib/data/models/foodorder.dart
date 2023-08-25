@@ -1,6 +1,8 @@
 import 'package:customer/data/models/food.dart';
+import 'package:customer/data/models/fooddetail.dart';
 
-enum RequestStatus { cart ,pending, ongoing, success, failed }
+import '../../middleware/helpers/constants.dart';
+
 
 class FoodOrder {
   final int id;
@@ -9,7 +11,7 @@ class FoodOrder {
   final double charges;
   final double discount;
   final double totalPrice;
-  final List<Food> items;
+  final List<FoodDetails> items;
   final DateTime eta;
 
   FoodOrder(
@@ -30,7 +32,7 @@ class FoodOrder {
       'charges': charges,
       'discount': discount,
       'totalPrice': totalPrice,
-      'items': items.map((food) => food.toJson()).toList(),
+      'items': items.map((foodDetails) => foodDetails.toJson()).toList(),
       'eta': eta.toIso8601String(),
     };
   }
@@ -44,7 +46,7 @@ class FoodOrder {
       discount: json['discount'],
       totalPrice: json['totalPrice'],
       items: (json['items'] as List<dynamic>)
-          .map((foodJson) => Food.fromJson(foodJson))
+          .map((foodJson) => FoodDetails.fromJson(foodJson))
           .toList(),
       eta: DateTime.parse(json['eta']),
     );

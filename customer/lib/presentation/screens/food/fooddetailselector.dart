@@ -1,12 +1,15 @@
 import 'package:customer/middleware/blocs/cart/cart_bloc.dart';
+import 'package:customer/middleware/blocs/products/products_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/food.dart';
 
 class FoodDetailSelector extends StatefulWidget {
-  const FoodDetailSelector({super.key, required this.food});
+  const FoodDetailSelector(
+      {super.key, required this.food, required this.outerContext});
   final Food food;
+  final BuildContext outerContext;
   @override
   State<FoodDetailSelector> createState() => _FoodDetailSelectorState();
 }
@@ -123,10 +126,10 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
             Map<String, int> selectedAddons = {
               for (var key in selecteditems) key: widget.food.addOns[key] ?? 0
             };
-            print('step 1');
-            context
+            
+            widget.outerContext
                 .read<CartBloc>()
-                .add(AddItemToCartEvent(widget.food, 1,selectedAddons ));
+                .add(AddItemToCartEvent(widget.food, 1, selectedAddons));
             Navigator.pop(context);
           },
         ),
