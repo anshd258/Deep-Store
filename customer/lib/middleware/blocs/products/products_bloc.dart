@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:customer/middleware/blocs/order/order_bloc.dart';
+import 'package:customer/data/repositories/data.repository.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
@@ -14,54 +14,45 @@ part 'products_event.dart';
 part 'products_state.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
-  ProductsBloc() : super(ProductsInitial()) {
-    on<ProductsEvent>((event, emit) {
-    });
-    on<InitialProductFetchEvent>((event, emit) async{
-
-
-       String data = await rootBundle.loadString('assets/testdata.json');
+  final DataRepository dataRepository;
+  ProductsBloc(this.dataRepository) : super(ProductsInitial()) {
+    on<ProductsEvent>((event, emit) {});
+    on<InitialProductFetchEvent>((event, emit) async {
+      String data = await rootBundle.loadString('assets/testdata.json');
       ApiResponse response = ApiResponse.fromJson(json.decode(data));
       await Future.delayed(const Duration(milliseconds: 100));
-
 
       emit(UpdateProductState(
           foodList: response.foodItems,
           rideList: response.rideItems,
-          rentalList: response.rentalItems
-          ));
+          rentalList: response.rentalItems));
     });
-    on<UpdateFoodListEvent>((event, emit) async{
-
-
-       String data = await rootBundle.loadString('assets/testdata.json');
+    on<UpdateFoodListEvent>((event, emit) async {
+      String data = await rootBundle.loadString('assets/testdata.json');
       ApiResponse response = ApiResponse.fromJson(json.decode(data));
       await Future.delayed(const Duration(milliseconds: 100));
 
-
       emit(UpdateProductState(
-          foodList: response.foodItems,
-          ));
+        foodList: response.foodItems,
+      ));
     });
-    on<UpdateRideListEvent>((event, emit) async{
-       String data = await rootBundle.loadString('assets/testdata.json');
+    on<UpdateRideListEvent>((event, emit) async {
+      String data = await rootBundle.loadString('assets/testdata.json');
       ApiResponse response = ApiResponse.fromJson(json.decode(data));
       await Future.delayed(const Duration(milliseconds: 100));
 
-
       emit(UpdateProductState(
-          rideList: response.rideItems,
-          ));
+        rideList: response.rideItems,
+      ));
     });
-    on<UpdateRentalListEvent>((event, emit) async{
-       String data = await rootBundle.loadString('assets/testdata.json');
+    on<UpdateRentalListEvent>((event, emit) async {
+      String data = await rootBundle.loadString('assets/testdata.json');
       ApiResponse response = ApiResponse.fromJson(json.decode(data));
       await Future.delayed(const Duration(milliseconds: 100));
 
-
       emit(UpdateProductState(
-          rentalList: response.rentalItems,
-          ));
+        rentalList: response.rentalItems,
+      ));
     });
   }
 }

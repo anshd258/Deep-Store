@@ -1,11 +1,12 @@
 import 'package:customer/middleware/blocs/products/products_bloc.dart';
+import 'package:customer/presentation/screens/food/cart/cart.dart';
 import 'package:customer/presentation/widgets/itemcard.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:customer/data/models/food.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../middleware/blocs/cart/cart_bloc.dart';
-import 'carttile.dart';
+import 'cart/carttile.dart';
 import 'fooddetailselector.dart';
 
 class FoodSelect extends StatelessWidget {
@@ -21,13 +22,13 @@ class FoodSelect extends StatelessWidget {
           return Column(
             children: [
               Expanded(
-                child: Builder(builder: (outerContext) {
+                child: Builder(builder: (context) {
                   List<Food>? foodList =
-                      outerContext.read<ProductsBloc>().state.foodList;
+                      context.read<ProductsBloc>().state.foodList;
                   return foodList != null
                       ? ListView.builder(
                           itemCount: foodList.length,
-                          itemBuilder: (context, index) {
+                          itemBuilder: (itemContext, index) {
                             Food food = foodList[index];
                             return ServiceCard(
                               name: food.name,
@@ -43,13 +44,12 @@ class FoodSelect extends StatelessWidget {
                                         child: SquicircleContainer(
                                           width: 300,
                                           height: 600,
-                                          child:
-                                              FoodDetailSelector(food: food, outerContext: outerContext,),
+                                          child: FoodDetailSelector(
+                                              food: food,
+                                              outerContext: itemContext),
                                         ),
                                       );
                                     });
-                              
-                              
                               },
                             );
                           })
@@ -59,8 +59,16 @@ class FoodSelect extends StatelessWidget {
               ),
               BlocBuilder<CartBloc, CartState>(
                 builder: (context, state) {
-                  return CartTile(
-                    cart: state.cartOrder,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CartScreen()));
+                    },
+                    child: CartTile(
+                      cart: state.cartOrder,
+                    ),
                   );
                 },
               )

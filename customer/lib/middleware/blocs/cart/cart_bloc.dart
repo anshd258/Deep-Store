@@ -1,30 +1,33 @@
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
-import 'package:customer/data/datasource.dart';
-import 'package:customer/data/models/apiresponse.dart';
 import 'package:customer/data/models/food.dart';
 import 'package:customer/data/models/fooddetail.dart';
 import 'package:customer/data/models/foodorder.dart';
 import 'package:customer/data/models/user.dart';
+import 'package:customer/data/repositories/data.repository.dart';
+import 'package:customer/data/repositories/user.repository.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:meta/meta.dart';
+
+import '../../../data/datasource.dart';
+import '../../../data/models/apiresponse.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  final User user;
-  CartBloc(this.user) : super(CartInitial()) {
+  final UserRepository userRepository;
+  final DataRepository dataRepository;
+  CartBloc(this.userRepository, this.dataRepository) : super(CartInitial()) {
     on<CartEvent>((event, emit) {});
 
-    on<AddItemToCartEvent>((event, emit) async {
-      FoodOrder? order = state.cartOrder;
+    on<AddItemToCartEvent>((event, emit)  {
+      // FoodOrder? order = state.cartOrder;
+
       // ///if cart is null.
       // if (order == null) {
       //   Map<String, String> urlParameters = {
       //     'location': 'BriCabin',
-      //     'user_id': user.userID.toString(),
+      //     'user_id': userRepository.user!.userID.toString(),
       //   };
       //   ApiResponse? apiResponse = await DataSource.getData(
       //       path: DataSource.createOrder, urlParameters: urlParameters);
@@ -33,13 +36,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
       // ///Adding selected addons to order.
       // Map<String, int> selectedAddons = event.selectedAddons;
-      // FoodDetails selectedItem = FoodDetails(event.food, selectedAddons, 0);
+      // FoodDetails selectedItem = FoodDetails(event.food, selectedAddons, 0,1);
 
       // Map<String, dynamic> body = {
       //   'order': {
       //     'id': order?.id ?? 0,
       //     'items': [selectedItem.toJson()],
-      //     'user_id': user.userID,
+      //     'user_id': userRepository.user!.userID,
       //   }
       // };
       // await DataSource.getData(
@@ -54,10 +57,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
       // order = apiResponse!.foodOrder;
 
-      /// for now I am simulating a order.
+      // for now I am simulating a order.
 
       if (state.cartOrder == null) {
-
         emit(UpdateCartState(
             cartOrder: FoodOrder(
                 charges: 0,
@@ -67,15 +69,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                 status: RequestStatus.cart,
                 taxes: 0,
                 totalPrice: event.food.price +
-                        event.selectedAddons.values.fold(0,
-                            (previousValue, element) => previousValue + element)
-                 ,
+                    event.selectedAddons.values.fold(
+                        0, (previousValue, element) => previousValue + element),
                 items: [
               FoodDetails(
                   event.food,
                   event.selectedAddons,
                   event.food.price +
-                      event.selectedAddons.values.fold(0, (previousValue, element) => previousValue + element))
+                      event.selectedAddons.values.fold(0,
+                          (previousValue, element) => previousValue + element),
+                  1),
             ])));
       } else {
         List<FoodDetails> newlist = state.cartOrder!.items;
@@ -83,7 +86,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             event.food,
             event.selectedAddons,
             event.food.price +
-                event.selectedAddons.values.fold(0, (previousValue, element) => previousValue + element)));
+                event.selectedAddons.values.fold(
+                    0, (previousValue, element) => previousValue + element),
+            1));
 
         emit(UpdateCartState(
             cartOrder: FoodOrder(
@@ -95,9 +100,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                 taxes: 0,
                 totalPrice: state.cartOrder!.totalPrice +
                     event.food.price +
-                    event.selectedAddons.values.fold(0, (previousValue, element) => previousValue + element),
+                    event.selectedAddons.values.fold(
+                        0, (previousValue, element) => previousValue + element),
                 status: RequestStatus.cart)));
       }
     });
+
   }
 }

@@ -1,22 +1,22 @@
+import 'package:customer/data/models/rental.dart';
 import 'package:customer/middleware/helpers/constants.dart';
-import 'ride.dart';
 import 'user.dart';
 
 class RentalRequest {
-  final int rideId;
+  final int rentalId;
   final User user;
-  final Ride ride;
+  final Rental rental;
   final String pickupLocation;
   final String dropOffLocation;
   final RequestStatus status;
 
-  RentalRequest(this.rideId, this.user, this.ride, this.pickupLocation, this.dropOffLocation, this.status);
+  RentalRequest(this.rentalId, this.user, this.rental, this.pickupLocation, this.dropOffLocation, this.status);
 
   Map<String, dynamic> toJson() {
     return {
-      'rideId': rideId,
+      'rentalId': rentalId,
       'user': user.toJson(),
-      'ride': ride.toJson(),
+      'rental': rental.toJson(),
       'pickupLocation': pickupLocation,
       'dropOffLocation': dropOffLocation,
       'status': _requestStatusToString(status),
@@ -29,9 +29,9 @@ class RentalRequest {
 
   static RentalRequest _fromJson(Map<String, dynamic> json) {
     return RentalRequest(
-      json['rideId'],
+      json['rentalId'],
       User.fromJson(json['user']),
-      Ride.fromJson(json['ride']),
+      Rental.fromJson(json['rental']),
       json['pickupLocation'],
       json['dropOffLocation'],
       _stringToRequestStatus(json['status']),

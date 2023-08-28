@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:customer/data/repositories/data.repository.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
@@ -13,7 +14,8 @@ part 'order_event.dart';
 part 'order_state.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
-  OrderBloc() : super(OrderInitial()) {
+  final DataRepository dataRepository;
+  OrderBloc(this.dataRepository) : super(OrderInitial()) {
     on<OrderEvent>((event, emit) {});
 
     on<InitialOrderFetchEvent>((event, emit) async {
@@ -24,10 +26,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       /// simulating the data fetching from server.
 
       emit(UpdateOrderState(
-        foodOrderList: response.foodOrders,
-        rideRequestList: response.rideRequests,
-        rentalRequestList: response.rentalRequests
-      ));
+          foodOrderList: response.foodOrders,
+          rideRequestList: response.rideRequests,
+          rentalRequestList: response.rentalRequests));
     });
     on<UpdateFoodOrderEvent>((event, emit) async {
       String data = await rootBundle.loadString('assets/testdata.json');

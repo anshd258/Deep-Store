@@ -2,6 +2,8 @@ class User {
   final int userID;
   final String name;
   final String contactNo;
+  // provider.
+  // room number.
 
   User(this.userID, this.name, this.contactNo);
 

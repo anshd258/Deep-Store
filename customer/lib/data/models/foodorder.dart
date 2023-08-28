@@ -1,4 +1,3 @@
-import 'package:customer/data/models/food.dart';
 import 'package:customer/data/models/fooddetail.dart';
 
 import '../../middleware/helpers/constants.dart';
