@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:partner/UI/body/ridesbody.dart';
-import 'package:partner/UI/widget/ownerOngoingcard.dart';
-import 'package:partner/UI/widget/ridesCard.dart';
 
-import 'widget/FilterContainer.dart';
 
 class ScreenSetup extends StatelessWidget {
   ScreenSetup({super.key, this.appBar});
@@ -17,8 +13,7 @@ class ScreenSetup extends StatelessWidget {
         child: Column(
           children: [
             // RidesCard(),
-            FilterWidget(),
-            RidesBody()
+         
           ],
         ),
       ),
