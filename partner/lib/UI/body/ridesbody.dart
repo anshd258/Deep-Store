@@ -20,10 +20,10 @@ class _RidesBodyState extends State<RidesBody> {
       listener: (context, state) {},
       builder: (context, state) {
         if (state.loading) {
-          return CircularProgressIndicator.adaptive();
+          return Center(child: CircularProgressIndicator.adaptive());
         }
         return SizedBox(
-          height: 550,
+          height: 538,
           child: SingleChildScrollView(
             child: Column(
               children: values.map((e) {

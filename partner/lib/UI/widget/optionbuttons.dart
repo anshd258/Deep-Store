@@ -23,19 +23,18 @@ class OptionsButton extends StatefulWidget {
 class _OptionsButtonState extends State<OptionsButton>
     with SingleTickerProviderStateMixin {
   AnimationController? ctr;
-  late final value val;
-  late final value selected;
+
   @override
   void initState() {
     ctr = AnimationController(vsync: this, lowerBound: 0, upperBound: 1);
     ctr!.stop();
-    val = widget.e;
-    selected = widget.selectede;
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print("${widget.e} and ${widget.selectede}");
     return GestureDetector(
       onTap: () {
         ctr!.forward().then((value) => ctr!.reset());
@@ -51,7 +50,7 @@ class _OptionsButtonState extends State<OptionsButton>
             Radius.circular(100),
           ),
           color: Colors.grey,
-          gradient: val == selected
+          gradient: widget.e == widget.selectede
               ? const LinearGradient(colors: [
                   Color.fromRGBO(32, 171, 154, 1),
                   Color.fromRGBO(34, 150, 199, 1)
@@ -65,11 +64,13 @@ class _OptionsButtonState extends State<OptionsButton>
         alignment: Alignment.center,
         constraints: const BoxConstraints(minHeight: 33, minWidth: 60),
         child: Text(
-          val.name,
+          widget.e.name,
           style: GoogleFonts.lato(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: val == selected ? Colors.white : Colors.grey.shade700),
+              color: widget.e == widget.selectede
+                  ? Colors.white
+                  : Colors.grey.shade700),
         ),
       ),
     )

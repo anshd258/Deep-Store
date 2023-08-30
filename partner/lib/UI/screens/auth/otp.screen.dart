@@ -108,10 +108,8 @@ class _OtpScreenState extends State<OtpScreen> {
                   listenForMultipleSmsOnAndroid: true,
                   defaultPinTheme: defaultPinTheme,
                   validator: (value) {
-                    if (value ==  '123456') {
+                    if (value == '123456') {
                       // use navigator here to route to new page
-                      
-                      
                     }
                     return value == '123456' ? null : 'Pin is incorrect';
                   },
@@ -183,7 +181,12 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
               GradientCommonButton(
                 function: () {
-                  setState(() {});
+                  if (pinController.length == 6) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        "/screenSetup", (route) => false);
+                  } else {
+                    setState(() {});
+                  }
                 },
                 borderradius: 4,
                 height: 48,
