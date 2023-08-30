@@ -23,12 +23,11 @@ class _RidesBodyState extends State<RidesBody> {
           return CircularProgressIndicator.adaptive();
         }
         return SizedBox(
-          height: 604.333,
+          height: 550,
           child: SingleChildScrollView(
             child: Column(
               children: values.map((e) {
-               
-                return  Widgetfactory().onTabChange(state.tabIndex);
+                return Widgetfactory().onTabChange(state.tabIndex);
               }).toList(),
             ),
           ),
