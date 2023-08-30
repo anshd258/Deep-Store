@@ -1,14 +1,15 @@
 import 'package:common/common.dart';
+import 'package:customer/data/models/food.dart';
+import 'package:customer/middleware/blocs/food/food_bloc.dart';
+import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
 import 'package:customer/presentation/screens/account/account.dart';
-import 'package:customer/presentation/screens/home/home.dart';
+import 'package:customer/presentation/screens/orders/home.dart';
 import 'package:customer/presentation/screens/vehicle/vehicleselect.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../middleware/blocs/cart/cart_bloc.dart';
-import '../middleware/blocs/order/order_bloc.dart';
-import '../middleware/blocs/products/products_bloc.dart';
+import '../middleware/blocs/rental/rental_bloc.dart';
 import 'screens/food/foodselect.dart';
 
 class ScreenSetup extends StatelessWidget {
@@ -17,8 +18,11 @@ class ScreenSetup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      context.read<OrderBloc>().add(InitialOrderFetchEvent());
-      context.read<ProductsBloc>().add(InitialProductFetchEvent());
+      context.read<RideBloc>().add(FetchRideRequests());
+      context.read<RentalBloc>().add(FetchRentalRequests());
+      context.read<FoodBloc>().add(FetchFoodOrders());
+
+
       return CustomTabView(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -34,7 +38,7 @@ class ScreenSetup extends StatelessWidget {
                       color: const Color.fromRGBO(86, 86, 86, 1),
                       fontSize: 16,
                       fontWeight: FontWeight.w700)),
-              Text(context.read<CartBloc>().userRepository.user!.name,
+              Text(context.read<FoodBloc>().userRepository.user!.name,
                   style: GoogleFonts.lato(
                       color: const Color.fromRGBO(121, 121, 121, 1),
                       fontSize: 19,

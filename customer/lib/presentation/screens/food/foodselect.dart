@@ -1,30 +1,30 @@
-import 'package:customer/middleware/blocs/products/products_bloc.dart';
 import 'package:customer/presentation/screens/food/cart/cart.dart';
 import 'package:customer/presentation/widgets/fooditemcard.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:customer/data/models/food.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../middleware/blocs/cart/cart_bloc.dart';
+import '../../../middleware/blocs/food/food_bloc.dart';
 import 'cart/carttile.dart';
-import 'fooddetailselector.dart';
+import 'fooddetails.dart';
 
 class FoodSelect extends StatelessWidget {
   const FoodSelect({super.key});
   @override
   Widget build(BuildContext context) {
+        context.read<FoodBloc>().add(FetchFoods());
     return RefreshIndicator.adaptive(
       onRefresh: () async {
-        context.read<ProductsBloc>().add(UpdateFoodListEvent());
+        context.read<FoodBloc>().add(FetchFoods());
       },
-      child: BlocBuilder<ProductsBloc, ProductsState>(
+      child: BlocBuilder<FoodBloc, FoodState>(
         builder: (context, state) {
           return Column(
             children: [
               Expanded(
                 child: Builder(builder: (context) {
                   List<Food>? foodList =
-                      context.read<ProductsBloc>().state.foodList;
+                      context.read<FoodBloc>().state.foodList;
                   return foodList != null
                       ? ListView.builder(
                           itemCount: foodList.length,
@@ -57,9 +57,7 @@ class FoodSelect extends StatelessWidget {
                           child: CircularProgressIndicator.adaptive());
                 }),
               ),
-              BlocBuilder<CartBloc, CartState>(
-                builder: (context, state) {
-                  return GestureDetector(
+              GestureDetector(
                     onTap: () {
                       Navigator.push(
                           context,
@@ -69,9 +67,7 @@ class FoodSelect extends StatelessWidget {
                     child: CartTile(
                       cart: state.cartOrder,
                     ),
-                  );
-                },
-              )
+                  )
               ////////////////////
             ],
           );

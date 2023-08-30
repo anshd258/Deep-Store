@@ -1,12 +1,12 @@
 import 'package:customer/data/repositories/data.repository.dart';
 import 'package:customer/data/repositories/user.repository.dart';
+import 'package:customer/middleware/blocs/food/food_bloc.dart';
+import 'package:customer/middleware/blocs/rental/rental_bloc.dart';
+import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'data/models/user.dart';
-import 'middleware/blocs/cart/cart_bloc.dart';
-import 'middleware/blocs/order/order_bloc.dart';
-import 'middleware/blocs/products/products_bloc.dart';
 import 'middleware/helpers/app.router.dart';
 
 void main() {
@@ -17,14 +17,17 @@ void main() {
     providers: [
       
           BlocProvider(
-          create: (context) => ProductsBloc(dataRepository),
+          create: (context) => FoodBloc(userRepository,dataRepository),
         ),
         BlocProvider(
-          create: (context) => OrderBloc(dataRepository),
+          create: (context) => RideBloc(userRepository,dataRepository),
+        ),
+        BlocProvider(
+          create: (context) => RentalBloc(userRepository,dataRepository),
         ),
         BlocProvider(
           create: (context) =>
-              CartBloc(userRepository, dataRepository),
+              FoodBloc(userRepository, dataRepository),
         ),
       
     ],

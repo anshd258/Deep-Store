@@ -1,9 +1,9 @@
-import 'package:customer/middleware/blocs/cart/cart_bloc.dart';
-import 'package:customer/middleware/blocs/cart/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../middleware/blocs/food/food_bloc.dart';
 import 'cardbody.dart';
+import 'payment.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -30,7 +30,7 @@ class CartScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'Rs.${context.read<CartBloc>().state.cartOrder!.totalPrice}',
+                      'Rs.${context.read<FoodBloc>().state.cartOrder!.totalPrice}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,

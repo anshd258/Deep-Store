@@ -2,7 +2,8 @@ import 'package:customer/data/models/fooddetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../middleware/blocs/cart/cart_bloc.dart';
+import '../../../../middleware/blocs/food/food_bloc.dart';
+
 
 class ItemTile extends StatefulWidget {
   const ItemTile({
@@ -22,7 +23,7 @@ class _ItemTileState extends State<ItemTile> {
   @override
   Widget build(BuildContext context) {
     String options = widget.item.selectedAddons.keys.map((e) => e).join(', ');
-    return BlocBuilder<CartBloc, CartState>(
+    return BlocBuilder<FoodBloc, FoodState>(
       builder: (context, state) {
         return Container(
           decoration: const BoxDecoration(
@@ -75,7 +76,7 @@ class _ItemTileState extends State<ItemTile> {
                               IconButton(
                                 onPressed: () {
                                  
-                                  context.read<CartBloc>().add(
+                                  context.read<FoodBloc>().add(
                                       AddItemToCartEvent(
                                           widget.item.food,
                                           widget.item.quantity + 1,
@@ -91,7 +92,7 @@ class _ItemTileState extends State<ItemTile> {
                               Text('${widget.item.quantity}'),
                               IconButton(
                                 onPressed: () {
-                                  context.read<CartBloc>().add(
+                                  context.read<FoodBloc>().add(
                                       AddItemToCartEvent(
                                           widget.item.food,
                                           widget.item.quantity - 1,

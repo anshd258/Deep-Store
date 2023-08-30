@@ -1,7 +1,4 @@
-import 'package:customer/middleware/blocs/order/order_bloc.dart';
-import 'package:customer/middleware/blocs/products/products_bloc.dart';
-import 'package:customer/presentation/widgets/fooditemcard.dart';
-import 'package:customer/data/models/ride.dart';
+import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +6,8 @@ class RideSelect extends StatelessWidget {
   const RideSelect({super.key});
   @override
   Widget build(BuildContext context) {
+    context.read<RideBloc>().add(FetchRides());
+
     TextEditingController pickupController = TextEditingController();
     TextEditingController dropoffController = TextEditingController();
     return Column(
@@ -46,7 +45,7 @@ class RideSelect extends StatelessWidget {
                 const SizedBox(height: 32.0),
                 ElevatedButton(
                   onPressed: () {
-                    context.read<OrderBloc>().add(CreateRideRequest(pickUpLocation: pickupController.text, dropOffLocation: dropoffController.text, pickUpCoordinates: '123.123', dropOffCoordinates: '123.123'));
+                    context.read<RideBloc>().add(CreateRideRequest(pickUpLocation: pickupController.text, dropOffLocation: dropoffController.text, pickUpCoordinates: '123.123', dropOffCoordinates: '123.123'));
                   },
                   child: const Text('Request Ride'),
                 ),
