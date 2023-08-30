@@ -18,7 +18,7 @@ class CustomTabView extends StatefulWidget {
 
 class _CustomTabViewState extends State<CustomTabView>
     with SingleTickerProviderStateMixin {
-  int index = 1;
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

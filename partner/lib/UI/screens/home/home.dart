@@ -7,17 +7,12 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          children: [
-            // RidesCard(),
-            FilterWidget(),
-            RidesBody()
-          ],
-        ),
-      ),
+    return Column(
+      children: [
+        // RidesCard(),
+        FilterWidget(),
+        RidesBody()
+      ],
     );
   }
 }
