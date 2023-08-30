@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:customer/data/datasource.dart';
 import 'package:customer/data/repositories/data.repository.dart';
+import 'package:customer/middleware/helpers/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
@@ -17,6 +19,15 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   final DataRepository dataRepository;
   OrderBloc(this.dataRepository) : super(OrderInitial()) {
     on<OrderEvent>((event, emit) {});
+
+    on<CreateRideRequest>((event, emit) {
+      // post and create a new request.
+      // DataSource.getData(
+      //   path: DataSource.createOrder,
+      //   queryType: QueryType.post,
+      // );
+      print('ride requested!!!!!!!!!!!!!!!!');
+    });
 
     on<InitialOrderFetchEvent>((event, emit) async {
       String data = await rootBundle.loadString('assets/testdata.json');

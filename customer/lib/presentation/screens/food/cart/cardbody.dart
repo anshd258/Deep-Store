@@ -1,5 +1,4 @@
 import 'package:customer/data/models/fooddetail.dart';
-import 'package:customer/data/models/foodorder.dart';
 import 'package:customer/middleware/blocs/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -18,7 +17,7 @@ class CardBody extends StatelessWidget {
     double taxes = (state.cartOrder!.taxes) + charges;
     double discount = state.cartOrder!.discount;
     double toPay = state.cartOrder!.totalPrice;
-    List<FoodDetails> items = state.cartOrder!.items.toList() ?? [];
+    List<FoodDetails> items = state.cartOrder!.items.toList();
 
     SchedulerBinding.instance.addPostFrameCallback(
       (_) {

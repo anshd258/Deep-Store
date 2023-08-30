@@ -17,8 +17,8 @@ class VehicleSelect extends StatelessWidget {
         context.read<ProductsBloc>().add(UpdateRentalListEvent());
       },
       child: const TwoItemTabView(
-        child1: RideSelect(),
-        child2: RentalSelect(),
+        child1: RentalSelect(),
+        child2: RideSelect(),
         tab1: Tab(text: 'rent a ride'),
         tab2: Tab(
           text: 'book a ride',

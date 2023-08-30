@@ -1,32 +1,35 @@
 class Ride {
-  final int id;
-  final String name;
-  final int nos;
-  final int price;
-  final List<String> images;
-  final String description; 
+  final int? id;
+  final String? pickUpLocation;
+  final String? pickUpCoordinates;
+  final String? dropOffLocation;
+  final String? dropOffCoordinates;
 
-  Ride(this.id, this.name, this.nos, this.price, this.images, this.description);
+  Ride({
+    this.id,
+    this.pickUpLocation,
+    this.pickUpCoordinates,
+    this.dropOffLocation,
+    this.dropOffCoordinates,
+  });
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'name': name,
-      'nos': nos,
-      'price': price,
-      'images': images,
-      'description': description, 
+      'pickUpLocation': pickUpLocation,
+      'pickUpCoordinates': pickUpCoordinates,
+      'dropOffLocation': dropOffLocation,
+      'dropOffCoordinates': dropOffCoordinates,
     };
   }
 
   factory Ride.fromJson(Map<String, dynamic> json) {
     return Ride(
-      json['id'],
-      json['name'],
-      json['nos'],
-      json['price'],
-      (json['images'] as List<dynamic>).cast<String>(),
-      json['description'], 
+      id: json['id'],
+      pickUpLocation: json['pickUpLocation'],
+      pickUpCoordinates: json['pickUpCoordinates'],
+      dropOffLocation: json['dropOffLocation'],
+      dropOffCoordinates: json['dropOffCoordinates'],
     );
   }
 }

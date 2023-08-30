@@ -1,4 +1,5 @@
 import 'package:customer/middleware/blocs/cart/cart_bloc.dart';
+import 'package:customer/middleware/blocs/cart/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,6 +42,10 @@ class CartScreen extends StatelessWidget {
                     child: const Text('Proceed to Pay'),
                     onPressed: () async {
                       // initiate payment
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PaymentScreen()));
                     },
                   )
                 ],
