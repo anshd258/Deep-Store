@@ -1,5 +1,6 @@
 import 'package:common/common.dart';
 import 'package:customer/middleware/helpers/constants.dart';
+import 'package:customer/presentation/widgets/graedient.common.button.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/rental.dart';
@@ -65,21 +66,31 @@ class _RentalItemCardState extends State<RentalItemCard> {
                           const SizedBox(
                             height: 10.0,
                           ),
-                           Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: widget.rental.type == VehicleType.TWO_WHEELER ? [
-                              Expanded(
-                                  child: IconText(
-                                      icon: NavBarIcons.burger, text: '${widget.rental.engineCapacity}cc')),
-                              IconText(
-                                  icon: NavBarIcons.burger, text: '${widget.rental.mileage} kmpl'),
-                            ] : [
-                              Expanded(
-                                  child: IconText(
-                                      icon: NavBarIcons.burger, text: widget.rental.fuelType.toString())),
-                              IconText(
-                                  icon: NavBarIcons.burger, text: '${widget.rental.seatingCapacity} Seater'),
-                            ],
+                            children: widget.rental.type ==
+                                    VehicleType.TWO_WHEELER
+                                ? [
+                                    Expanded(
+                                        child: IconText(
+                                            icon: NavBarIcons.burger,
+                                            text:
+                                                '${widget.rental.engineCapacity}cc')),
+                                    IconText(
+                                        icon: NavBarIcons.burger,
+                                        text: '${widget.rental.mileage} kmpl'),
+                                  ]
+                                : [
+                                    Expanded(
+                                        child: IconText(
+                                            icon: NavBarIcons.burger,
+                                            text: widget.rental.fuelType
+                                                .toString())),
+                                    IconText(
+                                        icon: NavBarIcons.burger,
+                                        text:
+                                            '${widget.rental.seatingCapacity} Seater'),
+                                  ],
                           ),
                           const SizedBox(
                             height: 10.0,
@@ -97,28 +108,31 @@ class _RentalItemCardState extends State<RentalItemCard> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(bottom: 13, right: 8),
-                            child: ElevatedButton(
-                              child: const Text('Request Ride'),
-                              onPressed: () {
-                                showDialog(
-                                    barrierColor: Colors.black26,
-                                    context: context,
-                                    builder: (context) {
-                                      return const Center(
-                                        child: IntrinsicHeight(
+                              padding:
+                                  const EdgeInsets.only(bottom: 13, right: 8),
+                              child: GradientCommonButton(
+                                function: () {
+                                  showDialog(
+                                      barrierColor: Colors.black26,
+                                      context: context,
+                                      builder: (context) {
+                                        return const Center(
                                           child: SquicircleContainer(
+                                              height: 300,
                                               margin: EdgeInsets.all(10),
                                               width: double.infinity,
-                                              color: Colors.amber,
+                                              color: Colors.white,
                                               child: PopUpMessage()),
-                                        ),
-                                      );
-                                    });
-                              },
-                            ),
-                          ),
+                                        );
+                                      });
+                                },
+                                borderradius: 4,
+                                height: 48,
+                                width: 328,
+                                lable: 'Request Ride',
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                              )),
                         ],
                       ),
                     ],
@@ -196,12 +210,26 @@ class PopUpMessage extends StatelessWidget {
         children: [
           const Image(image: AssetImage('assets/check.png'), height: 60),
           const Text('Rental Request Sent'),
+          SizedBox(
+            height: 10,
+          ),
           const Text('check home section for updates'),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Okay'))
+          SizedBox(
+            height: 10,
+          ),
+          GradientCommonButton(
+            function: () {
+              Navigator.pop(context);
+            },
+            borderradius: 4,
+            height: 48,
+            width: 328,
+            lable: 'Okay',
+            margin: const EdgeInsets.symmetric(vertical: 10),
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
         ],
       ),
     );

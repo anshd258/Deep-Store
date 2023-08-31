@@ -1,10 +1,12 @@
 import 'package:customer/data/models/fooddetail.dart';
+import 'package:customer/data/models/user.dart'; // Import the User class
 
 import '../../middleware/helpers/constants.dart';
 
-
 class FoodOrder {
   final int id;
+  final User user; // New User variable
+
   final RequestStatus status;
   final double taxes;
   final double charges;
@@ -13,19 +15,22 @@ class FoodOrder {
   final List<FoodDetails> items;
   final DateTime eta;
 
-  FoodOrder(
-      {required this.id,
-      required this.status,
-      required this.taxes,
-      required this.charges,
-      required this.discount,
-      required this.totalPrice,
-      required this.items,
-      required this.eta});
+  FoodOrder({
+    required this.id,
+    required this.user, // Include user parameter in the constructor
+    required this.status,
+    required this.taxes,
+    required this.charges,
+    required this.discount,
+    required this.totalPrice,
+    required this.items,
+    required this.eta,
+  });
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'user': user.toJson(), // Convert user to JSON representation
       'status': _mapRequestStatusToInt(status),
       'taxes': taxes,
       'charges': charges,
@@ -39,6 +44,7 @@ class FoodOrder {
   factory FoodOrder.fromJson(Map<String, dynamic> json) {
     return FoodOrder(
       id: json['id'],
+      user: User.fromJson(json['user']), // Parse user from JSON
       status: _mapIntToRequestStatus(json['status']),
       taxes: json['taxes'],
       charges: json['charges'],
@@ -50,6 +56,8 @@ class FoodOrder {
       eta: DateTime.parse(json['eta']),
     );
   }
+
+
 
   static int _mapRequestStatusToInt(RequestStatus status) {
     switch (status) {

@@ -1,7 +1,7 @@
 import 'package:common/common.dart';
 import 'package:customer/middleware/blocs/food/food_bloc.dart';
 import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
-import 'package:customer/presentation/screens/account/account.dart';
+import 'package:customer/presentation/screens/Profile/Profile.page.dart';
 import 'package:customer/presentation/screens/orders/home.dart';
 import 'package:customer/presentation/screens/vehicle/vehicleselect.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +51,7 @@ class ScreenSetup extends StatelessWidget {
           Home(),
           FoodSelect(),
           VehicleSelect(),
-          AccountScreen()
+          ProfilePage()
         ],
         items: [
           BottomNavigationBarItem(

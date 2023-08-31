@@ -84,6 +84,7 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
             foodList: state.foodList,
           foodOrderList: state.foodOrderList,
             cartOrder: FoodOrder(
+              user: userRepository.user!,
                 charges: 0,
                 discount: 0,
                 eta: DateTime.now(),
@@ -116,6 +117,7 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
           foodList: state.foodList,
           foodOrderList: state.foodOrderList,
             cartOrder: FoodOrder(
+              user: userRepository.user!,
                 charges: 0,
                 discount: 0,
                 eta: DateTime.now(),
