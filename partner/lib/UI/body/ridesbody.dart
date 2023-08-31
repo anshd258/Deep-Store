@@ -20,15 +20,14 @@ class _RidesBodyState extends State<RidesBody> {
       listener: (context, state) {},
       builder: (context, state) {
         if (state.loading) {
-          return CircularProgressIndicator.adaptive();
+          return Center(child: CircularProgressIndicator.adaptive());
         }
         return SizedBox(
-          height: 604.333,
+          height: 538,
           child: SingleChildScrollView(
             child: Column(
               children: values.map((e) {
-               
-                return  Widgetfactory().onTabChange(state.tabIndex);
+                return Widgetfactory().onTabChange(state.tabIndex);
               }).toList(),
             ),
           ),

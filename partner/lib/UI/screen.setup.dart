@@ -1,22 +1,23 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:partner/UI/body/ridesbody.dart';
-import 'package:common/common.dart';
-import 'widget/FilterContainer.dart';
+import 'package:partner/UI/screens/Profile/Profile.page.dart';
+import 'package:partner/UI/screens/Rides/rides.request.dart';
+import 'package:partner/UI/widget/Profile.container.dart';
+
+import 'screens/Food/food.request.dart';
+import 'screens/home/home.dart';
 
 class ScreenSetup extends StatelessWidget {
-  ScreenSetup({super.key, this.appBar});
+  const ScreenSetup({super.key, this.appBar});
   final PreferredSizeWidget? appBar;
-
   @override
   Widget build(BuildContext context) {
     return CustomTabView(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
-        leading: const Icon(
-          NavBarIcons.account,
-          color: Colors.blue,
-        ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -33,100 +34,32 @@ class ScreenSetup extends StatelessWidget {
           ],
         ),
       ),
-      screens: const [
-        Column(children: [
-
-       FilterWidget(),
-            RidesBody(),
-        ],),
-        Column(children: [
-
-       FilterWidget(),
-            RidesBody(),
-        ],),
-        Column(children: [
-
-       FilterWidget(),
-            RidesBody(),
-        ],),
-        Column(children: [
-
-       FilterWidget(),
-            RidesBody(),
-        ],),
+      screens: [
+        const Home(),
+        FoodRequest(),
+        const RidesRequest(),
+        const ProfilePage(),
       ],
-      items: [
+      items: const [
         BottomNavigationBarItem(
-          activeIcon: ShaderMask(
-            shaderCallback: (Rect bounds) {
-              return const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromRGBO(47, 251, 227, 1),
-                  Color.fromRGBO(29, 172, 157, 1),
-                ],
-              ).createShader(Rect.fromLTWH(0, 0, 300, 300));
-            },
-            child: const Icon(NavBarIcons.home),
-          ),
-          icon: const Icon(
+          icon: Icon(
             NavBarIcons.home,
           ),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          activeIcon: ShaderMask(
-            shaderCallback: (Rect bounds) {
-              return const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromRGBO(47, 251, 227, 1),
-                  Color.fromRGBO(29, 172, 157, 1),
-                ],
-              ).createShader(Rect.fromLTWH(0, 0, 300, 300));
-            },
-            child: const Icon(NavBarIcons.burger),
-          ),
           icon: Icon(
             NavBarIcons.burger,
           ),
           label: 'Food',
         ),
         BottomNavigationBarItem(
-          activeIcon: ShaderMask(
-            shaderCallback: (Rect bounds) {
-              return const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromRGBO(47, 251, 227, 1),
-                  Color.fromRGBO(29, 172, 157, 1),
-                ],
-              ).createShader(Rect.fromLTWH(0, 0, 300, 300));
-            },
-            child: const Icon(NavBarIcons.ride),
-          ),
           icon: Icon(
             NavBarIcons.ride,
           ),
           label: 'Rides',
         ),
         BottomNavigationBarItem(
-          activeIcon: ShaderMask(
-            shaderCallback: (Rect bounds) {
-              return const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromRGBO(47, 251, 227, 1),
-                  Color.fromRGBO(29, 172, 157, 1),
-                ],
-              ).createShader(Rect.fromLTWH(0, 0, 300, 300));
-            },
-            child: const Icon(NavBarIcons.account),
-          ),
           icon: Icon(
             NavBarIcons.account,
           ),

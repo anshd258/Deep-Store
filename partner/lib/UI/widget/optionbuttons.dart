@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/Constants/filterEnum.dart';
 import 'package:partner/middleware/filter_cubit_cubit.dart';
 
-
 class OptionsButton extends StatefulWidget {
   final value e;
   final value selectede;
@@ -24,15 +23,18 @@ class OptionsButton extends StatefulWidget {
 class _OptionsButtonState extends State<OptionsButton>
     with SingleTickerProviderStateMixin {
   AnimationController? ctr;
+
   @override
   void initState() {
     ctr = AnimationController(vsync: this, lowerBound: 0, upperBound: 1);
     ctr!.stop();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print("${widget.e} and ${widget.selectede}");
     return GestureDetector(
       onTap: () {
         ctr!.forward().then((value) => ctr!.reset());
@@ -74,6 +76,7 @@ class _OptionsButtonState extends State<OptionsButton>
     )
         .animate(controller: ctr)
         .elevation(borderRadius: BorderRadius.circular(30), begin: 0, end: 5)
-        .scaleXY(begin: 1, end: 1.1, duration: const Duration(microseconds: 10));
+        .scaleXY(
+            begin: 1, end: 1.1, duration: const Duration(microseconds: 10));
   }
 }
