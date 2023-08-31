@@ -25,10 +25,10 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
           children: [
             SizedBox(
               height: 200,
+              width: MediaQuery.of(context).size.width,
               child: Image.network(
                 widget.food.images[0],
                 fit: BoxFit.cover,
-                height: 200,
                 frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
                     frame == null
                         ? const Center(
@@ -125,7 +125,7 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
             Map<String, int> selectedAddons = {
               for (var key in selecteditems) key: widget.food.addOns[key] ?? 0
             };
-            
+
             widget.outerContext
                 .read<FoodBloc>()
                 .add(AddItemToCartEvent(widget.food, 1, selectedAddons));

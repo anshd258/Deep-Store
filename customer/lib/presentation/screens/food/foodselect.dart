@@ -12,7 +12,7 @@ class FoodSelect extends StatelessWidget {
   const FoodSelect({super.key});
   @override
   Widget build(BuildContext context) {
-        context.read<FoodBloc>().add(FetchFoods());
+    context.read<FoodBloc>().add(FetchFoods());
     return RefreshIndicator.adaptive(
       onRefresh: () async {
         context.read<FoodBloc>().add(FetchFoods());
@@ -37,13 +37,14 @@ class FoodSelect extends StatelessWidget {
                               images: food.images,
                               onClick: () {
                                 showDialog(
-                                    barrierColor: Colors.black26,
+                                    barrierColor: Colors.black45,
                                     context: context,
                                     builder: (context) {
                                       return Center(
                                         child: SquicircleContainer(
-                                          width: 300,
-                                          height: 600,
+                                          width: double.infinity,
+                                          margin: const EdgeInsets.all(10),
+                                          height: 500,
                                           child: FoodDetailSelector(
                                               food: food,
                                               outerContext: itemContext),
@@ -58,16 +59,16 @@ class FoodSelect extends StatelessWidget {
                 }),
               ),
               GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CartScreen()));
-                    },
-                    child: CartTile(
-                      cart: state.cartOrder,
-                    ),
-                  )
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CartScreen()));
+                },
+                child: CartTile(
+                  cart: state.cartOrder,
+                ),
+              )
               ////////////////////
             ],
           );

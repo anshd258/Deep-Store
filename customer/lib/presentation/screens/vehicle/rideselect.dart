@@ -2,6 +2,9 @@ import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/rentalitemcard.dart';
+import '../../widgets/squicircle.dart';
+
 class RideSelect extends StatelessWidget {
   const RideSelect({super.key});
   @override
@@ -45,6 +48,20 @@ class RideSelect extends StatelessWidget {
                 const SizedBox(height: 32.0),
                 ElevatedButton(
                   onPressed: () {
+                     showDialog(
+                                    barrierColor: Colors.black26,
+                                    context: context,
+                                    builder: (context) {
+                                      return const Center(
+                                        child: IntrinsicHeight(
+                                          child: SquicircleContainer(
+                                              margin: EdgeInsets.all(10),
+                                              width: double.infinity,
+                                              color: Colors.amber,
+                                              child: PopUpMessage()),
+                                        ),
+                                      );
+                                    });
                     context.read<RideBloc>().add(CreateRideRequest(pickUpLocation: pickupController.text, dropOffLocation: dropoffController.text, pickUpCoordinates: '123.123', dropOffCoordinates: '123.123'));
                   },
                   child: const Text('Request Ride'),

@@ -18,7 +18,6 @@ class RentalSelect extends StatelessWidget {
             Container(
               height: 50,
               width: MediaQuery.of(context).size.width,
-              color: Colors.amber,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -42,10 +41,7 @@ class RentalSelect extends StatelessWidget {
                       itemBuilder: (context, index) {
                         Rental rental = rentalList[index];
                         return RentalItemCard(
-                          name: rental.name,
-                          price: rental.price,
-                          images: rental.images,
-                          onClick: () {},
+                          rental: rental,
                         );
                       })
                   : const Center(child: CircularProgressIndicator.adaptive()),
@@ -62,7 +58,8 @@ class LabeledToggleButton extends StatefulWidget {
   final bool initialValue;
   final ValueChanged<bool> onChanged;
 
-  LabeledToggleButton({
+  const LabeledToggleButton({
+    super.key,
     required this.label,
     required this.initialValue,
     required this.onChanged,
@@ -86,8 +83,10 @@ class _LabeledToggleButtonState extends State<LabeledToggleButton> {
     return Row(
       children: [
         Text(widget.label),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Switch(
+          activeColor: Colors.white,
+          activeTrackColor: const Color.fromRGBO(168, 217, 119, 1),
           value: _value,
           onChanged: (newValue) {
             setState(() {

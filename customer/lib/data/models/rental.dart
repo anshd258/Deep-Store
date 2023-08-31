@@ -1,32 +1,55 @@
+
+import '../../middleware/helpers/constants.dart';
+
 class Rental {
   final int id;
   final String name;
-  final int engineCapacity;
-  final int mileage;
   final int price;
   final List<String> images;
 
-  Rental(this.id, this.name, this.engineCapacity, this.mileage, this.price, this.images);
+  final VehicleType type;
+  final int? engineCapacity;
+  final int? mileage;
+  final String? fuelType;
+  final int? seatingCapacity;
+
+  Rental({
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.type,
+    required this.images,
+    this.engineCapacity,
+    this.mileage,
+    this.fuelType,
+    this.seatingCapacity,
+  });
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
+      'price': price,
+      'type': type.toString(),
+      'images': images,
       'engineCapacity': engineCapacity,
       'mileage': mileage,
-      'price': price,
-      'images': images,
+      'fuelType': fuelType,
+      'seatingCapacity': seatingCapacity,
     };
   }
 
   factory Rental.fromJson(Map<String, dynamic> json) {
     return Rental(
-      json['id'],
-      json['name'],
-      json['engineCapacity'],
-      json['mileage'],
-      json['price'],
-      (json['images'] as List<dynamic>).cast<String>(),
+      id: json['id'],
+      name: json['name'],
+      price: json['price'],
+      type: VehicleTypeExtension.fromString(json['type']),
+      images: (json['images'] as List<dynamic>).cast<String>(),
+      engineCapacity: json['engineCapacity'],
+      mileage: json['mileage'],
+      fuelType: json['fuelType'],
+      seatingCapacity: json['seatingCapacity'],
     );
   }
 }
