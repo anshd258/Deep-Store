@@ -9,7 +9,6 @@ class RideSelect extends StatelessWidget {
   const RideSelect({super.key});
   @override
   Widget build(BuildContext context) {
-    context.read<RideBloc>().add(FetchRides());
 
     TextEditingController pickupController = TextEditingController();
     TextEditingController dropoffController = TextEditingController();

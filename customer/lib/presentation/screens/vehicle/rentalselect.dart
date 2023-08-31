@@ -1,54 +1,55 @@
-import 'package:customer/middleware/blocs/rental/rental_bloc.dart';
 import 'package:customer/data/models/rental.dart';
 import 'package:customer/presentation/widgets/rentalitemcard.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RentalSelect extends StatelessWidget {
-  const RentalSelect({super.key});
+class RentalSelect extends StatefulWidget {
+  const RentalSelect({super.key, this.rentalList});
+  final List<Rental>? rentalList;
+  @override
+  State<RentalSelect> createState() => _RentalSelectState();
+}
+
+class _RentalSelectState extends State<RentalSelect> {
+  bool twoWheelers = true;
+  bool fourWheelers = false;
+  List<Rental>? displayList;
   @override
   Widget build(BuildContext context) {
-    context.read<RentalBloc>().add(FetchRentals());
-
-    return BlocBuilder<RentalBloc, RentalState>(
-      builder: (context, state) {
-        List<Rental>? rentalList = context.read<RentalBloc>().state.rentalList;
-        return Column(
-          children: [
-            Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  LabeledToggleButton(
-                    label: 'Two wheelers only',
-                    initialValue: true,
-                    onChanged: (value) {},
-                  ),
-                  LabeledToggleButton(
-                    label: 'Four wheelers only',
-                    initialValue: true,
-                    onChanged: (value) {},
-                  ),
-                ],
+    
+    return Column(
+      children: [
+        SizedBox(
+          height: 50,
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              LabeledToggleButton(
+                label: 'Two wheelers only',
+                initialValue: true,
+                onChanged: (value) {},
               ),
-            ),
-            Expanded(
-              child: rentalList != null
-                  ? ListView.builder(
-                      itemCount: rentalList.length,
-                      itemBuilder: (context, index) {
-                        Rental rental = rentalList[index];
-                        return RentalItemCard(
-                          rental: rental,
-                        );
-                      })
-                  : const Center(child: CircularProgressIndicator.adaptive()),
-            ),
-          ],
-        );
-      },
+              LabeledToggleButton(
+                label: 'Four wheelers only',
+                initialValue: true,
+                onChanged: (value) {},
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: widget.rentalList != null
+              ? ListView.builder(
+                  itemCount: widget.rentalList!.length,
+                  itemBuilder: (context, index) {
+                    Rental rental = widget.rentalList![index];
+                    return RentalItemCard(
+                      rental: rental,
+                    );
+                  })
+              : const Center(child: CircularProgressIndicator.adaptive()),
+        ),
+      ],
     );
   }
 }

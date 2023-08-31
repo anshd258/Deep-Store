@@ -1,4 +1,3 @@
-import 'package:customer/data/models/rental.dart';
 import 'package:customer/middleware/blocs/rental/rental_bloc.dart';
 import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +12,14 @@ class VehicleSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<RideBloc>().add(FetchRides());
         context.read<RentalBloc>().add(FetchRentals());
       },
-      child: const TwoItemTabView(
-        child1: RentalSelect(),
+      child:  TwoItemTabView(
+        child1: RentalSelect(rentalList:  context.read<RentalBloc>().state.rentalList),
         child2: RideSelect(),
         tab1: Tab(text: 'rent a ride'),
         tab2: Tab(

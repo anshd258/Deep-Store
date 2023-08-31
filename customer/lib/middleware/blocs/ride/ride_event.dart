@@ -3,7 +3,6 @@ part of 'ride_bloc.dart';
 @immutable
 sealed class RideEvent {}
 
-class FetchRides extends RideEvent {}
 
 class FetchRideRequests extends RideEvent {}
 

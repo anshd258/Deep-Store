@@ -1,5 +1,4 @@
 import 'package:common/common.dart';
-import 'package:customer/data/models/food.dart';
 import 'package:customer/middleware/blocs/food/food_bloc.dart';
 import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
 import 'package:customer/presentation/screens/account/account.dart';
@@ -21,6 +20,8 @@ class ScreenSetup extends StatelessWidget {
       context.read<RideBloc>().add(FetchRideRequests());
       context.read<RentalBloc>().add(FetchRentalRequests());
       context.read<FoodBloc>().add(FetchFoodOrders());
+    context.read<RentalBloc>().add(FetchRentals());
+
 
 
       return CustomTabView(
