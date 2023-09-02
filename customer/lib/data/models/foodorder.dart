@@ -5,8 +5,7 @@ import '../../middleware/helpers/constants.dart';
 
 class FoodOrder {
   final int id;
-  final User user; // New User variable
-
+  final User user;
   final RequestStatus status;
   final double taxes;
   final double charges;
@@ -17,7 +16,7 @@ class FoodOrder {
 
   FoodOrder({
     required this.id,
-    required this.user, // Include user parameter in the constructor
+    required this.user, 
     required this.status,
     required this.taxes,
     required this.charges,
@@ -30,7 +29,7 @@ class FoodOrder {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'user': user.toJson(), // Convert user to JSON representation
+      'user': user.toJson(),
       'status': _mapRequestStatusToInt(status),
       'taxes': taxes,
       'charges': charges,
@@ -44,7 +43,7 @@ class FoodOrder {
   factory FoodOrder.fromJson(Map<String, dynamic> json) {
     return FoodOrder(
       id: json['id'],
-      user: User.fromJson(json['user']), // Parse user from JSON
+      user: User.fromJson(json['user']), 
       status: _mapIntToRequestStatus(json['status']),
       taxes: json['taxes'],
       charges: json['charges'],

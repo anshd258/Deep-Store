@@ -2,17 +2,15 @@ part of 'ride_bloc.dart';
 
 @immutable
 sealed class RideState {
-  final List<Ride>? rideList;
-  final List<RideRequest>? rideRequestList;
-
-  const RideState({ this.rideList, this.rideRequestList});
+  final Ride? ride;
+  const RideState({this.ride});
 }
 
-final class RideInitial extends RideState {}
+final class RideInitial extends RideState {
+  const RideInitial();
+}
 
 class UpdateRideState extends RideState {
-  final List<Ride>? rideList;
-  final List<RideRequest>? rideRequestList;
-
-  const UpdateRideState({ this.rideList, this.rideRequestList});
+  final Ride? newRide;
+  const UpdateRideState(this.newRide);
 }
