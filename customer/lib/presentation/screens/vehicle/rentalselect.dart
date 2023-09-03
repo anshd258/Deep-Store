@@ -1,4 +1,5 @@
 import 'package:customer/data/models/rental.dart';
+import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/presentation/widgets/rentalitemcard.dart';
 import 'package:flutter/material.dart';
 
@@ -10,59 +11,100 @@ class RentalSelect extends StatefulWidget {
 }
 
 class _RentalSelectState extends State<RentalSelect> {
-  bool twoWheelers = true;
-  bool fourWheelers = false;
-  List<Rental>? displayList;
+  late bool twoWheelers = false;
+  late bool fourWheelers = false;
   @override
   Widget build(BuildContext context) {
-    
-    return Column(
+    List<Rental> displayList = [];
+    if (widget.rentalList != null) {
+      if (twoWheelers) {
+        displayList.addAll(widget.rentalList!
+            .where((element) => element.type == VehicleType.TWO_WHEELER));
+      }
+      if (fourWheelers) {
+        displayList.addAll(widget.rentalList!
+            .where((element) => element.type == VehicleType.FOUR_WHEELER));
+      }
+      if (twoWheelers == false && fourWheelers == false) {
+        displayList = widget.rentalList ?? [];
+      }
+
+      return Column(
+        children: [
+          SizedBox(
+            height: 50,
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
       children: [
-        SizedBox(
-          height: 50,
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              LabeledToggleButton(
-                label: 'Two wheelers only',
-                initialValue: true,
-                onChanged: (value) {},
-              ),
-              LabeledToggleButton(
-                label: 'Four wheelers only',
-                initialValue: true,
-                onChanged: (value) {},
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: widget.rentalList != null
-              ? ListView.builder(
-                  itemCount: widget.rentalList!.length,
-                  itemBuilder: (context, index) {
-                    Rental rental = widget.rentalList![index];
-                    return RentalItemCard(
-                      rental: rental,
-                    );
-                  })
-              : const Center(child: CircularProgressIndicator.adaptive()),
+        Text('Two wheelers only'),
+        const SizedBox(width: 10),
+        Switch(
+          activeColor: Colors.white,
+          activeTrackColor: const Color.fromRGBO(168, 217, 119, 1),
+          value: twoWheelers,
+          onChanged: (value) {
+                    setState(() {
+                      twoWheelers = value;
+                      fourWheelers = value ? false : fourWheelers;
+                    });
+                  },
         ),
       ],
-    );
+    ),
+                Row(
+      children: [
+        Text('Four wheelers only'),
+        const SizedBox(width: 10),
+        Switch(
+          activeColor: Colors.white,
+          activeTrackColor: const Color.fromRGBO(168, 217, 119, 1),
+          value: fourWheelers,
+          onChanged: (value) {
+                    setState(() {
+                      fourWheelers = value;
+                      twoWheelers = value ? false : twoWheelers;
+                    });
+                  },
+        ),
+      ],
+    ),
+             
+            
+              ],
+            ),
+          ),
+          Expanded(
+            child: 
+                ListView.builder(
+                    itemCount: displayList.length,
+                    itemBuilder: (context, index) {
+                      Rental rental = displayList[index];
+                      
+                      return RentalItemCard(
+                        rental: rental,
+                      );
+                    })
+               
+          ),
+        ],
+      );
+    } else {
+      return Container();
+    }
   }
 }
 
 class LabeledToggleButton extends StatefulWidget {
   final String label;
-  final bool initialValue;
+  final bool value;
   final ValueChanged<bool> onChanged;
-
   const LabeledToggleButton({
     super.key,
     required this.label,
-    required this.initialValue,
+    required this.value,
     required this.onChanged,
   });
 
@@ -76,7 +118,7 @@ class _LabeledToggleButtonState extends State<LabeledToggleButton> {
   @override
   void initState() {
     super.initState();
-    _value = widget.initialValue;
+    _value = widget.value;
   }
 
   @override

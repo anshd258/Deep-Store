@@ -20,13 +20,12 @@ class ScreenSetup extends StatelessWidget {
       context.read<RideBloc>().add(FetchRideRequests());
       context.read<RentalBloc>().add(FetchRentalRequests());
       context.read<FoodBloc>().add(FetchFoodOrders());
-    context.read<RentalBloc>().add(FetchRentals());
-
-
+      context.read<RentalBloc>().add(FetchRentals());
 
       return CustomTabView(
         appBar: AppBar(
           backgroundColor: Colors.white,
+          elevation: 0,
           leading: const Icon(
             NavBarIcons.account,
             color: Colors.blue,
@@ -47,12 +46,7 @@ class ScreenSetup extends StatelessWidget {
             ],
           ),
         ),
-        screens: const [
-          Home(),
-          FoodSelect(),
-          VehicleSelect(),
-          ProfilePage()
-        ],
+        screens: const [Home(), FoodSelect(), VehicleSelect(), ProfilePage()],
         items: [
           BottomNavigationBarItem(
             activeIcon: ShaderMask(

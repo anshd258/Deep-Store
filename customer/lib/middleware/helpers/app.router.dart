@@ -13,9 +13,9 @@ class AppRouter {
       case '/home':
         return MaterialPageRoute(builder: (_) => const ScreenSetup());
           case '/editprofile':
-        return MaterialPageRoute(builder: (_) => EditProfilePage());
+        return MaterialPageRoute(builder: (_) => const EditProfilePage());
       case '/otpPage':
-        return MaterialPageRoute(builder: (_) => OtpScreen());
+        return MaterialPageRoute(builder: (_) => const OtpScreen());
       default:
         return MaterialPageRoute(builder: (_) => const ScreenSetup());
     }
