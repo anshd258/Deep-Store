@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/UI/widget/graedient.common.button.dart';
+import 'package:partner/middleware/auth_cubit.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -111,7 +113,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     if (value == '123456') {
                       // use navigator here to route to new page
                     }
-                    return value == '123456' ? null : 'Pin is incorrect';
+                    return value!.length == 6 ? null : 'Pin is incorrect';
                   },
                   hapticFeedbackType: HapticFeedbackType.lightImpact,
                   onCompleted: (pin) {
@@ -179,20 +181,30 @@ class _OtpScreenState extends State<OtpScreen> {
                   ],
                 ),
               ),
-              GradientCommonButton(
-                function: () {
-                  if (pinController.length == 6) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        "/screenSetup", (route) => false);
-                  } else {
-                    setState(() {});
+              BlocConsumer<AuthCubit, AuthInitial>(
+                listener: (context, state) {
+                  if (state.obj!.authToken!.isNotEmpty) {
+                    Navigator.pushNamed(context, "/home");
                   }
                 },
-                borderradius: 4,
-                height: 48,
-                margin: EdgeInsets.symmetric(vertical: 18),
-                width: 300,
-                lable: 'Verify & continue',
+                builder: (context, state) {
+                  return GradientCommonButton(
+                    function: () {
+                      if (pinController.length == 6) {
+                        context
+                            .read<AuthCubit>()
+                            .loginWithOtp(pinController.text);
+                      } else {
+                        setState(() {});
+                      }
+                    },
+                    borderradius: 4,
+                    height: 48,
+                    margin: EdgeInsets.symmetric(vertical: 18),
+                    width: 300,
+                    lable: 'Verify & continue',
+                  );
+                },
               )
             ],
           ),

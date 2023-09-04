@@ -17,6 +17,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => OtpScreen());
       case '/screenSetup':
         return MaterialPageRoute(builder: (_) => ScreenSetup());
+      case '/home':
+        return MaterialPageRoute(builder: (_) => ScreenSetup());
       default:
         return MaterialPageRoute(builder: (_) => Home());
     }
