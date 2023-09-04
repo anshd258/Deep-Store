@@ -15,13 +15,13 @@ class ProfileOptions extends StatelessWidget {
         onTap: function,
         child: Container(
           width: 328,
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           height: 56,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             border: Border.all(
               width: 0.5,
-              color: Color(0x99565656),
+              color: const Color(0x99565656),
             ),
           ),
           child:
@@ -30,13 +30,13 @@ class ProfileOptions extends StatelessWidget {
               lable,
               textAlign: TextAlign.center,
               style: GoogleFonts.lato(
-                color: Color(0xFF2B2B2B),
+                color: const Color(0xFF2B2B2B),
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 letterSpacing: -0.28,
               ),
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios_rounded,
               color: Color(0xFF2B2B2B),
               size: 20,

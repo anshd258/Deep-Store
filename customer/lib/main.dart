@@ -1,5 +1,6 @@
 import 'package:customer/data/repositories/data.repository.dart';
 import 'package:customer/data/repositories/user.repository.dart';
+import 'package:customer/middleware/blocs/filtercubit/filter_cubit.dart';
 import 'package:customer/middleware/blocs/food/food_bloc.dart';
 import 'package:customer/middleware/blocs/rental/rental_bloc.dart';
 import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
@@ -18,6 +19,9 @@ void main() {
       
           BlocProvider(
           create: (context) => FoodBloc(userRepository,dataRepository),
+        ),
+          BlocProvider(
+          create: (context) => FilterCubit(),
         ),
         BlocProvider(
           create: (context) => RideBloc(userRepository,dataRepository),

@@ -1,3 +1,4 @@
+import 'package:customer/presentation/widgets/commonbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,7 +18,6 @@ class CartScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
       ),
-      backgroundColor: Colors.amber,
       body: const CardBody(),
       bottomNavigationBar: SizedBox(
         child: Column(
@@ -38,15 +38,17 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                    child: const Text('Proceed to Pay'),
-                    onPressed: () async {
-                      // initiate payment
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PaymentScreen()));
-                    },
+                  Expanded(
+                    flex: 2,
+                    child: CommonButton(
+                        onPressed: () async {
+                          // initiate payment
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const PaymentScreen()));
+                        },
+                        lable: 'Proceed to Pay'),
                   )
                 ],
               ),

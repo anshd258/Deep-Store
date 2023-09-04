@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../widgets/graedient.common.button.dart';
+import '../../widgets/commonbutton.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -180,8 +180,8 @@ class _OtpScreenState extends State<OtpScreen> {
                   ],
                 ),
               ),
-              GradientCommonButton(
-                function: () {
+              CommonButton(
+                onPressed: () {
                   if (pinController.length == 6) {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         "/home", (route) => false);
@@ -189,10 +189,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     setState(() {});
                   }
                 },
-                borderradius: 4,
-                height: 48,
-                margin: const EdgeInsets.symmetric(vertical: 18),
-                width: 300,
+           
                 lable: 'Verify & continue',
               )
             ],

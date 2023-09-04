@@ -1,8 +1,14 @@
 enum RequestStatus{cart, pending,ongoing, success, failed}
 enum QueryType{get,post}
 
-enum value { FOOD, RIDES, RENTALS }
+enum FilterValue { FOOD, RIDES, RENTALS }
 enum VehicleType {TWO_WHEELER, FOUR_WHEELER}
+enum Component {
+  ownerOngoingcards,
+  ownerOngoingcardsIMAGE,
+  ownerOngoingcardsDESC
+}
+
 
 extension VehicleTypeExtension on VehicleType {
   String toShortString() {

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../middleware/blocs/food/food_bloc.dart';
 
-
 class ItemTile extends StatefulWidget {
   const ItemTile({
     Key? key,
@@ -27,7 +26,7 @@ class _ItemTileState extends State<ItemTile> {
       builder: (context, state) {
         return Container(
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: Colors.amber,
             borderRadius: BorderRadius.all(
               Radius.circular(
                 10.0,
@@ -75,13 +74,11 @@ class _ItemTileState extends State<ItemTile> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                 
                                   context.read<FoodBloc>().add(
                                       AddItemToCartEvent(
                                           widget.item.food,
                                           widget.item.quantity + 1,
                                           widget.item.selectedAddons));
-
                                 },
                                 icon: const Icon(
                                   Icons.add_circle,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../widgets/graedient.common.button.dart';
+import '../../widgets/commonbutton.dart';
 
 class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});
@@ -133,8 +133,8 @@ class _LoginscreenState extends State<Loginscreen> {
                   ],
                 ),
               ),
-              GradientCommonButton(
-                function: () {
+              CommonButton(
+                onPressed: () {
                   setState(() {
                     if (_text.text.isEmpty || _text.text.length != 10) {
                       print(_text.text.length);
@@ -147,10 +147,7 @@ class _LoginscreenState extends State<Loginscreen> {
                     Navigator.of(context).pushReplacementNamed("/otpPage");
                   }
                 },
-                borderradius: 4,
-                height: 48,
-                margin: EdgeInsets.symmetric(vertical: 18),
-                width: 300,
+         
                 lable: "Generate OTP",
               )
             ],

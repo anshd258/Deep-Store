@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../widgets/editPage.FormField.dart';
-import '../../widgets/editpage.image.dart';
-import '../../widgets/graedient.common.button.dart';
+import '../../widgets/commonbutton.dart';
+import 'editprofile.image.dart';
+import 'editprofile.form.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -91,13 +91,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ],
                     ),
                   )),
-              GradientCommonButton(
+              CommonButton(
                 borderradius: 4,
                 height: 48,
                 width: 328,
                 lable: 'Save changes',
-                margin: EdgeInsets.symmetric(vertical: 10),
-                function: () {
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                onPressed: () {
                   _formkey.currentState!.validate();
                 },
               )

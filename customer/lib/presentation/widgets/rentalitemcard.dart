@@ -1,9 +1,9 @@
 import 'package:common/common.dart';
 import 'package:customer/middleware/helpers/constants.dart';
-import 'package:customer/presentation/widgets/graedient.common.button.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:flutter/material.dart';
 import '../../data/models/rental.dart';
+import 'commonbutton.dart';
 
 class RentalItemCard extends StatefulWidget {
   const RentalItemCard({
@@ -19,129 +19,122 @@ class RentalItemCard extends StatefulWidget {
 class _RentalItemCardState extends State<RentalItemCard> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(
-              15.0,
+    return Container(
+      height: 170,
+      margin: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 3,
+            child: SquicircleContainer(
+              height: double.infinity,
+              child: Image.network(
+                widget.rental.images[0],
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-          color: Colors.white,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SquicircleContainer(
-                width: 160,
-                height: 140,
-                child: Image.network(
-                  widget.rental.images[0],
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(
-                width: 15.0,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Wrap(
+          const SizedBox(
+            width: 15.0,
+          ),
+          Expanded(
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Wrap(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            widget.rental.name,
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                              color: Color.fromRGBO(85, 85, 85, 1),
-                              fontWeight: FontWeight.w600,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: widget.rental.type ==
-                                    VehicleType.TWO_WHEELER
-                                ? [
-                                    Expanded(
-                                        child: IconText(
-                                            icon: NavBarIcons.burger,
-                                            text:
-                                                '${widget.rental.engineCapacity}cc')),
-                                    IconText(
-                                        icon: NavBarIcons.burger,
-                                        text: '${widget.rental.mileage} kmpl'),
-                                  ]
-                                : [
-                                    Expanded(
-                                        child: IconText(
-                                            icon: NavBarIcons.burger,
-                                            text: widget.rental.fuelType
-                                                .toString())),
-                                    IconText(
+                      Text(
+                        widget.rental.name,
+                        style: const TextStyle(
+                          fontSize: 16.0,
+                          color: Color.fromRGBO(85, 85, 85, 1),
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: widget.rental.type == VehicleType.TWO_WHEELER
+                            ? [
+                                Expanded(
+                                    child: IconText(
                                         icon: NavBarIcons.burger,
                                         text:
-                                            '${widget.rental.seatingCapacity} Seater'),
-                                  ],
-                          ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          const Counter(),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Text(
-                            'Rs. ${widget.rental.price.toStringAsFixed(2)} per day',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Color.fromRGBO(85, 85, 85, 1),
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 13, right: 8),
-                              child: GradientCommonButton(
-                                function: () {
-                                  showDialog(
-                                      barrierColor: Colors.black26,
-                                      context: context,
-                                      builder: (context) {
-                                        return const Center(
-                                          child: SquicircleContainer(
-                                              height: 300,
-                                              margin: EdgeInsets.all(10),
-                                              width: double.infinity,
-                                              color: Colors.white,
-                                              child: PopUpMessage()),
-                                        );
-                                      });
-                                },
-                                borderradius: 4,
-                                height: 48,
-                                width: 328,
-                                lable: 'Request Ride',
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                              )),
-                        ],
+                                            '${widget.rental.engineCapacity}cc')),
+                                Expanded(
+                                  child: IconText(
+                                      icon: NavBarIcons.burger,
+                                      text: '${widget.rental.mileage} kmpl'),
+                                ),
+                              ]
+                            : [
+                                Expanded(
+                                    child: IconText(
+                                        icon: NavBarIcons.burger,
+                                        text:
+                                            widget.rental.fuelType.toString())),
+                                Expanded(
+                                  child: IconText(
+                                      icon: NavBarIcons.burger,
+                                      text:
+                                          '${widget.rental.seatingCapacity} Seater'),
+                                ),
+                              ],
                       ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      const Counter(),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        'Rs. ${widget.rental.price.toStringAsFixed(2)} per day',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color.fromRGBO(85, 85, 85, 1),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(bottom: 13, right: 8),
+                          child: CommonButton(
+                            onPressed: () {
+                              showDialog(
+                                  barrierColor: Colors.black26,
+                                  context: context,
+                                  builder: (context) {
+                                    return const Center(
+                                      child: SquicircleContainer(
+                                          height: 300,
+                                          margin: EdgeInsets.all(10),
+                                          width: double.infinity,
+                                          color: Colors.white,
+                                          child: PopUpMessage()),
+                                    );
+                                  });
+                            },
+                            borderradius: 4,
+                            height: 48,
+                            width: 328,
+                            lable: 'Request Ride',
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                          )),
                     ],
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -210,15 +203,15 @@ class PopUpMessage extends StatelessWidget {
         children: [
           const Image(image: AssetImage('assets/check.png'), height: 60),
           const Text('Rental Request Sent'),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           const Text('check home section for updates'),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          GradientCommonButton(
-            function: () {
+          CommonButton(
+            onPressed: () {
               Navigator.pop(context);
             },
             borderradius: 4,

@@ -2,28 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class GradientCommonButton extends StatefulWidget {
+class CommonButton extends StatefulWidget {
   String lable;
-  VoidCallback function;
+  VoidCallback onPressed;
   double height;
   double width;
   double borderradius;
   EdgeInsets margin;
 
-  GradientCommonButton(
+
+  CommonButton(
       {super.key,
-      required this.function,
-      required this.height,
-      required this.margin,
-      required this.borderradius,
+      required this.onPressed,
+       this.height = 48,
+       this.margin =const EdgeInsets.symmetric(vertical: 18),
+       this.borderradius = 4,
       required this.lable,
-      required this.width});
+       this.width = 300});
 
   @override
-  State<GradientCommonButton> createState() => _GradientCommonButtonState();
+  State<CommonButton> createState() => _GradientCommonButtonState();
 }
 
-class _GradientCommonButtonState extends State<GradientCommonButton>
+class _GradientCommonButtonState extends State<CommonButton>
     with SingleTickerProviderStateMixin {
   AnimationController? ctr;
   @override
@@ -51,7 +52,7 @@ class _GradientCommonButtonState extends State<GradientCommonButton>
         ctr!.forward().then((value) => ctr!.reset());
 
         setState(() {});
-        widget.function();
+        widget.onPressed();
       },
       child: Container(
         decoration: BoxDecoration(

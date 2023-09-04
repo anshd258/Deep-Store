@@ -39,7 +39,7 @@ class _RentalSelectState extends State<RentalSelect> {
               children: [
                 Row(
       children: [
-        Text('Two wheelers only'),
+        const Text('Two wheelers only'),
         const SizedBox(width: 10),
         Switch(
           activeColor: Colors.white,
@@ -56,7 +56,7 @@ class _RentalSelectState extends State<RentalSelect> {
     ),
                 Row(
       children: [
-        Text('Four wheelers only'),
+        const Text('Four wheelers only'),
         const SizedBox(width: 10),
         Switch(
           activeColor: Colors.white,
@@ -82,7 +82,6 @@ class _RentalSelectState extends State<RentalSelect> {
                     itemCount: displayList.length,
                     itemBuilder: (context, index) {
                       Rental rental = displayList[index];
-                      
                       return RentalItemCard(
                         rental: rental,
                       );

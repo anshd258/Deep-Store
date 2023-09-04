@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/food.dart';
 import '../../../middleware/blocs/food/food_bloc.dart';
-import '../../widgets/fooditemcardnew.dart';
-import '../../widgets/squicircle.dart';
+import '../../widgets/fooditemcard.dart';
 import 'cart/cart.dart';
 import 'cart/carttile.dart';
-import 'fooddetails.dart';
 
 class FoodSelect extends StatelessWidget {
   const FoodSelect({super.key});
@@ -32,23 +30,6 @@ class FoodSelect extends StatelessWidget {
                             Food food = foodList[index];
                             return FoodItemCard(
                               food: food,
-                              // onClick: () {
-                              //   showDialog(
-                              //       barrierColor: Colors.black45,
-                              //       context: context,
-                              //       builder: (context) {
-                              //         return Center(
-                              //           child: SquicircleContainer(
-                              //             width: double.infinity,
-                              //             margin: const EdgeInsets.all(10),
-                              //             height: 500,
-                              //             child: FoodDetailSelector(
-                              //                 food: food,
-                              //                 outerContext: itemContext),
-                              //           ),
-                              //         );
-                              //       });
-                              // },
                             );
                           })
                       : const Center(
