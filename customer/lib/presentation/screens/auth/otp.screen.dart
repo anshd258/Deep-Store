@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 
+import '../../../middleware/blocs/authentication/auth_cubit.dart';
 import '../../widgets/commonbutton.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -48,7 +50,7 @@ class _OtpScreenState extends State<OtpScreen> {
         title: Text(
           "Guest Login",
           style: GoogleFonts.lato(
-            color: const Color(0xB2555555),
+            color: Color(0xB2555555),
             fontSize: 16,
             fontWeight: FontWeight.w700,
             letterSpacing: -0.28,
@@ -71,7 +73,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       child: Text(
                         "OTP verification",
                         style: GoogleFonts.lato(
-                            color: const Color(0xE5555555),
+                            color: Color(0xE5555555),
                             letterSpacing: -0.72,
                             fontSize: 24,
                             fontWeight: FontWeight.w600),
@@ -86,13 +88,13 @@ class _OtpScreenState extends State<OtpScreen> {
                           Text(
                             "Enter the OTP sent to +910000000000",
                             style: GoogleFonts.lato(
-                              color: const Color(0xB2555555),
+                              color: Color(0xB2555555),
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                               letterSpacing: -0.28,
                             ),
                           ),
-                          const Icon(Icons.short_text_rounded)
+                          Icon(Icons.short_text_rounded)
                         ],
                       ),
                     )
@@ -100,7 +102,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 18),
+                margin: EdgeInsets.symmetric(vertical: 18),
                 child: Pinput(
                   controller: pinController,
                   focusNode: focusNode,
@@ -112,7 +114,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     if (value == '123456') {
                       // use navigator here to route to new page
                     }
-                    return value == '123456' ? null : 'Pin is incorrect';
+                    return value!.length == 6 ? null : 'Pin is incorrect';
                   },
                   hapticFeedbackType: HapticFeedbackType.lightImpact,
                   onCompleted: (pin) {
@@ -151,7 +153,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 5),
+                margin: EdgeInsets.symmetric(vertical: 5),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -161,7 +163,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       'Didn’t receive OTP?',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                        color: const Color(0xB2555555),
+                        color: Color(0xB2555555),
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -171,7 +173,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       'Resend OTP',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                        color: const Color(0xFF3BA365),
+                        color: Color(0xFF3BA365),
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         letterSpacing: -0.42,
@@ -180,17 +182,30 @@ class _OtpScreenState extends State<OtpScreen> {
                   ],
                 ),
               ),
-              CommonButton(
-                onPressed: () {
-                  if (pinController.length == 6) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        "/home", (route) => false);
-                  } else {
-                    setState(() {});
+              BlocConsumer<AuthCubit, AuthInitial>(
+                listener: (context, state) {
+                  if (state.obj!.authToken!.isNotEmpty) {
+                    Navigator.pushNamed(context, "/home");
                   }
                 },
-           
-                lable: 'Verify & continue',
+                builder: (context, state) {
+                  return CommonButton(
+                    onPressed: () {
+                      if (pinController.length == 6) {
+                        context
+                            .read<AuthCubit>()
+                            .loginWithOtp(pinController.text);
+                      } else {
+                        setState(() {});
+                      }
+                    },
+                    borderradius: 4,
+                    height: 48,
+                    margin: EdgeInsets.symmetric(vertical: 18),
+                    width: 300,
+                    lable: 'Verify & continue',
+                  );
+                },
               )
             ],
           ),

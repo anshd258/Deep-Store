@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../middleware/blocs/authentication/auth_cubit.dart';
 import '../../widgets/commonbutton.dart';
 
 class Loginscreen extends StatefulWidget {
@@ -17,6 +19,11 @@ class _LoginscreenState extends State<Loginscreen> {
   void dispose() {
     _text.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -133,22 +140,41 @@ class _LoginscreenState extends State<Loginscreen> {
                   ],
                 ),
               ),
-              CommonButton(
-                onPressed: () {
-                  setState(() {
-                    if (_text.text.isEmpty || _text.text.length != 10) {
-                      print(_text.text.length);
-                      _validate = true;
-                    } else {
-                      _validate = false;
-                    }
-                  });
-                  if (!_validate) {
-                    Navigator.of(context).pushReplacementNamed("/otpPage");
+              BlocConsumer<AuthCubit, AuthInitial>(
+                buildWhen: (previous, current) {
+                  if (previous.otpSent == current.otpSent) {
+                    return true;
+                  } else {
+                    return false;
                   }
                 },
-         
-                lable: "Generate OTP",
+                listener: (context, state) {
+                  if (state.otpSent) {
+                    Navigator.pushNamed(context, "/otpPage");
+                  }
+                },
+                builder: (context, state) {
+                  return CommonButton(
+                    onPressed: () {
+                      setState(() {
+                        if (_text.text.isEmpty || _text.text.length != 10) {
+                          print(_text.text.length);
+                          _validate = true;
+                        } else {
+                          _validate = false;
+                        }
+                      });
+                      if (!_validate) {
+                        context.read<AuthCubit>().getOTP(_text.text);
+                      }
+                    },
+                    borderradius: 4,
+                    height: 48,
+                    margin: EdgeInsets.symmetric(vertical: 18),
+                    width: 300,
+                    lable: "Generate OTP",
+                  );
+                },
               )
             ],
           ),

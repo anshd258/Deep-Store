@@ -8,6 +8,8 @@ enum Component {
   ownerOngoingcardsIMAGE,
   ownerOngoingcardsDESC
 }
+const baseUrl =
+    "brisphere-django-backend.agreeablebush-b77b4bbe.southeastasia.azurecontainerapps.io";
 
 
 extension VehicleTypeExtension on VehicleType {
