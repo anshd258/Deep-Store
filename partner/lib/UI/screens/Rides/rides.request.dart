@@ -37,7 +37,8 @@ class _RidesRequestState extends State<RidesRequest>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: TabBar(
+        bottom: PreferredSize(
+            preferredSize: Size(double.infinity, 20), child: TabBar(
           controller: _controller,
           indicatorColor: Colors.white,
           indicatorWeight: 0.001,
@@ -58,7 +59,8 @@ class _RidesRequestState extends State<RidesRequest>
               _controller.animateTo(tabindex = _controller.index);
             });
           },
-        ),
+        ),),
+       
         backgroundColor: Colors.white,
       ),
       body: TabBarView(

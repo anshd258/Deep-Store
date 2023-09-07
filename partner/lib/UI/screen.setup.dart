@@ -16,6 +16,7 @@ class ScreenSetup extends StatelessWidget {
     return CustomTabView(
       backgroundColor: Colors.white,
       appBar: AppBar(
+       
         elevation: 0,
         backgroundColor: Colors.white,
         title: Column(
@@ -24,12 +25,12 @@ class ScreenSetup extends StatelessWidget {
             Text('Welcome back!',
                 style: GoogleFonts.lato(
                     color: const Color.fromRGBO(86, 86, 86, 1),
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.w700)),
             Text('Rahul',
                 style: GoogleFonts.lato(
                     color: const Color.fromRGBO(121, 121, 121, 1),
-                    fontSize: 19,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500)),
           ],
         ),

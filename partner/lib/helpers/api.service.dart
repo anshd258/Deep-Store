@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:partner/helpers/constants.dart';
 
-Future<Response?> getData({
+Future getData({
   QueryType queryType = QueryType.get,
   required String path, //convert this to enum later
   Map<String, String>? headers,
@@ -17,12 +17,8 @@ Future<Response?> getData({
     urlParameters,
   );
   final String bodyAsString = json.encode(body);
-  print(body);
-  print(headers);
-  print(endpoint);
 
   late Response response;
-
 
   try {
     switch (queryType) {
@@ -30,7 +26,7 @@ Future<Response?> getData({
         response = await get(endpoint);
         break;
       case QueryType.post:
-        response = await post(endpoint, body: body, headers: headers);
+        response = await post(endpoint, body: bodyAsString, headers: headers);
         break;
     }
 
@@ -40,9 +36,10 @@ Future<Response?> getData({
     } else {
       print(response.statusCode);
       print(response.body);
-      return null;
+      Map body = json.decode(response.body);
+      throw (Exception(body['status']));
     }
-  } catch (e) {
-    return null;
+  } on Exception catch (e) {
+    rethrow;
   }
 }

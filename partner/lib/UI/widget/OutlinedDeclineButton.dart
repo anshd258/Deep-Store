@@ -5,11 +5,15 @@ class OutlinedDeclineButton extends StatefulWidget {
   String lable;
   VoidCallback function;
   double height;
+  Color color;
   double width;
+  IconData? icon;
   double borderradius;
   EdgeInsets margin;
   OutlinedDeclineButton(
       {super.key,
+      this.icon,
+      required this.color,
       required this.function,
       required this.height,
       required this.margin,
@@ -59,19 +63,31 @@ class _OutlinedDeclineButtonState extends State<OutlinedDeclineButton>
             color: Colors.white,
             border: Border.all(
                 width: 2,
-                color: Color(0xFFC25C5C),
+                color: widget.color,
                 strokeAlign: BorderSide.strokeAlignInside)),
         margin: widget.margin,
         padding: const EdgeInsets.symmetric(horizontal: 5),
         alignment: Alignment.center,
         constraints:
             BoxConstraints(maxWidth: widget.width, maxHeight: widget.height),
-        child: Text(
-          widget.lable,
-          style: GoogleFonts.lato(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFFC25C5C)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              widget.lable,
+              style: GoogleFonts.lato(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: widget.color),
+            ),
+            if (widget.icon != null) ...[
+              Icon(
+                widget.icon!,
+                color: widget.color,
+                size: 20,
+              )
+            ]
+          ],
         ),
       ),
     );

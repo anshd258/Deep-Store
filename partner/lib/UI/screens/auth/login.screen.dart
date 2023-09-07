@@ -43,142 +43,165 @@ class _LoginscreenState extends State<Loginscreen> {
         ),
       ),
       body: Center(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: BlocConsumer<AuthCubit, AuthInitial>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          return Stack(
+            alignment: Alignment.center,
             children: [
               Container(
-                height: 90,
+                color: Colors.white,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: 29,
-                      child: Text(
-                        "Enter your Phone number",
-                        style: GoogleFonts.lato(
-                            color: Color(0xE5555555),
-                            letterSpacing: -0.72,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600),
+                    Container(
+                      height: 90,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            height: 29,
+                            child: Text(
+                              "Enter your Phone number",
+                              style: GoogleFonts.lato(
+                                  color: Color(0xE5555555),
+                                  letterSpacing: -0.72,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40,
+                            child: Text(
+                              "Enter your Phone number",
+                              style: GoogleFonts.lato(
+                                color: Color(0xB2555555),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: -0.28,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 40,
-                      child: Text(
-                        "Enter your Phone number",
-                        style: GoogleFonts.lato(
-                          color: Color(0xB2555555),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.28,
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 328),
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          setState(() {
+                            _validate = false;
+                          });
+                        },
+                        maxLength: 10,
+                        controller: _text,
+                        decoration: InputDecoration(
+                          errorText:
+                              _validate ? "please enter 10 numbers" : null,
+                          prefixText: "+91",
+                          prefixStyle: GoogleFonts.nunito(
+                            color: Color(0x99565656),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            height: 1.25,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: BorderSide(
+                              width: 0.50,
+                              color: Color(0x33565656),
+                            ),
+                          ),
                         ),
                       ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Not a guest?',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.lato(
+                              color: Color(0xB2555555),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(width: 2),
+                          Text(
+                            ' Login as stay owner',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.lato(
+                              color: Color(0xFF3BA365),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: -0.42,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    BlocConsumer<AuthCubit, AuthInitial>(
+                      buildWhen: (previous, current) {
+                        if (previous.otpSent == current.otpSent) {
+                          return true;
+                        } else {
+                          return false;
+                        }
+                      },
+                      listener: (context, state) {
+                        if (state.otpSent) {
+                          Navigator.pushNamed(context, "/otpPage");
+                        }
+                      },
+                      builder: (context, state) {
+                        return GradientCommonButton(
+                          function: () {
+                            setState(() {
+                              if (_text.text.isEmpty ||
+                                  _text.text.length != 10) {
+                                print(_text.text.length);
+                                _validate = true;
+                              } else {
+                                _validate = false;
+                              }
+                            });
+                            if (!_validate) {
+                              context.read<AuthCubit>().getOTP(_text.text);
+                            }
+                          },
+                          borderradius: 4,
+                          height: 48,
+                          margin: EdgeInsets.symmetric(vertical: 18),
+                          width: 300,
+                          lable: "Generate OTP",
+                        );
+                      },
                     )
                   ],
                 ),
               ),
-              ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 328),
-                child: TextField(
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    setState(() {
-                      _validate = false;
-                    });
-                  },
-                  maxLength: 10,
-                  controller: _text,
-                  decoration: InputDecoration(
-                    errorText: _validate ? "please enter 10 numbers" : null,
-                    prefixText: "+91",
-                    prefixStyle: GoogleFonts.nunito(
-                      color: Color(0x99565656),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.25,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: BorderSide(
-                        width: 0.50,
-                        color: Color(0x33565656),
-                      ),
-                    ),
+              if (state.loading != null && state.loading == true) ...[
+                Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  color: Colors.white60,
+                  child: Center(
+                    child: CircularProgressIndicator.adaptive(),
                   ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 5),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Not a guest?',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                        color: Color(0xB2555555),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(width: 2),
-                    Text(
-                      ' Login as stay owner',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                        color: Color(0xFF3BA365),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: -0.42,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              BlocConsumer<AuthCubit, AuthInitial>(
-                buildWhen: (previous, current) {
-                  if (previous.otpSent == current.otpSent) {
-                    return true;
-                  } else {
-                    return false;
-                  }
-                },
-                listener: (context, state) {
-                  if (state.otpSent) {
-                    Navigator.pushNamed(context, "/otpPage");
-                  }
-                },
-                builder: (context, state) {
-                  return GradientCommonButton(
-                    function: () {
-                      setState(() {
-                        if (_text.text.isEmpty || _text.text.length != 10) {
-                          print(_text.text.length);
-                          _validate = true;
-                        } else {
-                          _validate = false;
-                        }
-                      });
-                      if (!_validate) {
-                        context.read<AuthCubit>().getOTP(_text.text);
-                      }
-                    },
-                    borderradius: 4,
-                    height: 48,
-                    margin: EdgeInsets.symmetric(vertical: 18),
-                    width: 300,
-                    lable: "Generate OTP",
-                  );
-                },
-              )
+                )
+              ]
             ],
-          ),
-        ),
-      ),
+          );
+        },
+      )),
     );
   }
 }
