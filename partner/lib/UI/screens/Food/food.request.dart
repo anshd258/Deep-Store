@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/UI/widget/ownerRequestCard.dart';
+import 'package:partner/helpers/constants.dart';
+import 'package:partner/middleware/incoming_request_cubit.dart';
 
-class FoodRequest extends StatelessWidget {
+class FoodRequest extends StatefulWidget {
   FoodRequest({super.key});
+
+  @override
+  State<FoodRequest> createState() => _FoodRequestState();
+}
+
+class _FoodRequestState extends State<FoodRequest> {
   List<int> val = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +39,44 @@ class FoodRequest extends StatelessWidget {
         ),
       ),
       body: SizedBox(
-        height: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: val.map((e) => OwnerRequestcard()).toList(),
-          ),
-        ),
-      ),
+          height: double.infinity,
+          child: BlocConsumer<IncomingFoodRequestCubit, IncomingRequestState>(
+            listener: (context, state) {
+              if (state is IncomingRequestError) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                  ),
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state is IncomingRequestLoading) {
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              }
+              if (state is IncomingRequestError) {
+                return Center(
+                  child: Icon(Icons.error_outline_outlined,
+                      color: Colors.red.shade400, size: 100),
+                );
+              }
+              if (state is IncomingRequestcomplete) {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: state.foodRequest!.orders!
+                        .map(
+                          (e) => OwnerRequestcard(),
+                        )
+                        .toList(),
+                  ),
+                );
+              } else {
+                return Center();
+              }
+            },
+          )),
     );
   }
 }

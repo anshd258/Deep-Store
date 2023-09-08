@@ -9,6 +9,7 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthInitial> {
   AuthCubit() : super(AuthInitial(otpSent: false, loading: false));
+  
   String pathGetOtp = "/user/login/";
 
   void getOTP(String phoneNumber) async {

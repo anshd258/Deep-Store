@@ -19,6 +19,7 @@ Future getData({
   final String bodyAsString = json.encode(body);
 
   late Response response;
+  print(endpoint);
 
   try {
     switch (queryType) {

@@ -1,9 +1,13 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/UI/screens/Profile/Profile.page.dart';
 import 'package:partner/UI/screens/Rides/rides.request.dart';
 import 'package:partner/UI/widget/Profile.container.dart';
+import 'package:partner/helpers/constants.dart';
+import 'package:partner/middleware/incoming_rental_request_cubit.dart';
+import 'package:partner/middleware/incoming_request_cubit.dart';
 
 import 'screens/Food/food.request.dart';
 import 'screens/home/home.dart';
@@ -13,10 +17,16 @@ class ScreenSetup extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   @override
   Widget build(BuildContext context) {
+    context
+        .read<IncomingFoodRequestCubit>()
+        .getIncomingRequest(StatusFood.processing.code.toString());
+    context
+        .read<IncomingRentalRequestCubit>()
+        .getIncomingRequest(StatusRideRental.pending.code.toString());
+
     return CustomTabView(
       backgroundColor: Colors.white,
       appBar: AppBar(
-       
         elevation: 0,
         backgroundColor: Colors.white,
         title: Column(

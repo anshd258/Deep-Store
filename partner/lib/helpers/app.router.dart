@@ -10,7 +10,7 @@ class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => Loginscreen());
+        return MaterialPageRoute(builder: (_) => ScreenSetup());
       case '/editprofile':
         return MaterialPageRoute(builder: (_) => EditProfilePage());
       case '/otpPage':
