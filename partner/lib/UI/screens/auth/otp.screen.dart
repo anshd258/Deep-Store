@@ -99,7 +99,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Enter the OTP sent to +910000000000",
+                                  "Enter the OTP sent to +91${state.obj!.phoneNumber}",
                                   style: GoogleFonts.lato(
                                     color: Color(0xB2555555),
                                     fontSize: 12,
