@@ -6,7 +6,9 @@ import 'package:partner/helpers/constants.dart';
 Future getData({
   QueryType queryType = QueryType.get,
   required String path, //convert this to enum later
-  Map<String, String>? headers,
+  Map<String, String>? headers = const {
+    'Content-Type': 'application/json',
+  },
   Map<String, dynamic>? urlParameters,
   Map<String, dynamic>? body = const {},
   Map<String, String>? multiPartBody = const {},
@@ -19,7 +21,7 @@ Future getData({
   final String bodyAsString = json.encode(body);
 
   late Response response;
-  print(endpoint);
+  print(body);
 
   try {
     switch (queryType) {
@@ -32,7 +34,6 @@ Future getData({
     }
 
     if (response.statusCode == 200) {
-     
       return json.decode(response.body);
     } else {
       print(response.statusCode);

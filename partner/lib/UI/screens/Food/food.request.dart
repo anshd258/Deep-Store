@@ -45,6 +45,14 @@ class _FoodRequestState extends State<FoodRequest> {
                 errorSnackBar(context, state.message);
               }
             },
+            buildWhen: (previous, current) {
+              if (previous is IncomingRequestcomplete &&
+                  current is IncomingRequestError) {
+                return false;
+              } else {
+                return true;
+              }
+            },
             builder: (context, state) {
               if (state is IncomingRequestLoading) {
                 return progressIndicator;
@@ -60,7 +68,8 @@ class _FoodRequestState extends State<FoodRequest> {
                     child: Column(
                       children: state.foodRequest.orders!
                           .map(
-                            (e) => OwnerRequestcard(),
+                            (e) => OwnerRequestcard(
+                                type: RequestType.food, id: e.id!.toString()),
                           )
                           .toList(),
                     ),

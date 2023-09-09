@@ -29,4 +29,32 @@ class IncomingRideRequestCubit extends Cubit<IncomingRideRequestState> {
           rideRequest: RidesRequestModal.fromJson(response)));
     } else {}
   }
+
+  void rejectRequest(String id) async {
+    String path = "/service/set-status-ride/";
+    Map<String, dynamic> body = {
+      'ride_id': id,
+      'status': StatusRideRental.rejected.code.toString()
+    };
+
+    await getData(path: path, queryType: QueryType.post, body: body)
+        .then((value) =>
+            getIncomingRequest(StatusRideRental.pending.code.toString()))
+        .onError((error, stackTrace) =>
+            emit(IncomingRideRequestError(message: error.toString())));
+  }
+
+  void acceptRequest(String id) async {
+    String path = "/service/set-status-rental/";
+    Map<String, dynamic> body = {
+      'ride_id': id,
+      'status': StatusRideRental.accepted.code.toString()
+    };
+
+    await getData(path: path, queryType: QueryType.post, body: body)
+        .then((value) =>
+            getIncomingRequest(StatusRideRental.pending.code.toString()))
+        .onError((error, stackTrace) =>
+            emit(IncomingRideRequestError(message: error.toString())));
+  }
 }

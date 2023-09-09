@@ -17,7 +17,9 @@ class ProfilePage extends StatelessWidget {
             ProfileContainer(),
             ProfileOptions(
               lable: 'Request History',
-              function: () {},
+              function: () {
+                Navigator.of(context).pushNamed('/history');
+              },
             ),
             ProfileOptions(
               lable: 'Edit Profile',

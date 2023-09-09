@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:math';
-
+import '../../Constants/filterEnum.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../Constants/filterEnum.dart';
+
 
 part 'filter_cubit_state.dart';
 

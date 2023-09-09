@@ -143,7 +143,7 @@ class RentalRequest extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: data.rentalRequest!.rentals!
-              .map((e) => OwnerRequestcard())
+              .map((e) => OwnerRequestcard(type: RequestType.rental,id: e.id!.toString(),))
               .toList(),
         ),
       ),
@@ -162,7 +162,7 @@ class RideRequest extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children:
-              data.rideRequest!.rides!.map((e) => OwnerRequestcard()).toList(),
+              data.rideRequest!.rides!.map((e) => OwnerRequestcard(type: RequestType.ride,id: e.id!.toString(),)).toList(),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:partner/UI/screen.setup.dart';
+import 'package:partner/UI/screens/History/history.screen.dart';
 import 'package:partner/UI/screens/Profile/Edit.profile.dart';
 import 'package:partner/UI/screens/auth/login.screen.dart';
 
@@ -11,6 +12,8 @@ class AppRouter {
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => ScreenSetup());
+         case '/history':
+        return MaterialPageRoute(builder: (_) => HistoryScreen());
       case '/editprofile':
         return MaterialPageRoute(builder: (_) => EditProfilePage());
       case '/otpPage':

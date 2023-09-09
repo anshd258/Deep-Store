@@ -27,9 +27,34 @@ class IncomingFoodRequestCubit extends Cubit<IncomingRequestState> {
             emit(IncomingRequestError(error.toString())));
 
     if (response != null) {
-
       emit(
           IncomingRequestcomplete(foodRequest: FoodRequest.fromJson(response)));
     } else {}
+  }
+
+  void rejectRequest(String id) async {
+    String path = "/service/update-foodorder/";
+    Map<String, dynamic> body = {
+      "order": {"id": id, "status": StatusFood.failed.code.toString()}
+    };
+
+    await getData(path: path, queryType: QueryType.post, body: body)
+        .then((value) =>
+            getIncomingRequest(StatusRideRental.pending.code.toString()))
+        .onError((error, stackTrace) =>
+            emit(IncomingRequestError(error.toString())));
+  }
+
+  void acceptRequest(String id) async {
+    String path = "/service/update-foodorder/";
+    Map<String, dynamic> body = {
+      "order": {"id": id, "status": StatusFood.confirmed.code.toString()}
+    };
+
+    await getData(path: path, queryType: QueryType.post, body: body)
+        .then((value) =>
+            getIncomingRequest(StatusRideRental.pending.code.toString()))
+        .onError((error, stackTrace) =>
+            emit(IncomingRequestError(error.toString())));
   }
 }

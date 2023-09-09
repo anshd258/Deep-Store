@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner/UI/widget/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/graedient.common.button.dart';
 import 'package:partner/UI/widget/ridesCard.dart';
+import 'package:partner/helpers/constants.dart';
+import 'package:partner/middleware/incomingRequestCubit/incoming_rental_request_cubit.dart';
+import 'package:partner/middleware/incomingRequestCubit/incoming_request_cubit.dart';
+import 'package:partner/middleware/incomingRequestCubit/incoming_ride_request_cubit.dart';
 
 class OwnerRequestcard extends StatefulWidget {
-  const OwnerRequestcard({super.key});
+  RequestType type;
+  String id;
+  OwnerRequestcard({super.key, required this.type, required this.id});
 
   @override
   State<OwnerRequestcard> createState() => _OwnerRequestcardState();
@@ -33,7 +40,21 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
                 fontSize: 16,
               ),
               GradientCommonButton(
-                  function: () {},
+                  function: () {
+                    if (widget.type == RequestType.food) {
+                      context
+                          .read<IncomingFoodRequestCubit>()
+                          .acceptRequest(widget.id);
+                    } else if (widget.type == RequestType.ride) {
+                      context
+                          .read<IncomingRideRequestCubit>()
+                          .acceptRequest(widget.id);
+                    } else {
+                      context
+                          .read<IncomingRentalRequestCubit>()
+                          .acceptRequest(widget.id);
+                    }
+                  },
                   height: 42,
                   margin: EdgeInsets.all(2),
                   borderradius: 4,
@@ -55,8 +76,22 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
                 fontSize: 16,
               ),
               OutlinedDeclineButton(
-                  function: () {},
-                  color:  Color(0xFFC25C5C),
+                  function: () {
+                    if (widget.type == RequestType.food) {
+                      context
+                          .read<IncomingFoodRequestCubit>()
+                          .rejectRequest(widget.id);
+                    } else if (widget.type == RequestType.ride) {
+                      context
+                          .read<IncomingRideRequestCubit>()
+                          .rejectRequest(widget.id);
+                    } else {
+                      context
+                          .read<IncomingRentalRequestCubit>()
+                          .rejectRequest(widget.id);
+                    }
+                  },
+                  color: Color(0xFFC25C5C),
                   height: 42,
                   margin: EdgeInsets.all(2),
                   borderradius: 4,
