@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
+import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
+import 'package:partner/middleware/AcceptedRequestCubit/accepted_ride_request_cubit.dart';
+
 import 'package:partner/middleware/auth_cubit.dart';
 import 'package:partner/middleware/filter_cubit_cubit.dart';
-import 'package:partner/middleware/incoming_rental_request_cubit.dart';
-import 'package:partner/middleware/incoming_request_cubit.dart';
+import 'package:partner/middleware/incomingRequestCubit/incoming_rental_request_cubit.dart';
+import 'package:partner/middleware/incomingRequestCubit/incoming_request_cubit.dart';
+import 'package:partner/middleware/incomingRequestCubit/incoming_ride_request_cubit.dart';
+
 import 'app.router.dart';
 
 class AppSetup extends StatelessWidget {
@@ -16,11 +22,23 @@ class AppSetup extends StatelessWidget {
         BlocProvider(
           create: (context) => FilterCubitCubit(),
         ),
-         BlocProvider(
+        BlocProvider(
+          create: (context) => AcceptedRequestsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AcceptedRideRequestCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AcceptedRentalRequestCubit(),
+        ),
+        BlocProvider(
           create: (context) => IncomingFoodRequestCubit(),
         ),
-         BlocProvider(
+        BlocProvider(
           create: (context) => IncomingRentalRequestCubit(),
+        ),
+        BlocProvider(
+          create: (context) => IncomingRideRequestCubit(),
         ),
         BlocProvider(
           create: (context) => AuthCubit(),

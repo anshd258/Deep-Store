@@ -27,7 +27,7 @@ class IncomingFoodRequestCubit extends Cubit<IncomingRequestState> {
             emit(IncomingRequestError(error.toString())));
 
     if (response != null) {
-      print(response);
+
       emit(
           IncomingRequestcomplete(foodRequest: FoodRequest.fromJson(response)));
     } else {}

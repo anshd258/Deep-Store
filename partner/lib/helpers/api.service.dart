@@ -32,7 +32,7 @@ Future getData({
     }
 
     if (response.statusCode == 200) {
-      print(response.statusCode);
+     
       return json.decode(response.body);
     } else {
       print(response.statusCode);

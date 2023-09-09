@@ -2,19 +2,19 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:partner/helpers/api.service.dart';
 import 'package:partner/helpers/constants.dart';
-import 'package:partner/helpers/models/rental.request.dart';
+import 'package:partner/helpers/models/ride.request.dart';
 
-part 'incoming_rental_request_state.dart';
+part 'incoming_ride_request_state.dart';
 
-class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
-  IncomingRentalRequestCubit() : super(IncomingRentalRequestInitial());
+class IncomingRideRequestCubit extends Cubit<IncomingRideRequestState> {
+  IncomingRideRequestCubit() : super(IncomingRideRequestInitial());
 
   String path = "/service/get-order-by-type";
 
   void getIncomingRequest(String code) async {
-    emit(IncomingRentalRequestLoading());
+    emit(IncomingRideRequestLoading());
     Map<String, dynamic> parameters = {
-      "type": RequestType.rental.name,
+      "type": RequestType.ride.name,
       "status": code
     };
     print(parameters);
@@ -22,12 +22,11 @@ class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
     var response = await getData(
             path: path, urlParameters: parameters, queryType: QueryType.get)
         .onError((error, stackTrace) =>
-            emit(IncomingRentalRequestError(message: error.toString())));
+            emit(IncomingRideRequestError(message: error.toString())));
 
     if (response != null) {
-      print(response);
-      emit(IncomingRentalRequestCompleted(
-          rentalRequest: RentalRequestModal.fromJson(response)));
+      emit(IncomingRideRequestLoaded(
+          rideRequest: RidesRequestModal.fromJson(response)));
     } else {}
   }
 }

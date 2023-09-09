@@ -39,9 +39,8 @@ class _FilterWidgetState extends State<FilterWidget>
             margin: const EdgeInsets.symmetric(vertical: 15),
             child: Row(
               children: [
-                BlocBuilder<FilterCubitCubit, FilterCubitState>(
-                  builder: (context, state) {
-                    return Container(
+               
+                   Container(
                       constraints: const BoxConstraints(maxWidth: 220, maxHeight: 33),
                       margin: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(
@@ -50,13 +49,11 @@ class _FilterWidgetState extends State<FilterWidget>
                           return  OptionsButton(
                               
                               e: e,
-                              selectede: state.SelectedValue,
+                             
                             );
                         }).toList(),
                       ),
-                    );
-                  },
-                ),
+                    )
               ],
             ),
           )
