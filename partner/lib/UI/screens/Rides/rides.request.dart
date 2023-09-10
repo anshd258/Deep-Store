@@ -75,7 +75,7 @@ class _RidesRequestState extends State<RidesRequest>
           BlocConsumer<IncomingRentalRequestCubit, IncomingRentalRequestState>(
             listener: (context, state) {
               if (state is IncomingRentalRequestError) {
-               errorSnackBar(context, state.message);
+                errorSnackBar(context, state.message);
               }
             },
             builder: (context, state) {
@@ -114,13 +114,11 @@ class _RidesRequestState extends State<RidesRequest>
               if (state is IncomingRideRequestLoaded) {
                 if (state.rideRequest!.rides!.isEmpty) {
                   return noIncomingRequest;
-                }else{
-                   return RideRequest(
-                  data: state,
-                );
-
+                } else {
+                  return RideRequest(
+                    data: state,
+                  );
                 }
-               
               } else {
                 return Center();
               }
@@ -143,7 +141,10 @@ class RentalRequest extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: data.rentalRequest!.rentals!
-              .map((e) => OwnerRequestcard(type: RequestType.rental,id: e.id!.toString(),))
+              .map((e) => OwnerRequestcard(
+                    type: RequestType.rental,
+                    id: e.id!.toString(),
+                  ))
               .toList(),
         ),
       ),
@@ -161,8 +162,12 @@ class RideRequest extends StatelessWidget {
       height: double.infinity,
       child: SingleChildScrollView(
         child: Column(
-          children:
-              data.rideRequest!.rides!.map((e) => OwnerRequestcard(type: RequestType.ride,id: e.id!.toString(),)).toList(),
+          children: data.rideRequest!.rides!
+              .map((e) => OwnerRequestcard(
+                    type: RequestType.ride,
+                    id: e.id!.toString(),
+                  ))
+              .toList(),
         ),
       ),
     );

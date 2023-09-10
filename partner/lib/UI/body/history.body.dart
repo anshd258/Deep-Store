@@ -37,7 +37,12 @@ class HistoryBody extends StatelessWidget {
                     return SingleChildScrollView(
                       child: Column(
                           children: state.foodRequest!.orders!
-                              .map((e) => ownerOngoingcards())
+                              .map((e) => ownerOngoingcards(
+                                    name: e.items!.first.name!,
+                                    quantitiy:
+                                        e.items!.first.quantity!.toString(),
+                                    total: e.total!.toString(),
+                                  ))
                               .toList()),
                     );
                   }
@@ -67,7 +72,11 @@ class HistoryBody extends StatelessWidget {
                     return SingleChildScrollView(
                       child: Column(
                           children: state.rideRequest!.rides!
-                              .map((e) => RidesCard())
+                              .map((e) => ownerOngoingcards(
+                                    name: e.startLocation!,
+                                    quantitiy: e.distance.toString(),
+                                    total: e.price!.toString(),
+                                  ))
                               .toList()),
                     );
                   }
@@ -97,7 +106,10 @@ class HistoryBody extends StatelessWidget {
                   return SingleChildScrollView(
                     child: Column(
                         children: state.rentalRequest!.rentals!
-                            .map((e) => RidesCard())
+                            .map((e) => RidesCard(
+                                  dropLocation: e.startLocation!,
+                                  pickupLocation: e.endLocation!,
+                                ))
                             .toList()),
                   );
                 }

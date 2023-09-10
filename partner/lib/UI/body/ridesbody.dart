@@ -5,10 +5,8 @@ import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_ride_request_cubit.dart';
 
-
 import 'package:partner/UI/util/utilwidget.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/filter_cubit_cubit.dart';
-
 
 import '../widget/ownerOngoingcard.dart';
 
@@ -20,7 +18,6 @@ class RidesBody extends StatefulWidget {
 }
 
 class _RidesBodyState extends State<RidesBody> {
-
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
@@ -46,7 +43,12 @@ class _RidesBodyState extends State<RidesBody> {
                     return SingleChildScrollView(
                       child: Column(
                           children: state.foodRequest!.orders!
-                              .map((e) => ownerOngoingcards())
+                              .map((e) => ownerOngoingcards(
+                                    name: e.items!.first.name!,
+                                    quantitiy:
+                                        e.items!.first.quantity!.toString(),
+                                    total: e.total!.toString(),
+                                  ))
                               .toList()),
                     );
                   }
@@ -77,7 +79,11 @@ class _RidesBodyState extends State<RidesBody> {
                     return SingleChildScrollView(
                       child: Column(
                           children: state.rideRequest!.rides!
-                              .map((e) => RidesCard())
+                              .map((e) => ownerOngoingcards(
+                                    name: e.startLocation!,
+                                    quantitiy: e.distance.toString(),
+                                    total: e.price!.toString(),
+                                  ))
                               .toList()),
                     );
                   }
@@ -108,7 +114,10 @@ class _RidesBodyState extends State<RidesBody> {
                   return SingleChildScrollView(
                     child: Column(
                         children: state.rentalRequest!.rentals!
-                            .map((e) => RidesCard())
+                            .map((e) => RidesCard(
+                                  dropLocation: e.startLocation!,
+                                  pickupLocation: e.endLocation!,
+                                ))
                             .toList()),
                   );
                 }

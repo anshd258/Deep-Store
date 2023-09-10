@@ -6,7 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../Constants/PotraitSizes.dart';
 
 class ownerOngoingcards extends StatelessWidget {
-  const ownerOngoingcards({super.key});
+  String name;
+  String quantitiy;
+  String total;
+  ownerOngoingcards({super.key, required this.name, required this.quantitiy, required this.total});
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +48,10 @@ class ownerOngoingcards extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                textwidget("Ice-cream ", "(x3)", 16, FontWeight.w600),
+                textwidget("${name} ", "(x${quantitiy})", 16, FontWeight.w600),
                 textwidget("Name : ", "Alice", 14, FontWeight.w400),
                 textwidget("Ph no :", "+91 8764562372", 14, FontWeight.w400),
-                textwidget("Total : ", "₹1000", 14, FontWeight.w400),
+                textwidget("Total : ", "₹${total}", 14, FontWeight.w400),
               ],
             ),
           )
