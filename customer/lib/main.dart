@@ -41,7 +41,7 @@ void main() {
       theme: ThemeData(
         textTheme: GoogleFonts.latoTextTheme(),
       ),
-      initialRoute: '/home',
+      initialRoute: '/',
       onGenerateRoute: (settings) => AppRouter().onGenerateRoute(settings),
     ),
   ));
