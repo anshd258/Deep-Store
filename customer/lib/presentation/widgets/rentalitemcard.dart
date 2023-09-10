@@ -142,12 +142,10 @@ class _RentalItemCardState extends State<RentalItemCard> {
                           padding: const EdgeInsets.only(bottom: 13, right: 8),
                           child: CommonButton(
                             onPressed: () {
-                              context
-                                  .read<RentalBloc>()
-                                  .add(CreateRentalRequest(
-                                    rental: widget.rental,
-                                    vehicleCount: vehicleCount
-                                  ));
+                              context.read<RentalBloc>().add(
+                                  CreateRentalRequest(
+                                      rental: widget.rental,
+                                      vehicleCount: vehicleCount));
                               showDialog(
                                   barrierColor: Colors.black26,
                                   context: context,
@@ -216,22 +214,26 @@ class PopUpMessage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(18.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Image(image: AssetImage('assets/check.png'), height: 60),
-          const Text('Rental Request Sent'),
-          const SizedBox(
-            height: 10,
-          ),
-          const Text('check home section for updates'),
-          const SizedBox(
-            height: 10,
+          const Column(
+            children: [
+              Image(image: AssetImage('assets/check.png'), height: 60),
+              Text('Rental Request Sent'),
+              SizedBox(
+                height: 10,
+              ),
+              Text('check home section for updates'),
+              SizedBox(
+                height: 10,
+              ),
+            ],
           ),
           CommonButton(
             onPressed: () {
               Navigator.pop(context);
             },
             borderradius: 4,
-            height: 48,
             width: 328,
             lable: 'Okay',
             margin: const EdgeInsets.symmetric(vertical: 10),

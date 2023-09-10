@@ -54,25 +54,25 @@ class RideSelect extends StatelessWidget {
                   onPressed: () {
                     /// fire event to create ride request
                     context.read<RideBloc>().add(CreateRideRequest(
-                      Ride(rating: 5,status: RequestStatus.pending,
-                      pickUpLocation: pickupController.text,
-                      dropOffLocation: dropoffController.text,
-                      pickUpCoordinates: pickupCoordinates,
-                      dropOffCoordinates: dropOffCoordinates
-                      ),
-                    ));
+                          Ride(
+                              rating: 5,
+                              status: RequestStatus.pending,
+                              pickUpLocation: pickupController.text,
+                              dropOffLocation: dropoffController.text,
+                              pickUpCoordinates: pickupCoordinates,
+                              dropOffCoordinates: dropOffCoordinates),
+                        ));
                     showDialog(
                         barrierColor: Colors.black26,
                         context: context,
                         builder: (context) {
                           return const Center(
-                            child: IntrinsicHeight(
-                              child: SquicircleContainer(
-                                  margin: EdgeInsets.all(10),
-                                  width: double.infinity,
-                                  color: Colors.amber,
-                                  child: PopUpMessage()),
-                            ),
+                            child: SquicircleContainer(
+                                height: 230,
+                                margin: EdgeInsets.all(30),
+                                width: double.infinity,
+                                color: Colors.amber,
+                                child: PopUpMessage()),
                           );
                         });
                   },

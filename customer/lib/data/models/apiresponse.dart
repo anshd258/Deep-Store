@@ -55,8 +55,8 @@ class ApiResponse {
       rentalItems: (json['rentals'] as List<dynamic>?)
           ?.map((e) => Rental.fromJson(e as Map<String, dynamic>))
           .toList(),
-      foodOrder: json['foodorder'] != null
-          ? FoodOrder.fromJson(json['foodorder'] as Map<String, dynamic>)
+      foodOrder: json['order'] != null
+          ? FoodOrder.fromJson(json['order'] as Map<String, dynamic>)
           : null,
       ride: json['ride'] != null
           ? Ride.fromJson(json['ride'] as Map<String, dynamic>)

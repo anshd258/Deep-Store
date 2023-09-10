@@ -10,7 +10,7 @@ class DataSource {
 
   // static const String getMenu = 'service/get-menu/';
 
-  static const String getFoodOrder = '/service/find-foodorder';
+  static const String getFoodOrder = '/service/get-food-order';
 
   static const String getAllFoodOrder = '/service/find-all-foodorders';
   static const String getAllRideRequests = '/service/find-all-riderequests';
@@ -23,8 +23,8 @@ class DataSource {
   static const String createRideRequest = '/service/create-riderequest';
   static const String createRentalRequest = '/service/create-rentalrequest';
 
-  static const String updateFoodOrder = '/service/update-foodorder';
-  static const String addFoodItem = '/service/add-fooditems';
+  static const String updateFoodOrder = '/service/update-foodorder/';
+  static const String addFoodItem = '/service/add-fooditems/';
   static const String getOtp = '/user/get-otp';
 
   /// create user
@@ -64,11 +64,9 @@ class DataSource {
       }
 
       if (response.statusCode == 200) {
-        print('yayyyyyyyyyyyyyyyyyyyyyyy');
-        print(json.decode(response.body));
+        print(' ${response.body}');
         ApiResponse apiResponse =
             ApiResponse.fromJson(json.decode(response.body));
-        print(apiResponse.foodItems);
         return apiResponse;
       } else {
         return null;

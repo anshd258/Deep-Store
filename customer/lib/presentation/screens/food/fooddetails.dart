@@ -62,9 +62,10 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
             const Divider(),
             Builder(builder: (context) {
               List<MapEntry<String, int>> addons = [];
-              if(widget.food.addOns != null)
-              addons =
+              if(widget.food.addOns != null) {
+                addons =
                   widget.food.addOns!.entries.toList();
+              }
 
               return ListView.separated(
                 shrinkWrap: true,
@@ -131,7 +132,7 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
                 selectedAddons[item] = addOns[item] ?? 0;
               }
             }
-            widget.outerContext
+            context
                 .read<FoodBloc>()
                 .add(AddItemToCartEvent(widget.food, 1, selectedAddons));
             Navigator.pop(context);

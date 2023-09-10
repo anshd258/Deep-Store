@@ -37,7 +37,7 @@ class Food {
       finalPrice: json['final_price'] as double,
       price: json['price'] as double,
       addOns: (json['options'] as Map<String, dynamic>?)?.map(
-        (key, value) => MapEntry(key, value as int),
+        (key, value) => MapEntry(key, (value as double).toInt()),
       ),
       images: json['image'] as String?,
     );

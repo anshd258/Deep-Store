@@ -5,12 +5,13 @@ import '../../middleware/helpers/constants.dart';
 
 class FoodOrder {
   final int id;
-  final RequestStatus status;
+  final List<FoodDetails> items;
+  final double discount;
+  final double subTotalPrice;
   final double taxes;
   final double charges;
-  final double discount;
   final double totalPrice;
-  final List<FoodDetails> items;
+  final RequestStatus status;
   final DateTime eta;
 
   FoodOrder({
@@ -20,6 +21,7 @@ class FoodOrder {
     required this.charges,
     required this.discount,
     required this.totalPrice,
+    required this.subTotalPrice,
     required this.items,
     required this.eta,
   });
@@ -31,24 +33,26 @@ class FoodOrder {
       'taxes': taxes,
       'charges': charges,
       'discount': discount,
-      'totalPrice': totalPrice,
+      'total': totalPrice,
       'items': items.map((foodDetails) => foodDetails.toJson()).toList(),
       'eta': eta.toIso8601String(),
+      'subTotal': subTotalPrice
     };
   }
 
   factory FoodOrder.fromJson(Map<String, dynamic> json) {
     return FoodOrder(
       id: json['id'],
-      status: _mapIntToRequestStatus(json['status']),
+      items: (json['items'] as List<dynamic>)
+          .map((foodJson) => FoodDetails.fromBackendJson(foodJson))
+          .toList(),
+      discount: json['discount'],
+      subTotalPrice: json['subtotal'],
       taxes: json['taxes'],
       charges: json['charges'],
-      discount: json['discount'],
-      totalPrice: json['totalPrice'],
-      items: (json['items'] as List<dynamic>)
-          .map((foodJson) => FoodDetails.fromJson(foodJson))
-          .toList(),
-      eta: DateTime.parse(json['eta']),
+      totalPrice: json['total'],
+      status: _mapIntToRequestStatus(json['status']),
+      eta: DateTime.parse(json['created']),
     );
   }
 
