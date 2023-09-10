@@ -45,6 +45,7 @@ dependencies:
   figma_squircle: ^0.5.3
   flutter_animate: ^4.2.0+1
   pinput: ^3.0.1
+  qr_code_dart_scan: ^0.7.2
   
 
 dev_dependencies:

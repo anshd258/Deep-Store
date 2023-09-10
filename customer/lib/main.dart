@@ -15,7 +15,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   DataRepository dataRepository = DataRepository();
   UserRepository userRepository =
-      UserRepository(user: User(01, "Hemant", "9340765396"));
+      UserRepository(user: User(userID: 1, contact: '9340765396',room: '201',username: 'Hemant'));
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
@@ -41,7 +41,7 @@ void main() {
       theme: ThemeData(
         textTheme: GoogleFonts.latoTextTheme(),
       ),
-      initialRoute: '/',
+      initialRoute: '/home',
       onGenerateRoute: (settings) => AppRouter().onGenerateRoute(settings),
     ),
   ));

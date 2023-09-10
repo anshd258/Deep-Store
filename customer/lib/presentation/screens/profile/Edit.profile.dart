@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../widgets/commonbutton.dart';
-import 'editprofile.image.dart';
 import 'editprofile.form.dart';
+import 'editprofile.image.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -96,7 +96,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 height: 48,
                 width: 328,
                 lable: 'Save changes',
-                margin: const EdgeInsets.symmetric(vertical: 10),
+                margin: EdgeInsets.symmetric(vertical: 10),
                 onPressed: () {
                   _formkey.currentState!.validate();
                 },

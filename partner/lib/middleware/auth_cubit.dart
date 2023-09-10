@@ -1,23 +1,22 @@
 import 'dart:convert';
-import 'package:customer/data/models/apiresponse.dart';
-import 'package:customer/data/repositories/datasource.dart';
 import 'package:http/http.dart';
 import 'package:bloc/bloc.dart';
 
-import '../../helpers/constants.dart';
-
+import 'package:partner/helpers/api.service.dart';
+import 'package:partner/helpers/constants.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthInitial> {
   AuthCubit() : super(AuthInitial(otpSent: false, loading: false));
   
+  String pathGetOtp = "/user/login/";
 
   void getOTP(String phoneNumber) async {
     Map<String, dynamic> parameters = {"phone": phoneNumber};
     emit(AuthInitial(otpSent: false, loading: true));
-    await DataSource.getData(
-            path: DataSource.getOtp,
+    await getData(
+            path: pathGetOtp,
             urlParameters: parameters,
             queryType: QueryType.get)
         .whenComplete(
@@ -45,21 +44,25 @@ class AuthCubit extends Cubit<AuthInitial> {
       'room': '',
       'phone': state.obj!.phoneNumber,
     };
+    print(state.obj!.phoneNumber);
+    print(otp);
     try {
-      ApiResponse? response = await DataSource.getData(
-          path: DataSource.getOtp,
+      Response response = await getData(
+          path: pathGetOtp,
           queryType: QueryType.post,
           body: body,
           headers: headers);
-      if (response!.access != null) {
+      Map<String, dynamic> responseBody = json.decode(response.body);
+      print(responseBody);
+      if (responseBody['access'] != null) {
         emit(
           AuthInitial(
             otpSent: false,
             loading: false,
             obj: Token(
                 phoneNumber: state.obj!.phoneNumber,
-                authToken: response!.access,
-                refreshToken: response.refresh),
+                authToken: responseBody['access'],
+                refreshToken: responseBody['refresh']),
           ),
         );
       }

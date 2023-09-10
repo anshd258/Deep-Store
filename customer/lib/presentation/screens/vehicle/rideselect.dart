@@ -1,4 +1,7 @@
+import 'package:customer/data/models/ride.dart';
+import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../widgets/commonbutton.dart';
 import '../../widgets/rentalitemcard.dart';
@@ -10,8 +13,8 @@ class RideSelect extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController pickupController = TextEditingController();
     TextEditingController dropoffController = TextEditingController();
-    String pickupCoordinates;
-    String dropOffCoordinates;
+    String pickupCoordinates = '123';
+    String dropOffCoordinates = '456';
     return Column(
       children: [
         SingleChildScrollView(
@@ -29,7 +32,7 @@ class RideSelect extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16.0),
-                 TextField(
+                TextField(
                   controller: pickupController,
                   decoration: const InputDecoration(
                     labelText: 'Enter pickup location',
@@ -40,7 +43,7 @@ class RideSelect extends StatelessWidget {
                 const SizedBox(height: 16.0),
                 TextField(
                   controller: dropoffController,
-                  decoration:const InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Enter drop-off location',
                     prefixIcon: Icon(Icons.location_on),
                     border: OutlineInputBorder(),
@@ -50,6 +53,14 @@ class RideSelect extends StatelessWidget {
                 CommonButton(
                   onPressed: () {
                     /// fire event to create ride request
+                    context.read<RideBloc>().add(CreateRideRequest(
+                      Ride(rating: 5,status: RequestStatus.pending,
+                      pickUpLocation: pickupController.text,
+                      dropOffLocation: dropoffController.text,
+                      pickUpCoordinates: pickupCoordinates,
+                      dropOffCoordinates: dropOffCoordinates
+                      ),
+                    ));
                     showDialog(
                         barrierColor: Colors.black26,
                         context: context,

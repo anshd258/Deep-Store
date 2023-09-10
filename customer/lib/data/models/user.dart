@@ -1,25 +1,32 @@
 class User {
   final int userID;
-  final String name;
-  final String contactNo;
-  // provider.
-  // room number.
+  final String? username;
+  final String? contact;
+  final String? room;
 
-  User(this.userID, this.name, this.contactNo);
-
-  Map<String, dynamic> toJson() {
-    return {
-      'userID': userID,
-      'name': name,
-      'contactNo': contactNo,
-    };
-  }
+  User({
+    required this.userID,
+    this.username,
+    this.contact,
+    this.room,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
+    print('fromjsonrunning');
     return User(
-      json['userID'],
-      json['name'],
-      json['contactNo'],
+      userID: json['id'] as int,
+      username: json['username'] as String?,
+      contact: json['contact'] as String?,
+      room: json['room'] as String?,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = userID;
+    data['username'] = username;
+    data['contact'] = contact;
+    data['room'] = room;
+    return data;
   }
 }

@@ -35,49 +35,45 @@ class _OptionsButtonState extends State<OptionsButton>
 
   @override
   Widget build(BuildContext context) {
-    print("${widget.e} and ${widget.selectede}");
     return GestureDetector(
       onTap: () {
         ctr!.forward().then((value) => ctr!.reset());
-        context
-            .read<FilterCubit>()
-            .changeFilter(widget.e, widget.e.index + 1);
+        context.read<FilterCubit>().changeFilter(widget.e, widget.e.index + 1);
 
         setState(() {});
       },
       child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(
             Radius.circular(100),
           ),
-          color: Colors.grey,
           gradient: widget.e == widget.selectede
               ? const LinearGradient(colors: [
                   Color.fromRGBO(32, 171, 154, 1),
                   Color.fromRGBO(34, 150, 199, 1)
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight)
               : const LinearGradient(colors: [
-                  Colors.grey,
-                  Colors.grey,
+                  Color.fromRGBO(227, 227, 227, 1),
+                  Color.fromRGBO(227, 227, 227, 1),
                 ], begin: Alignment.bottomCenter, end: Alignment.topRight),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 5),
         alignment: Alignment.center,
         constraints: const BoxConstraints(minHeight: 33, minWidth: 60),
-        child: Text(
-          widget.e.name,
-          style: GoogleFonts.lato(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: widget.e == widget.selectede
-                  ? Colors.white
-                  : Colors.grey.shade700),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            widget.e.name,
+            style: GoogleFonts.lato(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: widget.e == widget.selectede
+                    ? Colors.white
+                    : Colors.grey.shade700),
+          ),
         ),
       ),
-    )
-        .animate(controller: ctr)
-        .elevation(borderRadius: BorderRadius.circular(30), begin: 0, end: 5)
-        .scaleXY(
-            begin: 1, end: 1.1, duration: const Duration(microseconds: 10));
+    ).animate(controller: ctr);
   }
 }

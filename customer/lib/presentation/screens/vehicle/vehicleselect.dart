@@ -12,17 +12,22 @@ class VehicleSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    context.read<RentalBloc>().add(FetchRentals());
 
     return RefreshIndicator(
       onRefresh: () async {
         context.read<RentalBloc>().add(FetchRentals());
       },
-      child:  TwoItemTabView(
-        child1: RentalSelect(rentalList:  context.read<RentalBloc>().state.rentalList),
-        child2: RideSelect(),
-        tab1: Tab(text: 'rent a ride'),
-        tab2: Tab(
+      child: TwoItemTabView(
+        child1: BlocBuilder<RentalBloc, RentalState>(
+          builder: (context, state) {
+            return RentalSelect(
+                rentalList: state.rentalList);
+          },
+        ),
+        child2: const RideSelect(),
+        tab1: const Tab(text: 'rent a ride'),
+        tab2: const Tab(
           text: 'book a ride',
         ),
       ),

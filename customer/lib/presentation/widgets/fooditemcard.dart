@@ -28,7 +28,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
             child: SquicircleContainer(
               height: double.infinity,
               child: Image.network(
-                widget.food.images[0],
+                 'https://images.unsplash.com/photo-1550547660-d9450f859349?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
                 fit: BoxFit.cover,
               ),
             ),

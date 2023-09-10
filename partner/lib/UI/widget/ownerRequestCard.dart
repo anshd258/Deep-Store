@@ -56,6 +56,7 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
               ),
               OutlinedDeclineButton(
                   function: () {},
+                  color:  Color(0xFFC25C5C),
                   height: 42,
                   margin: EdgeInsets.all(2),
                   borderradius: 4,

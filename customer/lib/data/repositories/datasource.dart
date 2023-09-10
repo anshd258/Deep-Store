@@ -6,59 +6,46 @@ import 'package:customer/middleware/helpers/constants.dart';
 
 class DataSource {
   static String backend =
-      'https://brisphere-django-backend.agreeablebush-b77b4bbe.southeastasia.azurecontainerapps.io';
+      'brisphere-django-backend.agreeablebush-b77b4bbe.southeastasia.azurecontainerapps.io';
 
-  static const String getMenu = 'service/get-menu/';
-  static const String createOrder = 'service/create-order/';
-  static const String updateOrder = 'service/update-order/';
-  static const String addItems = 'service/add-items/';
-  static const String findOrders = 'service/find-orders/';
-  static const String findAllOrders = 'service/find-all-orders/';
+  // static const String getMenu = 'service/get-menu/';
 
-  /// find food order
-  /// find ride order
-  /// find rental order
-  ///
-  /// find all food orders
-  /// find all ride orders
-  /// find all rental orders
+  static const String getFoodOrder = '/service/find-foodorder';
 
-  /// find all foodlist
-  /// find all ridelist
-  /// find all rentallist
-  /// 
-  /// create food order (for cart)
-  /// update order (for cart)
-  /// add fooditem to cart 
-  /// 
-  /// create rental request. 
-  /// create ride request. 
-  /// 
-  /// 
+  static const String getAllFoodOrder = '/service/find-all-foodorders';
+  static const String getAllRideRequests = '/service/find-all-riderequests';
+  static const String getAllRentalRequests = '/service/find-all-rentalrequests';
+
+  static const String getAllFoods = '/service/get-all-foods';
+  static const String getAllRentals = '/service/find-all-rentals';
+
+  static const String createFoodOrder = '/service/create-foodorder';
+  static const String createRideRequest = '/service/create-riderequest';
+  static const String createRentalRequest = '/service/create-rentalrequest';
+
+  static const String updateFoodOrder = '/service/update-foodorder';
+  static const String addFoodItem = '/service/add-fooditems';
+  static const String getOtp = '/user/get-otp';
+
   /// create user
   /// get user
   /// checkIn (room number and hotel selection)
   /// checkOut
 
+  static Future<ApiResponse?> getData(
+      {QueryType queryType = QueryType.get,
+      required String path,
+      String? url,
+      String? username,
+      String? password,
+      Map<String, dynamic>? urlParameters,
+      Map<String, dynamic>? body = const {},
+      Map<String, String>? headers}) async {
+    Uri endpoint = Uri.https(
+        'brisphere-django-backend.agreeablebush-b77b4bbe.southeastasia.azurecontainerapps.io',
+        path,
+        urlParameters);
 
-  static const String updateItem = 'service/update-item/';
-  static const String removeItem = 'service/remove-item/';
-  static const String getOtp = '/user/get-otp/';
-  static const String getUser = '/user/get-user/';
-  static const String createUser = '/user/create-user/';
-  static const String checkIn = '/user/checkin/';
-  static const String checkOut = '/user/checkout';
-
-  static Future<ApiResponse?> getData({
-    QueryType queryType = QueryType.get,
-    required String path,
-    String? url,
-    String? username,
-    String? password,
-    Map<String, dynamic>? urlParameters,
-    Map<String, dynamic>? body = const {},
-  }) async {
-    Uri endpoint = Uri.https(backend, path, urlParameters);
     final String bodyAsString = json.encode(body);
 
     late http.Response response;
@@ -66,24 +53,29 @@ class DataSource {
     try {
       switch (queryType) {
         case QueryType.get:
-          response = await http.get(endpoint,);///TODO: add authorization token......
+          response = await http.get(endpoint, headers: headers);
           break;
         case QueryType.post:
-          response = await http.post(endpoint, body: bodyAsString,);///TODO:add authorization token......
+          response = await http.post(
+            endpoint,
+            body: bodyAsString,
+          );
           break;
       }
 
       if (response.statusCode == 200) {
-        ApiResponse apiResponse = ApiResponse.fromJson(
-            json.decode(const Utf8Decoder().convert(response.bodyBytes)));
-
+        print('yayyyyyyyyyyyyyyyyyyyyyyy');
+        print(json.decode(response.body));
+        ApiResponse apiResponse =
+            ApiResponse.fromJson(json.decode(response.body));
+        print(apiResponse.foodItems);
         return apiResponse;
       } else {
         return null;
       }
     } catch (e) {
       if (kDebugMode) {
-        print('unable to fetch data!');
+        print('unable to fetch data! $e');
       }
       return null;
     }

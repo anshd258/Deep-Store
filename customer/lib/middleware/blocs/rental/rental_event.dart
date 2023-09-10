@@ -7,5 +7,9 @@ class FetchRentals extends RentalEvent {}
 
 class FetchRentalRequests extends RentalEvent {}
 
-class CreateRentalRequest extends RentalEvent{}
+class CreateRentalRequest extends RentalEvent {
+  final Rental rental;
+  final int vehicleCount;
 
+  CreateRentalRequest({required this.rental, required this.vehicleCount});
+}

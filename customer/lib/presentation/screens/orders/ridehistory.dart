@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RidesCard extends StatelessWidget {
-  const RidesCard({super.key});
+  const RidesCard({super.key, required this.name, required this.pickUpLocation, required this.dropOffLocation, required this.contactNo});
+  final String name;
+  final String pickUpLocation;
+  final String dropOffLocation;
+  final String contactNo;
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +18,12 @@ class RidesCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             RidesDetailsContainer(
-              data: "Alice lee",
+              data: name,
               heading: "Guest Name",
               fontSize: 20,
-            ),  
+            ),
             RidesDetailsContainer(
-              data: "+91 9871085060",
+              data: contactNo,
               heading: "Contact Number",
               fontSize: 16,
             )
@@ -29,12 +33,12 @@ class RidesCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             RidesDetailsContainer(
-              data: "Gyatso orchid",
+              data: pickUpLocation,
               heading: "Pickup location",
               fontSize: 20,
             ),
             RidesDetailsContainer(
-              data: "Spiti Valley",
+              data: dropOffLocation,
               heading: "Drop off location",
               fontSize: 16,
             )

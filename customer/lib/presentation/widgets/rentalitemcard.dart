@@ -1,7 +1,9 @@
 import 'package:common/common.dart';
+import 'package:customer/middleware/blocs/rental/rental_bloc.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/models/rental.dart';
 import 'commonbutton.dart';
 
@@ -17,6 +19,7 @@ class RentalItemCard extends StatefulWidget {
 }
 
 class _RentalItemCardState extends State<RentalItemCard> {
+  int vehicleCount = 1;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +33,9 @@ class _RentalItemCardState extends State<RentalItemCard> {
             child: SquicircleContainer(
               height: double.infinity,
               child: Image.network(
-                widget.rental.images[0],
+                widget.rental.image != null
+                    ? widget.rental.image!.first
+                    : "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2l0eSUyMGNhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
                 fit: BoxFit.cover,
               ),
             ),
@@ -92,7 +97,36 @@ class _RentalItemCardState extends State<RentalItemCard> {
                       const SizedBox(
                         height: 10.0,
                       ),
-                      const Counter(),
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                if (vehicleCount > 1) {
+                                  setState(() {
+                                    vehicleCount = vehicleCount - 1;
+                                  });
+                                }
+                              },
+                              icon: const Icon(Icons.remove_circle),
+                              color: const Color.fromRGBO(65, 65, 65, 0.7)),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          Text(vehicleCount.toString()),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                vehicleCount = vehicleCount + 1;
+                              });
+                            },
+                            icon: const Icon(Icons.add_circle),
+                            color: const Color.fromRGBO(73, 204, 115, 1),
+                          ),
+                        ],
+                      ),
                       const SizedBox(
                         height: 10.0,
                       ),
@@ -108,6 +142,12 @@ class _RentalItemCardState extends State<RentalItemCard> {
                           padding: const EdgeInsets.only(bottom: 13, right: 8),
                           child: CommonButton(
                             onPressed: () {
+                              context
+                                  .read<RentalBloc>()
+                                  .add(CreateRentalRequest(
+                                    rental: widget.rental,
+                                    vehicleCount: vehicleCount
+                                  ));
                               showDialog(
                                   barrierColor: Colors.black26,
                                   context: context,
@@ -163,30 +203,6 @@ class IconText extends StatelessWidget {
               fontWeight: FontWeight.w500,
               color: Color.fromRGBO(65, 65, 65, 0.7)),
         )
-      ],
-    );
-  }
-}
-
-class Counter extends StatelessWidget {
-  const Counter({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        Icon(Icons.remove_circle, color: Color.fromRGBO(65, 65, 65, 0.7)),
-        SizedBox(
-          width: 10.0,
-        ),
-        Text('1'),
-        SizedBox(
-          width: 10.0,
-        ),
-        Icon(
-          Icons.add_circle,
-          color: Color.fromRGBO(73, 204, 115, 1),
-        ),
       ],
     );
   }

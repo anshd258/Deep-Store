@@ -1,9 +1,13 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/UI/screens/Profile/Profile.page.dart';
 import 'package:partner/UI/screens/Rides/rides.request.dart';
 import 'package:partner/UI/widget/Profile.container.dart';
+import 'package:partner/helpers/constants.dart';
+import 'package:partner/middleware/incoming_rental_request_cubit.dart';
+import 'package:partner/middleware/incoming_request_cubit.dart';
 
 import 'screens/Food/food.request.dart';
 import 'screens/home/home.dart';
@@ -13,6 +17,13 @@ class ScreenSetup extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   @override
   Widget build(BuildContext context) {
+    context
+        .read<IncomingFoodRequestCubit>()
+        .getIncomingRequest(StatusFood.processing.code.toString());
+    context
+        .read<IncomingRentalRequestCubit>()
+        .getIncomingRequest(StatusRideRental.pending.code.toString());
+
     return CustomTabView(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -24,12 +35,12 @@ class ScreenSetup extends StatelessWidget {
             Text('Welcome back!',
                 style: GoogleFonts.lato(
                     color: const Color.fromRGBO(86, 86, 86, 1),
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.w700)),
             Text('Rahul',
                 style: GoogleFonts.lato(
                     color: const Color.fromRGBO(121, 121, 121, 1),
-                    fontSize: 19,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500)),
           ],
         ),

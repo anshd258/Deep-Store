@@ -15,7 +15,7 @@ class Tabes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 115,
-      height: 35,
+      height: 50,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,

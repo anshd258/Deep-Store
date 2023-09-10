@@ -9,21 +9,26 @@ class ApiResponse {
   final List<Food>? foodItems;
   final List<Rental>? rentalItems;
   final FoodOrder? foodOrder;
-  final Ride? rideRequest;
   final List<FoodOrder>? foodOrders;
+  final Ride? ride;
+  final List<Ride>? rideRequests;
   final List<RentalRequest>? rentalRequests;
-  final User user;
-  final int providerID;
+  // final User? user;
+ 
+  final String? access;
+  final String? refresh;
 
   ApiResponse({
+    this.rideRequests,
     this.foodItems,
-    this.rideRequest,
+    this.ride,
     this.rentalItems,
     this.foodOrder,
     this.foodOrders,
     this.rentalRequests,
-    required this.user,
-    required this.providerID,
+    // required this.user,
+    this.access,
+    this.refresh,
   });
 
   Map<String, dynamic> toJson() {
@@ -31,38 +36,43 @@ class ApiResponse {
       'foodItems': foodItems?.map((e) => e.toJson()).toList(),
       'rentalItems': rentalItems?.map((e) => e.toJson()).toList(),
       'foodOrder': foodOrder?.toJson(),
-      'rideRequest': rideRequest?.toJson(),
+      'ride': ride?.toJson(),
       'foodOrders': foodOrders?.map((e) => e.toJson()).toList(),
       'rentalRequests': rentalRequests?.map((e) => e.toJson()).toList(),
-      'user': user.toJson(),
-      'providerID': providerID,
+      'rideRequests': rideRequests?.map((e) => e.toJson()).toList(),
+      // 'user': user.toJson(),
+      'access': access,
+      'refresh': refresh,
     };
     return data;
   }
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) {
     return ApiResponse(
-      foodItems: (json['foodItems'] as List<dynamic>?)
+      foodItems: (json['catalog'] as List<dynamic>?)
           ?.map((e) => Food.fromJson(e as Map<String, dynamic>))
           .toList(),
-      rentalItems: (json['rentalItems'] as List<dynamic>?)
+      rentalItems: (json['rentals'] as List<dynamic>?)
           ?.map((e) => Rental.fromJson(e as Map<String, dynamic>))
           .toList(),
-      foodOrder: json['foodOrder'] != null
-          ? FoodOrder.fromJson(json['foodOrder'] as Map<String, dynamic>)
+      foodOrder: json['foodorder'] != null
+          ? FoodOrder.fromJson(json['foodorder'] as Map<String, dynamic>)
           : null,
-      rideRequest: json['rideRequest'] != null
-          ? Ride.fromJson(json['rideRequest'] as Map<String, dynamic>)
+      ride: json['ride'] != null
+          ? Ride.fromJson(json['ride'] as Map<String, dynamic>)
           : null,
-      foodOrders: (json['foodOrders'] as List<dynamic>?)
+      foodOrders: (json['foodorders'] as List<dynamic>?)
           ?.map((e) => FoodOrder.fromJson(e as Map<String, dynamic>))
           .toList(),
-      rentalRequests: (json['rentalRequests'] as List<dynamic>?)
+      rentalRequests: (json['rentalrequests'] as List<dynamic>?)
           ?.map((e) => RentalRequest.fromJson(e as Map<String, dynamic>))
           .toList(),
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
-      providerID: json['providerID'] as int,
+      rideRequests: (json['riderequests'] as List<dynamic>?)
+          ?.map((e) => Ride.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      // user: User.fromJson(json['user'] as Map<String, dynamic>),
+      access: json['access'],
+      refresh: json['refresh'],
     );
   }
 }
-

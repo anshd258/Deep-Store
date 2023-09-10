@@ -4,18 +4,16 @@ import 'user.dart';
 
 class RentalRequest {
   final int rentalId;
-  final User user;
   final Rental rental;
   final String pickupLocation;
   final String dropOffLocation;
   final RequestStatus status;
 
-  RentalRequest(this.rentalId, this.user, this.rental, this.pickupLocation, this.dropOffLocation, this.status);
+  RentalRequest(this.rentalId,  this.rental, this.pickupLocation, this.dropOffLocation, this.status);
 
   Map<String, dynamic> toJson() {
     return {
       'rentalId': rentalId,
-      'user': user.toJson(),
       'rental': rental.toJson(),
       'pickupLocation': pickupLocation,
       'dropOffLocation': dropOffLocation,
@@ -30,7 +28,6 @@ class RentalRequest {
   static RentalRequest _fromJson(Map<String, dynamic> json) {
     return RentalRequest(
       json['rentalId'],
-      User.fromJson(json['user']),
       Rental.fromJson(json['rental']),
       json['pickupLocation'],
       json['dropOffLocation'],

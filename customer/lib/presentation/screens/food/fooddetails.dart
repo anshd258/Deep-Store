@@ -27,7 +27,7 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
               height: 200,
               width: MediaQuery.of(context).size.width,
               child: Image.network(
-                widget.food.images[0],
+                 'https://images.unsplash.com/photo-1550547660-d9450f859349?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
                 fit: BoxFit.cover,
                 frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
                     frame == null
@@ -61,8 +61,10 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
             ),
             const Divider(),
             Builder(builder: (context) {
-              List<MapEntry<String, int>> addons =
-                  widget.food.addOns.entries.toList();
+              List<MapEntry<String, int>> addons = [];
+              if(widget.food.addOns != null)
+              addons =
+                  widget.food.addOns!.entries.toList();
 
               return ListView.separated(
                 shrinkWrap: true,
@@ -122,10 +124,13 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
           child: const Text('Add to Cart'),
           onPressed: () async {
             // add item to cart.
-            Map<String, int> selectedAddons = {
-              for (var key in selecteditems) key: widget.food.addOns[key] ?? 0
-            };
-
+            Map<String, int> selectedAddons = {};
+            Map<String, int> addOns = widget.food.addOns ?? {};
+            for (String item in selecteditems) {
+              if (addOns.containsKey(item)) {
+                selectedAddons[item] = addOns[item] ?? 0;
+              }
+            }
             widget.outerContext
                 .read<FoodBloc>()
                 .add(AddItemToCartEvent(widget.food, 1, selectedAddons));

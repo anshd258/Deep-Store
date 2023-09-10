@@ -58,159 +58,179 @@ class _OtpScreenState extends State<OtpScreen> {
         ),
       ),
       body: Center(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: BlocConsumer<AuthCubit, AuthInitial>(
+        listener: (context, state) {
+          if (state.obj != null && state.obj!.authToken != null) {
+            Navigator.pushNamed(context, "/home");
+          }
+          if (state.messaage != null) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.messaage!)));
+          }
+        },
+        builder: (context, state) {
+          return Stack(
+            alignment: Alignment.center,
             children: [
               Container(
-                height: 90,
+                color: Colors.white,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: 29,
-                      child: Text(
-                        "OTP verification",
-                        style: GoogleFonts.lato(
-                            color: Color(0xE5555555),
-                            letterSpacing: -0.72,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                      width: 270,
-                      child: Row(
+                    Container(
+                      height: 90,
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Enter the OTP sent to +910000000000",
-                            style: GoogleFonts.lato(
-                              color: Color(0xB2555555),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: -0.28,
+                          SizedBox(
+                            height: 29,
+                            child: Text(
+                              "OTP verification",
+                              style: GoogleFonts.lato(
+                                  color: Color(0xE5555555),
+                                  letterSpacing: -0.72,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ),
-                          Icon(Icons.short_text_rounded)
+                          SizedBox(
+                            height: 40,
+                            width: 270,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Enter the OTP sent to +910000000000",
+                                  style: GoogleFonts.lato(
+                                    color: Color(0xB2555555),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: -0.28,
+                                  ),
+                                ),
+                                Icon(Icons.short_text_rounded)
+                              ],
+                            ),
+                          )
                         ],
                       ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 18),
+                      child: Pinput(
+                        controller: pinController,
+                        focusNode: focusNode,
+                        length: 6,
+                        androidSmsAutofillMethod: AndroidSmsAutofillMethod.none,
+                        listenForMultipleSmsOnAndroid: true,
+                        defaultPinTheme: defaultPinTheme,
+                        validator: (value) {
+                          // if (value == '123456') {
+                          if (value != null && value.length == 6) {
+                            // use navigator here to route to new page
+                            Navigator.pushNamed(context, '/home');  
+                          }
+                          return value!.length == 6 ? null : 'Pin is incorrect';
+                        },
+                        hapticFeedbackType: HapticFeedbackType.lightImpact,
+                        onCompleted: (pin) {
+                          debugPrint('onCompleted: $pin');
+                        },
+                        onChanged: (value) {
+                          debugPrint('onChanged: $value');
+                        },
+                        cursor: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 9),
+                              width: 22,
+                              height: 1,
+                              color: focusedBorderColor,
+                            ),
+                          ],
+                        ),
+                        focusedPinTheme: defaultPinTheme.copyWith(
+                          decoration: defaultPinTheme.decoration!.copyWith(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: focusedBorderColor),
+                          ),
+                        ),
+                        submittedPinTheme: defaultPinTheme.copyWith(
+                          decoration: defaultPinTheme.decoration!.copyWith(
+                            color: fillColor,
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: focusedBorderColor),
+                          ),
+                        ),
+                        errorPinTheme: defaultPinTheme.copyBorderWith(
+                          border: Border.all(color: Colors.redAccent),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Didn\'t receive OTP?',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.lato(
+                              color: Color(0xB2555555),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(width: 2),
+                          Text(
+                            'Resend OTP',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.lato(
+                              color: Color(0xFF3BA365),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: -0.42,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    CommonButton(
+                      onPressed: () {
+                        if (pinController.length == 6) {
+                          context
+                              .read<AuthCubit>()
+                              .loginWithOtp(pinController.text);
+                        } else {
+                          setState(() {});
+                        }
+                      },
+                      borderradius: 4,
+                      height: 48,
+                      margin: EdgeInsets.symmetric(vertical: 18),
+                      width: 300,
+                      lable: 'Verify & continue',
                     )
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 18),
-                child: Pinput(
-                  controller: pinController,
-                  focusNode: focusNode,
-                  length: 6,
-                  androidSmsAutofillMethod: AndroidSmsAutofillMethod.none,
-                  listenForMultipleSmsOnAndroid: true,
-                  defaultPinTheme: defaultPinTheme,
-                  validator: (value) {
-                    if (value == '123456') {
-                      // use navigator here to route to new page
-                    }
-                    return value!.length == 6 ? null : 'Pin is incorrect';
-                  },
-                  hapticFeedbackType: HapticFeedbackType.lightImpact,
-                  onCompleted: (pin) {
-                    debugPrint('onCompleted: $pin');
-                  },
-                  onChanged: (value) {
-                    debugPrint('onChanged: $value');
-                  },
-                  cursor: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 9),
-                        width: 22,
-                        height: 1,
-                        color: focusedBorderColor,
-                      ),
-                    ],
+              if (state.loading != null && state.loading == true) ...[
+                Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  color: Colors.white60,
+                  child: Center(
+                    child: CircularProgressIndicator.adaptive(),
                   ),
-                  focusedPinTheme: defaultPinTheme.copyWith(
-                    decoration: defaultPinTheme.decoration!.copyWith(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: focusedBorderColor),
-                    ),
-                  ),
-                  submittedPinTheme: defaultPinTheme.copyWith(
-                    decoration: defaultPinTheme.decoration!.copyWith(
-                      color: fillColor,
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: focusedBorderColor),
-                    ),
-                  ),
-                  errorPinTheme: defaultPinTheme.copyBorderWith(
-                    border: Border.all(color: Colors.redAccent),
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 5),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Didn’t receive OTP?',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                        color: Color(0xB2555555),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(width: 2),
-                    Text(
-                      'Resend OTP',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                        color: Color(0xFF3BA365),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: -0.42,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              BlocConsumer<AuthCubit, AuthInitial>(
-                listener: (context, state) {
-                  if (state.obj!.authToken!.isNotEmpty) {
-                    Navigator.pushNamed(context, "/home");
-                  }
-                },
-                builder: (context, state) {
-                  return CommonButton(
-                    onPressed: () {
-                      if (pinController.length == 6) {
-                        context
-                            .read<AuthCubit>()
-                            .loginWithOtp(pinController.text);
-                      } else {
-                        setState(() {});
-                      }
-                    },
-                    borderradius: 4,
-                    height: 48,
-                    margin: EdgeInsets.symmetric(vertical: 18),
-                    width: 300,
-                    lable: 'Verify & continue',
-                  );
-                },
-              )
+                )
+              ]
             ],
-          ),
-        ),
-      ),
+          );
+        },
+      )),
     );
   }
 }
