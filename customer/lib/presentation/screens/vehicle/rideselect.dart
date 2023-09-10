@@ -71,7 +71,7 @@ class RideSelect extends StatelessWidget {
                                 height: 230,
                                 margin: EdgeInsets.all(30),
                                 width: double.infinity,
-                                color: Colors.amber,
+                                color: Colors.white,
                                 child: PopUpMessage()),
                           );
                         });

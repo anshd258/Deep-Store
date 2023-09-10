@@ -147,18 +147,18 @@ class _RentalItemCardState extends State<RentalItemCard> {
                                       rental: widget.rental,
                                       vehicleCount: vehicleCount));
                               showDialog(
-                                  barrierColor: Colors.black26,
-                                  context: context,
-                                  builder: (context) {
-                                    return const Center(
-                                      child: SquicircleContainer(
-                                          height: 300,
-                                          margin: EdgeInsets.all(10),
-                                          width: double.infinity,
-                                          color: Colors.white,
-                                          child: PopUpMessage()),
-                                    );
-                                  });
+                        barrierColor: Colors.black26,
+                        context: context,
+                        builder: (context) {
+                          return const Center(
+                            child: SquicircleContainer(
+                                height: 230,
+                                margin: EdgeInsets.all(30),
+                                width: double.infinity,
+                                color: Colors.white,
+                                child: PopUpMessage()),
+                          );
+                        });
                             },
                             borderradius: 4,
                             height: 48,
