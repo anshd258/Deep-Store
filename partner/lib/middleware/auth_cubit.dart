@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:bloc/bloc.dart';
@@ -9,7 +10,7 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthInitial> {
   AuthCubit() : super(AuthInitial(otpSent: false, loading: false));
-  
+
   String pathGetOtp = "/user/login/";
 
   void getOTP(String phoneNumber) async {
@@ -47,25 +48,40 @@ class AuthCubit extends Cubit<AuthInitial> {
     print(state.obj!.phoneNumber);
     print(otp);
     try {
-      Response response = await getData(
-          path: pathGetOtp,
-          queryType: QueryType.post,
-          body: body,
-          headers: headers);
-      Map<String, dynamic> responseBody = json.decode(response.body);
-      print(responseBody);
-      if (responseBody['access'] != null) {
-        emit(
-          AuthInitial(
-            otpSent: false,
-            loading: false,
-            obj: Token(
-                phoneNumber: state.obj!.phoneNumber,
-                authToken: responseBody['access'],
-                refreshToken: responseBody['refresh']),
-          ),
-        );
+      if (otp == "123456") {
+        Timer(Duration(seconds: 1), () {
+          emit(AuthInitial(
+              otpSent: false,
+              loading: false,
+              obj: Token(
+                  phoneNumber: state.obj!.phoneNumber,
+                  authToken: "afsasfsaf",
+                  refreshToken: "asdsad")));
+        });
+      } else {
+      await  Future.delayed(const Duration(seconds: 1), () {
+          throw (Exception("invalid otp"));
+        });
       }
+      // Response response = await getData(
+      //     path: pathGetOtp,
+      //     queryType: QueryType.post,
+      //     body: body,
+      //     headers: headers);
+      // Map<String, dynamic> responseBody = json.decode(response.body);
+      // print(responseBody);
+      // if (responseBody['access'] != null) {
+      //   emit(
+      //     AuthInitial(
+      //       otpSent: false,
+      //       loading: false,
+      //       obj: Token(
+      //           phoneNumber: state.obj!.phoneNumber,
+      //           authToken: responseBody['access'],
+      //           refreshToken: responseBody['refresh']),
+      //     ),
+      //   );
+      // }
     } catch (e) {
       emit(AuthInitial(
           otpSent: false,

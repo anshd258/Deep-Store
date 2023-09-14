@@ -1,42 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:partner/UI/widget/ridesCard.dart';
-import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
-import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
-import 'package:partner/middleware/AcceptedRequestCubit/accepted_ride_request_cubit.dart';
-
 import 'package:partner/UI/util/utilwidget.dart';
-import 'package:partner/middleware/AcceptedRequestCubit/filter_cubit_cubit.dart';
+import 'package:partner/UI/widget/ownerOngoingcard.dart';
+import 'package:partner/UI/widget/ridesCard.dart';
+import 'package:partner/middleware/HistoryCubit/food_history_cubit.dart';
+import 'package:partner/middleware/HistoryCubit/history_filter_cubit.dart';
+import 'package:partner/middleware/HistoryCubit/rental_history_cubit.dart';
+import 'package:partner/middleware/HistoryCubit/ride_history_cubit.dart';
 
-import '../widget/ownerOngoingcard.dart';
+class HistoryBody extends StatelessWidget {
+  const HistoryBody({super.key});
 
-class RidesBody extends StatefulWidget {
-  const RidesBody({super.key});
-
-  @override
-  State<RidesBody> createState() => _RidesBodyState();
-}
-
-class _RidesBodyState extends State<RidesBody> {
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      var value = context.watch<FilterCubitCubit>();
+    return BlocBuilder<HistoryFilterCubit, HistoryFilterState>(
+        builder: (context, state) {
+      var value = context.watch<HistoryFilterCubit>();
       if (value.tabIndex == 1) {
         return SizedBox(
             height: 538,
-            child: BlocConsumer<AcceptedRequestsCubit, AcceptedRequestsState>(
+            child: BlocConsumer<FoodHistoryCubit, FoodHistoryState>(
               listener: (context, state) {
-                if (state is AcceptedRequestsError) {
+                if (state is FoodHistoryError) {
                   errorSnackBar(context, state.message);
                 }
               },
               builder: (context, state) {
-                if (state is AcceptedRequestsError) {
+                if (state is FoodHistoryError) {
                   return errorIcon;
-                } else if (state is AcceptedRequestsLoading) {
+                } else if (state is FoodHistoryLoading) {
                   return progressIndicator;
-                } else if (state is AcceptedRequestsLoaded) {
+                } else if (state is FoodHistoryLoaded) {
                   if (state.foodRequest!.orders!.isEmpty) {
                     return noAcceptedRequest;
                   } else {
@@ -60,20 +54,19 @@ class _RidesBodyState extends State<RidesBody> {
       } else if (value.tabIndex == 2) {
         return SizedBox(
             height: 538,
-            child: BlocConsumer<AcceptedRideRequestCubit,
-                AcceptedRideRequestState>(
+            child: BlocConsumer<RideHistoryCubit, RideHistoryState>(
               listener: (context, state) {
-                if (state is AcceptedRideRequestError) {
+                if (state is RideHistoryError) {
                   errorSnackBar(context, state.message);
                 }
               },
               builder: (context, state) {
-                if (state is AcceptedRideRequestError) {
+                if (state is RideHistoryError) {
                   return errorIcon;
-                } else if (state is AcceptedRideRequestLoading) {
+                } else if (state is RideHistoryLoading) {
                   return progressIndicator;
-                } else if (state is AcceptedRideRequestLoaded) {
-                  if (state.rideRequest!.rides!.isEmpty) {
+                } else if (state is RideHistoryLoaded) {
+                  if (state.rideRequest!.rides == null) {
                     return noAcceptedRequest;
                   } else {
                     return SingleChildScrollView(
@@ -95,19 +88,18 @@ class _RidesBodyState extends State<RidesBody> {
       } else {
         return SizedBox(
           height: 538,
-          child: BlocConsumer<AcceptedRentalRequestCubit,
-              AcceptedRentalRequestState>(
+          child: BlocConsumer<RentalHistoryCubit, RentalHistoryState>(
             listener: (context, state) {
-              if (state is AcceptedRentalRequestError) {
+              if (state is RentalHistoryError) {
                 errorSnackBar(context, state.message);
               }
             },
             builder: (context, state) {
-              if (state is AcceptedRentalRequestError) {
+              if (state is RentalHistoryError) {
                 return errorIcon;
-              } else if (state is AcceptedRentalRequestLoading) {
+              } else if (state is RentalHistoryLoading) {
                 return progressIndicator;
-              } else if (state is AcceptedRentalRequestLoaded) {
+              } else if (state is RentalHistoryLoaded) {
                 if (state.rentalRequest!.rentals!.isEmpty) {
                   return noAcceptedRequest;
                 } else {

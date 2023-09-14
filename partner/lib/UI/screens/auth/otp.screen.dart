@@ -99,7 +99,8 @@ class _OtpScreenState extends State<OtpScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Enter the OTP sent to +910000000000",
+                                  "Enter the OTP sent to +91${state.obj!.phoneNumber
+                                  }",
                                   style: GoogleFonts.lato(
                                     color: Color(0xB2555555),
                                     fontSize: 12,
@@ -124,10 +125,8 @@ class _OtpScreenState extends State<OtpScreen> {
                         listenForMultipleSmsOnAndroid: true,
                         defaultPinTheme: defaultPinTheme,
                         validator: (value) {
-                          // if (value == '123456') {
-                          if (value != null && value.length == 6) {
+                          if (value == '123456') {
                             // use navigator here to route to new page
-                            Navigator.pushNamed(context, '/home');  
                           }
                           return value!.length == 6 ? null : 'Pin is incorrect';
                         },
@@ -175,7 +174,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Didn\'t receive OTP?',
+                            'Didn’t receive OTP?',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
                               color: Color(0xB2555555),

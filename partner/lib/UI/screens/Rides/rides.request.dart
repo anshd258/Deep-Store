@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner/UI/widget/ownerRequestCard.dart';
 import 'package:partner/UI/widget/rides.tabe.dart';
 import 'package:partner/helpers/constants.dart';
-import 'package:partner/middleware/incoming_rental_request_cubit.dart';
-import 'package:partner/middleware/incoming_request_cubit.dart';
+import 'package:partner/middleware/incomingRequestCubit/incoming_rental_request_cubit.dart';
+import 'package:partner/middleware/incomingRequestCubit/incoming_ride_request_cubit.dart';
+import 'package:partner/UI/util/utilwidget.dart';
 
 class RidesRequest extends StatefulWidget {
   const RidesRequest({super.key});
@@ -71,9 +72,58 @@ class _RidesRequestState extends State<RidesRequest>
       body: TabBarView(
         controller: _controller,
         children: [
-          RentalRequest(
-              val: StatusRideRental.pending, body: RequestType.rental),
-          RentalRequest(val: StatusRideRental.pending, body: RequestType.ride),
+          BlocConsumer<IncomingRentalRequestCubit, IncomingRentalRequestState>(
+            listener: (context, state) {
+              if (state is IncomingRentalRequestError) {
+                errorSnackBar(context, state.message);
+              }
+            },
+            builder: (context, state) {
+              if (state is IncomingRentalRequestLoading) {
+                return progressIndicator;
+              }
+              if (state is IncomingRentalRequestError) {
+                return errorIcon;
+              }
+              if (state is IncomingRentalRequestCompleted) {
+                if (state.rentalRequest!.rentals!.isEmpty) {
+                  return noIncomingRequest;
+                } else {
+                  return RentalRequest(
+                    data: state,
+                  );
+                }
+              } else {
+                return Center();
+              }
+            },
+          ),
+          BlocConsumer<IncomingRideRequestCubit, IncomingRideRequestState>(
+            listener: (context, state) {
+              if (state is IncomingRideRequestError) {
+                errorSnackBar(context, state.message);
+              }
+            },
+            builder: (context, state) {
+              if (state is IncomingRideRequestLoading) {
+                return progressIndicator;
+              }
+              if (state is IncomingRideRequestError) {
+                return errorIcon;
+              }
+              if (state is IncomingRideRequestLoaded) {
+                if (state.rideRequest!.rides!.isEmpty) {
+                  return noIncomingRequest;
+                } else {
+                  return RideRequest(
+                    data: state,
+                  );
+                }
+              } else {
+                return Center();
+              }
+            },
+          ),
         ],
       ),
     );
@@ -81,54 +131,45 @@ class _RidesRequestState extends State<RidesRequest>
 }
 
 class RentalRequest extends StatelessWidget {
-  const RentalRequest({
-    super.key,
-    required this.val,
-    required this.body,
-  });
-
-  final StatusRideRental val;
-  final RequestType body;
+  RentalRequest({super.key, required this.data});
+  IncomingRentalRequestCompleted data;
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<IncomingRentalRequestCubit, IncomingRentalRequestState>(
-      listener: (context, state) {
-        if (state is IncomingRentalRequestError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-            ),
-          );
-        }
-      },
-      builder: (context, state) {
-        if (state is IncomingRentalRequestLoading) {
-          return const Center(
-            child: CircularProgressIndicator.adaptive(),
-          );
-        }
-        if (state is IncomingRentalRequestError) {
-          return Center(
-            child: Icon(Icons.error_outline_outlined,
-                color: Colors.red.shade400, size: 100),
-          );
-        }
-        if (state is IncomingRentalRequestCompleted) {
-          return SizedBox(
-            height: double.infinity,
-            child: SingleChildScrollView(
-              child: Column(
-                children: state.rentalRequest!.rentals!
-                    .map((e) => OwnerRequestcard())
-                    .toList(),
-              ),
-            ),
-          );
-        } else {
-          return Center();
-        }
-      },
+    return SizedBox(
+      height: double.infinity,
+      child: SingleChildScrollView(
+        child: Column(
+          children: data.rentalRequest!.rentals!
+              .map((e) => OwnerRequestcard(
+                    type: RequestType.rental,
+                    id: e.id!.toString(),
+                  ))
+              .toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class RideRequest extends StatelessWidget {
+  RideRequest({super.key, required this.data});
+  IncomingRideRequestLoaded data;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: double.infinity,
+      child: SingleChildScrollView(
+        child: Column(
+          children: data.rideRequest!.rides!
+              .map((e) => OwnerRequestcard(
+                    type: RequestType.ride,
+                    id: e.id!.toString(),
+                  ))
+              .toList(),
+        ),
+      ),
     );
   }
 }

@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/UI/widget/ownerRequestCard.dart';
 import 'package:partner/helpers/constants.dart';
-import 'package:partner/middleware/incoming_request_cubit.dart';
+import 'package:partner/middleware/incomingRequestCubit/incoming_request_cubit.dart';
+import 'package:partner/UI/util/utilwidget.dart';
 
 class FoodRequest extends StatefulWidget {
   FoodRequest({super.key});
@@ -14,8 +15,6 @@ class FoodRequest extends StatefulWidget {
 
 class _FoodRequestState extends State<FoodRequest> {
   List<int> val = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,35 +42,39 @@ class _FoodRequestState extends State<FoodRequest> {
           child: BlocConsumer<IncomingFoodRequestCubit, IncomingRequestState>(
             listener: (context, state) {
               if (state is IncomingRequestError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.message),
-                  ),
-                );
+                errorSnackBar(context, state.message);
+              }
+            },
+            buildWhen: (previous, current) {
+              if (previous is IncomingRequestcomplete &&
+                  current is IncomingRequestError) {
+                return false;
+              } else {
+                return true;
               }
             },
             builder: (context, state) {
               if (state is IncomingRequestLoading) {
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                );
+                return progressIndicator;
               }
               if (state is IncomingRequestError) {
-                return Center(
-                  child: Icon(Icons.error_outline_outlined,
-                      color: Colors.red.shade400, size: 100),
-                );
+                return errorIcon;
               }
               if (state is IncomingRequestcomplete) {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: state.foodRequest!.orders!
-                        .map(
-                          (e) => OwnerRequestcard(),
-                        )
-                        .toList(),
-                  ),
-                );
+                if (state.foodRequest.orders!.isEmpty) {
+                  return noIncomingRequest;
+                } else {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: state.foodRequest.orders!
+                          .map(
+                            (e) => OwnerRequestcard(
+                                type: RequestType.food, id: e.id!.toString()),
+                          )
+                          .toList(),
+                    ),
+                  );
+                }
               } else {
                 return Center();
               }

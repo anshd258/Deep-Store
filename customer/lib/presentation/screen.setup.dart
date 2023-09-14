@@ -23,6 +23,7 @@ class ScreenSetup extends StatelessWidget {
 
       return CustomTabView(
         appBar: AppBar(
+          toolbarHeight: 80,
           backgroundColor: Colors.white,
           elevation: 0,
           leading: const Icon(

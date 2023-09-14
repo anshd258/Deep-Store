@@ -34,6 +34,9 @@ class Home extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(
+                  height: 10,
+                ),
                 Container(
                   width: 200,
                   margin:
@@ -43,6 +46,9 @@ class Home extends StatelessWidget {
                     style: GoogleFonts.lato(
                         fontSize: 18, fontWeight: FontWeight.w700),
                   ),
+                ),
+                const SizedBox(
+                  height: 5,
                 ),
                 Container(
                   width: double.infinity,
@@ -93,7 +99,7 @@ class Home extends StatelessWidget {
                               : SingleChildScrollView(
                                   child: Column(
                                     children: data.map((e) {
-                                      return RentalHistory();
+                                      return const RentalHistory();
                                     }).toList(),
                                   ),
                                 ),
@@ -113,8 +119,13 @@ class Home extends StatelessWidget {
                               : SingleChildScrollView(
                                   child: Column(
                                     children: data.map((e) {
-                                      
-                                      return RidesCard(contactNo: '9415789546',dropOffLocation: e.dropOffLocation ?? '',name: 'Shubho',pickUpLocation: e.pickUpLocation ?? '');
+                                      return RidesCard(
+                                          contactNo: '9415789546',
+                                          dropOffLocation:
+                                              e.dropOffLocation ?? '',
+                                          name: 'Shubho',
+                                          pickUpLocation:
+                                              e.pickUpLocation ?? '');
                                     }).toList(),
                                   ),
                                 ),
@@ -133,7 +144,7 @@ class Home extends StatelessWidget {
                               : SingleChildScrollView(
                                   child: Column(
                                     children: data.map((e) {
-                                      return FoodHistory();
+                                      return const FoodHistory();
                                     }).toList(),
                                   ),
                                 ),

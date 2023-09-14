@@ -25,9 +25,36 @@ class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
             emit(IncomingRentalRequestError(message: error.toString())));
 
     if (response != null) {
-      print(response);
       emit(IncomingRentalRequestCompleted(
           rentalRequest: RentalRequestModal.fromJson(response)));
     } else {}
+  }
+
+  void rejectRequest(String id) async {
+    String path = "/service/set-status-rental/";
+    Map<String, dynamic> body = {
+      'rentalbooking_id': id,
+      'status': StatusRideRental.rejected.code.toString()
+    };
+
+    await getData(path: path, queryType: QueryType.post, body: body)
+        .then((value) =>
+            getIncomingRequest(StatusRideRental.pending.code.toString()))
+        .onError((error, stackTrace) =>
+            emit(IncomingRentalRequestError(message: error.toString())));
+  }
+
+  void acceptRequest(String id) async {
+    String path = "/service/set-status-rental/";
+    Map<String, dynamic> body = {
+      'rentalbooking_id': id,
+      'status': StatusRideRental.accepted.code.toString()
+    };
+
+    await getData(path: path, queryType: QueryType.post, body: body)
+        .then((value) =>
+            getIncomingRequest(StatusRideRental.pending.code.toString()))
+        .onError((error, stackTrace) =>
+            emit(IncomingRentalRequestError(message: error.toString())));
   }
 }

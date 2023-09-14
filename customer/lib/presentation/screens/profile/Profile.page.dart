@@ -37,7 +37,10 @@ class ProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     OutlinedDeclineButton(
-                        function: () {},
+                        function: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/', (route) => false);
+                        },
                         color: Color(0xFFC25C5C),
                         icon: Icons.logout_outlined,
                         height: 42,

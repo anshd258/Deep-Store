@@ -4,20 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/Constants/filterEnum.dart';
 import 'package:partner/UI/widget/optionbuttons.dart';
 
-
-import 'package:partner/middleware/filter_cubit_cubit.dart';
-
 class FilterWidget extends StatefulWidget {
-  const FilterWidget({super.key});
+  String type;
+  FilterWidget({super.key, required this.type});
 
   @override
   State<FilterWidget> createState() => _FilterWidgetState();
 }
 
-class _FilterWidgetState extends State<FilterWidget>
-     {
-
-
+class _FilterWidgetState extends State<FilterWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,24 +34,20 @@ class _FilterWidgetState extends State<FilterWidget>
             margin: const EdgeInsets.symmetric(vertical: 15),
             child: Row(
               children: [
-                BlocBuilder<FilterCubitCubit, FilterCubitState>(
-                  builder: (context, state) {
-                    return Container(
-                      constraints: const BoxConstraints(maxWidth: 220, maxHeight: 33),
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: value.values.map((e) {
-                          return  OptionsButton(
-                              
-                              e: e,
-                              selectede: state.SelectedValue,
-                            );
-                        }).toList(),
-                      ),
-                    );
-                  },
-                ),
+                Container(
+                  constraints:
+                      const BoxConstraints(maxWidth: 220, maxHeight: 33),
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: value.values.map((e) {
+                      return OptionsButton(
+                        e: e,
+                        type: widget.type,
+                      );
+                    }).toList(),
+                  ),
+                )
               ],
             ),
           )

@@ -10,7 +10,7 @@ class Home extends StatelessWidget {
     return Column(
       children: [
         // RidesCard(),
-        FilterWidget(),
+        FilterWidget(type: "Accepted"),
         RidesBody()
       ],
     );
