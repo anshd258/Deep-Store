@@ -23,7 +23,7 @@ class RentalRequestModal {
 
 class Rentals {
   int? id;
-  int? user;
+  User? user;
   String? startLocation;
   String? endLocation;
   String? startCoordinates;
@@ -33,7 +33,7 @@ class Rentals {
   int? status;
   double? distance;
   double? rating;
-  int? rental;
+
 
   Rentals(
       {this.id,
@@ -47,11 +47,11 @@ class Rentals {
       this.status,
       this.distance,
       this.rating,
-      this.rental});
+    });
 
   Rentals.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    user = json['user'];
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
     startLocation = json['start_location'];
     endLocation = json['end_location'];
     startCoordinates = json['start_coordinates'];
@@ -61,15 +61,15 @@ class Rentals {
     status = json['status'];
     distance = json['distance'];
     rating = json['rating'];
-    rental = json['rental'];
+   
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-
-    data['user'] = this.user;
-
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
     data['start_location'] = this.startLocation;
     data['end_location'] = this.endLocation;
     data['start_coordinates'] = this.startCoordinates;
@@ -79,38 +79,38 @@ class Rentals {
     data['status'] = this.status;
     data['distance'] = this.distance;
     data['rating'] = this.rating;
-    data['rental'] = this.rental;
+    
     return data;
   }
 }
 
-// class User {
-//   int? id;
+class User {
+  int? id;
 
-//   String? contact;
-//   String? otp;
-//   String? username;
-//   Null? room;
+  String? contact;
+  String? otp;
+  String? username;
+  Null? room;
 
-//   User({this.id, this.contact, this.otp, this.username, this.room});
+  User({this.id, this.contact, this.otp, this.username, this.room});
 
-//   User.fromJson(Map<String, dynamic> json) {
-//     id = json['id'];
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
 
-//     contact = json['contact'];
-//     otp = json['otp'];
-//     username = json['username'];
-//     room = json['room'];
-//   }
+    contact = json['contact'];
+    otp = json['otp'];
+    username = json['username'];
+    room = json['room'];
+  }
 
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['id'] = this.id;
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
 
-//     data['contact'] = this.contact;
-//     data['otp'] = this.otp;
-//     data['username'] = this.username;
-//     data['room'] = this.room;
-//     return data;
-//   }
-// }
+    data['contact'] = this.contact;
+    data['otp'] = this.otp;
+    data['username'] = this.username;
+    data['room'] = this.room;
+    return data;
+  }
+}

@@ -2,28 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RidesCard extends StatelessWidget {
-  String pickupLocation;
-  String dropLocation;
+  String data1;
+  String data2;
+  String data3;
+  String data4;
+  String heading1;
+  String heading2;
+  String heading3;
+  String heading4;
   RidesCard(
-      {super.key, required this.dropLocation, required this.pickupLocation});
+      {super.key,
+      required this.data1,
+      required this.data2,
+      required this.data3,
+      required this.data4,
+      required this.heading1,
+      required this.heading2,
+      required this.heading3,
+      required this.heading4});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.symmetric(horizontal: 5),
       height: 140,
+      decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.shade400,
+                blurRadius: 5,
+                blurStyle: BlurStyle.outer)
+          ],
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10))),
       padding: EdgeInsets.only(left: 18, right: 18, top: 12, bottom: 20),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             RidesDetailsContainer(
-              data: "Alice lee",
-              heading: "Guest Name",
+              data: data1,
+              heading: heading1,
               fontSize: 20,
             ),
             RidesDetailsContainer(
-              data: "+91 9871085060",
-              heading: "Contact Number",
+              data: data2,
+              heading: heading2,
               fontSize: 16,
             )
           ],
@@ -32,13 +56,13 @@ class RidesCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             RidesDetailsContainer(
-              data: pickupLocation,
-              heading: "Pickup location",
+              data: data3,
+              heading: heading3,
               fontSize: 20,
             ),
             RidesDetailsContainer(
-              data: dropLocation,
-              heading: "Drop off location",
+              data: data4,
+              heading: heading4,
               fontSize: 16,
             )
           ],
