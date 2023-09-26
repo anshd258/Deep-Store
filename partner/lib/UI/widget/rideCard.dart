@@ -9,15 +9,30 @@ class ownerOngoingcards extends StatelessWidget {
   String name;
   String quantitiy;
   String total;
-  ownerOngoingcards({super.key, required this.name, required this.quantitiy, required this.total});
+  String user;
+  String contact;
+  ownerOngoingcards(
+      {super.key,
+      required this.name,
+      required this.quantitiy,
+      required this.total,
+      required this.contact,
+      required this.user});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: sizesMapPotrait[Component.ownerOngoingcards]?[Sizes.HEIGHT],
-      margin: EdgeInsets.symmetric(
-          vertical: sizesMapPotrait[Component.ownerOngoingcards]![
-              Sizes.MARGINVERTICAL]!),
+      decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.shade400,
+                blurRadius: 5,
+                blurStyle: BlurStyle.outer)
+          ],
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10))),
+      height: 130,
+      margin: EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         children: [
           Image.network(
@@ -49,8 +64,8 @@ class ownerOngoingcards extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 textwidget("${name} ", "(x${quantitiy})", 16, FontWeight.w600),
-                textwidget("Name : ", "Alice", 14, FontWeight.w400),
-                textwidget("Ph no :", "+91 8764562372", 14, FontWeight.w400),
+                textwidget("Name : ", user, 14, FontWeight.w400),
+                textwidget("Ph no :", contact, 14, FontWeight.w400),
                 textwidget("Total : ", "₹${total}", 14, FontWeight.w400),
               ],
             ),

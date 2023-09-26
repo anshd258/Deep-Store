@@ -8,7 +8,6 @@ import 'package:customer/middleware/helpers/shared_preferences_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'middleware/blocs/authentication/auth_cubit.dart';
 import 'middleware/helpers/app.router.dart';
 

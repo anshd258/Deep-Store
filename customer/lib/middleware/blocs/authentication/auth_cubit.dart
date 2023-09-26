@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:customer/data/models/apiresponse.dart';
-import 'package:customer/data/models/authentication.model.dart';
-import 'package:customer/data/repositories/datasource.dart';
+import 'package:customer/data/models/authentication.dart';
+import 'package:customer/data/datasource.dart';
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
 

@@ -3,15 +3,15 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CommonButton extends StatefulWidget {
-  String lable;
-  VoidCallback onPressed;
-  double height;
-  double width;
-  double borderradius;
-  EdgeInsets margin;
+  final String lable;
+  final VoidCallback onPressed;
+  final double height;
+  final double width;
+  final double borderradius;
+  final EdgeInsets margin;
 
 
-  CommonButton(
+  const CommonButton(
       {super.key,
       required this.onPressed,
        this.height = 48,

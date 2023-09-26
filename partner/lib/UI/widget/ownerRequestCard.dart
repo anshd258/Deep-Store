@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner/UI/widget/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/graedient.common.button.dart';
-import 'package:partner/UI/widget/ridesCard.dart';
+import 'package:partner/UI/widget/rentalCard.dart';
 import 'package:partner/helpers/constants.dart';
 import 'package:partner/middleware/incomingRequestCubit/incoming_rental_request_cubit.dart';
 import 'package:partner/middleware/incomingRequestCubit/incoming_request_cubit.dart';

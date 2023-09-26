@@ -3,7 +3,6 @@ enum RequestStatus { cart, pending, ongoing, success, failed }
 enum QueryType { get, post }
 
 enum FilterValue { FOOD, RIDES, RENTALS }
-
 enum VehicleType { TWO_WHEELER, FOUR_WHEELER }
 
 class SharedPrefrencesKeys {

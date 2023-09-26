@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:customer/data/models/food.dart';
 import 'package:customer/data/models/foodorder.dart';
-import 'package:customer/data/repositories/datasource.dart';
+import 'package:customer/data/datasource.dart';
 import 'package:customer/middleware/helpers/shared_preferences_utils.dart';
 import 'package:meta/meta.dart';
 
@@ -36,17 +36,23 @@ class FoodBloc extends Bloc<FoodEvent, FoodState> {
 
 //////////////////////////////////////////////////////////////////////////////////////
     on<FetchFoodOrders>((event, emit) async {
-      await DataSource.getData(
-        path: DataSource.getAllFoodOrder,
-      ).then((value) {
-        print('fetching food order complete');
-        if (value != null) {
-          emit(UpdateFoodState(
-              foodOrderList: value.foodOrders,
-              cartOrder: state.cartOrder,
-              foodList: state.foodList));
-        } else {}
-      });
+      try {
+        await DataSource.getData(
+                path: DataSource.getOrderByType,
+                urlParameters: {'type': 'food', 'search_by_user': '1'})
+            .then((value) {
+          if (value != null) {
+            emit(UpdateFoodState(
+                foodOrderList: value.foodOrders,
+                cartOrder: state.cartOrder,
+                foodList: state.foodList));
+          } else {}
+        });
+      } catch (e) {
+        print('--------------');
+        print(e);
+        print('--------------');
+      }
     });
 
 //////////////////////////////////////////////////////////////////////////////////////

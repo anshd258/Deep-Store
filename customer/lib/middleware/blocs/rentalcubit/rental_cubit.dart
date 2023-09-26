@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:customer/data/models/apiresponse.dart';
-import 'package:customer/data/repositories/datasource.dart';
+import 'package:customer/data/datasource.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/middleware/helpers/shared_preferences_utils.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 import '../../../data/models/rental.dart';
@@ -30,7 +30,6 @@ class RentalCubit extends Cubit<RentalState> {
   }
 
   Future<void> fetchAllRentalRequests() async {
-   
     await DataSource.getData(
       path: DataSource.getAllRentalRequests,
     ).then((value) {
@@ -43,23 +42,27 @@ class RentalCubit extends Cubit<RentalState> {
   }
 
   Future<bool> createRentalRequest(String rentalId) async {
-    print('now trying to create rental request');
-  
+    String location = await SharedPreferencesUtils.getString(
+            key: SharedPrefrencesKeys.location) ??
+        '';
+
     Map<String, dynamic> body = {
       "rental_id": rentalId,
-      "start_location": 'wall street',
+      "start_location": location,
       "end_location": 'mount abu',
       'start_coordinates': '123456',
       'end_coordinates': '78910'
     };
     try {
-      ApiResponse? response = await DataSource.getData(
+      http.Response? response = await DataSource.get(
         queryType: QueryType.post,
         path: DataSource.createRideRequest,
         body: body,
       );
+      if (response!.statusCode == 200) return true;
 
-      return true;
+
+      return false;
     } catch (e) {
       print('someting when wrong while requesting ride');
       return false;

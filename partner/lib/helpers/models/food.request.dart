@@ -23,42 +23,38 @@ class FoodRequest {
 
 class Orders {
   int? id;
-  int? user;
-  Location? location;
+  User? user;
+
   List<Items>? items;
   double? discount;
   double? subtotal;
   double? taxes;
   double? charges;
-  String? comments;
+  
   double? total;
   int? status;
   String? created;
   String? updated;
-  double? rating;
 
-  Orders(
-      {this.id,
-      this.user,
-      this.location,
-      this.items,
-      this.discount,
-      this.subtotal,
-      this.taxes,
-      this.charges,
-      this.comments,
-      this.total,
-      this.status,
-      this.created,
-      this.updated,
-      this.rating});
+  Orders({
+    this.id,
+    this.user,
+    this.items,
+    this.discount,
+    this.subtotal,
+    this.taxes,
+    this.charges,
+  
+    this.total,
+    this.status,
+    this.created,
+    this.updated,
+  });
 
   Orders.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    user = json['user'];
-    location = json['location'] != null
-        ? new Location.fromJson(json['location'])
-        : null;
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
@@ -69,23 +65,20 @@ class Orders {
     subtotal = json['subtotal'];
     taxes = json['taxes'];
     charges = json['charges'];
-    comments = json['comments'];
+    
     total = json['total'];
     status = json['status'];
     created = json['created'];
     updated = json['updated'];
-    rating = json['rating'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-
-    data['user'] = this.user;
-
-    if (this.location != null) {
-      data['location'] = this.location!.toJson();
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
     }
+
     if (this.items != null) {
       data['items'] = this.items!.map((v) => v.toJson()).toList();
     }
@@ -93,59 +86,43 @@ class Orders {
     data['subtotal'] = this.subtotal;
     data['taxes'] = this.taxes;
     data['charges'] = this.charges;
-    data['comments'] = this.comments;
+   
     data['total'] = this.total;
     data['status'] = this.status;
     data['created'] = this.created;
     data['updated'] = this.updated;
-    data['rating'] = this.rating;
+
     return data;
   }
 }
 
-// class User {
-//   int? id;
+class User {
+  int? id;
 
-//   String? contact;
-//   String? otp;
-//   String? username;
-//   Null room;
+  String? contact;
+  String? otp;
+  String? username;
+  String? room;
 
-//   User({this.id, this.contact, this.otp, this.username, this.room});
+  User({this.id, this.contact, this.otp, this.username, this.room});
 
-//   User.fromJson(Map<String, dynamic> json) {
-//     id = json['id'];
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
 
-//     contact = json['contact'];
-//     otp = json['otp'];
-//     username = json['username'];
-//     room = json['room'];
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['id'] = this.id;
-
-//     data['contact'] = this.contact;
-//     data['otp'] = this.otp;
-//     data['username'] = this.username;
-//     data['room'] = this.room;
-//     return data;
-//   }
-// }
-
-class Location {
-  String? address;
-
-  Location({this.address});
-
-  Location.fromJson(Map<String, dynamic> json) {
-    address = json['address'];
+    contact = json['contact'];
+    otp = json['otp'];
+    username = json['username'];
+    room = json['room'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['address'] = this.address;
+    data['id'] = this.id;
+
+    data['contact'] = this.contact;
+    data['otp'] = this.otp;
+    data['username'] = this.username;
+    data['room'] = this.room;
     return data;
   }
 }
@@ -156,14 +133,14 @@ class Items {
   String? desc;
   int? providerId;
   String? providerName;
-  Null option;
+  Null? option;
   double? listedPrice;
   double? total;
   double? discount;
   double? rating;
   int? quantity;
   int? order;
-  int? item;
+
 
   Items(
       {this.id,
@@ -178,7 +155,7 @@ class Items {
       this.rating,
       this.quantity,
       this.order,
-      this.item});
+     });
 
   Items.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -193,7 +170,7 @@ class Items {
     rating = json['rating'];
     quantity = json['quantity'];
     order = json['order'];
-    item = json['item'];
+  
   }
 
   Map<String, dynamic> toJson() {
@@ -210,7 +187,7 @@ class Items {
     data['rating'] = this.rating;
     data['quantity'] = this.quantity;
     data['order'] = this.order;
-    data['item'] = this.item;
+   
     return data;
   }
 }

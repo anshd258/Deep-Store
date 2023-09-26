@@ -30,7 +30,7 @@ class FoodDetails {
   }
   factory FoodDetails.fromBackendJson(Map<String, dynamic> json) {
     return FoodDetails(
-        Food(foodID: json['id'], name: json['name'], description: json['desc'], category: 'food', type: 'food', veg: true, available: true, finalPrice: json['listed_price'], price: json['listed_price']),
+        Food(foodID: json['id'], name: json['name'], description: json['desc'], category: 'food', type: 'food', veg: true, available: true, finalPrice: json['total'], price: json['listed_price']),
         Map<String, int>.from(json['option'] ?? {}),
         json['total'],
         json['quantity'],

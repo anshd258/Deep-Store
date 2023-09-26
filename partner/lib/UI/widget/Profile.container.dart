@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:partner/UI/widget/ridesCard.dart';
+import 'package:partner/UI/widget/rentalCard.dart';
 
 class ProfileContainer extends StatelessWidget {
   const ProfileContainer({super.key});

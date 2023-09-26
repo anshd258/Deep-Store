@@ -1,6 +1,4 @@
 import 'package:customer/data/models/rental.dart';
-
-import 'authentication.model.dart';
 import 'food.dart';
 import 'foodorder.dart';
 import 'rentalrequest.dart';
@@ -15,7 +13,6 @@ class ApiResponse {
   final List<Ride>? rideRequests;
   final List<RentalRequest>? rentalRequests;
 
-  
   final String? accessToken;
   final String? refreshToken;
   final String? authToken;
@@ -78,9 +75,9 @@ class ApiResponse {
       ride: json['ride'] != null
           ? Ride.fromJson(json['ride'] as Map<String, dynamic>)
           : null,
-      foodOrders: (json['orders'] as List<dynamic>?)
-          ?.map((e) => FoodOrder.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      foodOrders: (json['orders'] as List<Map<String, dynamic>>?)?.map((e) {
+        return FoodOrder.fromJson(e);
+      }).toList(),
       rentalRequests: (json['rentalrequests'] as List<dynamic>?)
           ?.map((e) => RentalRequest.fromJson(e as Map<String, dynamic>))
           .toList(),

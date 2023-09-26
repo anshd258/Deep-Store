@@ -1,37 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:partner/UI/util/utilwidget.dart';
-import 'package:partner/UI/widget/rideCard.dart';
 import 'package:partner/UI/widget/rentalCard.dart';
-import 'package:partner/middleware/HistoryCubit/food_history_cubit.dart';
-import 'package:partner/middleware/HistoryCubit/history_filter_cubit.dart';
-import 'package:partner/middleware/HistoryCubit/rental_history_cubit.dart';
-import 'package:partner/middleware/HistoryCubit/ride_history_cubit.dart';
+import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
+import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
+import 'package:partner/middleware/AcceptedRequestCubit/accepted_ride_request_cubit.dart';
 
-class HistoryBody extends StatelessWidget {
-  const HistoryBody({super.key});
+import 'package:partner/UI/util/utilwidget.dart';
+import 'package:partner/middleware/AcceptedRequestCubit/filter_cubit_cubit.dart';
+
+import '../widget/rideCard.dart';
+
+class RidesBody extends StatefulWidget {
+  const RidesBody({super.key});
 
   @override
+  State<RidesBody> createState() => _RidesBodyState();
+}
+
+class _RidesBodyState extends State<RidesBody> {
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HistoryFilterCubit, HistoryFilterState>(
-        builder: (context, state) {
-      var value = context.watch<HistoryFilterCubit>();
+    return Builder(builder: (context) {
+      var value = context.watch<FilterCubitCubit>();
       if (value.tabIndex == 1) {
         return SizedBox(
             height: 538,
-            child: BlocConsumer<FoodHistoryCubit, FoodHistoryState>(
+            child: BlocConsumer<AcceptedRequestsCubit, AcceptedRequestsState>(
               listener: (context, state) {
-                if (state is FoodHistoryError) {
+                if (state is AcceptedRequestsError) {
                   errorSnackBar(context, state.message);
                 }
               },
               builder: (context, state) {
-                if (state is FoodHistoryError) {
+                if (state is AcceptedRequestsError) {
                   return errorIcon;
-                } else if (state is FoodHistoryLoading) {
+                } else if (state is AcceptedRequestsLoading) {
                   return progressIndicator;
-                } else if (state is FoodHistoryLoaded) {
+                } else if (state is AcceptedRequestsLoaded) {
                   if (state.foodRequest!.orders!.isEmpty) {
                     return noAcceptedRequest;
                   } else {
@@ -58,7 +64,7 @@ class HistoryBody extends StatelessWidget {
                                                 barrierDismissible: true,
                                                 context: context,
                                                 builder: (context) {
-                                                  return AlertDialog( 
+                                                  return AlertDialog(
                                                     elevation: 5,
                                                     content: Column(
                                                         children: e.items!
@@ -102,19 +108,20 @@ class HistoryBody extends StatelessWidget {
       } else if (value.tabIndex == 2) {
         return SizedBox(
             height: 538,
-            child: BlocConsumer<RideHistoryCubit, RideHistoryState>(
+            child: BlocConsumer<AcceptedRideRequestCubit,
+                AcceptedRideRequestState>(
               listener: (context, state) {
-                if (state is RideHistoryError) {
+                if (state is AcceptedRideRequestError) {
                   errorSnackBar(context, state.message);
                 }
               },
               builder: (context, state) {
-                if (state is RideHistoryError) {
+                if (state is AcceptedRideRequestError) {
                   return errorIcon;
-                } else if (state is RideHistoryLoading) {
+                } else if (state is AcceptedRideRequestLoading) {
                   return progressIndicator;
-                } else if (state is RideHistoryLoaded) {
-                  if (state.rideRequest!.rides == null) {
+                } else if (state is AcceptedRideRequestLoaded) {
+                  if (state.rideRequest!.rides!.isEmpty) {
                     return noAcceptedRequest;
                   } else {
                     return SingleChildScrollView(
@@ -132,7 +139,7 @@ class HistoryBody extends StatelessWidget {
                               children: state.rideRequest!.rides!
                                   .map((e) => ownerOngoingcards(
                                         contact: e.user!.contact!,
-                                        user: e.user!.username!,
+                                        user: e.user!.contact!,
                                         name: e.startLocation!,
                                         quantitiy: e.distance.toString(),
                                         total: e.price!.toString(),
@@ -150,18 +157,19 @@ class HistoryBody extends StatelessWidget {
       } else {
         return SizedBox(
           height: 538,
-          child: BlocConsumer<RentalHistoryCubit, RentalHistoryState>(
+          child: BlocConsumer<AcceptedRentalRequestCubit,
+              AcceptedRentalRequestState>(
             listener: (context, state) {
-              if (state is RentalHistoryError) {
+              if (state is AcceptedRentalRequestError) {
                 errorSnackBar(context, state.message);
               }
             },
             builder: (context, state) {
-              if (state is RentalHistoryError) {
+              if (state is AcceptedRentalRequestError) {
                 return errorIcon;
-              } else if (state is RentalHistoryLoading) {
+              } else if (state is AcceptedRentalRequestLoading) {
                 return progressIndicator;
-              } else if (state is RentalHistoryLoaded) {
+              } else if (state is AcceptedRentalRequestLoaded) {
                 if (state.rentalRequest!.rentals!.isEmpty) {
                   return noAcceptedRequest;
                 } else {

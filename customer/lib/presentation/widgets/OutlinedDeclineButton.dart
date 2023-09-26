@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OutlinedDeclineButton extends StatefulWidget {
-  String lable;
-  VoidCallback function;
-  double height;
-  Color color;
-  double width;
-  IconData? icon;
-  double borderradius;
-  EdgeInsets margin;
-  OutlinedDeclineButton(
+  final String lable;
+  final VoidCallback function;
+  final double height;
+  final Color color;
+  final double width;
+  final IconData? icon;
+  final double borderradius;
+  final EdgeInsets margin;
+  const OutlinedDeclineButton(
       {super.key,
       this.icon,
       required this.color,

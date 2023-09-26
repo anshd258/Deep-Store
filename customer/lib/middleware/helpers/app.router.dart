@@ -1,6 +1,5 @@
 import 'package:customer/presentation/screens/auth/checkin.screen.dart';
 import 'package:customer/presentation/screens/auth/login.screen.dart';
-import 'package:customer/presentation/screens/splash.screen.dart';
 import 'package:flutter/material.dart';
 import '../../presentation/screen.setup.dart';
 import '../../presentation/screens/Profile/Edit.profile.dart';

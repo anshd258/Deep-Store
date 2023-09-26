@@ -12,7 +12,7 @@ class DataSource {
 
   // static const String getMenu = 'service/get-menu/';
 
-  static const String getFoodOrder = '/service/get-food-order';
+  static const String getFoodOrder = '/service/find-foodorder';
   static const String getOrderByType = '/service/get-order-by-type';
 
   static const String getAllFoodOrder = '/service/find-all-foodorders';
@@ -23,18 +23,13 @@ class DataSource {
   static const String getAllRentals = '/service/find-all-rentals';
 
   static const String createFoodOrder = '/service/create-foodorder';
-  static const String createRideRequest = '/service/create-riderequest';
-  static const String createRentalRequest = '/service/create-rentalrequest';
+  static const String createRideRequest = '/service/create-ride';
+  static const String createRentalRequest = '/service/create-rentalbooking';
 
   static const String updateFoodOrder = '/service/update-foodorder/';
   static const String addFoodItem = '/service/add-fooditems/';
   static const String getOtp = '/user/login/';
   static const String updateRoomNumber = '/user/update-user/';
-
-  /// create user
-  /// get user
-  /// checkIn (room number and hotel selection)
-  /// checkOut
 
   static Future<ApiResponse?> getData({
     QueryType queryType = QueryType.get,
@@ -79,7 +74,6 @@ class DataSource {
           );
           break;
       }
-      print(response.body);
       if (response.statusCode == 200) {
         ApiResponse apiResponse =
             ApiResponse.fromJson(json.decode(response.body));
@@ -88,9 +82,7 @@ class DataSource {
         return null;
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('unable to fetch data! $e');
-      }
+      print('unable to fetch data! $e');
       return null;
     }
   }
