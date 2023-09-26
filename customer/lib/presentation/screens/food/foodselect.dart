@@ -17,6 +17,7 @@ class FoodSelect extends StatelessWidget {
       },
       child: BlocBuilder<FoodBloc, FoodState>(
         builder: (context, state) {
+          print('building food select screen');
           return Column(
             children: [
               Expanded(

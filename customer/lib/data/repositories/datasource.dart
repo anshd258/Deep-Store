@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:customer/data/models/apiresponse.dart';
+import 'package:customer/middleware/helpers/shared_preferences_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:customer/middleware/helpers/constants.dart';
@@ -11,6 +13,7 @@ class DataSource {
   // static const String getMenu = 'service/get-menu/';
 
   static const String getFoodOrder = '/service/get-food-order';
+  static const String getOrderByType = '/service/get-order-by-type';
 
   static const String getAllFoodOrder = '/service/find-all-foodorders';
   static const String getAllRideRequests = '/service/find-all-riderequests';
@@ -25,52 +28,117 @@ class DataSource {
 
   static const String updateFoodOrder = '/service/update-foodorder/';
   static const String addFoodItem = '/service/add-fooditems/';
-  static const String getOtp = '/user/get-otp';
+  static const String getOtp = '/user/login/';
+  static const String updateRoomNumber = '/user/update-user/';
 
   /// create user
   /// get user
   /// checkIn (room number and hotel selection)
   /// checkOut
 
-  static Future<ApiResponse?> getData(
-      {QueryType queryType = QueryType.get,
-      required String path,
-      String? url,
-      String? username,
-      String? password,
-      Map<String, dynamic>? urlParameters,
-      Map<String, dynamic>? body = const {},
-      Map<String, String>? headers}) async {
+  static Future<ApiResponse?> getData({
+    QueryType queryType = QueryType.get,
+    required String path,
+    Map<String, dynamic>? urlParameters,
+    Map<String, String>? headers,
+    Map<String, dynamic>? body = const {},
+  }) async {
     Uri endpoint = Uri.https(
         'brisphere-django-backend.agreeablebush-b77b4bbe.southeastasia.azurecontainerapps.io',
         path,
         urlParameters);
 
     final String bodyAsString = json.encode(body);
+    String? accessToken = await SharedPreferencesUtils.getString(
+        key: SharedPrefrencesKeys.accessToken);
+    if (accessToken == null) {
+      // use refereshtoken to get new access token
+    }
 
     late http.Response response;
 
     try {
       switch (queryType) {
         case QueryType.get:
-          response = await http.get(endpoint, headers: headers);
+          response = await http.get(endpoint,
+              headers: headers ??
+                  {
+                    HttpHeaders.contentTypeHeader: "application/json",
+                    HttpHeaders.authorizationHeader: "Bearer $accessToken"
+                  });
           break;
         case QueryType.post:
           response = await http.post(
+            headers: headers ??
+                {
+                  HttpHeaders.contentTypeHeader: "application/json",
+                  HttpHeaders.authorizationHeader: "Bearer $accessToken"
+                },
             endpoint,
             body: bodyAsString,
           );
           break;
       }
-
+      print(response.body);
       if (response.statusCode == 200) {
-        print(' ${response.body}');
         ApiResponse apiResponse =
             ApiResponse.fromJson(json.decode(response.body));
         return apiResponse;
       } else {
         return null;
       }
+    } catch (e) {
+      if (kDebugMode) {
+        print('unable to fetch data! $e');
+      }
+      return null;
+    }
+  }
+
+  static Future<http.Response?> get({
+    QueryType queryType = QueryType.get,
+    required String path,
+    Map<String, dynamic>? urlParameters,
+    Map<String, String>? headers,
+    Map<String, dynamic>? body = const {},
+  }) async {
+    Uri endpoint = Uri.https(
+        'brisphere-django-backend.agreeablebush-b77b4bbe.southeastasia.azurecontainerapps.io',
+        path,
+        urlParameters);
+
+    final String bodyAsString = json.encode(body);
+    String? accessToken = await SharedPreferencesUtils.getString(
+        key: SharedPrefrencesKeys.accessToken);
+    if (accessToken == null) {
+      // use refereshtoken to get new access token
+    }
+
+    late http.Response response;
+
+    try {
+      switch (queryType) {
+        case QueryType.get:
+          response = await http.get(endpoint,
+              headers: headers ??
+                  {
+                    HttpHeaders.contentTypeHeader: "application/json",
+                    HttpHeaders.authorizationHeader: "Bearer $accessToken"
+                  });
+          break;
+        case QueryType.post:
+          response = await http.post(
+            headers: headers ??
+                {
+                  HttpHeaders.contentTypeHeader: "application/json",
+                  HttpHeaders.authorizationHeader: "Bearer $accessToken"
+                },
+            endpoint,
+            body: bodyAsString,
+          );
+          break;
+      }
+      return response;
     } catch (e) {
       if (kDebugMode) {
         print('unable to fetch data! $e');

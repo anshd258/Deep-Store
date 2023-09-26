@@ -1,4 +1,4 @@
-part of 'rental_bloc.dart';
+part of 'rental_cubit.dart';
 
 
 @immutable

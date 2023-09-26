@@ -2,7 +2,7 @@ import 'package:customer/data/models/foodorder.dart';
 import 'package:customer/data/models/rentalrequest.dart';
 import 'package:customer/data/models/ride.dart';
 import 'package:customer/middleware/blocs/food/food_bloc.dart';
-import 'package:customer/middleware/blocs/rental/rental_bloc.dart';
+import 'package:customer/middleware/blocs/rentalcubit/rental_cubit.dart';
 import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
 import 'package:customer/presentation/screens/orders/foodhistory.dart';
 import 'package:customer/presentation/screens/orders/rentalhistory.dart';
@@ -24,7 +24,7 @@ class Home extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () async {
         context.read<FoodBloc>().add(FetchFoodOrders());
-        context.read<RentalBloc>().add(FetchRentalRequests());
+        context.read<RentalCubit>().fetchAllRentalRequests();
         context.read<RideBloc>().add(FetchRideRequests());
       },
       child: Column(
@@ -87,7 +87,7 @@ class Home extends StatelessWidget {
                   }
 
                   if (state.SelectedValue == FilterValue.RENTALS) {
-                    return BlocBuilder<RentalBloc, RentalState>(
+                    return BlocBuilder<RentalCubit, RentalState>(
                       builder: (context, rentalstate) {
                         List<RentalRequest> data =
                             rentalstate.rentalRequestList ?? [];

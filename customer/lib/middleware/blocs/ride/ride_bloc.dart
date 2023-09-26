@@ -3,24 +3,21 @@ import 'package:customer/middleware/helpers/constants.dart';
 import 'package:meta/meta.dart';
 
 import '../../../data/models/ride.dart';
-import '../../../data/repositories/data.repository.dart';
 import '../../../data/repositories/datasource.dart';
-import '../../../data/repositories/user.repository.dart';
+import '../../helpers/shared_preferences_utils.dart';
 
 part 'ride_event.dart';
 part 'ride_state.dart';
 
 class RideBloc extends Bloc<RideEvent, RideState> {
-  final UserRepository userRepository;
-  final DataRepository dataRepository;
-  RideBloc(this.userRepository, this.dataRepository)
+  RideBloc( )
       : super(const RideInitial()) {
     on<RideEvent>((event, emit) {});
+
+
     on<FetchRideRequests>((event, emit) async {
-      Map<String, dynamic> parameters = {"user_id": "1"};
       await DataSource.getData(
         path: DataSource.getAllRideRequests,
-        urlParameters: parameters,
       ).then((value) {
         if (value != null) {
           emit(UpdateRideRequestsState(

@@ -1,9 +1,10 @@
+import 'package:customer/data/models/rental.dart';
+
+import 'authentication.model.dart';
 import 'food.dart';
 import 'foodorder.dart';
-import 'rental.dart';
 import 'rentalrequest.dart';
 import 'ride.dart';
-import 'user.dart';
 
 class ApiResponse {
   final List<Food>? foodItems;
@@ -13,10 +14,16 @@ class ApiResponse {
   final Ride? ride;
   final List<Ride>? rideRequests;
   final List<RentalRequest>? rentalRequests;
-  // final User? user;
- 
-  final String? access;
-  final String? refresh;
+
+  
+  final String? accessToken;
+  final String? refreshToken;
+  final String? authToken;
+  final bool? newUser;
+  final String? phoneNumber;
+  final String? userName;
+  final String? userEmail;
+  final String? roomNumber;
 
   ApiResponse({
     this.rideRequests,
@@ -26,9 +33,14 @@ class ApiResponse {
     this.foodOrder,
     this.foodOrders,
     this.rentalRequests,
-    // required this.user,
-    this.access,
-    this.refresh,
+    this.accessToken,
+    this.refreshToken,
+    this.authToken,
+    this.newUser,
+    this.phoneNumber,
+    this.userName,
+    this.userEmail,
+    this.roomNumber,
   });
 
   Map<String, dynamic> toJson() {
@@ -40,9 +52,14 @@ class ApiResponse {
       'foodOrders': foodOrders?.map((e) => e.toJson()).toList(),
       'rentalRequests': rentalRequests?.map((e) => e.toJson()).toList(),
       'rideRequests': rideRequests?.map((e) => e.toJson()).toList(),
-      // 'user': user.toJson(),
-      'access': access,
-      'refresh': refresh,
+      'accessToken': accessToken,
+      'refreshToken': refreshToken,
+      'authToken': authToken,
+      'newUser': newUser,
+      'phoneNumber': phoneNumber,
+      'userName': userName,
+      'userEmail': userEmail,
+      'roomNumber': roomNumber,
     };
     return data;
   }
@@ -61,18 +78,23 @@ class ApiResponse {
       ride: json['ride'] != null
           ? Ride.fromJson(json['ride'] as Map<String, dynamic>)
           : null,
-      foodOrders: (json['foodorders'] as List<dynamic>?)
+      foodOrders: (json['orders'] as List<dynamic>?)
           ?.map((e) => FoodOrder.fromJson(e as Map<String, dynamic>))
           .toList(),
       rentalRequests: (json['rentalrequests'] as List<dynamic>?)
           ?.map((e) => RentalRequest.fromJson(e as Map<String, dynamic>))
           .toList(),
-      rideRequests: (json['riderequests'] as List<dynamic>?)
+      rideRequests: (json['rides'] as List<dynamic>?)
           ?.map((e) => Ride.fromJson(e as Map<String, dynamic>))
           .toList(),
-      // user: User.fromJson(json['user'] as Map<String, dynamic>),
-      access: json['access'],
-      refresh: json['refresh'],
+      accessToken: json['access'],
+      refreshToken: json['refresh'],
+      authToken: json['authToken'],
+      newUser: json['new_user'],
+      phoneNumber: json['phoneNumber'],
+      userName: json['userName'],
+      userEmail: json['userEmail'],
+      roomNumber: json['roomNumber'],
     );
   }
 }

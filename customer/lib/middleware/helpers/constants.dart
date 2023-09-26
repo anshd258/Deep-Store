@@ -1,27 +1,28 @@
-enum RequestStatus{cart, pending,ongoing, success, failed}
-enum QueryType{get,post}
+enum RequestStatus { cart, pending, ongoing, success, failed }
+
+enum QueryType { get, post }
 
 enum FilterValue { FOOD, RIDES, RENTALS }
-enum VehicleType {TWO_WHEELER, FOUR_WHEELER}
+
+enum VehicleType { TWO_WHEELER, FOUR_WHEELER }
+
+class SharedPrefrencesKeys {
+  static const String accessToken = 'accessToken';
+  static const String refreshToken = 'refreshToken';
+  static const String room = 'room';
+  static const String propertyId  = 'propertyId';
+  static const String userPhoneNumber = 'phoneNumber';
+  static const String location  = 'location';
+
+}
+
 enum Component {
   ownerOngoingcards,
   ownerOngoingcardsIMAGE,
   ownerOngoingcardsDESC
 }
+
 const baseUrl =
     "brisphere-django-backend.agreeablebush-b77b4bbe.southeastasia.azurecontainerapps.io";
 
-
-extension VehicleTypeExtension on VehicleType {
-  String toShortString() {
-    return this.toString().split('.').last;
-  }
-
-  static VehicleType fromString(String? value) {
-    return VehicleType.values.firstWhere(
-      (type) => type.toShortString() == value,
-      orElse: () => VehicleType.TWO_WHEELER,
-    );
-  }
-}
 

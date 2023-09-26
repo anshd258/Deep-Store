@@ -4,6 +4,7 @@ part of 'food_bloc.dart';
 sealed class FoodEvent {}
 
 class FetchFoods extends FoodEvent {}
+
 class FetchFoodOrders extends FoodEvent {}
 
 class AddItemToCartEvent extends FoodEvent {
@@ -22,3 +23,6 @@ class UpdateCartItem extends FoodEvent {
 
   UpdateCartItem(this.food, this.quantity, this.seletedAddons);
 }
+
+class FetchCartOrder extends FoodEvent {}
+

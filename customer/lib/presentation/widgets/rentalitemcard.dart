@@ -1,5 +1,5 @@
 import 'package:common/common.dart';
-import 'package:customer/middleware/blocs/rental/rental_bloc.dart';
+import 'package:customer/middleware/blocs/rentalcubit/rental_cubit.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +33,10 @@ class _RentalItemCardState extends State<RentalItemCard> {
             child: SquicircleContainer(
               height: double.infinity,
               child: Image.network(
-                widget.rental.image != null
-                    ? widget.rental.image!.first
-                    : "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2l0eSUyMGNhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                 "https://dummyimage.com/300",
+                // widget.rental.image != null
+                //     ? widget.rental.image!
+                //     : "https://dummyimage.com/300",
                 fit: BoxFit.cover,
               ),
             ),
@@ -141,24 +142,33 @@ class _RentalItemCardState extends State<RentalItemCard> {
                       Padding(
                           padding: const EdgeInsets.only(bottom: 13, right: 8),
                           child: CommonButton(
-                            onPressed: () {
-                              context.read<RentalBloc>().add(
-                                  CreateRentalRequest(
-                                      rental: widget.rental,
-                                      vehicleCount: vehicleCount));
-                              showDialog(
-                        barrierColor: Colors.black26,
-                        context: context,
-                        builder: (context) {
-                          return const Center(
-                            child: SquicircleContainer(
-                                height: 230,
-                                margin: EdgeInsets.all(30),
-                                width: double.infinity,
-                                color: Colors.white,
-                                child: PopUpMessage()),
-                          );
-                        });
+                            onPressed: () async {
+                              context
+                                  .read<RentalCubit>()
+                                  .createRentalRequest(
+                                      widget.rental.id.toString())
+                                  .then((value) {
+                                if (value) {
+                                  print(
+                                      'sometinggggggggggggggggggggggg happeneddddddddddddd');
+                                  showDialog(
+                                      barrierColor: Colors.black26,
+                                      context: context,
+                                      builder: (context) {
+                                        return Center(
+                                          child: SquicircleContainer(
+                                              height: 230,
+                                              margin: const EdgeInsets.all(30),
+                                              width: double.infinity,
+                                              color: Colors.white,
+                                              child: PopUpMessage(
+                                                  text: value
+                                                      ? 'Rental Request Sent'
+                                                      : 'sorry! can\'t book')),
+                                        );
+                                      });
+                                }
+                              });
                             },
                             borderradius: 4,
                             height: 48,
@@ -207,8 +217,8 @@ class IconText extends StatelessWidget {
 }
 
 class PopUpMessage extends StatelessWidget {
-  const PopUpMessage({super.key});
-
+  const PopUpMessage({super.key, required this.text});
+  final String text;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -216,15 +226,15 @@ class PopUpMessage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+          Column(
             children: [
-              Image(image: AssetImage('assets/check.png'), height: 60),
-              Text('Rental Request Sent'),
-              SizedBox(
+              const Image(image: AssetImage('assets/check.png'), height: 60),
+              Text(text),
+              const SizedBox(
                 height: 10,
               ),
-              Text('check home section for updates'),
-              SizedBox(
+              const Text('check home section for updates'),
+              const SizedBox(
                 height: 10,
               ),
             ],

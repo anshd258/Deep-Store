@@ -14,6 +14,7 @@ class FoodDetailSelector extends StatefulWidget {
 }
 
 class _FoodDetailSelectorState extends State<FoodDetailSelector> {
+  bool showLoadingIndicator = false;
   List<String> selecteditems = [];
   @override
   Widget build(BuildContext context) {
@@ -24,10 +25,10 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
           alignment: WrapAlignment.center,
           children: [
             SizedBox(
-              height: 200,
+              height: 250,
               width: MediaQuery.of(context).size.width,
               child: Image.network(
-                 'https://images.unsplash.com/photo-1550547660-d9450f859349?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+                'https://images.unsplash.com/photo-1550547660-d9450f859349?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
                 fit: BoxFit.cover,
                 frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
                     frame == null
@@ -36,79 +37,87 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
                         : child,
               ),
             ),
-            Row(
-              children: [
-                Text(
-                  '${widget.food.name},Rs. ${widget.food.price}',
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    widget.food.description,
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Row(
+                children: [
+                  Text(
+                    '${widget.food.name},Rs. ${widget.food.price}',
                     style: const TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      widget.food.description,
+                      style: const TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const Divider(),
-            Builder(builder: (context) {
-              List<MapEntry<String, int>> addons = [];
-              if(widget.food.addOns != null) {
-                addons =
-                  widget.food.addOns!.entries.toList();
-              }
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Builder(builder: (context) {
+                List<MapEntry<String, int>> addons = [];
+                if (widget.food.addOns != null) {
+                  addons = widget.food.addOns!.entries.toList();
+                }
 
-              return ListView.separated(
-                shrinkWrap: true,
-                itemCount: addons.length,
-                itemBuilder: (BuildContext _, int index) {
-                  String name = addons.elementAt(index).key;
-                  int price = addons.elementAt(index).value;
+                return ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: addons.length,
+                  itemBuilder: (BuildContext _, int index) {
+                    String name = addons.elementAt(index).key;
+                    int price = addons.elementAt(index).value;
 
-                  return Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black12,
-                      ),
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(
-                          5.0,
+                    return Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black12,
+                        ),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(
+                            5.0,
+                          ),
                         ),
                       ),
-                    ),
-                    child: CheckboxListTile(
-                      activeColor: Colors.blue,
-                      title: Text(name),
-                      subtitle: Text('Rs. $price'),
-                      value:
-                          selecteditems.contains(addons.elementAt(index).key),
-                      onChanged: (status) {
-                        if (status ?? false) {
-                          selecteditems.add(addons.elementAt(index).key);
-                        } else {
-                          selecteditems.remove(addons.elementAt(index).key);
-                        }
-                        setState(() {});
-                      },
-                    ),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(
-                    height: 10.0,
-                  );
-                },
-              );
-            }),
+                      child: CheckboxListTile(
+                        activeColor: Colors.blue,
+                        title: Text(name),
+                        subtitle: Text('Rs. $price'),
+                        value:
+                            selecteditems.contains(addons.elementAt(index).key),
+                        onChanged: (status) {
+                          if (status ?? false) {
+                            selecteditems.add(addons.elementAt(index).key);
+                          } else {
+                            selecteditems.remove(addons.elementAt(index).key);
+                          }
+                          setState(() {});
+                        },
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      height: 10.0,
+                    );
+                  },
+                );
+              }),
+            ),
           ],
         ),
       ),
@@ -122,7 +131,9 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
           style: const ButtonStyle(
               elevation: MaterialStatePropertyAll(0),
               backgroundColor: MaterialStatePropertyAll(Colors.transparent)),
-          child: const Text('Add to Cart'),
+          child: showLoadingIndicator
+              ? const CircularProgressIndicator()
+              : const Text('Add to Cart'),
           onPressed: () async {
             // add item to cart.
             Map<String, int> selectedAddons = {};
@@ -135,7 +146,9 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
             context
                 .read<FoodBloc>()
                 .add(AddItemToCartEvent(widget.food, 1, selectedAddons));
-            Navigator.pop(context);
+            if (context.read<FoodBloc>().state.cartOrder != null) {
+              Navigator.pop(context);
+            }
           },
         ),
       ),

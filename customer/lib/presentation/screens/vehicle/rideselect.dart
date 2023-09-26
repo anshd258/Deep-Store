@@ -66,13 +66,13 @@ class RideSelect extends StatelessWidget {
                         barrierColor: Colors.black26,
                         context: context,
                         builder: (context) {
-                          return const Center(
+                          return  const Center(
                             child: SquicircleContainer(
                                 height: 230,
                                 margin: EdgeInsets.all(30),
                                 width: double.infinity,
                                 color: Colors.white,
-                                child: PopUpMessage()),
+                                child: PopUpMessage(text: 'Ride Request Sent')),
                           );
                         });
                   },

@@ -2,12 +2,12 @@
 import '../../middleware/helpers/constants.dart';
 
 
-class Rental {
+class   Rental {
   final int id;
   final String name;
   String description;
   final double price;
-  final List<String>? image;
+  final String? image;
   final String? engineCapacity;
   final String? mileage;
   final String? fuelType;
@@ -44,7 +44,7 @@ class Rental {
       name: json['name'],
       description: json['description'],
       price: json['price'],
-      image: (json['image'] as List<dynamic>?)?.cast<String>(),
+      image:json['image'],
       engineCapacity: json['engineCapacity'],
       mileage: json['mileage'],
       fuelType: json['fuelType'],

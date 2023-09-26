@@ -28,7 +28,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
             child: SquicircleContainer(
               height: double.infinity,
               child: Image.network(
-                 'https://images.unsplash.com/photo-1550547660-d9450f859349?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+                'https://images.unsplash.com/photo-1550547660-d9450f859349?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
                 fit: BoxFit.cover,
               ),
             ),
@@ -69,20 +69,25 @@ class _FoodItemCardState extends State<FoodItemCard> {
                 ),
                 CommonButton(
                   onPressed: () {
-                    showDialog(
-                        barrierColor: Colors.black45,
-                        context: context,
-                        builder: (context) {
-                          return Center(
-                            child: SquicircleContainer(
-                              width: double.infinity,
-                              margin: const EdgeInsets.all(10),
-                              height: 500,
-                              child: FoodDetailSelector(
-                                  food: widget.food, outerContext: context),
-                            ),
-                          );
-                        });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FoodDetailSelector(
+                                food: widget.food, outerContext: context)));
+                    // showDialog(
+                    //     barrierColor: Colors.black45,
+                    //     context: context,
+                    //     builder: (context) {
+                    //       return Center(
+                    //         child: SquicircleContainer(
+                    //           width: double.infinity,
+                    //           margin: const EdgeInsets.all(10),
+                    //           height: 500,
+                    //           child: FoodDetailSelector(
+                    //               food: widget.food, outerContext: context),
+                    //         ),
+                    //       );
+                    //     });
                   },
                   borderradius: 4,
                   height: 48,

@@ -27,8 +27,6 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     const focusedBorderColor = Color.fromRGBO(23, 171, 144, 1);
-    const fillColor = Color.fromRGBO(243, 246, 249, 0);
-    const borderColor = Color(0x33565656);
 
     final defaultPinTheme = PinTheme(
       width: 39,
@@ -39,7 +37,7 @@ class _OtpScreenState extends State<OtpScreen> {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: borderColor),
+        border: Border.all(color: const Color(0x33565656)),
       ),
     );
     return Scaffold(
@@ -50,7 +48,7 @@ class _OtpScreenState extends State<OtpScreen> {
         title: Text(
           "Guest Login",
           style: GoogleFonts.lato(
-            color: Color(0xB2555555),
+            color: const Color(0xB2555555),
             fontSize: 16,
             fontWeight: FontWeight.w700,
             letterSpacing: -0.28,
@@ -60,12 +58,11 @@ class _OtpScreenState extends State<OtpScreen> {
       body: Center(
           child: BlocConsumer<AuthCubit, AuthInitial>(
         listener: (context, state) {
-          if (state.obj != null && state.obj!.authToken != null) {
+          if (state.obj != null && state.obj!.accessToken != null) {
+            if (state.obj!.newUser!) {
+              Navigator.pushReplacementNamed(context, "/checkin");
+            }
             Navigator.pushNamed(context, "/home");
-          }
-          if (state.messaage != null) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.messaage!)));
           }
         },
         builder: (context, state) {
@@ -87,7 +84,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             child: Text(
                               "OTP verification",
                               style: GoogleFonts.lato(
-                                  color: Color(0xE5555555),
+                                  color: const Color(0xE5555555),
                                   letterSpacing: -0.72,
                                   fontSize: 24,
                                   fontWeight: FontWeight.w600),
@@ -102,13 +99,13 @@ class _OtpScreenState extends State<OtpScreen> {
                                 Text(
                                   "Enter the OTP sent to +910000000000",
                                   style: GoogleFonts.lato(
-                                    color: Color(0xB2555555),
+                                    color: const Color(0xB2555555),
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                     letterSpacing: -0.28,
                                   ),
                                 ),
-                                Icon(Icons.short_text_rounded)
+                                const Icon(Icons.short_text_rounded)
                               ],
                             ),
                           )
@@ -116,7 +113,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 18),
+                      margin: const EdgeInsets.symmetric(vertical: 18),
                       child: Pinput(
                         controller: pinController,
                         focusNode: focusNode,
@@ -124,20 +121,19 @@ class _OtpScreenState extends State<OtpScreen> {
                         androidSmsAutofillMethod: AndroidSmsAutofillMethod.none,
                         listenForMultipleSmsOnAndroid: true,
                         defaultPinTheme: defaultPinTheme,
-                        validator: (value) {
-                          // if (value == '123456') {
-                          if (value != null && value.length == 6) {
-                            // use navigator here to route to new page
-                            Navigator.pushNamed(context, '/home');  
-                          }
-                          return value!.length == 6 ? null : 'Pin is incorrect';
-                        },
+                        // validator: (value) {
+                        //   // if (value == '123456') {
+                        //   if (value != null && value.length == 6) {
+                        //     // use navigator here to route to new page
+
+                        //     Navigator.pushNamed(context, '/home');
+                        //   }
+                        //   return value!.length == 6 ? null : 'Pin is incorrect';
+                        // },
                         hapticFeedbackType: HapticFeedbackType.lightImpact,
                         onCompleted: (pin) {
-                          debugPrint('onCompleted: $pin');
                         },
                         onChanged: (value) {
-                          debugPrint('onChanged: $value');
                         },
                         cursor: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -158,7 +154,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         ),
                         submittedPinTheme: defaultPinTheme.copyWith(
                           decoration: defaultPinTheme.decoration!.copyWith(
-                            color: fillColor,
+                            color: const Color.fromRGBO(243, 246, 249, 0),
                             borderRadius: BorderRadius.circular(4),
                             border: Border.all(color: focusedBorderColor),
                           ),
@@ -169,7 +165,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -179,7 +175,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             'Didn\'t receive OTP?',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                              color: Color(0xB2555555),
+                              color: const Color(0xB2555555),
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
@@ -189,7 +185,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             'Resend OTP',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                              color: Color(0xFF3BA365),
+                              color: const Color(0xFF3BA365),
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               letterSpacing: -0.42,
@@ -210,7 +206,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       },
                       borderradius: 4,
                       height: 48,
-                      margin: EdgeInsets.symmetric(vertical: 18),
+                      margin: const EdgeInsets.symmetric(vertical: 18),
                       width: 300,
                       lable: 'Verify & continue',
                     )
@@ -222,7 +218,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   height: double.infinity,
                   width: double.infinity,
                   color: Colors.white60,
-                  child: Center(
+                  child: const Center(
                     child: CircularProgressIndicator.adaptive(),
                   ),
                 )

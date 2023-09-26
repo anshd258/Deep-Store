@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileContainer extends StatelessWidget {
-  const ProfileContainer({super.key});
+  const ProfileContainer(
+      {super.key,
+      required this.name,
+      required this.phoneNumber,
+      required this.joinedDate});
+  final String name;
+  final String phoneNumber;
+  final String joinedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +40,9 @@ class ProfileContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                textwidget("Alice lee ", "", 18, FontWeight.w600),
-                textwidget("+91 9762065768", "", 14, FontWeight.w400),
-                textwidget("Joined on 12/01/22", "", 14, FontWeight.w400),
-                textwidget("Hotel ID:  ", "IDBD900", 14, FontWeight.w600),
+                textwidget(name, "", 18, FontWeight.w600),
+                textwidget(phoneNumber, "", 14, FontWeight.w400),
+                textwidget("Joined on $joinedDate", "", 14, FontWeight.w400),
               ],
             ),
           )
