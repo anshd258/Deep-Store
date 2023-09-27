@@ -1,5 +1,5 @@
 import 'package:customer/middleware/blocs/filtercubit/filter_cubit.dart';
-import 'package:customer/middleware/blocs/food/food_bloc.dart';
+import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
 
 import 'package:customer/middleware/blocs/rentalcubit/rental_cubit.dart';
 import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
@@ -18,9 +18,6 @@ void main() {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
-        create: (context) => FoodBloc(),
-      ),
-      BlocProvider(
         create: (context) => FilterCubit(),
       ),
       BlocProvider(
@@ -33,7 +30,7 @@ void main() {
         create: (context) => RentalCubit(),
       ),
       BlocProvider(
-        create: (context) => FoodBloc(),
+        create: (context) => FoodCubit(),
       ),
     ],
     child: MaterialApp(

@@ -1,5 +1,5 @@
 import 'package:common/common.dart';
-import 'package:customer/middleware/blocs/food/food_bloc.dart';
+import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
 import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/middleware/helpers/shared_preferences_utils.dart';
@@ -22,24 +22,22 @@ class ScreenSetup extends StatefulWidget {
 
 class _ScreenSetupState extends State<ScreenSetup> {
   @override
-  void initState()  {
+  void initState() {
     super.initState();
-    SharedPreferencesUtils.getString(
-            key: SharedPrefrencesKeys.accessToken)
+    SharedPreferencesUtils.getString(key: SharedPrefrencesKeys.accessToken)
         .then((value) {
       print(value);
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<FoodBloc>().add(FetchCartOrder());
+      context.read<FoodCubit>().fetchCartOrders();
       context.read<RideBloc>().add(FetchRideRequests());
       context.read<RentalCubit>().fetchAllRentalRequests();
-      context.read<FoodBloc>().add(FetchFoodOrders());
+      context.read<FoodCubit>().fetchFoodOrders();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return CustomTabView(
       appBar: AppBar(
         toolbarHeight: 80,

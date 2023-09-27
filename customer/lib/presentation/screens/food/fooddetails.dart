@@ -1,4 +1,4 @@
-import 'package:customer/middleware/blocs/food/food_bloc.dart';
+import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -135,6 +135,9 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
               ? const CircularProgressIndicator()
               : const Text('Add to Cart'),
           onPressed: () async {
+            setState(() {
+              showLoadingIndicator = true;
+            });
             // add item to cart.
             Map<String, int> selectedAddons = {};
             Map<String, int> addOns = widget.food.addOns ?? {};
@@ -143,10 +146,16 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
                 selectedAddons[item] = addOns[item] ?? 0;
               }
             }
-            context
-                .read<FoodBloc>()
-                .add(AddItemToCartEvent(widget.food, 1, selectedAddons));
-            if (context.read<FoodBloc>().state.cartOrder != null) {
+            print('----------------------------');
+            bool status = await context
+                .read<FoodCubit>()
+                .addItemToCart(widget.food, 1, selectedAddons);
+            // .add(AddItemToCartEvent(widget.food, 1, selectedAddons));
+            setState(() {
+              showLoadingIndicator = false;
+            });
+            if (status) {
+              context.read<FoodCubit>().fetchCartOrders();
               Navigator.pop(context);
             }
           },

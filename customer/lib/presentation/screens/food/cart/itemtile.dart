@@ -1,8 +1,7 @@
 import 'package:customer/data/models/fooddetail.dart';
+import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../middleware/blocs/food/food_bloc.dart';
 
 class ItemTile extends StatefulWidget {
   const ItemTile({
@@ -18,12 +17,12 @@ class ItemTile extends StatefulWidget {
 
 class _ItemTileState extends State<ItemTile> {
   bool busy = false;
-
   @override
   Widget build(BuildContext context) {
-    String options = widget.item.selectedAddons.keys.map((e) => e).join(', ');
-    return BlocBuilder<FoodBloc, FoodState>(
+    return BlocBuilder<FoodCubit, FoodState>(
       builder: (context, state) {
+        FoodDetails item = state.cartOrder!.items.firstWhere((element) => element.food.foodID == widget.item.food.foodID);
+    String options = item.selectedAddons.keys.map((e) => e).join(', ');
         return Container(
           decoration: const BoxDecoration(
             color: Colors.amber,
@@ -34,7 +33,7 @@ class _ItemTileState extends State<ItemTile> {
             ),
           ),
           child: ListTile(
-            title: Text(widget.item.food.name),
+            title: Text(item.food.name),
             subtitle: options.isNotEmpty
                 ? Text(
                     options,
@@ -73,12 +72,18 @@ class _ItemTileState extends State<ItemTile> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                onPressed: () {
-                                  context.read<FoodBloc>().add(
-                                      AddItemToCartEvent(
-                                          widget.item.food,
-                                          widget.item.quantity + 1,
-                                          widget.item.selectedAddons));
+                                onPressed: () async {
+                                    setState(() {
+                                    busy = true;
+                                  });
+                                  await context.read<FoodCubit>().addItemToCart(
+
+                                      item.food,
+                                      1,
+                                      item.selectedAddons);
+                                        setState(() {
+                                    busy = false;
+                                  });
                                 },
                                 icon: const Icon(
                                   Icons.add_circle,
@@ -86,14 +91,21 @@ class _ItemTileState extends State<ItemTile> {
                                   size: 20,
                                 ),
                               ),
-                              Text('${widget.item.quantity}'),
+                              Text('${item.quantity}'),
                               IconButton(
-                                onPressed: () {
-                                  context.read<FoodBloc>().add(
-                                      AddItemToCartEvent(
-                                          widget.item.food,
-                                          widget.item.quantity - 1,
-                                          widget.item.selectedAddons));
+                                onPressed: () async {
+                                  setState(() {
+                                    busy = true;
+                                  });
+                                  await context
+                                      .read<FoodCubit>()
+                                      .removeFoodItemFromCart(
+                                        item.food,
+                                      );
+
+                                  setState(() {
+                                    busy = false;
+                                  });
 
                                   /// remove item call
                                 },
@@ -125,7 +137,7 @@ class _ItemTileState extends State<ItemTile> {
                     width: 10.0,
                   ),
                   Text(
-                    'Rs. ${widget.item.finalPrice.toStringAsFixed(2)}',
+                    'Rs. ${item.finalPrice.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 16.0,
                     ),

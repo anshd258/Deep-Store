@@ -1,4 +1,4 @@
-part of 'food_bloc.dart';
+part of 'food_cubit.dart';
 
 @immutable
 sealed class FoodState {

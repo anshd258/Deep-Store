@@ -2,7 +2,7 @@ import 'package:customer/presentation/widgets/commonbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../middleware/blocs/food/food_bloc.dart';
+import '../../../../middleware/blocs/foodcubit/food_cubit.dart';
 import 'cardbody.dart';
 import 'payment.dart';
 
@@ -18,7 +18,7 @@ class CartScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
       ),
-      body: const CardBody(),
+      body: const CartBody(),
       bottomNavigationBar: SizedBox(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -29,13 +29,17 @@ class CartScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      'Rs.${context.read<FoodBloc>().state.cartOrder!.totalPrice}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                        color: Colors.black87,
-                      ),
+                    child: BlocBuilder<FoodCubit, FoodState>(
+                      builder: (context, state) {
+                        return Text(
+                          'Rs.${state.cartOrder!.totalPrice}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            color: Colors.black87,
+                          ),
+                        );
+                      },
                     ),
                   ),
                   Expanded(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/food.dart';
-import '../../../middleware/blocs/food/food_bloc.dart';
+import '../../../middleware/blocs/foodcubit/food_cubit.dart';
 import '../../widgets/fooditemcard.dart';
 import 'cart/cart.dart';
 import 'cart/carttile.dart';
@@ -10,12 +10,12 @@ class FoodSelect extends StatelessWidget {
   const FoodSelect({super.key});
   @override
   Widget build(BuildContext context) {
-    context.read<FoodBloc>().add(FetchFoods());
+    context.read<FoodCubit>().fetchFoods();
     return RefreshIndicator.adaptive(
       onRefresh: () async {
-        context.read<FoodBloc>().add(FetchFoods());
+        context.read<FoodCubit>().fetchFoods();
       },
-      child: BlocBuilder<FoodBloc, FoodState>(
+      child: BlocBuilder<FoodCubit, FoodState>(
         builder: (context, state) {
           print('building food select screen');
           return Column(
@@ -23,7 +23,7 @@ class FoodSelect extends StatelessWidget {
               Expanded(
                 child: Builder(builder: (context) {
                   List<Food>? foodList =
-                      context.read<FoodBloc>().state.foodList;
+                      context.read<FoodCubit>().state.foodList;
                   return foodList != null
                       ? ListView.builder(
                           itemCount: foodList.length,

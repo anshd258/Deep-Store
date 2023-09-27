@@ -1,7 +1,7 @@
 import 'package:customer/data/models/foodorder.dart';
 import 'package:customer/data/models/rentalrequest.dart';
 import 'package:customer/data/models/ride.dart';
-import 'package:customer/middleware/blocs/food/food_bloc.dart';
+import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
 import 'package:customer/middleware/blocs/rentalcubit/rental_cubit.dart';
 import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
 import 'package:customer/presentation/screens/orders/foodhistory.dart';
@@ -23,7 +23,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<FoodBloc>().add(FetchFoodOrders());
+        context.read<FoodCubit>().fetchFoodOrders();
         context.read<RentalCubit>().fetchAllRentalRequests();
         context.read<RideBloc>().add(FetchRideRequests());
       },
@@ -133,7 +133,7 @@ class Home extends StatelessWidget {
                       },
                     );
                   } else {
-                    return BlocBuilder<FoodBloc, FoodState>(
+                    return BlocBuilder<FoodCubit, FoodState>(
                       builder: (context, foodstate) {
                         List<FoodOrder> data = foodstate.foodOrderList ?? [];
                         return SizedBox(

@@ -28,6 +28,7 @@ class DataSource {
 
   static const String updateFoodOrder = '/service/update-foodorder/';
   static const String addFoodItem = '/service/add-fooditems/';
+  static const String removeFoodItem = '/service/remove-fooditems/';
   static const String getOtp = '/user/login/';
   static const String updateRoomNumber = '/user/update-user/';
 
@@ -82,7 +83,7 @@ class DataSource {
         return null;
       }
     } catch (e) {
-      print('unable to fetch data! $e');
+      print('unable to fetch data! for $path  $e');
       return null;
     }
   }
