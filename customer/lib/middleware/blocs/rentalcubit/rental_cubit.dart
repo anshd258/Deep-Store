@@ -30,15 +30,19 @@ class RentalCubit extends Cubit<RentalState> {
   }
 
   Future<void> fetchAllRentalRequests() async {
-    await DataSource.getData(
-      path: DataSource.getAllRentalRequests,
-    ).then((value) {
-      if (value != null) {
-        emit(UpdateRentalState(
-          rentalRequestList: value.rentalRequests,
-        ));
-      } else {}
-    });
+    try {
+      await DataSource.getData(
+        path: DataSource.getAllRentalRequests,
+      ).then((value) {
+        if (value != null) {
+          emit(UpdateRentalState(
+            rentalRequestList: value.rentalRequests,
+          ));
+        } else {}
+      });
+    } catch (e) {
+      print('unable to fetch rental requests $e');
+    }
   }
 
   Future<bool> createRentalRequest(String rentalId) async {
@@ -60,7 +64,6 @@ class RentalCubit extends Cubit<RentalState> {
         body: body,
       );
       if (response!.statusCode == 200) return true;
-
 
       return false;
     } catch (e) {

@@ -75,8 +75,8 @@ class ApiResponse {
       ride: json['ride'] != null
           ? Ride.fromJson(json['ride'] as Map<String, dynamic>)
           : null,
-      foodOrders: (json['orders'] as List<Map<String, dynamic>>?)?.map((e) {
-        return FoodOrder.fromJson(e);
+      foodOrders: (json['orders'] as List<dynamic>?)?.map((e) {
+        return FoodOrder.fromJson(e as Map<String, dynamic>);
       }).toList(),
       rentalRequests: (json['rentalrequests'] as List<dynamic>?)
           ?.map((e) => RentalRequest.fromJson(e as Map<String, dynamic>))

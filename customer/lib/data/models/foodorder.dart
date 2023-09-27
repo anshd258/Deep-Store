@@ -1,5 +1,4 @@
 import 'package:customer/data/models/fooddetail.dart';
-import 'package:customer/data/models/user.dart'; // Import the User class
 
 import '../../middleware/helpers/constants.dart';
 
@@ -41,12 +40,11 @@ class FoodOrder {
   }
 
   factory FoodOrder.fromJson(Map<String, dynamic> json) {
-    print('yayyy');
     return FoodOrder(
       id: json['id'].toString(),
-      items: (json['items'] as List<Map<String, dynamic>>)
-          .map((foodJson) => FoodDetails.fromBackendJson(foodJson))
-          .toList(),
+      items: (json['items'] as List<dynamic>).map((foodJson) {
+        return FoodDetails.fromBackendJson(foodJson);
+      }).toList(),
       discount: json['discount'],
       subTotalPrice: json['subtotal'],
       taxes: json['taxes'],
