@@ -60,20 +60,24 @@ class HistoryBody extends StatelessWidget {
                                                 builder: (context) {
                                                   return AlertDialog( 
                                                     elevation: 5,
-                                                    content: Column(
-                                                        children: e.items!
-                                                            .map((e) => Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Text(
-                                                                        "${e.name} (X${e.quantity})"),
-                                                                    Text(
-                                                                        "₹${e.quantity}"),
-                                                                  ],
-                                                                ))
-                                                            .toList()),
+                                                    content: Container(
+                                                      height: 200,
+                                                      width: 300,
+                                                      child: Column(
+                                                          children: e.items!
+                                                              .map((e) => Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Text(
+                                                                          "${e.name} (X${e.quantity})"),
+                                                                      Text(
+                                                                          "₹${e.quantity}"),
+                                                                    ],
+                                                                  ))
+                                                              .toList()),
+                                                    ),
                                                   );
                                                 },
                                               );
