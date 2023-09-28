@@ -1,7 +1,8 @@
 import 'package:customer/data/models/rental.dart';
 import 'package:customer/middleware/helpers/constants.dart';
-import 'package:customer/presentation/widgets/rentalitemcard.dart';
 import 'package:flutter/material.dart';
+
+import '../../widgets/cards/rentalitemcard.dart';
 
 class RentalSelect extends StatefulWidget {
   const RentalSelect({super.key, this.rentalList});
@@ -38,56 +39,51 @@ class _RentalSelectState extends State<RentalSelect> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
-      children: [
-        const Text('Two wheelers only'),
-        const SizedBox(width: 10),
-        Switch(
-          activeColor: Colors.white,
-          activeTrackColor: const Color.fromRGBO(168, 217, 119, 1),
-          value: twoWheelers,
-          onChanged: (value) {
-                    setState(() {
-                      twoWheelers = value;
-                      fourWheelers = value ? false : fourWheelers;
-                    });
-                  },
-        ),
-      ],
-    ),
+                  children: [
+                    const Text('Two wheelers only'),
+                    const SizedBox(width: 10),
+                    Switch(
+                      activeColor: Colors.white,
+                      activeTrackColor: const Color.fromRGBO(168, 217, 119, 1),
+                      value: twoWheelers,
+                      onChanged: (value) {
+                        setState(() {
+                          twoWheelers = value;
+                          fourWheelers = value ? false : fourWheelers;
+                        });
+                      },
+                    ),
+                  ],
+                ),
                 Row(
-      children: [
-        const Text('Four wheelers only'),
-        const SizedBox(width: 10),
-        Switch(
-          activeColor: Colors.white,
-          activeTrackColor: const Color.fromRGBO(168, 217, 119, 1),
-          value: fourWheelers,
-          onChanged: (value) {
-                    setState(() {
-                      fourWheelers = value;
-                      twoWheelers = value ? false : twoWheelers;
-                    });
-                  },
-        ),
-      ],
-    ),
-             
-            
+                  children: [
+                    const Text('Four wheelers only'),
+                    const SizedBox(width: 10),
+                    Switch(
+                      activeColor: Colors.white,
+                      activeTrackColor: const Color.fromRGBO(168, 217, 119, 1),
+                      value: fourWheelers,
+                      onChanged: (value) {
+                        setState(() {
+                          fourWheelers = value;
+                          twoWheelers = value ? false : twoWheelers;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
           Expanded(
-            child: 
-                ListView.builder(
-                    itemCount: displayList.length,
-                    itemBuilder: (context, index) {
-                      Rental rental = displayList[index];
-                      return RentalItemCard(
-                        rental: rental,
-                      );
-                    })
-               
-          ),
+              child: ListView.builder(
+                  itemCount: displayList.length,
+                  itemBuilder: (context, index) {
+                    Rental rental = displayList[index];
+                    return RentalItemCard(
+                      rental: rental,
+                    );
+                  })),
         ],
       );
     } else {

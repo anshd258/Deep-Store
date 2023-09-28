@@ -8,7 +8,7 @@ class Editpageimage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 244,
       width: 328,
       child: Stack(

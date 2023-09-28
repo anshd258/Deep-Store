@@ -1,4 +1,5 @@
-part of 'ride_bloc.dart';
+part of 'ride_cubit.dart';
+
 
 @immutable
 sealed class RideState {
@@ -11,11 +12,7 @@ final class RideInitial extends RideState {
   const RideInitial();
 }
 
-// class UpdateRideState extends RideState {
-//   final Ride? newRide;
-//   final List<Ride>? requests;
-//   const UpdateRideState({this.newRide, this.requests});
-// }
+
 
 class UpdateRideRequestsState extends RideState {
 

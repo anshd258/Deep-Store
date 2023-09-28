@@ -1,6 +1,6 @@
 import 'package:common/common.dart';
 import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
-import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
+import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/middleware/helpers/shared_preferences_utils.dart';
 import 'package:customer/presentation/screens/Profile/Profile.page.dart';
@@ -30,7 +30,7 @@ class _ScreenSetupState extends State<ScreenSetup> {
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FoodCubit>().fetchCartOrders();
-      context.read<RideBloc>().add(FetchRideRequests());
+      context.read<RideCubit>().fetchRideRequests();
       context.read<RentalCubit>().fetchAllRentalRequests();
       context.read<FoodCubit>().fetchFoodOrders();
     });

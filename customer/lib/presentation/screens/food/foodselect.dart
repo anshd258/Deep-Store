@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/food.dart';
 import '../../../middleware/blocs/foodcubit/food_cubit.dart';
-import '../../widgets/fooditemcard.dart';
+import '../../widgets/cards/fooditemcard.dart';
 import 'cart/cart.dart';
 import 'cart/carttile.dart';
 

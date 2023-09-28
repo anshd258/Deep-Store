@@ -23,7 +23,7 @@ class DataSource {
   static const String getAllRentals = '/service/find-all-rentals';
 
   static const String createFoodOrder = '/service/create-foodorder';
-  static const String createRideRequest = '/service/create-ride';
+  static const String createRideRequest = '/service/create-ride/';
   static const String createRentalRequest = '/service/create-rentalbooking';
 
   static const String updateFoodOrder = '/service/update-foodorder/';

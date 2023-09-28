@@ -1,10 +1,10 @@
 import 'package:customer/data/models/ride.dart';
-import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
+import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../widgets/commonbutton.dart';
-import '../../widgets/rentalitemcard.dart';
+import '../../widgets/cards/rentalitemcard.dart';
+import '../../widgets/buttons/commonbutton.dart';
 import '../../widgets/squicircle.dart';
 
 class RideSelect extends StatelessWidget {
@@ -53,7 +53,7 @@ class RideSelect extends StatelessWidget {
                 CommonButton(
                   onPressed: () {
                     /// fire event to create ride request
-                    context.read<RideBloc>().add(CreateRideRequest(
+                    context.read<RideCubit>().createRideRequest(
                           Ride(
                               rating: 5,
                               status: RequestStatus.pending,
@@ -61,7 +61,7 @@ class RideSelect extends StatelessWidget {
                               dropOffLocation: dropoffController.text,
                               pickUpCoordinates: pickupCoordinates,
                               dropOffCoordinates: dropOffCoordinates),
-                        ));
+                        );
                     showDialog(
                         barrierColor: Colors.black26,
                         context: context,

@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../middleware/blocs/authentication/auth_cubit.dart';
 import '../../../middleware/helpers/shared_preferences_utils.dart';
 import '../../screen.setup.dart';
-import '../../widgets/commonbutton.dart';
+import '../../widgets/buttons/commonbutton.dart';
 
 class Loginscreen extends StatefulWidget {
   const Loginscreen({super.key});

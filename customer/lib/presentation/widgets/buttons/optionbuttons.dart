@@ -5,7 +5,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../middleware/blocs/filtercubit/filter_cubit.dart';
+import '../../../middleware/blocs/filtercubit/filter_cubit.dart';
+
 
 class OptionsButton extends StatefulWidget {
   final FilterValue e;

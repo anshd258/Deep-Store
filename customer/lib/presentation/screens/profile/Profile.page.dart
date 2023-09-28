@@ -2,9 +2,9 @@ import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/middleware/helpers/shared_preferences_utils.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/OutlinedDeclineButton.dart';
-import '../../widgets/Profile.container copy.dart';
-import '../../widgets/Profile.optionsContainer copy.dart';
+import '../../widgets/buttons/OutlinedDeclineButton.dart';
+import '../../widgets/cards/Profile.container.dart';
+import '../../widgets/cards/Profile.optionsContainer.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -45,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Container(
             height: 200,
             alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -55,19 +55,19 @@ class _ProfilePageState extends State<ProfilePage> {
                         Navigator.pushNamedAndRemoveUntil(
                             context, '/', (route) => false);
                       },
-                      color: Color(0xFFC25C5C),
+                      color: const Color(0xFFC25C5C),
                       icon: Icons.logout_outlined,
                       height: 42,
-                      margin: EdgeInsets.all(2),
+                      margin: const EdgeInsets.all(2),
                       borderradius: 4,
                       lable: "Log out",
                       width: 158),
                   OutlinedDeclineButton(
                       function: () {},
                       icon: Icons.headset_mic_outlined,
-                      color: Color.fromRGBO(34, 150, 199, 1),
+                      color: const Color.fromRGBO(34, 150, 199, 1),
                       height: 42,
-                      margin: EdgeInsets.all(2),
+                      margin: const EdgeInsets.all(2),
                       borderradius: 4,
                       lable: "call Support",
                       width: 158)

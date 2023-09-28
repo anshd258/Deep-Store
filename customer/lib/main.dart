@@ -2,7 +2,7 @@ import 'package:customer/middleware/blocs/filtercubit/filter_cubit.dart';
 import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
 
 import 'package:customer/middleware/blocs/rentalcubit/rental_cubit.dart';
-import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
+import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/middleware/helpers/shared_preferences_utils.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ void main() {
         create: (context) => AuthCubit(),
       ),
       BlocProvider(
-        create: (context) => RideBloc(),
+        create: (context) => RideCubit(),
       ),
       BlocProvider(
         create: (context) => RentalCubit(),

@@ -81,7 +81,7 @@ class ApiResponse {
       rentalRequests: (json['rentalrequests'] as List<dynamic>?)
           ?.map((e) => RentalRequest.fromJson(e as Map<String, dynamic>))
           .toList(),
-      rideRequests: (json['rides'] as List<dynamic>?)
+      rideRequests: (json['riderequests'] as List<dynamic>?)
           ?.map((e) => Ride.fromJson(e as Map<String, dynamic>))
           .toList(),
       accessToken: json['access'],

@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../middleware/blocs/authentication/auth_cubit.dart';
-import '../../widgets/commonbutton.dart';
+import '../../widgets/buttons/commonbutton.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});

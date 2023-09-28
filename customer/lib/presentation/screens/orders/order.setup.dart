@@ -3,7 +3,7 @@ import 'package:customer/data/models/rentalrequest.dart';
 import 'package:customer/data/models/ride.dart';
 import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
 import 'package:customer/middleware/blocs/rentalcubit/rental_cubit.dart';
-import 'package:customer/middleware/blocs/ride/ride_bloc.dart';
+import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
 import 'package:customer/presentation/screens/orders/foodhistory.dart';
 import 'package:customer/presentation/screens/orders/rentalhistory.dart';
 import 'package:customer/presentation/screens/orders/ridehistory.dart';
@@ -14,7 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../data/models/rental.dart';
 import '../../../middleware/blocs/filtercubit/filter_cubit.dart';
 import '../../../middleware/helpers/constants.dart';
-import '../../widgets/optionbuttons.dart';
+import '../../widgets/buttons/optionbuttons.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -25,7 +25,7 @@ class Home extends StatelessWidget {
       onRefresh: () async {
         context.read<FoodCubit>().fetchFoodOrders();
         context.read<RentalCubit>().fetchAllRentalRequests();
-        context.read<RideBloc>().add(FetchRideRequests());
+        context.read<RideCubit>().fetchRideRequests();
       },
       child: Column(
         children: [
@@ -108,7 +108,7 @@ class Home extends StatelessWidget {
                     );
                   }
                   if (state.SelectedValue == FilterValue.RIDES) {
-                    return BlocBuilder<RideBloc, RideState>(
+                    return BlocBuilder<RideCubit, RideState>(
                       builder: (context, ridestate) {
                         List<Ride> data = ridestate.rideRequests ?? [];
                         return SizedBox(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../widgets/commonbutton.dart';
+import '../../widgets/buttons/commonbutton.dart';
 import 'editprofile.form.dart';
 import 'editprofile.image.dart';
 

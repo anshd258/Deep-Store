@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_code_dart_scan/qr_code_dart_scan.dart';
 
 import '../../../middleware/blocs/authentication/auth_cubit.dart';
-import '../../widgets/commonbutton.dart';
+import '../../widgets/buttons/commonbutton.dart';
 
 class CheckInScreen extends StatefulWidget {
   const CheckInScreen({super.key});

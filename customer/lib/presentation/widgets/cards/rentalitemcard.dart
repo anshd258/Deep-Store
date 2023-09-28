@@ -4,8 +4,8 @@ import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/models/rental.dart';
-import 'commonbutton.dart';
+import '../../../data/models/rental.dart';
+import '../buttons/commonbutton.dart';
 
 class RentalItemCard extends StatefulWidget {
   const RentalItemCard({

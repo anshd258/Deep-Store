@@ -1,8 +1,9 @@
-import 'package:customer/presentation/widgets/commonbutton.dart';
+import 'package:customer/presentation/widgets/buttons/commonbutton.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:flutter/material.dart';
-import '../../data/models/food.dart';
-import '../screens/food/fooddetails.dart';
+
+import '../../../data/models/food.dart';
+import '../../screens/food/fooddetails.dart';
 
 class FoodItemCard extends StatefulWidget {
   const FoodItemCard({
