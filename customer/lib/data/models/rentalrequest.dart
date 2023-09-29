@@ -3,50 +3,39 @@ import 'package:customer/middleware/helpers/constants.dart';
 import 'user.dart';
 
 class RentalRequest {
+  final int requestId;
   final int rentalId;
-  final Rental rental;
   final String pickupLocation;
   final String dropOffLocation;
   final RequestStatus status;
 
-  RentalRequest(this.rentalId,  this.rental, this.pickupLocation, this.dropOffLocation, this.status);
+  RentalRequest({
+    required this.rentalId,
+    required this.pickupLocation,
+    required this.dropOffLocation,
+    required this.status,
+    required this.requestId,
+  });
 
   Map<String, dynamic> toJson() {
     return {
-      'rentalId': rentalId,
-      'rental': rental.toJson(),
-      'pickupLocation': pickupLocation,
-      'dropOffLocation': dropOffLocation,
-      'status': _requestStatusToString(status),
+      'id': requestId,
+      'rental': rentalId,
+      'start_location': pickupLocation,
+      'end_location': dropOffLocation,
+      'status': status.toString(), // Assuming RequestStatus is an enum
     };
   }
 
   factory RentalRequest.fromJson(Map<String, dynamic> json) {
-    return RentalRequest._fromJson(json);
-  }
-
-  static RentalRequest _fromJson(Map<String, dynamic> json) {
     return RentalRequest(
-      json['rentalId'],
-      Rental.fromJson(json['rental']),
-      json['pickupLocation'],
-      json['dropOffLocation'],
-      _stringToRequestStatus(json['status']),
+      requestId: json['id'],
+      rentalId: json['rental'],
+      pickupLocation: json['start_location'],
+      dropOffLocation: json['end_location'],
+      status: mapIntToRequestStatus(json['status'])
     );
   }
-
-  String _requestStatusToString(RequestStatus status) {
-    return _requestStatusMap[status]!;
-  }
-
-  static RequestStatus _stringToRequestStatus(String status) {
-    return _requestStatusMap.entries.firstWhere((entry) => entry.value == status).key;
-  }
-
-  static final Map<RequestStatus, String> _requestStatusMap = {
-    RequestStatus.pending: 'pending',
-    RequestStatus.ongoing: 'ongoing',
-    RequestStatus.success: 'success',
-    RequestStatus.failed: 'failed',
-  };
 }
+
+

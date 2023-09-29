@@ -1,56 +1,61 @@
+import 'package:customer/data/models/rentalrequest.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../middleware/helpers/PotraitSizes.dart';
 import '../../../middleware/helpers/SizesEnum.dart';
 import '../../../middleware/helpers/constants.dart';
-
+import '../../widgets/squicircle.dart';
 
 class RentalHistory extends StatelessWidget {
-  const RentalHistory({super.key});
+  const RentalHistory({super.key, required this.request});
+  final RentalRequest request;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: sizesMapPotrait[Component.ownerOngoingcards]?[Sizes.HEIGHT],
-      margin: EdgeInsets.symmetric(
-          vertical: sizesMapPotrait[Component.ownerOngoingcards]![
-              Sizes.MARGINVERTICAL]!),
+      height: 120,
+      margin: const EdgeInsets.all(12),
       child: Row(
         children: [
-          Image.network(
-            "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: sizesMapPotrait[Component
-                        .ownerOngoingcardsIMAGE]![Sizes.MARGINHORIZONTAL]!),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  child: child,
-                ),
-              );
-            },
-            height: sizesMapPotrait[Component.ownerOngoingcardsIMAGE]
-                ?[Sizes.HEIGHT],
-            width: sizesMapPotrait[Component.ownerOngoingcardsIMAGE]
-                ?[Sizes.WIDTH],
-            fit: BoxFit.fill,
+          Expanded(
+            child: SquicircleContainer(
+              height: double.infinity,
+              child: Image.network(
+                "https://dummyimage.com/300",
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-          Container(
-            height: sizesMapPotrait[Component.ownerOngoingcardsDESC]
-                ?[Sizes.HEIGHT],
-            width: sizesMapPotrait[Component.ownerOngoingcardsDESC]
-                ?[Sizes.WIDTH],
-            alignment: Alignment.centerLeft,
+          const SizedBox(
+            width: 15.0,
+          ),
+          Expanded(
+            flex: 2,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                textwidget("Ice-cream ", "(x3)", 16, FontWeight.w600),
-                textwidget("Name : ", "Alice", 14, FontWeight.w400),
-                textwidget("Ph no :", "+91 8764562372", 14, FontWeight.w400),
-                textwidget("Total : ", "₹1000", 14, FontWeight.w400),
+                textwidget(
+                    request.rentalId.toString(), "", 16, FontWeight.w600),
+                textwidget("items : ", "${request.pickupLocation}", 14,
+                    FontWeight.w400),
+                textwidget("Total : ", "₹${request.dropOffLocation}", 14,
+                    FontWeight.w400),
               ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(
+                    width: 2, color: const Color.fromRGBO(73, 204, 115, 1))),
+            child: Text(
+              request.status.name,
+              style: const TextStyle(
+                  fontSize: 14,
+                  color: Color.fromRGBO(73, 204, 115, 1),
+                  fontWeight: FontWeight.w400),
             ),
           )
         ],

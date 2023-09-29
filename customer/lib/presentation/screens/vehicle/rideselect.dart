@@ -11,6 +11,8 @@ class RideSelect extends StatelessWidget {
   const RideSelect({super.key});
   @override
   Widget build(BuildContext context) {
+
+
     TextEditingController pickupController = TextEditingController();
     TextEditingController dropoffController = TextEditingController();
     String pickupCoordinates = '123';
@@ -66,13 +68,35 @@ class RideSelect extends StatelessWidget {
                         barrierColor: Colors.black26,
                         context: context,
                         builder: (context) {
-                          return  const Center(
+                          return Center(
                             child: SquicircleContainer(
                                 height: 230,
                                 margin: EdgeInsets.all(30),
                                 width: double.infinity,
                                 color: Colors.white,
-                                child: PopUpMessage(text: 'Ride Request Sent')),
+                                child: PopUpMessage(
+                                    function: () async {
+                                      bool status = await context
+                                          .read<RideCubit>()
+                                          .createRideRequest(
+                                            Ride(
+                                                rating: 5,
+                                                status: RequestStatus.pending,
+                                                pickUpLocation:
+                                                    pickupController.text,
+                                                dropOffLocation:
+                                                    dropoffController.text,
+                                                pickUpCoordinates:
+                                                    pickupCoordinates,
+                                                dropOffCoordinates:
+                                                    dropOffCoordinates),
+                                          );
+                                      print(status);
+                                      return status;
+                                    },
+                                    processingText: 'trying to book a ride',
+                                    successText: 'Ride Request Sent',
+                                    faliureText: 'sorry! can\'t book')),
                           );
                         });
                   },

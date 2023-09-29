@@ -128,30 +128,33 @@ class _RentalItemCardState extends State<RentalItemCard> {
                     ),
                     CommonButton(
                       onPressed: () async {
-                        
-                        context
-                            .read<RentalCubit>()
-                            .createRentalRequest(widget.rental.id.toString())
-                            .then((value) {
-                          if (value) {
-                            showDialog(
-                                barrierColor: Colors.black26,
-                                context: context,
-                                builder: (context) {
-                                  return Center(
-                                    child: SquicircleContainer(
-                                        height: 230,
-                                        margin: const EdgeInsets.all(30),
-                                        width: double.infinity,
-                                        color: Colors.white,
-                                        child: PopUpMessage(
-                                            text: value
-                                                ? 'Rental Request Sent'
-                                                : 'sorry! can\'t book')),
-                                  );
-                                });
-                          }
-                        });
+                        showDialog(
+                            barrierColor: Colors.black26,
+                            context: context,
+                            builder: (context) {
+                              return Center(
+                                child: SquicircleContainer(
+                                    height: MediaQuery.of(context).size.height /
+                                        3.5,
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 150, horizontal: 40),
+                                    width: double.infinity,
+                                    color: Colors.white,
+                                    child: PopUpMessage(
+                                        function: () async {
+                                          print(
+                                              'starting rental booking process');
+                                          return await context
+                                              .read<RentalCubit>()
+                                              .createRentalRequest(
+                                                  widget.rental.id.toString());
+                                        },
+                                        processingText:
+                                            'trying to book a rental',
+                                        successText: 'Rental Request Sent',
+                                        faliureText: 'sorry! can\'t book')),
+                              );
+                            });
                       },
                       borderradius: 4,
                       height: 48,
@@ -166,6 +169,75 @@ class _RentalItemCardState extends State<RentalItemCard> {
           ],
         );
       }),
+    );
+  }
+}
+
+class PopUpMessage extends StatefulWidget {
+  const PopUpMessage(
+      {super.key,
+      this.function,
+      required this.successText,
+      required this.faliureText,
+      required this.processingText});
+  final String successText;
+  final String processingText;
+  final String faliureText;
+  final Future<bool> Function()? function;
+  @override
+  State<PopUpMessage> createState() => _PopUpMessageState();
+}
+
+class _PopUpMessageState extends State<PopUpMessage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (widget.function != null) {
+        bool response = await widget.function!();
+        setState(() {
+          done = response;
+        });
+      }
+    });
+  }
+
+  bool? done;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Column(
+            children: [
+              const Image(image: AssetImage('assets/check.png'), height: 60),
+              if (done == null) Text(widget.processingText),
+              if (done == true) Text(widget.successText),
+              if (done == false) Text(widget.faliureText),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text('check home section for updates'),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+          CommonButton(
+            onPressed: () {
+              if (done != null) Navigator.pop(context);
+            },
+            borderradius: 4,
+            width: 328,
+            lable: 'Okay',
+            margin: const EdgeInsets.symmetric(vertical: 0),
+            child: done != null ? null : const CircularProgressIndicator(),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -194,47 +266,6 @@ class IconText extends StatelessWidget {
               color: Color.fromRGBO(65, 65, 65, 0.7)),
         )
       ],
-    );
-  }
-}
-
-class PopUpMessage extends StatelessWidget {
-  const PopUpMessage({super.key, required this.text});
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(18.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              const Image(image: AssetImage('assets/check.png'), height: 60),
-              Text(text),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text('check home section for updates'),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
-          ),
-          CommonButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            borderradius: 4,
-            width: 328,
-            lable: 'Okay',
-            margin: const EdgeInsets.symmetric(vertical: 10),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-        ],
-      ),
     );
   }
 }

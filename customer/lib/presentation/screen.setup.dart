@@ -29,10 +29,10 @@ class _ScreenSetupState extends State<ScreenSetup> {
       print(value);
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<FoodCubit>().fetchCartOrders();
-      context.read<RideCubit>().fetchRideRequests();
+      // context.read<FoodCubit>().fetchFoodOrders();
+      // context.read<RideCubit>().fetchRideRequests();
       context.read<RentalCubit>().fetchAllRentalRequests();
-      context.read<FoodCubit>().fetchFoodOrders();
+      // context.read<FoodCubit>().fetchCartOrders();
     });
   }
 

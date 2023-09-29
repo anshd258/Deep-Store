@@ -46,6 +46,7 @@ class RentalCubit extends Cubit<RentalState> {
   }
 
   Future<bool> createRentalRequest(String rentalId) async {
+    print('inside createRentalRequest function');
     String location = await SharedPreferencesUtils.getString(
             key: SharedPrefrencesKeys.location) ??
         '';
@@ -60,9 +61,10 @@ class RentalCubit extends Cubit<RentalState> {
     try {
       http.Response? response = await DataSource.get(
         queryType: QueryType.post,
-        path: DataSource.createRideRequest,
+        path: DataSource.createRentalRequest,
         body: body,
       );
+
       if (response!.statusCode == 200) return true;
 
       return false;

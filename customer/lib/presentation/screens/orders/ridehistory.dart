@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RidesCard extends StatelessWidget {
-  const RidesCard({super.key, required this.name, required this.pickUpLocation, required this.dropOffLocation, required this.contactNo});
+  const RidesCard(
+      {super.key,
+      required this.name,
+      required this.pickUpLocation,
+      required this.dropOffLocation,
+      required this.contactNo});
   final String name;
   final String pickUpLocation;
   final String dropOffLocation;
@@ -20,7 +25,7 @@ class RidesCard extends StatelessWidget {
             RidesDetailsContainer(
               data: name,
               heading: "Guest Name",
-              fontSize: 20,
+              fontSize: 16,
             ),
             RidesDetailsContainer(
               data: contactNo,
@@ -35,7 +40,7 @@ class RidesCard extends StatelessWidget {
             RidesDetailsContainer(
               data: pickUpLocation,
               heading: "Pickup location",
-              fontSize: 20,
+              fontSize: 16,
             ),
             RidesDetailsContainer(
               data: dropOffLocation,

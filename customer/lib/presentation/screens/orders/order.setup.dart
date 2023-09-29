@@ -99,7 +99,7 @@ class Home extends StatelessWidget {
                               : SingleChildScrollView(
                                   child: Column(
                                     children: data.map((e) {
-                                      return const RentalHistory();
+                                      return  RentalHistory(request: e,);
                                     }).toList(),
                                   ),
                                 ),
@@ -144,7 +144,7 @@ class Home extends StatelessWidget {
                               : SingleChildScrollView(
                                   child: Column(
                                     children: data.map((e) {
-                                      return const FoodHistory();
+                                      return  FoodHistory(order: e,);
                                     }).toList(),
                                   ),
                                 ),

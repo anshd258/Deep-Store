@@ -26,7 +26,7 @@ class RideCubit extends Cubit<RideState> {
     });
   }
 
-  Future<void> createRideRequest(Ride ride) async {
+  Future<bool> createRideRequest(Ride ride) async {
     print('trying to create a ride request ');
     Map<String, dynamic> body = {
       "start_location": "Spsdfituk",
@@ -52,9 +52,12 @@ class RideCubit extends Cubit<RideState> {
       if (response != null) {
         print(json.decode(response.body));
         print('done requesting ride');
+        return true;
       }
     } catch (e) {
       print('someting when wrong while requesting ride $e');
     }
+
+    return false;
   }
 }

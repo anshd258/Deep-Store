@@ -24,7 +24,7 @@ class DataSource {
 
   static const String createFoodOrder = '/service/create-foodorder';
   static const String createRideRequest = '/service/create-ride/';
-  static const String createRentalRequest = '/service/create-rentalbooking';
+  static const String createRentalRequest = '/service/create-rentalbooking/';
 
   static const String updateFoodOrder = '/service/update-foodorder/';
   static const String addFoodItem = '/service/add-fooditems/';
@@ -76,6 +76,7 @@ class DataSource {
           break;
       }
       if (response.statusCode == 200) {
+        print(response.body);
         ApiResponse apiResponse =
             ApiResponse.fromJson(json.decode(response.body));
         return apiResponse;
@@ -131,6 +132,7 @@ class DataSource {
           );
           break;
       }
+      print(response.body);
       return response;
     } catch (e) {
       if (kDebugMode) {
