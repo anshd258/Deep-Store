@@ -31,8 +31,8 @@ class Rentals {
   String? startTime;
   String? endTime;
   int? status;
-  double? distance;
-  double? rating;
+  String? distance;
+  String? rating;
 
 
   Rentals(
@@ -52,15 +52,15 @@ class Rentals {
   Rentals.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    startLocation = json['start_location'];
-    endLocation = json['end_location'];
-    startCoordinates = json['start_coordinates'];
-    endCoordinates = json['end_coordinates'];
-    startTime = json['start_time'];
-    endTime = json['end_time'];
+    startLocation = json['start_location'].toString();
+    endLocation = json['end_location'].toString();
+    startCoordinates = json['start_coordinates'].toString();
+    endCoordinates = json['end_coordinates'].toString();
+    startTime = json['start_time'].toString();
+    endTime = json['end_time'].toString();
     status = json['status'];
-    distance = json['distance'];
-    rating = json['rating'];
+    distance = json['distance'].toString();
+    rating = json['rating'].toString();
    
   }
 
@@ -90,17 +90,17 @@ class User {
   String? contact;
   String? otp;
   String? username;
-  Null? room;
+  String? room;
 
   User({this.id, this.contact, this.otp, this.username, this.room});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
 
-    contact = json['contact'];
-    otp = json['otp'];
-    username = json['username'];
-    room = json['room'];
+    contact = json['contact'].toString();
+    otp = json['otp'].toString();
+    username = json['username'].toString();
+    room = json['room'].toString();
   }
 
   Map<String, dynamic> toJson() {

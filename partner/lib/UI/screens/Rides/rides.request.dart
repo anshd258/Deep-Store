@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:partner/UI/widget/ownerRequestCard.dart';
 import 'package:partner/UI/widget/rides.tabe.dart';
 import 'package:partner/helpers/constants.dart';
@@ -87,7 +88,18 @@ class _RidesRequestState extends State<RidesRequest>
               }
               if (state is IncomingRentalRequestCompleted) {
                 if (state.rentalRequest!.rentals!.isEmpty) {
-                  return noIncomingRequest;
+                  return LiquidPullToRefresh(
+                      onRefresh: () async {
+                        context
+                            .read<IncomingRentalRequestCubit>()
+                            .getIncomingRequest(
+                              StatusFood.processing.code.toString(),
+                            );
+                      },
+                      child: SingleChildScrollView(
+                        child: noIncomingRequest,
+                        physics: AlwaysScrollableScrollPhysics(),
+                      ));
                 } else {
                   return RentalRequest(
                     data: state,
@@ -113,7 +125,18 @@ class _RidesRequestState extends State<RidesRequest>
               }
               if (state is IncomingRideRequestLoaded) {
                 if (state.rideRequest!.rides!.isEmpty) {
-                  return noIncomingRequest;
+                  return LiquidPullToRefresh(
+                      onRefresh: () async {
+                        context
+                            .read<IncomingRideRequestCubit>()
+                            .getIncomingRequest(
+                              StatusFood.processing.code.toString(),
+                            );
+                      },
+                      child: SingleChildScrollView(
+                        child: noIncomingRequest,
+                        physics: AlwaysScrollableScrollPhysics(),
+                      ));
                 } else {
                   return RideRequest(
                     data: state,
@@ -138,14 +161,21 @@ class RentalRequest extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: double.infinity,
-      child: SingleChildScrollView(
-        child: Column(
-          children: data.rentalRequest!.rentals!
-              .map((e) => OwnerRequestcard(
-                    type: RequestType.rental,
-                    id: e.id!.toString(),
-                  ))
-              .toList(),
+      child: LiquidPullToRefresh(
+        onRefresh: () async {
+          context.read<IncomingRentalRequestCubit>().getIncomingRequest(
+                StatusFood.processing.code.toString(),
+              );
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: data.rentalRequest!.rentals!
+                .map((e) => OwnerRequestcard(
+                      type: RequestType.rental,
+                      id: e.id!.toString(),
+                    ))
+                .toList(),
+          ),
         ),
       ),
     );
@@ -160,14 +190,21 @@ class RideRequest extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: double.infinity,
-      child: SingleChildScrollView(
-        child: Column(
-          children: data.rideRequest!.rides!
-              .map((e) => OwnerRequestcard(
-                    type: RequestType.ride,
-                    id: e.id!.toString(),
-                  ))
-              .toList(),
+      child: LiquidPullToRefresh(
+        onRefresh: () async {
+          context.read<IncomingRideRequestCubit>().getIncomingRequest(
+                StatusFood.processing.code.toString(),
+              );
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: data.rideRequest!.rides!
+                .map((e) => OwnerRequestcard(
+                      type: RequestType.ride,
+                      id: e.id!.toString(),
+                    ))
+                .toList(),
+          ),
         ),
       ),
     );

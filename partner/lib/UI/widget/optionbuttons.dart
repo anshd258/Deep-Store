@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/Constants/filterEnum.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/filter_cubit_cubit.dart';
 import 'package:partner/middleware/HistoryCubit/history_filter_cubit.dart';
+import 'package:partner/middleware/partnercubit/partner_filter_cubit.dart';
 
 class OptionsButton extends StatefulWidget {
   final value e;
@@ -33,27 +34,32 @@ class _OptionsButtonState extends State<OptionsButton>
     return Builder(
       builder: (context) {
         late var state;
-        var temp = widget.type == "Accepted"
-            ? context.watch<FilterCubitCubit>().state
-            : context.watch<HistoryFilterCubit>().state;
-        if (temp is FilterCubitState) {
-          state = temp;
-          
-        } else {
-          state = temp as HistoryFilterState;
-          print(state.SelectedValue);
+        
+        if (widget.type == "Accepted") {
+          state = context.watch<FilterCubitCubit>().state;
+        } else if (widget.type == "history") {
+          state = context.watch<HistoryFilterCubit>().state;
+        } else if (widget.type == "partner") {
+          state = context.watch<PartnerFilterCubit>().state;
         }
+
+       
         return GestureDetector(
           onTap: () {
             ctr!.forward().then((value) => ctr!.reset());
-            if(state is FilterCubitState){context
-                .read<FilterCubitCubit>()
-                .ChangeFilter(widget.e, widget.e.index + 1);}
-                else if(state is HistoryFilterState){
-                 context.read<HistoryFilterCubit>()
-                .ChangeFilter(widget.e, widget.e.index + 1);
-                }
-            
+            if (state is FilterCubitState) {
+              context
+                  .read<FilterCubitCubit>()
+                  .ChangeFilter(widget.e, widget.e.index + 1);
+            } else if (state is HistoryFilterState) {
+              context
+                  .read<HistoryFilterCubit>()
+                  .ChangeFilter(widget.e, widget.e.index + 1);
+            }else if(state is PartnerFilterState){
+               context
+                  .read<PartnerFilterCubit>()
+                  .ChangeFilter(widget.e, widget.e.index + 1);
+            }
 
             setState(() {});
           },

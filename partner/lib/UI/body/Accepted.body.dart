@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:partner/UI/widget/rentalCard.dart';
+import 'package:partner/helpers/constants.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_ride_request_cubit.dart';
 
 import 'package:partner/UI/util/utilwidget.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/filter_cubit_cubit.dart';
+import 'package:partner/middleware/incomingRequestCubit/incoming_rental_request_cubit.dart';
+import 'package:partner/middleware/incomingRequestCubit/incoming_request_cubit.dart';
 
 import '../widget/rideCard.dart';
 
@@ -39,69 +43,89 @@ class _RidesBodyState extends State<RidesBody> {
                   return progressIndicator;
                 } else if (state is AcceptedRequestsLoaded) {
                   if (state.foodRequest!.orders!.isEmpty) {
-                    return noAcceptedRequest;
+                    return LiquidPullToRefresh(
+                        onRefresh: () async {
+                          context
+                              .read<AcceptedRequestsCubit>()
+                              .getAcceptedRequests();
+                        },
+                        child: SingleChildScrollView(
+                          child: noAcceptedRequest,
+                          physics: AlwaysScrollableScrollPhysics(),
+                        ));
                   } else {
-                    return SingleChildScrollView(
-                      child: Column(
-                          children: state.foodRequest!.orders!
-                              .map((e) => Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "Room no ${e.user}",
-                                          style: GoogleFonts.lato(
-                                            color: Color.fromARGB(255, 0, 0, 0),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
+                    return LiquidPullToRefresh(
+                      onRefresh: () async {
+                        context
+                            .read<AcceptedRequestsCubit>()
+                            .getAcceptedRequests();
+                      },
+                      child: SingleChildScrollView(
+                        child: Column(
+                            children: state.foodRequest!.orders!
+                                .map((e) => Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Room no ${e.user}",
+                                            style: GoogleFonts.lato(
+                                              color:
+                                                  Color.fromARGB(255, 0, 0, 0),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                            ),
                                           ),
-                                        ),
-                                        InkWell(
-                                            onTap: () {
-                                              showDialog(
-                                                barrierLabel: "cancle",
-                                                barrierDismissible: true,
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    elevation: 5,
-                                                    content: Container(
-                                                      height: 200,
-                                                      width: 300,
-                                                      child: Column(
-                                                          children: e.items!
-                                                              .map((e) => Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                          "${e.name} (X${e.quantity})"),
-                                                                      Text(
-                                                                          "₹${e.quantity}"),
-                                                                    ],
-                                                                  ))
-                                                              .toList()),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                            child: RidesCard(
-                                              heading1: "Guest name",
-                                              heading2: "items ordered",
-                                              heading3: "Contact no",
-                                              heading4: "Total amount",
-                                              data1: e.user!.contact!,
-                                              data2: e.items!.length.toString(),
-                                              data3: e.user!.contact.toString(),
-                                              data4: "₹${e.total!.toString()}",
-                                            )),
-                                      ],
-                                    ),
-                                  ))
-                              .toList()),
+                                          InkWell(
+                                              onTap: () {
+                                                showDialog(
+                                                  barrierLabel: "cancle",
+                                                  barrierDismissible: true,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      elevation: 5,
+                                                      content: Container(
+                                                        height: 200,
+                                                        width: 300,
+                                                        child: Column(
+                                                            children: e.items!
+                                                                .map((e) => Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        Text(
+                                                                            "${e.name} (X${e.quantity})"),
+                                                                        Text(
+                                                                            "₹${e.quantity}"),
+                                                                      ],
+                                                                    ))
+                                                                .toList()),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: RidesCard(
+                                                heading1: "Guest name",
+                                                heading2: "items ordered",
+                                                heading3: "Contact no",
+                                                heading4: "Total amount",
+                                                data1: e.user!.contact!,
+                                                data2:
+                                                    e.items!.length.toString(),
+                                                data3:
+                                                    e.user!.contact.toString(),
+                                                data4:
+                                                    "₹${e.total!.toString()}",
+                                              )),
+                                        ],
+                                      ),
+                                    ))
+                                .toList()),
+                      ),
                     );
                   }
                 } else {
@@ -126,30 +150,46 @@ class _RidesBodyState extends State<RidesBody> {
                   return progressIndicator;
                 } else if (state is AcceptedRideRequestLoaded) {
                   if (state.rideRequest!.rides!.isEmpty) {
-                    return noAcceptedRequest;
+                    return LiquidPullToRefresh(
+                        onRefresh: () async {
+                          context
+                              .read<AcceptedRideRequestCubit>()
+                              .getAcceptedRequests();
+                        },
+                        child: SingleChildScrollView(
+                          child: noAcceptedRequest,
+                          physics: AlwaysScrollableScrollPhysics(),
+                        ));
                   } else {
-                    return SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Text(
-                            "Room no ",
-                            style: GoogleFonts.lato(
-                              color: Color.fromARGB(255, 0, 0, 0),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
+                    return LiquidPullToRefresh(
+                      onRefresh: () async {
+                        context
+                            .read<AcceptedRideRequestCubit>()
+                            .getAcceptedRequests();
+                      },
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Text(
+                              "Room no ",
+                              style: GoogleFonts.lato(
+                                color: Color.fromARGB(255, 0, 0, 0),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          ),
-                          Column(
-                              children: state.rideRequest!.rides!
-                                  .map((e) => ownerOngoingcards(
-                                        contact: e.user!.contact!,
-                                        user: e.user!.contact!,
-                                        name: e.startLocation!,
-                                        quantitiy: e.distance.toString(),
-                                        total: e.price!.toString(),
-                                      ))
-                                  .toList()),
-                        ],
+                            Column(
+                                children: state.rideRequest!.rides!
+                                    .map((e) => ownerOngoingcards(
+                                          contact: e.user!.contact!,
+                                          user: e.user!.contact!,
+                                          name: e.startLocation!,
+                                          quantitiy: e.distance.toString(),
+                                          total: e.price!.toString(),
+                                        ))
+                                    .toList()),
+                          ],
+                        ),
                       ),
                     );
                   }
@@ -175,33 +215,50 @@ class _RidesBodyState extends State<RidesBody> {
                 return progressIndicator;
               } else if (state is AcceptedRentalRequestLoaded) {
                 if (state.rentalRequest!.rentals!.isEmpty) {
-                  return noAcceptedRequest;
+                  return LiquidPullToRefresh(
+                      onRefresh: () async {
+                        context
+                            .read<AcceptedRentalRequestCubit>()
+                            .getAcceptedRequests();
+                      },
+                      child: SingleChildScrollView(
+                        child: noAcceptedRequest,
+                        physics: AlwaysScrollableScrollPhysics(),
+                      ));
                 } else {
-                  return SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Text(
-                          "Room no ",
-                          style: GoogleFonts.lato(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
+                  return LiquidPullToRefresh(
+                    onRefresh: () async {
+                      context
+                          .read<AcceptedRentalRequestCubit>()
+                          .getAcceptedRequests();
+                    },
+                    child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Room no ",
+                            style: GoogleFonts.lato(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                        ),
-                        Column(
-                            children: state.rentalRequest!.rentals!
-                                .map((e) => RidesCard(
-                                      heading1: "Guest name",
-                                      heading2: "pickup location",
-                                      heading3: "Contact no",
-                                      heading4: "Dropoff location",
-                                      data1: e.user!.username!,
-                                      data2: e.startLocation!,
-                                      data3: e.user!.contact.toString(),
-                                      data4: e.endLocation!,
-                                    ))
-                                .toList()),
-                      ],
+                          Column(
+                              children: state.rentalRequest!.rentals!
+                                  .map((e) => RidesCard(
+                                        heading1: "Guest name",
+                                        heading2: "pickup location",
+                                        heading3: "Contact no",
+                                        heading4: "Dropoff location",
+                                        data1: e.user!.username!,
+                                        data2: e.startLocation!,
+                                        data3: e.user!.contact.toString(),
+                                        data4: e.endLocation!,
+                                      ))
+                                  .toList()),
+                        ],
+                      ),
                     ),
                   );
                 }

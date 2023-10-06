@@ -2,8 +2,10 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:partner/UI/body/partner.body.dart';
 import 'package:partner/UI/screens/Profile/Profile.page.dart';
 import 'package:partner/UI/screens/Rides/rides.request.dart';
+import 'package:partner/UI/screens/partners/Partner.main.dart';
 import 'package:partner/helpers/constants.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
@@ -47,6 +49,7 @@ class ScreenSetup extends StatelessWidget {
         const Home(),
         FoodRequest(),
         const RidesRequest(),
+        const PartnerMain(),
         const ProfilePage(),
       ],
       items: const [
@@ -70,6 +73,12 @@ class ScreenSetup extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(
+            Icons.diamond_outlined,
+          ),
+          label: 'Partners',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
             NavBarIcons.account,
           ),
           label: 'Account',
@@ -81,7 +90,7 @@ class ScreenSetup extends StatelessWidget {
   void initialData(BuildContext context) {
     context
         .read<IncomingFoodRequestCubit>()
-        .getIncomingRequest(StatusFood.processing.code.toString());
+        .getIncomingRequest(StatusFood.processing.code.toString(), "567");
     context
         .read<IncomingRentalRequestCubit>()
         .getIncomingRequest(StatusRideRental.pending.code.toString());

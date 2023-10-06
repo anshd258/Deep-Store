@@ -6,6 +6,7 @@ import 'package:partner/UI/widget/optionbuttons.dart';
 
 class FilterWidget extends StatefulWidget {
   String type;
+  
   FilterWidget({super.key, required this.type});
 
   @override

@@ -1,15 +1,15 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart';
 import 'package:bloc/bloc.dart';
 
 import 'package:partner/helpers/api.service.dart';
 import 'package:partner/helpers/constants.dart';
+import 'package:partner/middleware/Repository/AuthRepo.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthInitial> {
-  AuthCubit() : super(AuthInitial(otpSent: false, loading: false));
+  final Authrepository _authrepository;
+  AuthCubit(this._authrepository)
+      : super(AuthInitial(otpSent: false, loading: false));
 
   String pathGetOtp = "/user/login/";
 
@@ -20,13 +20,17 @@ class AuthCubit extends Cubit<AuthInitial> {
             path: pathGetOtp,
             urlParameters: parameters,
             queryType: QueryType.get)
-        .whenComplete(
-      () {
+        .then(
+      (value) {
+        String token = value['jwt'];
         emit(
           AuthInitial(
+            jwt: token,
             otpSent: true,
             loading: false,
-            obj: Token(phoneNumber: phoneNumber),
+            obj: Token(
+              phoneNumber: phoneNumber,
+            ),
           ),
         );
       },
@@ -34,9 +38,11 @@ class AuthCubit extends Cubit<AuthInitial> {
   }
 
   void loginWithOtp(String otp) async {
-    emit(AuthInitial(otpSent: false, loading: true, obj: state.obj));
+    emit(AuthInitial(
+        otpSent: false, loading: true, obj: state.obj, jwt: state.jwt));
     Map<String, String> headers = {
       'Content-Type': 'application/json',
+      'jwt': state.jwt!
     };
 
     Map<String, dynamic> body = {
@@ -48,40 +54,41 @@ class AuthCubit extends Cubit<AuthInitial> {
     print(state.obj!.phoneNumber);
     print(otp);
     try {
-      if (otp == "123456") {
-        Timer(Duration(seconds: 1), () {
-          emit(AuthInitial(
-              otpSent: false,
-              loading: false,
-              obj: Token(
-                  phoneNumber: state.obj!.phoneNumber,
-                  authToken: "afsasfsaf",
-                  refreshToken: "asdsad")));
-        });
-      } else {
-      await  Future.delayed(const Duration(seconds: 1), () {
-          throw (Exception("invalid otp"));
-        });
-      }
-      // Response response = await getData(
-      //     path: pathGetOtp,
-      //     queryType: QueryType.post,
-      //     body: body,
-      //     headers: headers);
-      // Map<String, dynamic> responseBody = json.decode(response.body);
-      // print(responseBody);
-      // if (responseBody['access'] != null) {
-      //   emit(
-      //     AuthInitial(
-      //       otpSent: false,
-      //       loading: false,
-      //       obj: Token(
-      //           phoneNumber: state.obj!.phoneNumber,
-      //           authToken: responseBody['access'],
-      //           refreshToken: responseBody['refresh']),
-      //     ),
-      //   );
+      // if (otp == "123456") {
+      //   Timer(Duration(seconds: 1), () {
+      //     emit(AuthInitial(
+      //         otpSent: false,
+      //         loading: false,
+      //         obj: Token(
+      //             phoneNumber: state.obj!.phoneNumber,
+      //             authToken: "afsasfsaf",
+      //             refreshToken: "asdsad")));
+      //   });
+      // } else {
+      //   await Future.delayed(const Duration(seconds: 1), () {
+      //     throw (Exception("invalid otp"));
+      //   });
       // }
+      Map<String, dynamic> response = await getData(
+          path: pathGetOtp,
+          queryType: QueryType.post,
+          body: body,
+          headers: headers);
+
+      print(response);
+      if (response['access'] != null) {
+        _authrepository.update(response['access'], response['refresh']);
+        emit(
+          AuthInitial(
+            otpSent: false,
+            loading: false,
+            obj: Token(
+                phoneNumber: state.obj!.phoneNumber,
+                authToken: response['access'],
+                refreshToken: response['refresh']),
+          ),
+        );
+      }
     } catch (e) {
       emit(AuthInitial(
           otpSent: false,

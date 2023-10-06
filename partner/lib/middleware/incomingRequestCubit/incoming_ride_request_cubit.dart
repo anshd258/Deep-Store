@@ -3,15 +3,22 @@ import 'package:meta/meta.dart';
 import 'package:partner/helpers/api.service.dart';
 import 'package:partner/helpers/constants.dart';
 import 'package:partner/helpers/models/ride.request.dart';
+import 'package:partner/middleware/Repository/AuthRepo.dart';
 
 part 'incoming_ride_request_state.dart';
 
 class IncomingRideRequestCubit extends Cubit<IncomingRideRequestState> {
-  IncomingRideRequestCubit() : super(IncomingRideRequestInitial());
+  final Authrepository _authrepository;
+  IncomingRideRequestCubit(this._authrepository)
+      : super(IncomingRideRequestInitial());
 
   String path = "/service/get-order-by-type";
 
   void getIncomingRequest(String code) async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_authrepository.accessToken}',
+    };
     emit(IncomingRideRequestLoading());
     Map<String, dynamic> parameters = {
       "type": RequestType.ride.name,
@@ -20,7 +27,10 @@ class IncomingRideRequestCubit extends Cubit<IncomingRideRequestState> {
     print(parameters);
 
     var response = await getData(
-            path: path, urlParameters: parameters, queryType: QueryType.get)
+            path: path,
+            urlParameters: parameters,
+            queryType: QueryType.get,
+            headers: headers)
         .onError((error, stackTrace) =>
             emit(IncomingRideRequestError(message: error.toString())));
 
@@ -31,13 +41,18 @@ class IncomingRideRequestCubit extends Cubit<IncomingRideRequestState> {
   }
 
   void rejectRequest(String id) async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_authrepository.accessToken}',
+    };
     String path = "/service/set-status-ride/";
     Map<String, dynamic> body = {
       'ride_id': id,
       'status': StatusRideRental.rejected.code.toString()
     };
 
-    await getData(path: path, queryType: QueryType.post, body: body)
+    await getData(
+            path: path, queryType: QueryType.post, body: body, headers: headers)
         .then((value) =>
             getIncomingRequest(StatusRideRental.pending.code.toString()))
         .onError((error, stackTrace) =>
@@ -45,13 +60,18 @@ class IncomingRideRequestCubit extends Cubit<IncomingRideRequestState> {
   }
 
   void acceptRequest(String id) async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_authrepository.accessToken}',
+    };
     String path = "/service/set-status-rental/";
     Map<String, dynamic> body = {
       'ride_id': id,
       'status': StatusRideRental.accepted.code.toString()
     };
 
-    await getData(path: path, queryType: QueryType.post, body: body)
+    await getData(
+            path: path, queryType: QueryType.post, body: body, headers: headers)
         .then((value) =>
             getIncomingRequest(StatusRideRental.pending.code.toString()))
         .onError((error, stackTrace) =>

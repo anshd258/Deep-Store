@@ -44,7 +44,7 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
                     if (widget.type == RequestType.food) {
                       context
                           .read<IncomingFoodRequestCubit>()
-                          .acceptRequest(widget.id);
+                          .acceptRequest(widget.id, "5345");
                     } else if (widget.type == RequestType.ride) {
                       context
                           .read<IncomingRideRequestCubit>()
@@ -80,7 +80,7 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
                     if (widget.type == RequestType.food) {
                       context
                           .read<IncomingFoodRequestCubit>()
-                          .rejectRequest(widget.id);
+                          .rejectRequest(widget.id, "345");
                     } else if (widget.type == RequestType.ride) {
                       context
                           .read<IncomingRideRequestCubit>()
