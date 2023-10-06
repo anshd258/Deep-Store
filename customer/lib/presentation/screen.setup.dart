@@ -2,7 +2,6 @@ import 'package:common/common.dart';
 import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
 import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
 import 'package:customer/middleware/helpers/constants.dart';
-import 'package:customer/middleware/helpers/shared_preferences_utils.dart';
 import 'package:customer/presentation/screens/Profile/Profile.page.dart';
 import 'package:customer/presentation/screens/orders/order.setup.dart';
 import 'package:customer/presentation/screens/vehicle/vehicleselect.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../middleware/blocs/rentalcubit/rental_cubit.dart';
+import '../middleware/helpers/sharedprefrence.utils.dart';
 import 'screens/food/foodselect.dart';
 
 class ScreenSetup extends StatefulWidget {
@@ -29,10 +29,6 @@ class _ScreenSetupState extends State<ScreenSetup> {
       print(value);
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<FoodCubit>().fetchFoodOrders();
-      context.read<RideCubit>().fetchRideRequests();
-      context.read<RentalCubit>().fetchAllRentalRequests();
-      context.read<FoodCubit>().fetchCartOrders();
     });
   }
 

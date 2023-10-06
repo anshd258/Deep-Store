@@ -8,6 +8,7 @@ class ProfileEditFormField extends StatelessWidget {
   String hintText;
   TextInputType keyBoardtype;
   String? Function(String?)? function;
+  TextEditingController controller;
   ProfileEditFormField(
       {super.key,
       required this.maxlength,
@@ -15,24 +16,25 @@ class ProfileEditFormField extends StatelessWidget {
       required this.name,
       required this.function,
       required this.hintText,
-      required this.icon});
+      required this.icon,
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
     var outlineInputBorder = OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(
-                        color: Color(0x99565656),
-                        strokeAlign: BorderSide.strokeAlignInside,
-                        width: 1),
-                  );
+      borderRadius: BorderRadius.circular(4),
+      borderSide: const BorderSide(
+          color: Color(0x99565656),
+          strokeAlign: BorderSide.strokeAlignInside,
+          width: 1),
+    );
     var outlineInputBorderError = OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: const BorderSide(
-                        color: Color.fromARGB(153, 255, 54, 54),
-                        strokeAlign: BorderSide.strokeAlignInside,
-                        width: 1),
-                  );
+      borderRadius: BorderRadius.circular(4),
+      borderSide: const BorderSide(
+          color: Color.fromARGB(153, 255, 54, 54),
+          strokeAlign: BorderSide.strokeAlignInside,
+          width: 1),
+    );
     return SizedBox(
       height: 100,
       child: Column(
@@ -45,7 +47,7 @@ class ProfileEditFormField extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  color: Color(0xFF555555),
+                  color: const Color(0xFF555555),
                   size: 18,
                 ),
                 const SizedBox(width: 4),
@@ -64,22 +66,23 @@ class ProfileEditFormField extends StatelessWidget {
             ),
             SizedBox(
               child: TextFormField(
+                controller: controller,
                 keyboardType: keyBoardtype,
                 maxLength: maxlength,
                 validator: function,
-                cursorColor: Color(0x99565656),
+                cursorColor: const Color(0x99565656),
                 decoration: InputDecoration(
                   errorBorder: outlineInputBorderError,
                   errorStyle: GoogleFonts.nunito(
-                    color: Color.fromARGB(153, 255, 54, 54),
+                    color: const Color.fromARGB(153, 255, 54, 54),
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     height: 1.25,
                   ),
-                  constraints: BoxConstraints(maxHeight: 70),
+                  constraints: const BoxConstraints(maxHeight: 70),
                   hintText: hintText,
                   hintStyle: GoogleFonts.nunito(
-                    color: Color(0x99565656),
+                    color: const Color(0x99565656),
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     height: 1.25,

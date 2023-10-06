@@ -1,10 +1,10 @@
 import 'package:customer/data/models/foodorder.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../middleware/helpers/PotraitSizes.dart';
-import '../../../middleware/helpers/SizesEnum.dart';
+import '../../../middleware/blocs/foodcubit/food_cubit.dart';
 import '../../../middleware/helpers/constants.dart';
 
 class FoodHistory extends StatelessWidget {
@@ -17,69 +17,108 @@ class FoodHistory extends StatelessWidget {
         order.items.map((item) => item.food.name.toString()).toList();
     String names = itemnames.join(", ");
     return Container(
-      height: 120,
-      margin: const EdgeInsets.all(12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: SquicircleContainer(
-              height: double.infinity,
-              child: Image.network(
-                "https://dummyimage.com/300",
-                fit: BoxFit.cover,
+      child: LayoutBuilder(builder: (context, constraints) {
+        return SquicircleContainer(
+          margin: EdgeInsets.symmetric(
+              horizontal: constraints.maxWidth * 0.05,
+              vertical: constraints.maxWidth * 0.025),
+          child: Card(
+            elevation: 4,
+            // shape:
+            //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Text(
+                        //   'Items',
+                        //   style: GoogleFonts.lato(
+                        //       color: Colors.black,
+                        //       fontSize: 16,
+                        //       fontWeight: FontWeight.w600),
+                        // ),
+                        textwidget(
+                          'Items',
+                          names,
+                          16,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            textwidget(
+                              "Items ordered ",
+                              "${itemnames.length}",
+                              16,
+                            ),
+                            textwidget(
+                              "Total amount",
+                              "₹${order.totalPrice}",
+                              16,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Builder(builder: (context) {
+                      Color color = Color.fromRGBO(73, 204, 115, 1);
+                      if (order.status == RequestStatus.hold)
+                        color = Colors.red;
+                      return Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(width: 2, color: color)),
+                        child: Center(
+                          child: Text(
+                            order.status.name,
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: color,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      );
+                    }),
+                  )
+                ],
               ),
             ),
           ),
-          const SizedBox(
-            width: 15.0,
-          ),
-          Expanded(
-            flex: 2,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                textwidget(names, "", 16, FontWeight.w600),
-                textwidget(
-                    "items : ", "${itemnames.length}", 14, FontWeight.w400),
-                textwidget(
-                    "Total : ", "₹${order.totalPrice}", 14, FontWeight.w400),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(
-                    width: 2, color: const Color.fromRGBO(73, 204, 115, 1))),
-            child:  Text(
-              order.status.name,
-              style: const TextStyle(
-                  fontSize: 14,
-                  color: Color.fromRGBO(73, 204, 115, 1),
-                  fontWeight: FontWeight.w400),
-            ),
-          )
-        ],
-      ),
+        );
+      }),
     );
   }
 
-  Row textwidget(
-      String text1, String text2, double fontSize, FontWeight fontWeight) {
-    return Row(
+  Column textwidget(String text1, String text2, double fontSize) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(text1,
             style: GoogleFonts.lato(
                 color: Colors.black,
-                fontSize: fontSize,
-                fontWeight: FontWeight.w600)),
+                fontSize: fontSize - 2,
+                fontWeight: FontWeight.w400)),
         Text(text2,
             style: GoogleFonts.lato(
                 color: Colors.black,
-                fontSize: fontSize,
-                fontWeight: fontWeight))
+                fontSize: fontSize + 2,
+                fontWeight: FontWeight.w600))
       ],
     );
   }

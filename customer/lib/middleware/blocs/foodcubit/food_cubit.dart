@@ -10,12 +10,26 @@ import '../../../data/models/food.dart';
 import '../../../data/models/fooddetail.dart';
 import '../../../data/models/foodorder.dart';
 import '../../helpers/constants.dart';
-import '../../helpers/shared_preferences_utils.dart';
+import '../../helpers/sharedprefrence.utils.dart';
 
 part 'food_state.dart';
 
 class FoodCubit extends Cubit<FoodState> {
   FoodCubit() : super(FoodInitial());
+
+  Future<bool> updateOrderStatus(String orderId, RequestStatus status) async {
+    Map<String, dynamic> body = {
+      "order": {"id": orderId, "status": status.index}
+    };
+    Response? response = await DataSource.get(
+        path: DataSource.updateFoodOrder,
+        queryType: QueryType.post,
+        body: body);
+    if (response != null) {
+      return true;
+    }
+    return false;
+  }
 
   Future<bool> addItemToCart(
       Food food, int quantity, Map<String, int> selectedAddons) async {
@@ -63,6 +77,8 @@ class FoodCubit extends Cubit<FoodState> {
         Map<String, dynamic> urlParameters = {
           'id': (order.id).toString(),
         };
+        print('------------ about to fetch the new cart order--------------');
+        print(urlParameters);
         ApiResponse? apiResponse = await DataSource.getData(
             path: DataSource.getFoodOrder, urlParameters: urlParameters);
 
@@ -77,6 +93,7 @@ class FoodCubit extends Cubit<FoodState> {
     } catch (e) {
       print('something went wrong while adding foodItemtoCart : $e');
     }
+    fetchFoodOrders();
     return status;
   }
 
@@ -97,7 +114,7 @@ class FoodCubit extends Cubit<FoodState> {
     });
   }
 
-  Future<void> fetchFoodOrders() async {
+  Future<bool> fetchFoodOrders() async {
     try {
       await DataSource.getData(
           path: DataSource.getOrderByType,
@@ -107,11 +124,14 @@ class FoodCubit extends Cubit<FoodState> {
               foodOrderList: value.foodOrders,
               cartOrder: state.cartOrder,
               foodList: state.foodList));
-        } else {}
+          return true;
+        } else {
+        }
       });
     } catch (e) {
       print(e);
     }
+    return false;
   }
 
   Future<void> fetchCartOrders() async {
@@ -123,15 +143,20 @@ class FoodCubit extends Cubit<FoodState> {
       ApiResponse? apiResponse = await DataSource.getData(
           path: DataSource.getOrderByType, urlParameters: urlParameters);
       if (apiResponse!.foodOrders != null) {
-        FoodOrder? cartOrder = apiResponse.foodOrders?.first;
-        emit(UpdateFoodState(
-            cartOrder: cartOrder,
-            foodList: state.foodList,
-            foodOrderList: state.foodOrderList));
+        if (apiResponse.foodOrders!.isNotEmpty) {
+          FoodOrder? cartOrder = apiResponse.foodOrders?.first;
+          emit(UpdateFoodState(
+              cartOrder: cartOrder,
+              foodList: state.foodList,
+              foodOrderList: state.foodOrderList));
+        } else {
+          // do nothing.
+        }
       }
     } catch (e) {
       print('unable to fetch cart order $e');
     }
+    print('cart updated');
   }
 
   Future<bool> removeFoodItemFromCart(Food food) async {

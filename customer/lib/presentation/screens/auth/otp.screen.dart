@@ -56,7 +56,7 @@ class _OtpScreenState extends State<OtpScreen> {
         ),
       ),
       body: Center(
-          child: BlocConsumer<AuthCubit, AuthInitial>(
+          child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.obj != null && state.obj!.accessToken != null) {
             if (state.obj!.newUser!) {

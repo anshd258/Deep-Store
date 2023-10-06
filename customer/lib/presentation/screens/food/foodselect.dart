@@ -10,17 +10,18 @@ class FoodSelect extends StatelessWidget {
   const FoodSelect({super.key});
   @override
   Widget build(BuildContext context) {
-    context.read<FoodCubit>().fetchFoods();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+         context.read<FoodCubit>().fetchFoods();
+      context.read<FoodCubit>().fetchCartOrders();
+    });
 
     return RefreshIndicator.adaptive(
       onRefresh: () async {
         context.read<FoodCubit>().fetchFoods();
-      context.read<FoodCubit>().fetchCartOrders();
-
+        context.read<FoodCubit>().fetchCartOrders();
       },
       child: BlocBuilder<FoodCubit, FoodState>(
         builder: (context, state) {
-          print('building food select screen');
           return Column(
             children: [
               Expanded(

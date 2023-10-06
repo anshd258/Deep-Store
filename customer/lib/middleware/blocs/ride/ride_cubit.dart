@@ -13,24 +13,26 @@ part 'ride_state.dart';
 class RideCubit extends Cubit<RideState> {
   RideCubit() : super(const RideInitial());
 
-  Future<void> fetchRideRequests() async {
+  Future<bool> fetchRideRequests() async {
     await DataSource.getData(
       path: DataSource.getAllRideRequests,
     ).then((value) {
       if (value != null) {
-        print(value.rideRequests!.length);
         emit(UpdateRideRequestsState(
           rideRequests: value.rideRequests,
         ));
+        return true;
       }
     });
+    print('ride requests fetched');
+    return false;
   }
 
   Future<bool> createRideRequest(Ride ride) async {
     print('trying to create a ride request ');
     Map<String, dynamic> body = {
-      "start_location": "Spsdfituk",
-      "end_location": "Nubrsdfa",
+      "start_location": "${ride.pickUpLocation}",
+      "end_location": "${ride.dropOffLocation}",
       "start_coordinates": "123.23",
       "end_coordinates": "2323.3423",
       "price": 2000
@@ -52,6 +54,7 @@ class RideCubit extends Cubit<RideState> {
       if (response != null) {
         print(json.decode(response.body));
         print('done requesting ride');
+        fetchRideRequests();
         return true;
       }
     } catch (e) {

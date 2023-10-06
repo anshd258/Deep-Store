@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:customer/data/datasource.dart';
 import 'package:customer/middleware/helpers/constants.dart';
-import 'package:customer/middleware/helpers/shared_preferences_utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 import '../../../data/models/rental.dart';
 import '../../../data/models/rentalrequest.dart';
+import '../../helpers/sharedprefrence.utils.dart';
 
 part 'rental_state.dart';
 
@@ -29,7 +29,7 @@ class RentalCubit extends Cubit<RentalState> {
     });
   }
 
-  Future<void> fetchAllRentalRequests() async {
+  Future<bool> fetchAllRentalRequests() async {
     try {
       await DataSource.getData(
         path: DataSource.getAllRentalRequests,
@@ -38,11 +38,13 @@ class RentalCubit extends Cubit<RentalState> {
           emit(UpdateRentalState(
             rentalRequestList: value.rentalRequests,
           ));
+          return true;
         } else {}
       });
     } catch (e) {
       print('unable to fetch rental requests $e');
     }
+    return false;
   }
 
   Future<bool> createRentalRequest(String rentalId) async {
@@ -65,7 +67,10 @@ class RentalCubit extends Cubit<RentalState> {
         body: body,
       );
 
-      if (response!.statusCode == 200) return true;
+      if (response!.statusCode == 200) {
+        fetchAllRentalRequests();
+        return true;
+      }
 
       return false;
     } catch (e) {

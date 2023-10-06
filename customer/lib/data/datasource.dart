@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:customer/data/models/apiresponse.dart';
-import 'package:customer/middleware/helpers/shared_preferences_utils.dart';
+import 'package:customer/middleware/helpers/sharedprefrence.utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:customer/middleware/helpers/constants.dart';
@@ -12,7 +12,7 @@ class DataSource {
 
   // static const String getMenu = 'service/get-menu/';
 
-  static const String getFoodOrder = '/service/find-foodorder';
+  static const String getFoodOrder = '/service/find-foodorder/';
   static const String getOrderByType = '/service/get-order-by-type';
 
   static const String getAllFoodOrder = '/service/find-all-foodorders';
@@ -31,6 +31,7 @@ class DataSource {
   static const String removeFoodItem = '/service/remove-fooditems/';
   static const String getOtp = '/user/login/';
   static const String updateRoomNumber = '/user/update-user/';
+  static const String getUserDetails = '/user/get-user/';
 
   static Future<ApiResponse?> getData({
     QueryType queryType = QueryType.get,
@@ -45,6 +46,7 @@ class DataSource {
         urlParameters);
 
     final String bodyAsString = json.encode(body);
+    print(path);
     String? accessToken = await SharedPreferencesUtils.getString(
         key: SharedPrefrencesKeys.accessToken);
     if (accessToken == null) {

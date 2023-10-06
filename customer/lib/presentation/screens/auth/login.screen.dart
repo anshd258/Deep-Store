@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../middleware/blocs/authentication/auth_cubit.dart';
-import '../../../middleware/helpers/shared_preferences_utils.dart';
+import '../../../middleware/helpers/sharedprefrence.utils.dart';
 import '../../screen.setup.dart';
 import '../../widgets/buttons/commonbutton.dart';
 
@@ -22,22 +22,17 @@ class _LoginscreenState extends State<Loginscreen> {
   @override
   void initState() {
     super.initState();
-        SharedPreferencesUtils.getString(key: SharedPrefrencesKeys.accessToken)
+    SharedPreferencesUtils.getString(key: SharedPrefrencesKeys.accessToken)
         .then((value) {
-          if(value != null) {
-            Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  const ScreenSetup()));
-          }
+      if (value != null) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const ScreenSetup()));
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -53,11 +48,7 @@ class _LoginscreenState extends State<Loginscreen> {
           ),
         ),
       ),
-      body: Center(
-          child: BlocConsumer<AuthCubit, AuthInitial>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
+      body: Center(child: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
           return Stack(
             alignment: Alignment.center,
@@ -83,18 +74,6 @@ class _LoginscreenState extends State<Loginscreen> {
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
-                          SizedBox(
-                            height: 40,
-                            child: Text(
-                              "Enter your Phone number",
-                              style: GoogleFonts.lato(
-                                color: const Color(0xB2555555),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: -0.28,
-                              ),
-                            ),
-                          )
                         ],
                       ),
                     ),
@@ -159,16 +138,16 @@ class _LoginscreenState extends State<Loginscreen> {
                         ],
                       ),
                     ),
-                    BlocConsumer<AuthCubit, AuthInitial>(
-                      buildWhen: (previous, current) {
-                        if (previous.otpSent == current.otpSent) {
-                          return true;
-                        } else {
-                          return false;
-                        }
-                      },
+                    BlocConsumer<AuthCubit, AuthState>(
+                      // buildWhen: (previous, current) {
+                      //   if (previous.otpSent == current.otpSent) {
+                      //     return true;
+                      //   } else {
+                      //     return false;
+                      //   }
+                      // },
                       listener: (context, state) {
-                        if (state.otpSent) {
+                        if (state.otpSent!) {
                           Navigator.pushNamed(context, "/otpPage");
                         }
                       },

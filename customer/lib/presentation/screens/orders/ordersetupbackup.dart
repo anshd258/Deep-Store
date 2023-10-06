@@ -15,84 +15,67 @@ import '../../../middleware/blocs/filtercubit/filter_cubit.dart';
 import '../../../middleware/helpers/constants.dart';
 import '../../widgets/buttons/optionbuttons.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<FoodCubit>().fetchFoodOrders();
       context.read<RentalCubit>().fetchAllRentalRequests();
-      context.read<RideCubit>().fetchRideRequests();
+        context.read<RideCubit>().fetchRideRequests();
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        print('refreshing now');
-        await context.read<FoodCubit>().fetchFoodOrders();
-        await context.read<RentalCubit>().fetchAllRentalRequests();
-        await context.read<RideCubit>().fetchRideRequests();
-      },
-      child: ListView(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 10,
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: 200,
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                child: Text(
+                  "Ongoing requests",
+                  style: GoogleFonts.lato(
+                      fontSize: 18, fontWeight: FontWeight.w700),
                 ),
-                Container(
-                  width: 200,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                  child: Text(
-                    "Ongoing requests",
-                    style: GoogleFonts.lato(
-                        fontSize: 18, fontWeight: FontWeight.w700),
-                  ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.symmetric(vertical: 15),
+                child: Row(
+                  children: [
+                    BlocBuilder<FilterCubit, FilterState>(
+                      builder: (context, state) {
+                        return Container(
+                          height: 33,
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            children: FilterValue.values.map((e) {
+                              return OptionsButton(
+                                e: e,
+                                selectede: state.SelectedValue,
+                              );
+                            }).toList(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(vertical: 15),
-                  child: Row(
-                    children: [
-                      BlocBuilder<FilterCubit, FilterState>(
-                        builder: (context, state) {
-                          return Container(
-                            height: 33,
-                            margin: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Row(
-                              children: FilterValue.values.map((e) {
-                                return OptionsButton(
-                                  e: e,
-                                  selectede: state.SelectedValue,
-                                );
-                              }).toList(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
-          Builder(builder: (context) {
+        ),
+        Expanded(
+          child: Builder(builder: (context) {
             return BlocBuilder<FilterCubit, FilterState>(
               builder: (context, state) {
                 if (state.loading) {
@@ -181,9 +164,9 @@ class _HomeState extends State<Home> {
                 }
               },
             );
-          })
-        ],
-      ),
+          }),
+        )
+      ],
     );
   }
 }

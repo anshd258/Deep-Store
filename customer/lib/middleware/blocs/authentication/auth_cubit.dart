@@ -1,20 +1,42 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:customer/data/models/authentication.dart';
 import 'package:customer/data/datasource.dart';
 import 'package:bloc/bloc.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
+import '../../../data/models/user.dart';
 import '../../helpers/constants.dart';
-import '../../helpers/shared_preferences_utils.dart';
+import '../../helpers/sharedprefrence.utils.dart';
 
 part 'auth_state.dart';
 
-class AuthCubit extends Cubit<AuthInitial> {
-  AuthCubit() : super(AuthInitial(otpSent: false, loading: false)) {}
+class AuthCubit extends Cubit<AuthState> {
+  AuthCubit() : super(AuthState(otpSent: false, loading: false)) {}
+
+  Future<bool> getUserDetails() async {
+    String? phone = await SharedPreferencesUtils.getString(
+        key: SharedPrefrencesKeys.userPhoneNumber);
+    if (phone != null) {
+      Response? response =
+          await DataSource.get(path: DataSource.getUserDetails, urlParameters: {'phone': phone});
+      if (response != null) {
+        print('user details fetched ${response.body}');
+        User user = User.fromJson(json.decode(response.body));
+        emit(AuthState(
+            loading: state.loading,
+            obj: state.obj,
+            otpSent: state.otpSent,
+            user: user));
+        return true;
+      }
+    }
+    return false;
+  }
 
   Future<bool> updateRoomNumber(String roomNumber) async {
-    http.Response? response = await DataSource.get(
+    Response? response = await DataSource.get(
         path: DataSource.updateRoomNumber,
         queryType: QueryType.post,
         headers: {
@@ -38,16 +60,23 @@ class AuthCubit extends Cubit<AuthInitial> {
     await SharedPreferencesUtils.storeString(
         key: SharedPrefrencesKeys.userPhoneNumber,
         value: phoneNumber.toString());
+    print(phoneNumber);
     Map<String, dynamic> parameters = {"phone": phoneNumber};
-    emit(AuthInitial(otpSent: false, loading: true));
+    emit(AuthState(otpSent: false, loading: true));
+    print(Uri.https(DataSource.backend, DataSource.getOtp, parameters));
 
     try {
-      http.Response response = await http
-          .get(Uri.https(DataSource.backend, DataSource.getOtp, parameters));
+      Response response = await get(
+              Uri.https(DataSource.backend, DataSource.getOtp, parameters))
+          .then((value) {
+        print(value.body);
+        return value;
+      });
+
       if (response.statusCode == 200) {
         String jwtToken = json.decode(response.body)['jwt'];
         emit(
-          AuthInitial(
+          AuthState(
             otpSent: true,
             loading: false,
             obj: Authentication(phoneNumber: phoneNumber, authToken: jwtToken),
@@ -55,20 +84,20 @@ class AuthCubit extends Cubit<AuthInitial> {
         );
       }
     } catch (e) {
-      print('unable to request for otp');
-      emit(AuthInitial(otpSent: false, loading: false));
+      print('unable to request for otp $e');
+      emit(AuthState(otpSent: false, loading: false));
     }
   }
 
   void loginWithOtp(String otp) async {
-    emit(AuthInitial(otpSent: false, loading: true, obj: state.obj));
+    emit(AuthState(otpSent: false, loading: true, obj: state.obj));
 
     Map<String, dynamic> body = {
       'otp': otp,
       'phone': state.obj!.phoneNumber,
     };
     try {
-      http.Response? response = await DataSource.get(
+      Response? response = await DataSource.get(
           queryType: QueryType.post,
           path: DataSource.getOtp,
           body: body,
@@ -81,7 +110,7 @@ class AuthCubit extends Cubit<AuthInitial> {
       //     headers: {'jwt': state.obj!.authToken.toString()});
       if (credentials['access'] != null) {
         emit(
-          AuthInitial(
+          AuthState(
             otpSent: false,
             loading: false,
             obj: Authentication(
@@ -103,7 +132,7 @@ class AuthCubit extends Cubit<AuthInitial> {
             value: state.obj!.phoneNumber ?? '');
       }
     } catch (e) {
-      emit(AuthInitial(otpSent: false, loading: false, obj: state.obj));
+      emit(AuthState(otpSent: false, loading: false, obj: state.obj));
     }
   }
 }

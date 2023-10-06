@@ -13,9 +13,7 @@ class FilterCubit extends Cubit<FilterState> {
   void changeFilter(FilterValue e, int index) {
     state.SelectedValue = e;
     emit(FilterState(SelectedValue: e, loading: true, tabIndex: index));
-    Timer(const Duration(seconds: 2), () {
       emit(FilterState(
-          SelectedValue: state.SelectedValue, loading: false, tabIndex: index));
-    });
+          SelectedValue: e, loading: false, tabIndex: index));
   }
 }

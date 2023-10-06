@@ -4,6 +4,7 @@ import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../data/models/rental.dart';
 import '../buttons/commonbutton.dart';
 
@@ -34,10 +35,10 @@ class _RentalItemCardState extends State<RentalItemCard> {
               child: SquicircleContainer(
                 height: constraints.maxHeight - 10,
                 child: Image.network(
-                  "https://dummyimage.com/300",
-                  // widget.rental.image != null
-                  //     ? widget.rental.image!
-                  //     : "https://dummyimage.com/300",
+                  // "https://dummyimage.com/300",
+                  widget.rental.image != null
+                      ? widget.rental.image!
+                      : "https://dummyimage.com/300",
                   fit: BoxFit.cover,
                 ),
               ),
@@ -45,7 +46,8 @@ class _RentalItemCardState extends State<RentalItemCard> {
             Expanded(
               flex: 4,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -214,13 +216,36 @@ class _PopUpMessageState extends State<PopUpMessage> {
           Column(
             children: [
               const Image(image: AssetImage('assets/check.png'), height: 60),
-              if (done == null) Text(widget.processingText),
-              if (done == true) Text(widget.successText),
-              if (done == false) Text(widget.faliureText),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
-              const Text('check home section for updates'),
+              if (done == null)
+                Text(
+                  widget.processingText,
+                  style: GoogleFonts.lato(fontSize: 18),
+                ),
+              if (done == true)
+                Text(
+                  widget.successText,
+                  style: GoogleFonts.lato(fontSize: 18),
+                ),
+              if (done == false)
+                Text(
+                  widget.faliureText,
+                  style: GoogleFonts.lato(fontSize: 18),
+                ),
+              const SizedBox(
+                height: 20,
+              ),
+              done == null
+                  ? Text(
+                      'please wait',
+                      style: GoogleFonts.lato(fontSize: 14),
+                    )
+                  : Text(
+                      'check home section for updates',
+                      style: GoogleFonts.lato(fontSize: 14),
+                    ),
               const SizedBox(
                 height: 10,
               ),

@@ -1,10 +1,11 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:customer/data/models/rentalrequest.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../middleware/helpers/PotraitSizes.dart';
-import '../../../middleware/helpers/SizesEnum.dart';
-import '../../../middleware/helpers/constants.dart';
+import '../../../middleware/blocs/rentalcubit/rental_cubit.dart';
 import '../../widgets/squicircle.dart';
 
 class RentalHistory extends StatelessWidget {

@@ -55,15 +55,7 @@ class RideSelect extends StatelessWidget {
                 CommonButton(
                   onPressed: () {
                     /// fire event to create ride request
-                    context.read<RideCubit>().createRideRequest(
-                          Ride(
-                              rating: 5,
-                              status: RequestStatus.pending,
-                              pickUpLocation: pickupController.text,
-                              dropOffLocation: dropoffController.text,
-                              pickUpCoordinates: pickupCoordinates,
-                              dropOffCoordinates: dropOffCoordinates),
-                        );
+                  
                     showDialog(
                         barrierColor: Colors.black26,
                         context: context,
@@ -71,7 +63,7 @@ class RideSelect extends StatelessWidget {
                           return Center(
                             child: SquicircleContainer(
                                 height: 230,
-                                margin: EdgeInsets.all(30),
+                                margin: const EdgeInsets.all(30),
                                 width: double.infinity,
                                 color: Colors.white,
                                 child: PopUpMessage(
@@ -91,7 +83,6 @@ class RideSelect extends StatelessWidget {
                                                 dropOffCoordinates:
                                                     dropOffCoordinates),
                                           );
-                                      print(status);
                                       return status;
                                     },
                                     processingText: 'trying to book a ride',

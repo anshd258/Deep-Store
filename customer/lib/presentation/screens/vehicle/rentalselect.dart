@@ -1,7 +1,9 @@
 import 'package:customer/data/models/rental.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../middleware/blocs/rentalcubit/rental_cubit.dart';
 import '../../widgets/cards/rentalitemcard.dart';
 
 class RentalSelect extends StatefulWidget {
@@ -76,14 +78,20 @@ class _RentalSelectState extends State<RentalSelect> {
             ),
           ),
           Expanded(
+            child: RefreshIndicator(
+              onRefresh: () async {
+        context.read<RentalCubit>().fetchAllRentals();
+      },
               child: ListView.builder(
-                  itemCount: displayList.length,
-                  itemBuilder: (context, index) {
-                    Rental rental = displayList[index];
-                    return RentalItemCard(
-                      rental: rental,
-                    );
-                  })),
+                    itemCount: displayList.length,
+                    itemBuilder: (context, index) {
+                      Rental rental = displayList[index];
+                      return RentalItemCard(
+                        rental: rental,
+                      );
+                    }),
+            ),
+          ),
         ],
       );
     } else {

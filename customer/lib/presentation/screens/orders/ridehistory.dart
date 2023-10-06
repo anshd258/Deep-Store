@@ -1,4 +1,6 @@
+import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RidesCard extends StatelessWidget {

@@ -6,10 +6,11 @@ class ProfileContainer extends StatelessWidget {
       {super.key,
       required this.name,
       required this.phoneNumber,
-      required this.joinedDate});
+      required this.email, required this.room});
   final String name;
   final String phoneNumber;
-  final String joinedDate;
+  final String email;
+  final String room;
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +42,9 @@ class ProfileContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 textwidget(name, "", 18, FontWeight.w600),
-                textwidget(phoneNumber, "", 14, FontWeight.w400),
-                textwidget("Joined on $joinedDate", "", 14, FontWeight.w400),
+                textwidget('Phone No. : ', phoneNumber, 14, FontWeight.w400),
+                textwidget('Email : ', email, 14, FontWeight.w400),
+                textwidget('Room Number : ', room, 14, FontWeight.w400),
               ],
             ),
           )
