@@ -3,55 +3,67 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RidesCard extends StatelessWidget {
-  const RidesCard(
-      {super.key,
-      required this.name,
-      required this.pickUpLocation,
-      required this.dropOffLocation,
-      required this.contactNo});
-  final String name;
-  final String pickUpLocation;
-  final String dropOffLocation;
-  final String contactNo;
+import '../../../data/models/ride.dart';
+
+class RidesHistory extends StatelessWidget {
+  const RidesHistory({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 140,
-      padding: const EdgeInsets.only(left: 18, right: 18, top: 12, bottom: 20),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            RidesDetailsContainer(
-              data: name,
-              heading: "Guest Name",
-              fontSize: 16,
-            ),
-            RidesDetailsContainer(
-              data: contactNo,
-              heading: "Contact Number",
-              fontSize: 16,
-            )
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            RidesDetailsContainer(
-              data: pickUpLocation,
-              heading: "Pickup location",
-              fontSize: 16,
-            ),
-            RidesDetailsContainer(
-              data: dropOffLocation,
-              heading: "Drop off location",
-              fontSize: 16,
-            )
-          ],
-        )
-      ]),
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<RideCubit>().fetchRideRequests();
+    });
+    return RefreshIndicator(
+      onRefresh: () async {
+        await context.read<RideCubit>().fetchRideRequests();
+      },
+      child: BlocBuilder<RideCubit, RideState>(
+        builder: (context, ridestate) {
+          List<Ride>? data = ridestate.rideRequests;
+          return SizedBox(
+            child: data != null
+                ? data.isEmpty
+                    ? const Center(
+                        child: Text('no rides booked'),
+                      )
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: data.map((ride) {
+                            return Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              margin: const EdgeInsets.all(18),
+                              child: Container(
+                                padding: const EdgeInsets.only(
+                                    left: 25, right: 25, top: 12, bottom: 20),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: RidesDetailsContainer(
+                                          data: ride.pickUpLocation ?? '',
+                                          heading: "Pickup location",
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: RidesDetailsContainer(
+                                          data: ride.dropOffLocation ?? '',
+                                          heading: "Drop off location",
+                                          fontSize: 16,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      )
+                : const Center(child: CircularProgressIndicator()),
+          );
+        },
+      ),
     );
   }
 }
@@ -68,16 +80,12 @@ class RidesDetailsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      height: 50,
+    return SizedBox(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             margin: const EdgeInsets.only(bottom: 1),
-            width: double.infinity,
             child: Text(
               heading,
               style: GoogleFonts.lato(
@@ -87,15 +95,17 @@ class RidesDetailsContainer extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
           Container(
             margin: const EdgeInsets.only(top: 1),
-            width: double.infinity,
             child: Text(
               data,
               style: GoogleFonts.lato(
                 color: const Color(0xFF555555),
                 fontSize: fontSize,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),

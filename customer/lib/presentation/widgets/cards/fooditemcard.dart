@@ -29,8 +29,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
             child: SquicircleContainer(
               height: double.infinity,
               child: Image.network(
-                widget.food.images ??
-                "https://dummyimage.com/300",
+                widget.food.images ?? "https://dummyimage.com/300",
                 fit: BoxFit.cover,
               ),
             ),
@@ -56,7 +55,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
                 Text(
                   widget.food.description,
                   style: const TextStyle(
-                    fontSize: 16.0,
+                    fontSize: 12.0,
                     color: Color.fromRGBO(85, 85, 85, 1),
                     fontWeight: FontWeight.w600,
                   ),
@@ -71,25 +70,20 @@ class _FoodItemCardState extends State<FoodItemCard> {
                 ),
                 CommonButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FoodDetailSelector(
-                                food: widget.food, outerContext: context)));
-                    // showDialog(
-                    //     barrierColor: Colors.black45,
-                    //     context: context,
-                    //     builder: (context) {
-                    //       return Center(
-                    //         child: SquicircleContainer(
-                    //           width: double.infinity,
-                    //           margin: const EdgeInsets.all(10),
-                    //           height: 500,
-                    //           child: FoodDetailSelector(
-                    //               food: widget.food, outerContext: context),
-                    //         ),
-                    //       );
-                    //     });
+                    showModalBottomSheet(
+                        context: context,
+                        clipBehavior: Clip.hardEdge,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        builder: (context) {
+                          return FoodDetailSelector(
+                              food: widget.food, outerContext: context);
+                        });
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => FoodDetailSelector(
+                    //             food: widget.food, outerContext: context)));
                   },
                   borderradius: 4,
                   height: 48,

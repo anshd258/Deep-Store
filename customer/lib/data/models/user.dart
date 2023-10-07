@@ -1,12 +1,11 @@
 class User {
-  final String? firstName;
-  final String? lastName;
+  final String? name;
   final String? email;
   final String? contact;
   final String? room;
   final String? propertyId;
 
-  User({this.firstName, this.lastName, 
+  User({this.name,
     this.propertyId, 
     this.email,
     this.contact,
@@ -15,12 +14,12 @@ class User {
 
  factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      firstName: json['user']['first_name'] as String?,
-      lastName: json['user']['last_name'] as String?,
-      email: json['user']['email'] as String?,
+      name: json['username'] as String?,
+      email: json['email'] as String?,
       contact: json['contact'] as String?,
       room: json['room'] as String?,
       propertyId: json['property_id'] as String?,
     );
   }
+
 }

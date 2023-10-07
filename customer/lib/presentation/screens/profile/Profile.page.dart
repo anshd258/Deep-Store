@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ? Column(
                   children: <Widget>[
                     ProfileContainer(
-                      name: '${state.user!.firstName} ${state.user!.lastName} ',
+                      name: '${state.user!.name}',
                       phoneNumber: state.user!.contact ?? '',
                       email: state.user!.email ?? '',
                       room: state.user?.room ?? '',

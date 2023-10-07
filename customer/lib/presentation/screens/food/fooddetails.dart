@@ -1,4 +1,5 @@
 import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
+import 'package:customer/presentation/widgets/buttons/commonbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,149 +19,167 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
   List<String> selecteditems = [];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Wrap(
-          runSpacing: 10.0,
-          alignment: WrapAlignment.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
           children: [
-            SizedBox(
-              height: 250,
-              width: MediaQuery.of(context).size.width,
-              child: Image.network(
-                'https://images.unsplash.com/photo-1550547660-d9450f859349?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-                fit: BoxFit.cover,
-                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
-                    frame == null
-                        ? const Center(
-                            child: CircularProgressIndicator.adaptive())
-                        : child,
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.all(18.0),
-              child: Row(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  height: MediaQuery.of(context).size.width / 2.5,
+                  width: MediaQuery.of(context).size.width / 2.5,
+                  widget.food.images ?? "https://dummyimage.com/300",
+                  fit: BoxFit.cover,
+                  frameBuilder:
+                      (context, child, frame, wasSynchronouslyLoaded) =>
+                          frame == null
+                              ? const Center(
+                                  child: CircularProgressIndicator.adaptive())
+                              : child,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Column(
                 children: [
-                  Text(
-                    '${widget.food.name},Rs. ${widget.food.price}',
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      widget.food.description,
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Builder(builder: (context) {
-                List<MapEntry<String, int>> addons = [];
-                if (widget.food.addOns != null) {
-                  addons = widget.food.addOns!.entries.toList();
-                }
-
-                return ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: addons.length,
-                  itemBuilder: (BuildContext _, int index) {
-                    String name = addons.elementAt(index).key;
-                    int price = addons.elementAt(index).value;
-
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black12,
-                        ),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(
-                            5.0,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 18.0, vertical: 9),
+                    child: Row(
+                      children: [
+                        Text(
+                          '${widget.food.name},Rs. ${widget.food.price}',
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                      child: CheckboxListTile(
-                        activeColor: Colors.blue,
-                        title: Text(name),
-                        subtitle: Text('Rs. $price'),
-                        value:
-                            selecteditems.contains(addons.elementAt(index).key),
-                        onChanged: (status) {
-                          if (status ?? false) {
-                            selecteditems.add(addons.elementAt(index).key);
-                          } else {
-                            selecteditems.remove(addons.elementAt(index).key);
-                          }
-                          setState(() {});
-                        },
-                      ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 10.0,
-                    );
-                  },
-                );
-              }),
-            ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            widget.food.description,
+                            style: const TextStyle(
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [
-          Color.fromRGBO(32, 171, 154, 1),
-          Color.fromRGBO(34, 150, 199, 1),
-        ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
-        child: ElevatedButton(
-          style: const ButtonStyle(
-              elevation: MaterialStatePropertyAll(0),
-              backgroundColor: MaterialStatePropertyAll(Colors.transparent)),
-          child: showLoadingIndicator
-              ? const CircularProgressIndicator()
-              : const Text('Add to Cart'),
-          onPressed: () async {
-            setState(() {
-              showLoadingIndicator = true;
-            });
-            // add item to cart.
-            Map<String, int> selectedAddons = {};
-            Map<String, int> addOns = widget.food.addOns ?? {};
-            for (String item in selecteditems) {
-              if (addOns.containsKey(item)) {
-                selectedAddons[item] = addOns[item] ?? 0;
-              }
+        const Divider(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: Builder(builder: (context) {
+            List<MapEntry<String, int>> addons = [];
+            if (widget.food.addOns != null) {
+              addons = widget.food.addOns!.entries.toList();
             }
-            print('----------------------------');
-            bool status = await context
-                .read<FoodCubit>()
-                .addItemToCart(widget.food, 1, selectedAddons);
-            // .add(AddItemToCartEvent(widget.food, 1, selectedAddons));
-            setState(() {
-              showLoadingIndicator = false;
-            });
-            if (status) {
-              context.read<FoodCubit>().fetchCartOrders();
-              Navigator.pop(context);
-            }
-          },
+
+            return Wrap(
+              children: addons.map((addon) {
+                String name = addon.key;
+                int price = addon.value;
+                return Container(
+                  margin: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black12,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(
+                        5.0,
+                      ),
+                    ),
+                  ),
+                  child: IntrinsicWidth(
+                    child: CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      enableFeedback: true,
+                      visualDensity: VisualDensity.compact,
+                      activeColor: Colors.blue,
+                      title: Text(name),
+                      subtitle: Text('Rs. $price'),
+                      value: selecteditems.contains(addon.key),
+                      onChanged: (status) {
+                        if (status ?? false) {
+                          selecteditems.add(addon.key);
+                        } else {
+                          selecteditems.remove(addon.key);
+                        }
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                );
+              }).toList(),
+            );
+          }),
         ),
-      ),
+        Container(
+          padding: const EdgeInsets.all(18),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Text(
+                  'Rs. ${widget.food.price}',
+                  style: const TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: CommonButton(
+                  height: 58,
+                  lable: 'Add to Cart',
+                  onPressed: () async {
+                    setState(() {
+                      showLoadingIndicator = true;
+                    });
+                    // add item to cart.
+                    Map<String, int> selectedAddons = {};
+                    Map<String, int> addOns = widget.food.addOns ?? {};
+                    for (String item in selecteditems) {
+                      if (addOns.containsKey(item)) {
+                        selectedAddons[item] = addOns[item] ?? 0;
+                      }
+                    }
+                    print('----------------------------');
+                    bool status = await context
+                        .read<FoodCubit>()
+                        .addItemToCart(widget.food, 1, selectedAddons);
+                    // .add(AddItemToCartEvent(widget.food, 1, selectedAddons));
+                    setState(() {
+                      showLoadingIndicator = false;
+                    });
+                    if (status) {
+                      context.read<FoodCubit>().fetchCartOrders();
+                      Navigator.pop(context);
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

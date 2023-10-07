@@ -9,57 +9,98 @@ import '../../../middleware/blocs/rentalcubit/rental_cubit.dart';
 import '../../widgets/squicircle.dart';
 
 class RentalHistory extends StatelessWidget {
-  const RentalHistory({super.key, required this.request});
-  final RentalRequest request;
+  const RentalHistory({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 120,
-      margin: const EdgeInsets.all(12),
-      child: Row(
-        children: [
-          Expanded(
-            child: SquicircleContainer(
-              height: double.infinity,
-              child: Image.network(
-                "https://dummyimage.com/300",
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 15.0,
-          ),
-          Expanded(
-            flex: 2,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                textwidget(
-                    request.rentalId.toString(), "", 16, FontWeight.w600),
-                textwidget("items : ", "${request.pickupLocation}", 14,
-                    FontWeight.w400),
-                textwidget("Total : ", "₹${request.dropOffLocation}", 14,
-                    FontWeight.w400),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(
-                    width: 2, color: const Color.fromRGBO(73, 204, 115, 1))),
-            child: Text(
-              request.status.name,
-              style: const TextStyle(
-                  fontSize: 14,
-                  color: Color.fromRGBO(73, 204, 115, 1),
-                  fontWeight: FontWeight.w400),
-            ),
-          )
-        ],
+
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // context.read<FoodCubit>().fetchFoodOrders();
+      context.read<RentalCubit>().fetchAllRentalRequests();
+      // context.read<RideCubit>().fetchRideRequests();
+    });
+    return RefreshIndicator(
+      onRefresh: () async {
+                await context.read<RentalCubit>().fetchAllRentalRequests();
+        
+      },
+      child: BlocBuilder<RentalCubit, RentalState>(
+        builder: (context, rentalstate) {
+          List<RentalRequest>? data = rentalstate.rentalRequestList;
+          return SizedBox(
+            child: data != null
+                ? data.isEmpty
+                    ? const Center(
+                        child: Text('no rentals booked yet'),
+                      )
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: data.map((request) {
+                            return Container(
+                              height: 120,
+                              margin: const EdgeInsets.all(12),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: SquicircleContainer(
+                                      height: double.infinity,
+                                      child: Image.network(
+                                        "https://dummyimage.com/300",
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 15.0,
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        textwidget(request.rentalId.toString(),
+                                            "", 16, FontWeight.w600),
+                                        textwidget(
+                                            "items : ",
+                                            "${request.pickupLocation}",
+                                            14,
+                                            FontWeight.w400),
+                                        textwidget(
+                                            "Total : ",
+                                            "₹${request.dropOffLocation}",
+                                            14,
+                                            FontWeight.w400),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(4),
+                                        border: Border.all(
+                                            width: 2,
+                                            color: const Color.fromRGBO(
+                                                73, 204, 115, 1))),
+                                    child: Text(
+                                      request.status.name,
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Color.fromRGBO(73, 204, 115, 1),
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      )
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+          );
+        },
       ),
     );
   }
