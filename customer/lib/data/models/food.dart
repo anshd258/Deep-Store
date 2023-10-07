@@ -39,7 +39,7 @@ class Food {
       addOns: (json['options'] as Map<String, dynamic>?)?.map(
         (key, value) => MapEntry(key, (value as double).toInt()),
       ),
-      images: "https://dummyimage.com/300",
+      images: json['image'],
       // images: json['image'] as String?,
     );
   }

@@ -23,7 +23,7 @@ class PaymentScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+          automaticallyImplyLeading: false,
           centerTitle: true,
           elevation: 0,
           toolbarHeight: 80,
@@ -35,59 +35,78 @@ class PaymentScreen extends StatelessWidget {
       body: BlocBuilder<PaymentCubit, PaymentState>(
         builder: (context, state) {
           if (state.paymentStatus == PaymentStatus.initializing) {
-            return const Center(
+            return Center(
                 child: Column(
               children: [
-                CircularProgressIndicator(),
-                Text('Initializing Razorpay'),
+                const CircularProgressIndicator(),
+                Text(
+                  'Initiating Payment Gateway',
+                  style: GoogleFonts.lato(fontSize: 18, color: Colors.black),
+                ),
               ],
             ));
           }
           if (state.paymentStatus == PaymentStatus.processing) {
-            return const Center(
+            return Center(
                 child: Column(
               children: [
-                CircularProgressIndicator(),
-                Text('Processing payment'),
+                const CircularProgressIndicator(),
+                Text(
+                  'Awaiting payment',
+                  style: GoogleFonts.lato(fontSize: 18, color: Colors.black),
+                ),
               ],
             ));
           }
           if (state.paymentStatus == PaymentStatus.success) {
             return Center(
-                child: Container(
-                    color: Colors.green,
-                    child: Column(
-                      children: [
-                        Text('Success!!!'),
-                        CommonButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ScreenSetup()));
-                            },
-                            lable: 'Home')
-                      ],
-                    )));
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Success!!!',
+                  style: GoogleFonts.lato(fontSize: 18, color: Colors.green),
+                ),
+                CommonButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ScreenSetup()));
+                    },
+                    lable: 'Home')
+              ],
+            ));
           }
           if (state.paymentStatus == PaymentStatus.rejected) {
             return Center(
-                child: Container(
-                    color: Colors.red,
-                    child: Column(
-                      children: [
-                        const Text('Payment was unsuccessful. try again!!'),
-                        CommonButton(onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ScreenSetup()));
-                        }, lable: 'Home')
-                      ],
-                    )));
-          } else {
+                child: Column(
+              children: [
+                Text(
+                  'Payment was unsuccessful. try again!!',
+                  style: GoogleFonts.lato(fontSize: 18, color: Colors.red),
+                ),
+                CommonButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ScreenSetup()));
+                    },
+                    lable: 'Home')
+              ],
+            ));
+          }
+          if (state.paymentStatus == PaymentStatus.unInitialized) {
             return const Center(
-              child: Text('something is not right'),
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Center(
+              child: Text(
+                'something is not right',
+                style: GoogleFonts.lato(fontSize: 18, color: Colors.black),
+              ),
             );
           }
         },

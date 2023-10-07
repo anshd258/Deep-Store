@@ -19,17 +19,6 @@ class _LoginscreenState extends State<Loginscreen> {
   TextEditingController phoneNumber = TextEditingController();
   bool _validate = false;
 
-  @override
-  void initState() {
-    super.initState();
-    SharedPreferencesUtils.getString(key: SharedPrefrencesKeys.accessToken)
-        .then((value) {
-      if (value != null) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const ScreenSetup()));
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

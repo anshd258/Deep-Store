@@ -13,9 +13,11 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'middleware/blocs/authentication/auth_cubit.dart';
 import 'middleware/helpers/app.router.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferencesUtils.storeString(key: SharedPrefrencesKeys.location, value: 'manali');
+  SharedPreferencesUtils.storeString(
+      key: SharedPrefrencesKeys.location, value: 'manali');
+  String? accessToken = await SharedPreferencesUtils.getString(key: SharedPrefrencesKeys.accessToken);
 
   runApp(MultiBlocProvider(
     providers: [
@@ -39,7 +41,7 @@ void main() {
       ),
     ],
     child: MaterialApp(
-       builder: (context, child) => ResponsiveBreakpoints.builder(
+      builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,
         breakpoints: [
           const Breakpoint(start: 0, end: 450, name: MOBILE),
@@ -49,7 +51,7 @@ void main() {
       theme: ThemeData(
         textTheme: GoogleFonts.latoTextTheme(),
       ),
-      initialRoute: '/',
+      initialRoute:accessToken == null ? '/' : '/home',
       onGenerateRoute: (settings) => AppRouter().onGenerateRoute(settings),
     ),
   ));

@@ -3,15 +3,14 @@ part of 'payment_cubit.dart';
 @immutable
 sealed class PaymentState {
   final PaymentStatus paymentStatus;
-
-  PaymentState({required this.paymentStatus});
+  const PaymentState({required this.paymentStatus});
 }
 
 final class PaymentInitial extends PaymentState {
-  PaymentInitial({required super.paymentStatus});
+  const PaymentInitial({required super.paymentStatus});
 }
 final class UpdatePaymentState extends PaymentState {
-  UpdatePaymentState({required super.paymentStatus});
+  const UpdatePaymentState({required super.paymentStatus});
 }
 
 

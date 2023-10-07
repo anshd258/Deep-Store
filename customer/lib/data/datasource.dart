@@ -33,6 +33,9 @@ class DataSource {
   static const String updateRoomNumber = '/user/update-user/';
   static const String getUserDetails = '/user/get-user/';
 
+  static const String orderPayment = '/service/order-payment/';
+  static const String orderVerification = '/service/order-verify/' ;
+
   static Future<ApiResponse?> getData({
     QueryType queryType = QueryType.get,
     required String path,

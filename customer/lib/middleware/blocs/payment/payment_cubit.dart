@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:customer/data/models/payment.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
@@ -15,66 +16,78 @@ part 'payment_state.dart';
 
 class PaymentCubit extends Cubit<PaymentState> {
   PaymentCubit()
-      : super(PaymentInitial(paymentStatus: PaymentStatus.unInitialized));
+      : super(const PaymentInitial(paymentStatus: PaymentStatus.unInitialized));
 
   Future<void> initiatePayment(
       BuildContext context, FoodOrder order, String accessToken) async {
+    print('initiatePayment function called');
+    OrderPaymentData? orderPaymentData = await createOrder(order.id);
+    if (orderPaymentData != null) {
+      String itemNames = order.items
+          .map((item) => item.food.name.toString())
+          .toList()
+          .join(", ");
 
-        /// send order id.
-        /// 
-        /// I will receive order id.
-        /// payment-status passs order id. receive payment status. 
+      Map<String, dynamic> options = {
+        'key': 'rzp_test_KOQ959haeWLbDP',
+        'amount': orderPaymentData.amountDue * 100,
+        'name': 'Nestafar Private Limited',
+        'order_id': orderPaymentData.id,
+        'description': itemNames,
+        'timeout': 120,
+        'prefill': {}
+      };
 
+      //////
+      ///
+      emit(const UpdatePaymentState(paymentStatus: PaymentStatus.initializing));
 
+      Future<void> handlePaymentSuccess(PaymentSuccessResponse response) async {
+        try {
+          Response? verifyresponse = await DataSource.get(
+              path: DataSource.orderVerification,
+              queryType: QueryType.post,
+              body: {
+                'order_id': response.orderId,
+                'payment_id': response.paymentId,
+                'signature': response.signature
+              });
+          if (verifyresponse != null) {
+            if (json.decode(verifyresponse.body)['status'] == 'success') {
+              print('payment verified!!');
+              await updateOrderStatus(order.id, RequestStatus.confirmed)
+                  .then((value) {
+                emit(const UpdatePaymentState(
+                    paymentStatus: PaymentStatus.success));
+              });
+            } else {
+              print('payment not verified');
+              emit(const UpdatePaymentState(
+                  paymentStatus: PaymentStatus.rejected));
+            }
+          }
+        } catch (e) {
+          print('unable to verify payment success status $e');
+        }
+      }
 
+      Future<void> handlePaymentError(PaymentFailureResponse response) async {
+        print('payment failed');
+        await updateOrderStatus(order.id, RequestStatus.failed).then((value) {
+          emit(const UpdatePaymentState(paymentStatus: PaymentStatus.rejected));
+        });
+      }
 
+      void handleExternalWallet(ExternalWalletResponse response) {}
 
-    String itemNames = order.items
-        .map((item) => item.food.name.toString())
-        .toList()
-        .join(", ");
-
-    Map<String, dynamic> options = {
-      'key': 'rzp_test_KOQ959haeWLbDP',
-      'amount': order.totalPrice * 100,
-      'name': 'Nestafar Private Limited',
-      'order_id': 'order_EMBFqjDHEEn80l',
-      'description': itemNames,
-      'timeout': 120,
-      'prefill': {'Authorization': accessToken}
-    };
-
-    //////
-    ///
-    emit(UpdatePaymentState(paymentStatus: PaymentStatus.initializing));
-
-    Future<void> handlePaymentSuccess(PaymentSuccessResponse response) async {
-      print('payment was successful');
-
-      await updateOrderStatus(order.id, RequestStatus.confirmed).then((value) {
-        emit(UpdatePaymentState(paymentStatus: PaymentStatus.success));
+      updateOrderStatus(order.id, RequestStatus.processing).then((value) {
+        Razorpay razorpay = Razorpay();
+        razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+        razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+        razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+        razorpay.open(options);
       });
     }
-
-    Future<void> handlePaymentError(PaymentFailureResponse response) async {
-      print('payment failed');
-
-      await updateOrderStatus(order.id, RequestStatus.failed).then((value) {
-
-      emit(UpdatePaymentState(paymentStatus: PaymentStatus.rejected));
-      });
-    }
-
-    void handleExternalWallet(ExternalWalletResponse response) {}
-
-
-    updateOrderStatus(order.id, RequestStatus.processing).then((value) {
-      Razorpay razorpay = Razorpay(); 
-      razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
-      razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
-      razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
-      razorpay.open(options);
-    });
   }
 
   Future<bool> updateOrderStatus(String orderId, RequestStatus status) async {
@@ -92,5 +105,15 @@ class PaymentCubit extends Cubit<PaymentState> {
       }
     }
     return false;
+  }
+}
+
+Future<OrderPaymentData?> createOrder(String orderId) async {
+  Response? response = await DataSource.get(
+      queryType: QueryType.post,
+      path: DataSource.orderPayment,
+      body: {'order_id': orderId});
+  if (response != null) {
+    return OrderPaymentData.fromJson(json.decode(response.body));
   }
 }
