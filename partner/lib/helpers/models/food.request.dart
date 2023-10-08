@@ -85,7 +85,6 @@ class Orders {
     data['subtotal'] = this.subtotal;
     data['taxes'] = this.taxes;
     data['charges'] = this.charges;
-
     data['total'] = this.total;
     data['status'] = this.status;
     data['created'] = this.created;
@@ -184,7 +183,6 @@ class Items {
     data['rating'] = this.rating;
     data['quantity'] = this.quantity;
     data['order'] = this.order;
-
     return data;
   }
 }

@@ -14,7 +14,6 @@ enum StatusRideRental {
   final int code;
   const StatusRideRental(this.code);
 }
-
 enum StatusFood {
   failed(0),
   hold(1),
