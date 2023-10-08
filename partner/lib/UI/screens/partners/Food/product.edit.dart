@@ -30,6 +30,7 @@ class _PartnerFoodEditPageState extends State<PartnerFoodEditPage> {
                 fontSize: 17,
                 fontWeight: FontWeight.w600)),
       ),
+      backgroundColor: Colors.white,
       body: LiquidPullToRefresh(
         height: 50,
         springAnimationDurationInMilliseconds: 500,
