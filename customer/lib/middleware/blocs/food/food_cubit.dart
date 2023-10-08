@@ -70,15 +70,12 @@ class FoodCubit extends Cubit<FoodState> {
       Response? response = await DataSource.get(
           path: DataSource.addFoodItem, queryType: QueryType.post, body: body);
       if (response != null) {
-        print(response.body);
         status = json.decode(response.body)['status'] == 'success';
 
         /// fetching the latest cart order.
         Map<String, dynamic> urlParameters = {
           'id': (order.id).toString(),
         };
-        print('------------ about to fetch the new cart order--------------');
-        print(urlParameters);
         ApiResponse? apiResponse = await DataSource.getData(
             path: DataSource.getFoodOrder, urlParameters: urlParameters);
 

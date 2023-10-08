@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../middleware/blocs/rentalcubit/rental_cubit.dart';
+import '../../../middleware/blocs/rental/rental_cubit.dart';
 import '../../widgets/twoitemtabview.dart';
 import 'rentalselect.dart';
 import 'rideselect.dart';

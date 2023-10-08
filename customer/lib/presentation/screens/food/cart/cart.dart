@@ -2,7 +2,10 @@ import 'package:customer/presentation/widgets/buttons/commonbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../middleware/blocs/foodcubit/food_cubit.dart';
+import '../../../../middleware/blocs/food/food_cubit.dart';
+import '../../../../middleware/blocs/payment/payment_cubit.dart';
+import '../../../../middleware/helpers/constants.dart';
+import '../../../../middleware/helpers/sharedprefrence.utils.dart';
 import 'cardbody.dart';
 import 'payment.dart';
 
@@ -47,6 +50,12 @@ class CartScreen extends StatelessWidget {
                     child: CommonButton(
                         onPressed: () async {
                           // initiate payment
+                              SharedPreferencesUtils.getString(key: SharedPrefrencesKeys.accessToken)
+        .then((value) {
+      context.read<PaymentCubit>().initiatePayment(
+          context, context.read<FoodCubit>().state.cartOrder!, value!);
+    });
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(

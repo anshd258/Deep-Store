@@ -1,4 +1,5 @@
 import 'package:customer/data/models/rental.dart';
+import 'package:customer/data/models/user.dart';
 import 'food.dart';
 import 'foodorder.dart';
 import 'rentalrequest.dart';
@@ -12,6 +13,7 @@ class ApiResponse {
   final Ride? ride;
   final List<Ride>? rideRequests;
   final List<RentalRequest>? rentalRequests;
+  final User? userData;
 
   final String? accessToken;
   final String? refreshToken;
@@ -22,7 +24,7 @@ class ApiResponse {
   final String? userEmail;
   final String? roomNumber;
 
-  ApiResponse({
+  ApiResponse({this.userData, 
     this.rideRequests,
     this.foodItems,
     this.ride,
@@ -40,26 +42,7 @@ class ApiResponse {
     this.roomNumber,
   });
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {
-      'foodItems': foodItems?.map((e) => e.toJson()).toList(),
-      'rentalItems': rentalItems?.map((e) => e.toJson()).toList(),
-      'foodOrder': foodOrder?.toJson(),
-      'ride': ride?.toJson(),
-      'foodOrders': foodOrders?.map((e) => e.toJson()).toList(),
-      'rentalRequests': rentalRequests?.map((e) => e.toJson()).toList(),
-      'rideRequests': rideRequests?.map((e) => e.toJson()).toList(),
-      'accessToken': accessToken,
-      'refreshToken': refreshToken,
-      'authToken': authToken,
-      'newUser': newUser,
-      'phoneNumber': phoneNumber,
-      'userName': userName,
-      'userEmail': userEmail,
-      'roomNumber': roomNumber,
-    };
-    return data;
-  }
+
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) {
     return ApiResponse(
@@ -84,6 +67,7 @@ class ApiResponse {
       rideRequests: (json['riderequests'] as List<dynamic>?)
           ?.map((e) => Ride.fromJson(e as Map<String, dynamic>))
           .toList(),
+          userData:json['userdata'] != null ?  User.fromJson(json['userdata']) : null,
       accessToken: json['access'],
       refreshToken: json['refresh'],
       authToken: json['authToken'],

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:customer/data/models/apiresponse.dart';
 import 'package:customer/data/models/authentication.dart';
 import 'package:customer/data/datasource.dart';
 import 'package:bloc/bloc.dart';
@@ -19,11 +20,10 @@ class AuthCubit extends Cubit<AuthState> {
     String? phone = await SharedPreferencesUtils.getString(
         key: SharedPrefrencesKeys.userPhoneNumber);
     if (phone != null) {
-      Response? response =
-          await DataSource.get(path: DataSource.getUserDetails, urlParameters: {'phone': phone});
-      if (response != null) {
-        print('user details fetched ${response.body}');
-        User user = User.fromJson(json.decode(response.body));
+      ApiResponse? apiResponse = await DataSource.getData(
+          path: DataSource.getUserDetails, urlParameters: {'phone': phone});
+      if (apiResponse!.userData != null) {
+        User? user = apiResponse.userData;
         emit(AuthState(
             loading: state.loading,
             obj: state.obj,

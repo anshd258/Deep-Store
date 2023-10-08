@@ -3,7 +3,7 @@ import 'package:customer/middleware/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../middleware/blocs/rentalcubit/rental_cubit.dart';
+import '../../../middleware/blocs/rental/rental_cubit.dart';
 import '../../widgets/cards/rentalitemcard.dart';
 
 class RentalSelect extends StatefulWidget {

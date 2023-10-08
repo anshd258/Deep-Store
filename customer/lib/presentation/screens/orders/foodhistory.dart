@@ -1,10 +1,9 @@
 import 'package:customer/data/models/foodorder.dart';
-import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../middleware/blocs/foodcubit/food_cubit.dart';
+import '../../../middleware/blocs/food/food_cubit.dart';
 import '../../../middleware/helpers/constants.dart';
 
 class FoodHistory extends StatelessWidget {
@@ -30,115 +29,110 @@ class FoodHistory extends StatelessWidget {
                       ? const Center(
                           child: Text('no order yet'),
                         )
-                      : SingleChildScrollView(
-                          child: Column(
-                            children: data.map((order) {
-                              List<String> itemnames = order.items
-                                  .map((item) => item.food.name.toString())
-                                  .toList();
-                              String names = itemnames.join(", ");
-                              return LayoutBuilder(
-                                  builder: (context, constraints) {
-                                return Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: constraints.maxWidth * 0.05,
-                                      vertical: constraints.maxWidth * 0.025),
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    elevation: 4,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            flex: 5,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  textwidget(
-                                                    'Items',
-                                                    names,
-                                                    16,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      textwidget(
-                                                        "Items ordered ",
-                                                        "${itemnames.length}",
-                                                        16,
-                                                      ),
-                                                      textwidget(
-                                                        "Total amount",
-                                                        "₹${order.totalPrice}",
-                                                        16,
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
+                      : ListView(
+                        reverse: true,
+                          children: data.map((order) {
+                            List<String> itemnames = order.items
+                                .map((item) => item.food.name.toString())
+                                .toList();
+                            String names = itemnames.join(", ");
+                            return LayoutBuilder(
+                                builder: (context, constraints) {
+                              return Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: constraints.maxWidth * 0.05,
+                                    vertical: constraints.maxWidth * 0.025),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  elevation: 4,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                textwidget(
+                                                  'Items',
+                                                  names,
+                                                  16,
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    textwidget(
+                                                      "Items ordered ",
+                                                      "${itemnames.length}",
+                                                      16,
+                                                    ),
+                                                    textwidget(
+                                                      "Total amount",
+                                                      "₹${order.totalPrice}",
+                                                      16,
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
                                             ),
                                           ),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Builder(builder: (context) {
-                                              Color color =
-                                                  const Color.fromRGBO(
-                                                      73, 204, 115, 1);
-                                              if (order.status ==
-                                                  RequestStatus.failed) {
-                                                color = Colors.red;
-                                              }
-                                              return Container(
-                                                padding:
-                                                    const EdgeInsets.all(6),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4),
-                                                    border: Border.all(
-                                                        width: 2,
-                                                        color: color)),
-                                                child: Center(
-                                                  child: Text(
-                                                    order.status.name,
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: color,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
+                                        ),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Builder(builder: (context) {
+                                            Color color = const Color.fromRGBO(
+                                                73, 204, 115, 1);
+                                            if (order.status ==
+                                                RequestStatus.failed) {
+                                              color = Colors.red;
+                                            }
+                                            return Container(
+                                              padding: const EdgeInsets.all(6),
+                                              margin: const EdgeInsets.symmetric(
+                                                  vertical: 8),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                  border: Border.all(
+                                                      width: 2, color: color)),
+                                              child: Center(
+                                                child: Text(
+                                                  order.status.name,
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: color,
+                                                      fontWeight:
+                                                          FontWeight.w400),
                                                 ),
-                                              );
-                                            }),
-                                          )
-                                        ],
-                                      ),
+                                              ),
+                                            );
+                                          }),
+                                        )
+                                      ],
                                     ),
                                   ),
-                                );
-                              });
-                            }).toList(),
-                          ),
+                                ),
+                              );
+                            });
+                          }).toList(),
                         ),
                 )
               : const Center(
@@ -158,7 +152,7 @@ class FoodHistory extends StatelessWidget {
                 color: Colors.black,
                 fontSize: fontSize - 2,
                 fontWeight: FontWeight.w400)),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         Text(text2,

@@ -81,7 +81,7 @@ class DataSource {
           break;
       }
       if (response.statusCode == 200) {
-        print(response.body);
+        // print(response.body);
         ApiResponse apiResponse =
             ApiResponse.fromJson(json.decode(response.body));
         return apiResponse;
@@ -137,7 +137,7 @@ class DataSource {
           );
           break;
       }
-      print(response.body);
+      // print(response.body);
       return response;
     } catch (e) {
       if (kDebugMode) {

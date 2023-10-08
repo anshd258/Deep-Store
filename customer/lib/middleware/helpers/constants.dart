@@ -1,4 +1,4 @@
-enum RequestStatus { failed,hold, processing, confirmed, ready, delivered, completed}
+enum RequestStatus { failed, hold, processing, confirmed, ready, delivered, completed}
 
 enum QueryType { get, post }
 
@@ -27,19 +27,19 @@ const baseUrl =
 
   int mapRequestStatusToInt(RequestStatus status) {
     switch (status) {
-      case RequestStatus.hold:
-        return 0;
-      case RequestStatus.processing:
-        return 1;
-      case RequestStatus.confirmed:
-        return 2;
-      case RequestStatus.ready:
-        return 3;
-      case RequestStatus.delivered:
-        return 4;
-      case RequestStatus.completed:
-        return 5;
       case RequestStatus.failed:
+        return 0;
+      case RequestStatus.hold:
+        return 1;
+      case RequestStatus.processing:
+        return 2;
+      case RequestStatus.confirmed:
+        return 3;
+      case RequestStatus.ready:
+        return 4;
+      case RequestStatus.delivered:
+        return 5;
+      case RequestStatus.completed:
         return 6;
       default:
         throw ArgumentError('Invalid RequestStatus value: $status');

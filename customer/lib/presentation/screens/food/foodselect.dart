@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/food.dart';
-import '../../../middleware/blocs/foodcubit/food_cubit.dart';
+import '../../../middleware/blocs/food/food_cubit.dart';
 import '../../widgets/cards/fooditemcard.dart';
 import 'cart/cart.dart';
 import 'cart/carttile.dart';
@@ -17,8 +17,8 @@ class FoodSelect extends StatelessWidget {
 
     return RefreshIndicator.adaptive(
       onRefresh: () async {
-        context.read<FoodCubit>().fetchFoods();
         context.read<FoodCubit>().fetchCartOrders();
+       await context.read<FoodCubit>().fetchFoods();
       },
       child: BlocBuilder<FoodCubit, FoodState>(
         builder: (context, state) {

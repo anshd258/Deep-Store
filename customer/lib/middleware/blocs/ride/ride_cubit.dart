@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
-
 import '../../../data/datasource.dart';
 import '../../../data/models/ride.dart';
 import '../../helpers/constants.dart';
@@ -24,12 +21,10 @@ class RideCubit extends Cubit<RideState> {
         return true;
       }
     });
-    print('ride requests fetched');
     return false;
   }
 
   Future<bool> createRideRequest(Ride ride) async {
-    print('trying to create a ride request ');
     Map<String, dynamic> body = {
       "start_location": "${ride.pickUpLocation}",
       "end_location": "${ride.dropOffLocation}",
@@ -50,10 +45,7 @@ class RideCubit extends Cubit<RideState> {
         path: DataSource.createRideRequest,
         body: body,
       );
-      print(response!.statusCode);
       if (response != null) {
-        print(json.decode(response.body));
-        print('done requesting ride');
         fetchRideRequests();
         return true;
       }

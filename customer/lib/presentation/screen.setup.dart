@@ -1,36 +1,14 @@
 import 'package:common/common.dart';
-import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
-import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
-import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/presentation/screens/Profile/Profile.page.dart';
 import 'package:customer/presentation/screens/orders/order.setup.dart';
 import 'package:customer/presentation/screens/vehicle/vehicleselect.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../middleware/blocs/rentalcubit/rental_cubit.dart';
-import '../middleware/helpers/sharedprefrence.utils.dart';
 import 'screens/food/foodselect.dart';
 
-class ScreenSetup extends StatefulWidget {
+class ScreenSetup extends StatelessWidget {
   const ScreenSetup({super.key});
-
-  @override
-  State<ScreenSetup> createState() => _ScreenSetupState();
-}
-
-class _ScreenSetupState extends State<ScreenSetup> {
-  @override
-  void initState() {
-    super.initState();
-    SharedPreferencesUtils.getString(key: SharedPrefrencesKeys.accessToken)
-        .then((value) {
-      print(value);
-    });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +30,6 @@ class _ScreenSetupState extends State<ScreenSetup> {
                     color: const Color.fromRGBO(86, 86, 86, 1),
                     fontSize: 16,
                     fontWeight: FontWeight.w700)),
-            // Text(context.read<FoodBloc>().userRepository.user!.username ?? '',
-            //     style: GoogleFonts.lato(
-            //         color: const Color.fromRGBO(121, 121, 121, 1),
-            //         fontSize: 19,
-            //         fontWeight: FontWeight.w500)),
           ],
         ),
       ),

@@ -48,7 +48,6 @@ class RentalCubit extends Cubit<RentalState> {
   }
 
   Future<bool> createRentalRequest(String rentalId) async {
-    print('inside createRentalRequest function');
     String location = await SharedPreferencesUtils.getString(
             key: SharedPrefrencesKeys.location) ??
         '';

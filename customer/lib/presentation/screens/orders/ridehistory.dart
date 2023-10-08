@@ -26,39 +26,90 @@ class RidesHistory extends StatelessWidget {
                     ? const Center(
                         child: Text('no rides booked'),
                       )
-                    : SingleChildScrollView(
-                        child: Column(
-                          children: data.map((ride) {
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              margin: const EdgeInsets.all(18),
-                              child: Container(
-                                padding: const EdgeInsets.only(
-                                    left: 25, right: 25, top: 12, bottom: 20),
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: RidesDetailsContainer(
-                                          data: ride.pickUpLocation ?? '',
-                                          heading: "Pickup location",
-                                          fontSize: 16,
+                    : ListView(
+                      reverse: true,
+                        children: data.map((ride) {
+                          return Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 9),
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  left: 25, right: 25, top: 12, bottom: 20),
+                              child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      flex: 4,
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              RidesDetailsContainer(
+                                                data: ride.pickUpLocation ?? '',
+                                                heading: "Pickup location",
+                                                fontSize: 18,
+                                              ),
+                                              RidesDetailsContainer(
+                                                data:
+                                                    ride.dropOffLocation ?? '',
+                                                heading: "Drop off location",
+                                                fontSize: 18,
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              RidesDetailsContainer(
+                                                data: ride.distance.toString(),
+                                                heading: "Distance",
+                                                fontSize: 18,
+                                              ),
+                                              RidesDetailsContainer(
+                                                data: ride.price.toString(),
+                                                heading: "Price",
+                                                fontSize: 18,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 8),
+                                        padding: const EdgeInsets.all(6),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                            border: Border.all(
+                                                width: 2,
+                                                color: const Color.fromRGBO(
+                                                    73, 204, 115, 1))),
+                                        child: Text(
+                                          ride.status.name,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Color.fromRGBO(
+                                                  73, 204, 115, 1),
+                                              fontWeight: FontWeight.w400),
                                         ),
                                       ),
-                                      Expanded(
-                                        child: RidesDetailsContainer(
-                                          data: ride.dropOffLocation ?? '',
-                                          heading: "Drop off location",
-                                          fontSize: 16,
-                                        ),
-                                      )
-                                    ]),
-                              ),
-                            );
-                          }).toList(),
-                        ),
+                                    )
+                                  ]),
+                            ),
+                          );
+                        }).toList(),
                       )
                 : const Center(child: CircularProgressIndicator()),
           );
@@ -69,10 +120,10 @@ class RidesHistory extends StatelessWidget {
 }
 
 class RidesDetailsContainer extends StatelessWidget {
-  String heading;
-  String data;
-  double fontSize;
-  RidesDetailsContainer(
+  final String heading;
+  final String data;
+  final double fontSize;
+  const RidesDetailsContainer(
       {super.key,
       required this.heading,
       required this.data,
@@ -81,12 +132,12 @@ class RidesDetailsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 1),
-            child: Text(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
               heading,
               style: GoogleFonts.lato(
                 color: const Color(0xFF555555),
@@ -94,13 +145,7 @@ class RidesDetailsContainer extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 1),
-            child: Text(
+            Text(
               data,
               style: GoogleFonts.lato(
                 color: const Color(0xFF555555),
@@ -108,8 +153,8 @@ class RidesDetailsContainer extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

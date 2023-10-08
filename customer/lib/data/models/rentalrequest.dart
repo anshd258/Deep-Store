@@ -1,6 +1,4 @@
-import 'package:customer/data/models/rental.dart';
 import 'package:customer/middleware/helpers/constants.dart';
-import 'user.dart';
 
 class RentalRequest {
   final int requestId;
@@ -23,7 +21,7 @@ class RentalRequest {
       'rental': rentalId,
       'start_location': pickupLocation,
       'end_location': dropOffLocation,
-      'status': status.toString(), // Assuming RequestStatus is an enum
+      'status': status.toString(), 
     };
   }
 

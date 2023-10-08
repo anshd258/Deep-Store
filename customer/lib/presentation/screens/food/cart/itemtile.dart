@@ -1,7 +1,8 @@
 import 'package:customer/data/models/fooddetail.dart';
-import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../middleware/blocs/food/food_cubit.dart';
 
 class ItemTile extends StatefulWidget {
   const ItemTile({

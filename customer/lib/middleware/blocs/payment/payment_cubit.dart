@@ -30,7 +30,6 @@ class PaymentCubit extends Cubit<PaymentState> {
 
       Map<String, dynamic> options = {
         'key': 'rzp_test_KOQ959haeWLbDP',
-        'amount': orderPaymentData.amountDue * 100,
         'name': 'Nestafar Private Limited',
         'order_id': orderPaymentData.id,
         'description': itemNames,
@@ -44,6 +43,7 @@ class PaymentCubit extends Cubit<PaymentState> {
 
       Future<void> handlePaymentSuccess(PaymentSuccessResponse response) async {
         try {
+          print('starting payment verification');
           Response? verifyresponse = await DataSource.get(
               path: DataSource.orderVerification,
               queryType: QueryType.post,
@@ -73,14 +73,16 @@ class PaymentCubit extends Cubit<PaymentState> {
 
       Future<void> handlePaymentError(PaymentFailureResponse response) async {
         print('payment failed');
-        await updateOrderStatus(order.id, RequestStatus.failed).then((value) {
-          emit(const UpdatePaymentState(paymentStatus: PaymentStatus.rejected));
+        await updateOrderStatus(order.id, RequestStatus.hold).then((value) {
+          emit(const UpdatePaymentState(
+              paymentStatus: PaymentStatus.unInitialized));
         });
       }
 
       void handleExternalWallet(ExternalWalletResponse response) {}
 
       updateOrderStatus(order.id, RequestStatus.processing).then((value) {
+        emit(const UpdatePaymentState(paymentStatus: PaymentStatus.processing));
         Razorpay razorpay = Razorpay();
         razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
         razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);

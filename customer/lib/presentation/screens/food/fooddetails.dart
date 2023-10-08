@@ -1,9 +1,9 @@
-import 'package:customer/middleware/blocs/foodcubit/food_cubit.dart';
 import 'package:customer/presentation/widgets/buttons/commonbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/food.dart';
+import '../../../middleware/blocs/food/food_cubit.dart';
 
 class FoodDetailSelector extends StatefulWidget {
   const FoodDetailSelector(
