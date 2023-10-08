@@ -16,7 +16,7 @@ class PartnerBody extends StatefulWidget {
 }
 
 class _PartnerBodyState extends State<PartnerBody> {
-  List dummyValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  List _dummyValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
@@ -37,8 +37,15 @@ class _PartnerBodyState extends State<PartnerBody> {
                   child: SingleChildScrollView(
                     physics: AlwaysScrollableScrollPhysics(),
                     child: Column(
-                      children: dummyValues
-                          .map((e) => PartnerFoodContainer())
+                      children: _dummyValues
+                          .map((e) => InkWell(
+                                child: PartnerFoodContainer(),
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    "/partner/food/editpartner",
+                                  );
+                                },
+                              ))
                           .toList(),
                     ),
                   ),
