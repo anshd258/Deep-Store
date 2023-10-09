@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProfileEditFormField extends StatelessWidget {
-  String name;
-  IconData icon;
-  int maxlength;
-  String hintText;
-  TextInputType keyBoardtype;
-  String? Function(String?)? function;
-  TextEditingController controller;
-  ProfileEditFormField(
+class CustomFormField extends StatelessWidget {
+  final String? name;
+  final IconData? icon;
+  final int? maxlength;
+  final String hintText;
+  final TextInputType keyBoardtype;
+  final String? Function(String?)? function;
+  final TextEditingController controller;
+  const CustomFormField(
       {super.key,
-      required this.maxlength,
+       this.maxlength,
       required this.keyBoardtype,
-      required this.name,
+       this.name,
       required this.function,
       required this.hintText,
-      required this.icon,
+       this.icon,
       required this.controller});
 
   @override
@@ -41,7 +41,7 @@ class ProfileEditFormField extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Row(
+           if(name != null) Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -52,7 +52,7 @@ class ProfileEditFormField extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  name,
+                  name!,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Color(0xFF555555),

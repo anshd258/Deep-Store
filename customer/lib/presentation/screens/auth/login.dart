@@ -1,11 +1,9 @@
-import 'package:customer/middleware/helpers/constants.dart';
+import 'package:customer/middleware/helpers/sharedprefrence.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../middleware/blocs/authentication/auth_cubit.dart';
-import '../../../middleware/helpers/sharedprefrence.utils.dart';
-import '../../screen.setup.dart';
 import '../../widgets/buttons/commonbutton.dart';
 
 class Loginscreen extends StatefulWidget {
@@ -97,36 +95,40 @@ class _LoginscreenState extends State<Loginscreen> {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Not a guest?',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.lato(
-                              color: const Color(0xB2555555),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(width: 2),
-                          Text(
-                            ' Login as stay owner',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.lato(
-                              color: const Color(0xFF3BA365),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: -0.42,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   margin: const EdgeInsets.symmetric(vertical: 5),
+                    //   child: Row(
+                    //     mainAxisSize: MainAxisSize.min,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         'Don\'t have an account?',
+                    //         textAlign: TextAlign.center,
+                    //         style: GoogleFonts.lato(
+                    //           color: const Color(0xB2555555),
+                    //           fontSize: 14,
+                    //           fontWeight: FontWeight.w600,
+                    //         ),
+                    //       ),
+                    //       TextButton(
+                    //         onPressed: () {
+                    //           Navigator.pushReplacementNamed(context, '/');
+                    //         },
+                    //         child: Text(
+                    //           ' Register',
+                    //           textAlign: TextAlign.center,
+                    //           style: GoogleFonts.lato(
+                    //             color: const Color(0xFF3BA365),
+                    //             fontSize: 14,
+                    //             fontWeight: FontWeight.w500,
+                    //             letterSpacing: -0.42,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     BlocConsumer<AuthCubit, AuthState>(
                       // buildWhen: (previous, current) {
                       //   if (previous.otpSent == current.otpSent) {
@@ -137,7 +139,7 @@ class _LoginscreenState extends State<Loginscreen> {
                       // },
                       listener: (context, state) {
                         if (state.otpSent!) {
-                          Navigator.pushNamed(context, "/otpPage");
+                          Navigator.pushReplacementNamed(context, "/otp");
                         }
                       },
                       builder: (context, state) {

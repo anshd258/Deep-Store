@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
 
 import '../../widgets/buttons/commonbutton.dart';
-import 'editprofile.form.dart';
-import 'editprofile.image.dart';
+import '../../widgets/customformfield.dart';
+import 'profileImage.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -71,7 +70,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         horizontal: 16, vertical: 20),
                     child: Column(
                       children: [
-                        ProfileEditFormField(
+                        CustomFormField(
                             keyBoardtype: TextInputType.name,
                             controller: nameController,
                             hintText: "",
@@ -79,12 +78,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             function: (p0) {
                               if (p0!.isEmpty) {
                                 return "Please enter something";
-                              } else
+                              } else {
                                 return null;
+                              }
                             },
                             icon: Icons.person,
                             name: "Name"),
-                        ProfileEditFormField(
+                        CustomFormField(
                             controller: phoneController,
                             keyBoardtype: TextInputType.phone,
                             maxlength: 10,
@@ -94,27 +94,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 return "Please enter something";
                               } else if (p0.length != 10) {
                                 return "Please enter a valid number";
-                              } else
+                              } else {
                                 return null;
+                              }
                             },
                             icon: Icons.phone,
                             name: "Phone"),
-                        ProfileEditFormField(
+                        CustomFormField(
                             controller: emailController,
                             keyBoardtype: TextInputType.emailAddress,
                             maxlength: 50,
                             hintText: "",
                             function: (p0) {
-                              // if (p0!.isEmpty) {
-                              //   return "Please enter something";
-                              // } else if (p0.length == 0) {
-                              //   return "Please enter a valid number";
-                              // } else
-                              //   return null;
+                              return null;
                             },
                             icon: Icons.phone,
                             name: "Email"),
-                        ProfileEditFormField(
+                        CustomFormField(
                             controller: roomController,
                             hintText: '',
                             keyBoardtype: TextInputType.number,
@@ -123,8 +119,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             function: (p0) {
                               if (p0!.isEmpty) {
                                 return "Please enter something";
-                              } else
+                              } else {
                                 return null;
+                              }
                             },
                             name: "Room Number"),
                       ],
@@ -149,8 +146,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     print(newPhone);
                     print(newEmail);
                     print(newRoomNo);
-
-
                   }
                 },
               )

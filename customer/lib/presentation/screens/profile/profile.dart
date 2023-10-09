@@ -18,7 +18,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     SharedPreferencesUtils.getString(key: SharedPrefrencesKeys.userPhoneNumber)
         .then((value) {
@@ -40,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       email: state.user!.email ?? '',
                       room: state.user?.room ?? '',
                     )
-                  : const Center(child: CircularProgressIndicator()),
+                  : Center(child: CircularProgressIndicator()),
               ProfileOptions(
                 lable: 'Request History',
                 function: () {},
@@ -65,6 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       OutlinedDeclineButton(
                           function: () {
                             SharedPreferencesUtils.clear();
+
                             Navigator.pushNamedAndRemoveUntil(
                                 context, '/', (route) => false);
                           },

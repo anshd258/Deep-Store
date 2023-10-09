@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'package:customer/middleware/helpers/constants.dart';
+import 'package:customer/middleware/helpers/sharedprefrence.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,8 +17,10 @@ class CheckInScreen extends StatefulWidget {
 
 class _CheckInScreenState extends State<CheckInScreen> {
   TextEditingController roomNumberController = TextEditingController();
+  TextEditingController propertyController = TextEditingController();
   bool qrcodefound = false;
   bool _validate = false;
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,23 +115,31 @@ class _CheckInScreenState extends State<CheckInScreen> {
                 ),
                 CommonButton(
                   onPressed: () async {
-                    setState(() {
-                      if (roomNumberController.text.isEmpty) {
-                        _validate = true;
-                      } else {
-                        _validate = false;
-                      }
-                    });
-                    if (!_validate) {
-                      //update room number
-                      context
-                          .read<AuthCubit>()
-                          .updateRoomNumber(roomNumberController.text)
-                          .then((value) {
-                            if (value) {
-                              Navigator.pushReplacementNamed(context, "/home");
-                            }
+                    if (!loading) {
+                      setState(() {
+                        if (roomNumberController.text.isEmpty) {
+                          _validate = true;
+                        } else {
+                          _validate = false;
+                        }
                       });
+                      if (!_validate) {
+                        print('about to call updateUserDetails function');
+                        context
+                            .read<AuthCubit>()
+                            .updateUserDetails(
+                              roomNumberController.text,
+                              '123456',
+                            )
+                            .then((value) {
+                          if (value) {
+                            setState(() {
+                              loading = false;
+                            });
+                            Navigator.pushReplacementNamed(context, "/home");
+                          }
+                        });
+                      }
                     }
                   },
                   borderradius: 4,
@@ -136,6 +147,11 @@ class _CheckInScreenState extends State<CheckInScreen> {
                   margin: const EdgeInsets.symmetric(vertical: 18),
                   width: 300,
                   lable: "Confirm",
+                  child: loading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : null,
                 )
               ],
             )

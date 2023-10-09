@@ -20,7 +20,7 @@ class User {
       email: json['user']['email'] as String?,
       contact: json['contact'] as String?,
       room: json['room'] as String?,
-      propertyId: json['property_id'] as String?,
+      propertyId: json['property_id'].toString(),
     );
   }
 }

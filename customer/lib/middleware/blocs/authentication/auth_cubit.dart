@@ -35,23 +35,42 @@ class AuthCubit extends Cubit<AuthState> {
     return false;
   }
 
-  Future<bool> updateRoomNumber(String roomNumber) async {
-    Response? response = await DataSource.get(
-        path: DataSource.updateRoomNumber,
-        queryType: QueryType.post,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ${state.obj!.accessToken}'
-        },
-        body: {
-          'room': roomNumber
-        });
+  Future<bool> updateUserDetails(
+    String roomNumber,
+    String providerid,
+  ) async {
+    String name = await SharedPreferencesUtils.getString(
+            key: SharedPrefrencesKeys.name) ??
+        '';
+    String email = await SharedPreferencesUtils.getString(
+            key: SharedPrefrencesKeys.name) ??
+        '';
+    print('got name and email : $name , $email');
+    print({
+      'room': roomNumber,
+      'username': name,
+      'property_id': providerid,
+      'email': email
+    });
+    try {
+      Response? response = await DataSource.get(
+          path: DataSource.updateUserDetails,
+          queryType: QueryType.post,
+          body: {
+            'room': roomNumber,
+            'username': name,
+            'property_id': providerid,
+            'email': email
+          });
 
-    if (response != null) {
-      if (response.statusCode == 200) {
-        return true;
+      if (response != null) {
+        print('we got a response ${response.body}');
+        if (json.decode(response.body)['status'] == 'User updated') {
+          return true;
+        }
       }
+    } catch (e) {
+      print('unable to update user details $e');
     }
     return false;
   }
@@ -109,6 +128,7 @@ class AuthCubit extends Cubit<AuthState> {
       //     body: body,
       //     headers: {'jwt': state.obj!.authToken.toString()});
       if (credentials['access'] != null) {
+        print(credentials);
         emit(
           AuthState(
             otpSent: false,

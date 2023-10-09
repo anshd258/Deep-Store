@@ -14,30 +14,13 @@ import 'middleware/helpers/app.router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferencesUtils.storeString(
-      key: SharedPrefrencesKeys.location, value: 'manali');
+
   String? accessToken = await SharedPreferencesUtils.getString(
       key: SharedPrefrencesKeys.accessToken);
   print(accessToken);
 
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (context) => AuthCubit(),
-      ),
-      BlocProvider(
-        create: (context) => RideCubit(),
-      ),
-      BlocProvider(
-        create: (context) => RentalCubit(),
-      ),
-      BlocProvider(
-        create: (context) => FoodCubit(),
-      ),
-      BlocProvider(
-        create: (context) => PaymentCubit(),
-      ),
-    ],
+  runApp(BlocProvider(
+    create: (context) => AuthCubit(),
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
       builder: (context, child) => ResponsiveBreakpoints.builder(

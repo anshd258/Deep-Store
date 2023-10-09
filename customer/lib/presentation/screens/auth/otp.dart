@@ -1,7 +1,10 @@
+import 'package:customer/middleware/helpers/constants.dart';
+import 'package:customer/middleware/helpers/sharedprefrence.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../middleware/blocs/authentication/auth_cubit.dart';
 import '../../widgets/buttons/commonbutton.dart';
@@ -59,10 +62,16 @@ class _OtpScreenState extends State<OtpScreen> {
           child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.obj != null && state.obj!.accessToken != null) {
-            if (state.obj!.newUser!) {
-              Navigator.pushReplacementNamed(context, "/checkin");
+            if (state.obj!.newUser! == true) {
+              Navigator.pushReplacementNamed(context, "/registername");
+            } else {
+              SharedPreferencesUtils.getString(
+                      key: SharedPrefrencesKeys.accessToken)
+                  .then((value) {
+                print(value);
+              });
+              Navigator.pushNamed(context, "/home");
             }
-            Navigator.pushNamed(context, "/home");
           }
         },
         builder: (context, state) {
@@ -74,7 +83,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       height: 90,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,7 +106,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Enter the OTP sent to +910000000000",
+                                  "Enter the OTP sent to your phone number",
                                   style: GoogleFonts.lato(
                                     color: const Color(0xB2555555),
                                     fontSize: 12,
@@ -131,10 +140,8 @@ class _OtpScreenState extends State<OtpScreen> {
                         //   return value!.length == 6 ? null : 'Pin is incorrect';
                         // },
                         hapticFeedbackType: HapticFeedbackType.lightImpact,
-                        onCompleted: (pin) {
-                        },
-                        onChanged: (value) {
-                        },
+                        onCompleted: (pin) {},
+                        onChanged: (value) {},
                         cursor: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -200,8 +207,6 @@ class _OtpScreenState extends State<OtpScreen> {
                           context
                               .read<AuthCubit>()
                               .loginWithOtp(pinController.text);
-                        } else {
-                          setState(() {});
                         }
                       },
                       borderradius: 4,

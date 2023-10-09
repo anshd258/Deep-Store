@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Editpageimage extends StatelessWidget {
-  String src;
-   Editpageimage({
+  final String src;
+   const Editpageimage({
     super.key,required this.src
   });
 
@@ -34,7 +34,7 @@ class Editpageimage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4)),
               ),
-              child: Icon(Icons.mode_edit_outline_outlined,
+              child: const Icon(Icons.mode_edit_outline_outlined,
                   color: Colors.white, size: 20),
             ),
           )
