@@ -7,6 +7,7 @@ class GradientCommonButton extends StatefulWidget {
   String lable;
   VoidCallback function;
   double height;
+  double fontSize;
   double width;
   double borderradius;
   EdgeInsets margin;
@@ -18,6 +19,7 @@ class GradientCommonButton extends StatefulWidget {
       required this.margin,
       required this.borderradius,
       required this.lable,
+      this.fontSize = 12,
       required this.width});
 
   @override
@@ -70,10 +72,14 @@ class _GradientCommonButtonState extends State<GradientCommonButton>
         alignment: Alignment.center,
         constraints:
             BoxConstraints(maxWidth: widget.width, maxHeight: widget.height),
-        child: Text(
-          widget.lable,
-          style: GoogleFonts.lato(
-              fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white),
+        child: Center(
+          child: Text(
+            widget.lable,
+            style: GoogleFonts.lato(
+                fontSize: widget.fontSize,
+                fontWeight: FontWeight.w500,
+                color: Colors.white),
+          ),
         ),
       ),
     ).animate().blur(

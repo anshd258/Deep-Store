@@ -1,19 +1,20 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:partner/UI/widget/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/editPage.FormField.dart';
 import 'package:partner/UI/widget/graedient.common.button.dart';
-import 'package:file_picker/file_picker.dart';
 
-class PartnerProductEdit extends StatefulWidget {
-  PartnerProductEdit({super.key});
+class FoodProductAdd extends StatefulWidget {
+  const FoodProductAdd({super.key});
 
   @override
-  State<PartnerProductEdit> createState() => _PartnerProductEditState();
+  State<FoodProductAdd> createState() => _FoodProductAddState();
 }
 
-class _PartnerProductEditState extends State<PartnerProductEdit> {
+class _FoodProductAddState extends State<FoodProductAdd> {
   bool value = false;
 
   bool value3 = false;
@@ -34,7 +35,7 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
 
   @override
   Widget build(BuildContext context) {
-    String title = "Edit item";
+    String title = "Add New item";
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -42,6 +43,15 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
         ),
         backgroundColor: Colors.white,
         centerTitle: true,
+        actions: [
+          Center(
+            child: Text("1/1",
+                style: GoogleFonts.lato(
+                    color: Color.fromRGBO(86, 86, 86, 1),
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600)),
+          )
+        ],
         title: Text(title,
             style: GoogleFonts.lato(
                 color: Color.fromRGBO(86, 86, 86, 1),
@@ -232,13 +242,27 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
                         ),
                       ]),
                 ),
-                GradientCommonButton(
-                    function: () {},
-                    height: 44,
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    borderradius: 8,
-                    lable: "Save",
-                    width: 328)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    OutlinedDeclineButton(
+                        color: Color.fromRGBO(34, 150, 199, 1),
+                        function: () {},
+                        height: 44,
+                        margin: EdgeInsets.all(0),
+                        borderradius: 8,
+                        lable: "Add another item",
+                        width: 158),
+                    GradientCommonButton(
+                        function: () {},
+                        height: 44,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        borderradius: 8,
+                        lable: "Save",
+                        width: 158),
+                  ],
+                )
               ],
             ),
           ),

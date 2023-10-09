@@ -42,7 +42,7 @@ class _PartnerBodyState extends State<PartnerBody> {
                                 child: PartnerFoodContainer(),
                                 onTap: () {
                                   Navigator.of(context).pushNamed(
-                                    "/partner/food/editpartner",
+                                    "/partner/food/list",
                                   );
                                 },
                               ))
