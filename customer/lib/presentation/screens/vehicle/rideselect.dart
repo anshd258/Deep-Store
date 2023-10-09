@@ -52,7 +52,7 @@ class RideSelect extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: TextField(
                   controller: pickupController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.streetAddress,
                   decoration: InputDecoration(
                     suffixIconColor: const Color.fromRGBO(73, 204, 115, 1),
                     suffixIcon: const Icon(Icons.my_location),
@@ -85,7 +85,7 @@ class RideSelect extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: TextField(
                   controller: dropoffController,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.streetAddress,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -110,7 +110,7 @@ class RideSelect extends StatelessWidget {
                   builder: (context) {
                     return Center(
                       child: SquicircleContainer(
-                          height: 230,
+                          height: MediaQuery.of(context).size.height / 3.5,
                           margin: const EdgeInsets.all(30),
                           width: double.infinity,
                           color: Colors.white,
@@ -136,6 +136,9 @@ class RideSelect extends StatelessWidget {
                               faliureText: 'sorry! can\'t book')),
                     );
                   });
+              pickupController.clear();
+              dropoffController.clear();
+              
             },
             borderradius: 4,
             height: 48,

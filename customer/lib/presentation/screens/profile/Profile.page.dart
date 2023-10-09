@@ -31,63 +31,63 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
-          return state.user != null
-              ? Column(
-                  children: <Widget>[
-                    ProfileContainer(
-                        name: '${state.user!.firstName} ${state.user!.lastName} ',
+          return Column(
+            children: <Widget>[
+              state.user != null
+                  ? ProfileContainer(
+                      name: '${state.user!.firstName} ${state.user!.lastName} ',
                       phoneNumber: state.user!.contact ?? '',
                       email: state.user!.email ?? '',
                       room: state.user?.room ?? '',
-                    ),
-                    ProfileOptions(
-                      lable: 'Request History',
-                      function: () {},
-                    ),
-                    ProfileOptions(
-                      lable: 'Edit Profile',
-                      function: () {
-                        Navigator.of(context).pushNamed('/editprofile');
-                      },
-                    ),
-                    ProfileOptions(
-                      lable: 'Terms & Conditions',
-                      function: () {},
-                    ),
-                    Container(
-                      height: 200,
-                      alignment: Alignment.bottomCenter,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            OutlinedDeclineButton(
-                                function: () {
-                                  SharedPreferencesUtils.clear();
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context, '/', (route) => false);
-                                },
-                                color: const Color(0xFFC25C5C),
-                                icon: Icons.logout_outlined,
-                                height: 42,
-                                margin: const EdgeInsets.all(2),
-                                borderradius: 4,
-                                lable: "Log out",
-                                width: 158),
-                            OutlinedDeclineButton(
-                                function: () {},
-                                icon: Icons.headset_mic_outlined,
-                                color: const Color.fromRGBO(34, 150, 199, 1),
-                                height: 42,
-                                margin: const EdgeInsets.all(2),
-                                borderradius: 4,
-                                lable: "call Support",
-                                width: 158)
-                          ]),
-                    ),
-                  ],
-                )
-              : Center(child: const CircularProgressIndicator());
+                    )
+                  : const Center(child: CircularProgressIndicator()),
+              ProfileOptions(
+                lable: 'Request History',
+                function: () {},
+              ),
+              ProfileOptions(
+                lable: 'Edit Profile',
+                function: () {
+                  Navigator.of(context).pushNamed('/editprofile');
+                },
+              ),
+              ProfileOptions(
+                lable: 'Terms & Conditions',
+                function: () {},
+              ),
+              Container(
+                height: 200,
+                alignment: Alignment.bottomCenter,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      OutlinedDeclineButton(
+                          function: () {
+                            SharedPreferencesUtils.clear();
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/', (route) => false);
+                          },
+                          color: const Color(0xFFC25C5C),
+                          icon: Icons.logout_outlined,
+                          height: 42,
+                          margin: const EdgeInsets.all(2),
+                          borderradius: 4,
+                          lable: "Log out",
+                          width: 158),
+                      OutlinedDeclineButton(
+                          function: () {},
+                          icon: Icons.headset_mic_outlined,
+                          color: const Color.fromRGBO(34, 150, 199, 1),
+                          height: 42,
+                          margin: const EdgeInsets.all(2),
+                          borderradius: 4,
+                          lable: "call Support",
+                          width: 158)
+                    ]),
+              ),
+            ],
+          );
         },
       ),
     );

@@ -32,7 +32,6 @@ class RentalHistory extends StatelessWidget {
                         child: Text('no rentals booked yet'),
                       )
                     : ListView(
-                      reverse: true,
                         children: data.map((request) {
                           return Card(
                             elevation: 4,

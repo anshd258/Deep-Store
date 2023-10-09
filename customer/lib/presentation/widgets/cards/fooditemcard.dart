@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:customer/presentation/widgets/buttons/commonbutton.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +29,18 @@ class _FoodItemCardState extends State<FoodItemCard> {
             flex: 3,
             child: SquicircleContainer(
               height: double.infinity,
-              child: Image.network(
-                widget.food.images ?? "https://dummyimage.com/300",
-                fit: BoxFit.cover,
-              ),
+              child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(
+                          child: CircularProgressIndicator(
+                              value: downloadProgress.progress)),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  imageUrl: widget.food.images ?? "https://dummyimage.com/300"),
+              // child: Image.network(
+              //   widget.food.images ?? "https://dummyimage.com/300",
+              //   fit: BoxFit.cover,
+              // ),
             ),
           ),
           const SizedBox(

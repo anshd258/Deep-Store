@@ -37,6 +37,7 @@ class RentalCubit extends Cubit<RentalState> {
         if (value != null) {
           emit(UpdateRentalState(
             rentalRequestList: value.rentalRequests,
+            rentalList: state.rentalList
           ));
           return true;
         } else {}

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common/common.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
@@ -34,12 +35,16 @@ class _RentalItemCardState extends State<RentalItemCard> {
               flex: 3,
               child: SquicircleContainer(
                 height: constraints.maxHeight - 10,
-                child: Image.network(
-                  widget.rental.image != null
-                      ? widget.rental.image!
-                      : "https://dummyimage.com/300",
+                child: CachedNetworkImage(
                   fit: BoxFit.cover,
-                ),
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(
+                          child: CircularProgressIndicator(
+                              value: downloadProgress.progress)),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  imageUrl: widget.rental.image ?? "https://dummyimage.com/300"),
+                
+            
               ),
             ),
             Expanded(
@@ -143,8 +148,6 @@ class _RentalItemCardState extends State<RentalItemCard> {
                                     color: Colors.white,
                                     child: PopUpMessage(
                                         function: () async {
-                                          print(
-                                              'starting rental booking process');
                                           return await context
                                               .read<RentalCubit>()
                                               .createRentalRequest(

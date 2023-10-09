@@ -6,7 +6,8 @@ class ProfileContainer extends StatelessWidget {
       {super.key,
       required this.name,
       required this.phoneNumber,
-      required this.email, required this.room});
+      required this.email,
+      required this.room});
   final String name;
   final String phoneNumber;
   final String email;

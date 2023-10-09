@@ -27,7 +27,6 @@ class RidesHistory extends StatelessWidget {
                         child: Text('no rides booked'),
                       )
                     : ListView(
-                      reverse: true,
                         children: data.map((ride) {
                           return Card(
                             elevation: 4,
@@ -47,38 +46,44 @@ class RidesHistory extends StatelessWidget {
                                       flex: 4,
                                       child: Row(
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              RidesDetailsContainer(
-                                                data: ride.pickUpLocation ?? '',
-                                                heading: "Pickup location",
-                                                fontSize: 18,
-                                              ),
-                                              RidesDetailsContainer(
-                                                data:
-                                                    ride.dropOffLocation ?? '',
-                                                heading: "Drop off location",
-                                                fontSize: 18,
-                                              ),
-                                            ],
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                RidesDetailsContainer(
+                                                  data:
+                                                      ride.pickUpLocation ?? '',
+                                                  heading: "Pickup location",
+                                                  fontSize: 18,
+                                                ),
+                                                RidesDetailsContainer(
+                                                  data: ride.dropOffLocation ??
+                                                      '',
+                                                  heading: "Drop off location",
+                                                  fontSize: 18,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              RidesDetailsContainer(
-                                                data: ride.distance.toString(),
-                                                heading: "Distance",
-                                                fontSize: 18,
-                                              ),
-                                              RidesDetailsContainer(
-                                                data: ride.price.toString(),
-                                                heading: "Price",
-                                                fontSize: 18,
-                                              ),
-                                            ],
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                RidesDetailsContainer(
+                                                  data:
+                                                      ride.distance.toString(),
+                                                  heading: "Distance",
+                                                  fontSize: 18,
+                                                ),
+                                                RidesDetailsContainer(
+                                                  data: ride.price.toString(),
+                                                  heading: "Price",
+                                                  fontSize: 18,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -139,18 +144,22 @@ class RidesDetailsContainer extends StatelessWidget {
           children: [
             Text(
               heading,
+              softWrap: true,
               style: GoogleFonts.lato(
                 color: const Color(0xFF555555),
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),
             ),
-            Text(
-              data,
-              style: GoogleFonts.lato(
-                color: const Color(0xFF555555),
-                fontSize: fontSize,
-                fontWeight: FontWeight.w700,
+            FittedBox(
+              child: Text(
+                data,
+                softWrap: true,
+                style: GoogleFonts.lato(
+                  color: const Color(0xFF555555),
+                  fontSize: fontSize,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ],

@@ -10,6 +10,7 @@ class CommonButton extends StatefulWidget {
   final double borderradius;
   final EdgeInsets margin;
   final Widget? child;
+  final bool enabled;
 
   const CommonButton(
       {super.key,
@@ -19,7 +20,8 @@ class CommonButton extends StatefulWidget {
       this.margin = const EdgeInsets.symmetric(vertical: 18),
       this.borderradius = 4,
       required this.lable,
-      this.width = 300});
+      this.width = 300,
+      this.enabled = true});
 
   @override
   State<CommonButton> createState() => _GradientCommonButtonState();
@@ -50,10 +52,13 @@ class _GradientCommonButtonState extends State<CommonButton>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        if (widget.enabled) {
+          
         ctr!.forward().then((value) => ctr!.reset());
 
         setState(() {});
         widget.onPressed();
+        }
       },
       child: Container(
         decoration: BoxDecoration(
@@ -71,11 +76,14 @@ class _GradientCommonButtonState extends State<CommonButton>
         alignment: Alignment.center,
         constraints:
             BoxConstraints(maxWidth: widget.width, maxHeight: widget.height),
-        child:widget.child ?? Text(
-          widget.lable,
-          style: GoogleFonts.lato(
-              fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white),
-        ),
+        child: widget.child ??
+            Text(
+              widget.lable,
+              style: GoogleFonts.lato(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white),
+            ),
       ),
     ).animate().blur(
         duration: Duration(milliseconds: 800),

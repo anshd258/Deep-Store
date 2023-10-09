@@ -147,6 +147,8 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
               ),
               Expanded(
                 child: CommonButton(
+                  enabled: showLoadingIndicator,
+                  child:showLoadingIndicator ? CircularProgressIndicator() : null,
                   height: 58,
                   lable: 'Add to Cart',
                   onPressed: () async {

@@ -23,6 +23,8 @@ class FoodHistory extends StatelessWidget {
       child: BlocBuilder<FoodCubit, FoodState>(
         builder: (context, foodstate) {
           List<FoodOrder>? data = foodstate.foodOrderList;
+
+          // data =data != null ? data.reversed.toList() : data;
           return data != null
               ? SizedBox(
                   child: data.isEmpty
@@ -30,7 +32,6 @@ class FoodHistory extends StatelessWidget {
                           child: Text('no order yet'),
                         )
                       : ListView(
-                        reverse: true,
                           children: data.map((order) {
                             List<String> itemnames = order.items
                                 .map((item) => item.food.name.toString())
@@ -106,8 +107,9 @@ class FoodHistory extends StatelessWidget {
                                             }
                                             return Container(
                                               padding: const EdgeInsets.all(6),
-                                              margin: const EdgeInsets.symmetric(
-                                                  vertical: 8),
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8),
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(4),
