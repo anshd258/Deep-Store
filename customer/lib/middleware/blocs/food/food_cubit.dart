@@ -113,17 +113,17 @@ class FoodCubit extends Cubit<FoodState> {
 
   Future<bool> fetchFoodOrders() async {
     try {
-      await DataSource.getData(
+      await DataSource.get(
           path: DataSource.getOrderByType,
           urlParameters: {'type': 'food', 'search_by_user': '1'}).then((value) {
         if (value != null) {
-          List<FoodOrder>? orders = value.foodOrders;
-          if (orders != null) {
-            orders
-                .removeWhere((element) => element.status == RequestStatus.hold);
-          }
+          List<FoodOrder> orders =
+              (json.decode(value.body)['orders'] as List<dynamic>).map((e) {
+            return FoodOrder.fromJson(e as Map<String, dynamic>);
+          }).toList();
+          orders.removeWhere((element) => element.status == RequestStatus.hold);
           emit(UpdateFoodState(
-              foodOrderList: value.foodOrders,
+              foodOrderList: orders,
               cartOrder: state.cartOrder,
               foodList: state.foodList));
           return true;
@@ -141,18 +141,18 @@ class FoodCubit extends Cubit<FoodState> {
       'status': '1',
     };
     try {
-      ApiResponse? apiResponse = await DataSource.getData(
+      Response? response = await DataSource.get(
           path: DataSource.getOrderByType, urlParameters: urlParameters);
-      if (apiResponse!.foodOrders != null) {
-        if (apiResponse.foodOrders!.isNotEmpty) {
-          FoodOrder? cartOrder = apiResponse.foodOrders?.first;
+      if (response != null) {
+          List<FoodOrder> orders = (json.decode(response.body)['orders'] as List<dynamic>).map((e) {
+        return FoodOrder.fromJson(e as Map<String, dynamic>);
+      }).toList();
+          FoodOrder? cartOrder = orders.first;
           emit(UpdateFoodState(
               cartOrder: cartOrder,
               foodList: state.foodList,
               foodOrderList: state.foodOrderList));
-        } else {
-          // do nothing.
-        }
+        
       }
     } catch (e) {
       print('unable to fetch cart order $e');
