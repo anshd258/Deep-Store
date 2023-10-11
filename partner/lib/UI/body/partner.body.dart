@@ -38,14 +38,9 @@ class _PartnerBodyState extends State<PartnerBody> {
                     physics: AlwaysScrollableScrollPhysics(),
                     child: Column(
                       children: _dummyValues
-                          .map((e) => InkWell(
-                                child: PartnerFoodContainer(),
-                                onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    "/partner/food/list",
-                                  );
-                                },
-                              ))
+                          .map((e) =>  PartnerFoodContainer(),
+                               
+                              )
                           .toList(),
                     ),
                   ),

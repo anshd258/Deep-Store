@@ -88,18 +88,30 @@ class _RidesRequestState extends State<RidesRequest>
               }
               if (state is IncomingRentalRequestCompleted) {
                 if (state.rentalRequest!.rentals!.isEmpty) {
-                  return LiquidPullToRefresh(
-                      onRefresh: () async {
-                        context
-                            .read<IncomingRentalRequestCubit>()
-                            .getIncomingRequest(
-                              StatusFood.processing.code.toString(),
-                            );
-                      },
-                      child: SingleChildScrollView(
-                        child: noIncomingRequest,
-                        physics: AlwaysScrollableScrollPhysics(),
-                      ));
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      return LiquidPullToRefresh(
+                          onRefresh: () async {
+                            context
+                                .read<IncomingRentalRequestCubit>()
+                                .getIncomingRequest(
+                                  StatusFood.processing.code.toString(),
+                                );
+                          },
+                          child: SingleChildScrollView(
+                            child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    minHeight: constraints.minHeight,
+                                    maxHeight: constraints.maxHeight,
+                                    minWidth: constraints.minWidth,
+                                    maxWidth: constraints.maxWidth),
+                                child: Center(
+                                  child: noAcceptedRequest,
+                                )),
+                            physics: AlwaysScrollableScrollPhysics(),
+                          ));
+                    },
+                  );
                 } else {
                   return RentalRequest(
                     data: state,
@@ -125,18 +137,30 @@ class _RidesRequestState extends State<RidesRequest>
               }
               if (state is IncomingRideRequestLoaded) {
                 if (state.rideRequest!.rides!.isEmpty) {
-                  return LiquidPullToRefresh(
-                      onRefresh: () async {
-                        context
-                            .read<IncomingRideRequestCubit>()
-                            .getIncomingRequest(
-                              StatusFood.processing.code.toString(),
-                            );
-                      },
-                      child: SingleChildScrollView(
-                        child: noIncomingRequest,
-                        physics: AlwaysScrollableScrollPhysics(),
-                      ));
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      return LiquidPullToRefresh(
+                          onRefresh: () async {
+                            context
+                                .read<IncomingRideRequestCubit>()
+                                .getIncomingRequest(
+                                  StatusFood.processing.code.toString(),
+                                );
+                          },
+                          child: SingleChildScrollView(
+                            child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    minHeight: constraints.minHeight,
+                                    maxHeight: constraints.maxHeight,
+                                    minWidth: constraints.minWidth,
+                                    maxWidth: constraints.maxWidth),
+                                child: Center(
+                                  child: noAcceptedRequest,
+                                )),
+                            physics: AlwaysScrollableScrollPhysics(),
+                          ));
+                    },
+                  );
                 } else {
                   return RideRequest(
                     data: state,
@@ -164,13 +188,22 @@ class RentalRequest extends StatelessWidget {
       child: LiquidPullToRefresh(
         onRefresh: () async {
           context.read<IncomingRentalRequestCubit>().getIncomingRequest(
-                StatusFood.processing.code.toString(),
+                StatusRideRental.pending.code.toString(),
               );
         },
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: data.rentalRequest!.rentals!
                 .map((e) => OwnerRequestcard(
+                      heading1: "Guest name",
+                      heading2: "Contact no",
+                      heading3: "Pickup location",
+                      heading4: "Drop off location",
+                      data1: e.user!.username!,
+                      data2: e.user!.room!,
+                      data3: e.startLocation!,
+                      data4: e.endLocation!,
                       type: RequestType.rental,
                       id: e.id!.toString(),
                     ))
@@ -193,13 +226,22 @@ class RideRequest extends StatelessWidget {
       child: LiquidPullToRefresh(
         onRefresh: () async {
           context.read<IncomingRideRequestCubit>().getIncomingRequest(
-                StatusFood.processing.code.toString(),
+                StatusRideRental.pending.code.toString(),
               );
         },
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: data.rideRequest!.rides!
                 .map((e) => OwnerRequestcard(
+                      heading1: "Guest name",
+                      heading2: "Room no",
+                      heading3: "Order name",
+                      heading4: "Total Price",
+                      data1: e.user!.username!,
+                      data2: e.user!.room!,
+                      data3: e.distance!,
+                      data4: e.price!,
                       type: RequestType.ride,
                       id: e.id!.toString(),
                     ))

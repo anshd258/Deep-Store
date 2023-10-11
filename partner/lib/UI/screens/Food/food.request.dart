@@ -24,14 +24,15 @@ class _FoodRequestState extends State<FoodRequest> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        leadingWidth: 2,
         title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
           child: Text(
             'Food Requests',
             textAlign: TextAlign.center,
             style: GoogleFonts.lato(
               color: Color(0xFF565656),
-              fontSize: 14,
+              fontSize: 20,
               fontWeight: FontWeight.w700,
               letterSpacing: -0.28,
             ),
@@ -63,17 +64,30 @@ class _FoodRequestState extends State<FoodRequest> {
               }
               if (state is IncomingRequestcomplete) {
                 if (state.foodRequest.orders!.isEmpty) {
-                  return LiquidPullToRefresh(
-                      onRefresh: () async {
-                        context
-                            .read<IncomingFoodRequestCubit>()
-                            .getIncomingRequest(
-                                StatusFood.processing.code.toString(), "567");
-                      },
-                      child: SingleChildScrollView(
-                        child: noIncomingRequest,
-                        physics: AlwaysScrollableScrollPhysics(),
-                      ));
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      return LiquidPullToRefresh(
+                          onRefresh: () async {
+                            context
+                                .read<IncomingFoodRequestCubit>()
+                                .getIncomingRequest(
+                                    StatusFood.processing.code.toString(),
+                                    "567");
+                          },
+                          child: SingleChildScrollView(
+                            child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    minHeight: constraints.minHeight,
+                                    maxHeight: constraints.maxHeight,
+                                    minWidth: constraints.minWidth,
+                                    maxWidth: constraints.maxWidth),
+                                child: Center(
+                                  child: noAcceptedRequest,
+                                )),
+                            physics: AlwaysScrollableScrollPhysics(),
+                          ));
+                    },
+                  );
                 } else {
                   return LiquidPullToRefresh(
                     onRefresh: () async {
@@ -87,8 +101,49 @@ class _FoodRequestState extends State<FoodRequest> {
                       child: Column(
                         children: state.foodRequest.orders!
                             .map(
-                              (e) => OwnerRequestcard(
-                                  type: RequestType.food, id: e.id!.toString()),
+                              (e) => InkWell(
+                                onTap: () {
+                                  showDialog(
+                                    barrierLabel: "cancle",
+                                    barrierDismissible: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        elevation: 5,
+                                        content: Container(
+                                          height: 200,
+                                          width: 300,
+                                          child: Column(
+                                              children: e.items!
+                                                  .map((e) => Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                              "${e.name} (X${e.quantity})"),
+                                                          Text(
+                                                              "₹${e.quantity}"),
+                                                        ],
+                                                      ))
+                                                  .toList()),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: OwnerRequestcard(
+                                    heading1: "Guest name",
+                                    heading2: "Room no",
+                                    heading3: "Items ordered",
+                                    heading4: "Total Price",
+                                    data1: e.user!.username!,
+                                    data2: e.user!.room!,
+                                    data3: e.items!.length.toString(),
+                                    data4: e.total!,
+                                    type: RequestType.food,
+                                    id: e.id!.toString()),
+                              ),
                             )
                             .toList(),
                       ),

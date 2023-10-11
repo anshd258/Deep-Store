@@ -8,25 +8,32 @@ import 'package:partner/middleware/Repository/AuthRepo.dart';
 part 'incoming_rental_request_state.dart';
 
 class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
-   final Authrepository _authrepository;
-  IncomingRentalRequestCubit(this._authrepository) : super(IncomingRentalRequestInitial());
+  final Authrepository _authrepository;
+  IncomingRentalRequestCubit(this._authrepository)
+      : super(IncomingRentalRequestInitial());
 
   String path = "/service/get-order-by-type";
 
-  void getIncomingRequest(String code,) async {
+  void getIncomingRequest(
+    String code,
+  ) async {
     Map<String, String> headers = {
-     'Content-Type': 'application/json',
-  'Authorization': 'Bearer ${_authrepository.accessToken}',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_authrepository.accessToken}',
     };
     emit(IncomingRentalRequestLoading());
     Map<String, dynamic> parameters = {
       "type": RequestType.rental.name,
+      "search_by_user": 0.toString(),
       "status": code
     };
     print(parameters);
 
     var response = await getData(
-            path: path, urlParameters: parameters, queryType: QueryType.get, headers: headers)
+            path: path,
+            urlParameters: parameters,
+            queryType: QueryType.get,
+            headers: headers)
         .onError((error, stackTrace) =>
             emit(IncomingRentalRequestError(message: error.toString())));
 
@@ -36,10 +43,12 @@ class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
     } else {}
   }
 
-  void rejectRequest(String id,) async {
-      Map<String, String> headers = {
-     'Content-Type': 'application/json',
-  'Authorization': 'Bearer ${_authrepository.accessToken}',
+  void rejectRequest(
+    String id,
+  ) async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_authrepository.accessToken}',
     };
     String path = "/service/set-status-rental/";
     Map<String, dynamic> body = {
@@ -47,17 +56,20 @@ class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
       'status': StatusRideRental.rejected.code.toString()
     };
 
-    await getData(path: path, queryType: QueryType.post, body: body, headers: headers)
+    await getData(
+            path: path, queryType: QueryType.post, body: body, headers: headers)
         .then((value) =>
             getIncomingRequest(StatusRideRental.pending.code.toString()))
         .onError((error, stackTrace) =>
             emit(IncomingRentalRequestError(message: error.toString())));
   }
 
-  void acceptRequest(String id,) async {
-      Map<String, String> headers = {
-     'Content-Type': 'application/json',
-  'Authorization': 'Bearer ${_authrepository.accessToken}',
+  void acceptRequest(
+    String id,
+  ) async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_authrepository.accessToken}',
     };
     String path = "/service/set-status-rental/";
     Map<String, dynamic> body = {
@@ -65,7 +77,8 @@ class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
       'status': StatusRideRental.accepted.code.toString()
     };
 
-    await getData(path: path, queryType: QueryType.post, body: body, headers: headers)
+    await getData(
+            path: path, queryType: QueryType.post, body: body, headers: headers)
         .then((value) =>
             getIncomingRequest(StatusRideRental.pending.code.toString()))
         .onError((error, stackTrace) =>

@@ -23,6 +23,7 @@ class IncomingFoodRequestCubit extends Cubit<IncomingRequestState> {
     emit(IncomingRequestLoading());
     Map<String, dynamic> parameters = {
       "type": RequestType.food.name,
+      "search_by_user": 0.toString(),
       "status": code
     };
     print(parameters);

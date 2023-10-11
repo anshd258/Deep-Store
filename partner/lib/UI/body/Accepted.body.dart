@@ -3,16 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:partner/UI/widget/rentalCard.dart';
-import 'package:partner/helpers/constants.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_ride_request_cubit.dart';
-
 import 'package:partner/UI/util/utilwidget.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/filter_cubit_cubit.dart';
-import 'package:partner/middleware/incomingRequestCubit/incoming_rental_request_cubit.dart';
-import 'package:partner/middleware/incomingRequestCubit/incoming_request_cubit.dart';
-
 import '../widget/rideCard.dart';
 
 class RidesBody extends StatefulWidget {
@@ -29,7 +24,7 @@ class _RidesBodyState extends State<RidesBody> {
       var value = context.watch<FilterCubitCubit>();
       if (value.tabIndex == 1) {
         return SizedBox(
-            height: 538,
+            height: 516,
             child: BlocConsumer<AcceptedRequestsCubit, AcceptedRequestsState>(
               listener: (context, state) {
                 if (state is AcceptedRequestsError) {
@@ -43,16 +38,28 @@ class _RidesBodyState extends State<RidesBody> {
                   return progressIndicator;
                 } else if (state is AcceptedRequestsLoaded) {
                   if (state.foodRequest!.orders!.isEmpty) {
-                    return LiquidPullToRefresh(
-                        onRefresh: () async {
-                          context
-                              .read<AcceptedRequestsCubit>()
-                              .getAcceptedRequests();
-                        },
-                        child: SingleChildScrollView(
-                          child: noAcceptedRequest,
-                          physics: AlwaysScrollableScrollPhysics(),
-                        ));
+                    return LayoutBuilder(
+                      builder: (context, constraints) {
+                        return LiquidPullToRefresh(
+                            onRefresh: () async {
+                              context
+                                  .read<AcceptedRequestsCubit>()
+                                  .getAcceptedRequests();
+                            },
+                            child: SingleChildScrollView(
+                              child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                      minHeight: constraints.minHeight,
+                                      maxHeight: constraints.maxHeight,
+                                      minWidth: constraints.minWidth,
+                                      maxWidth: constraints.maxWidth),
+                                  child: Center(
+                                    child: noAcceptedRequest,
+                                  )),
+                              physics: AlwaysScrollableScrollPhysics(),
+                            ));
+                      },
+                    );
                   } else {
                     return LiquidPullToRefresh(
                       onRefresh: () async {
@@ -69,7 +76,7 @@ class _RidesBodyState extends State<RidesBody> {
                                       child: Column(
                                         children: [
                                           Text(
-                                            "Room no ${e.user}",
+                                            "Room no ${e.user!.room}",
                                             style: GoogleFonts.lato(
                                               color:
                                                   Color.fromARGB(255, 0, 0, 0),
@@ -135,7 +142,7 @@ class _RidesBodyState extends State<RidesBody> {
             ));
       } else if (value.tabIndex == 2) {
         return SizedBox(
-            height: 538,
+            height: 516,
             child: BlocConsumer<AcceptedRideRequestCubit,
                 AcceptedRideRequestState>(
               listener: (context, state) {
@@ -150,16 +157,28 @@ class _RidesBodyState extends State<RidesBody> {
                   return progressIndicator;
                 } else if (state is AcceptedRideRequestLoaded) {
                   if (state.rideRequest!.rides!.isEmpty) {
-                    return LiquidPullToRefresh(
-                        onRefresh: () async {
-                          context
-                              .read<AcceptedRideRequestCubit>()
-                              .getAcceptedRequests();
-                        },
-                        child: SingleChildScrollView(
-                          child: noAcceptedRequest,
-                          physics: AlwaysScrollableScrollPhysics(),
-                        ));
+                    return LayoutBuilder(
+                      builder: (context, constraints) {
+                        return LiquidPullToRefresh(
+                            onRefresh: () async {
+                              context
+                                  .read<AcceptedRideRequestCubit>()
+                                  .getAcceptedRequests();
+                            },
+                            child: SingleChildScrollView(
+                              child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                      minHeight: constraints.minHeight,
+                                      maxHeight: constraints.maxHeight,
+                                      minWidth: constraints.minWidth,
+                                      maxWidth: constraints.maxWidth),
+                                  child: Center(
+                                    child: noAcceptedRequest,
+                                  )),
+                              physics: AlwaysScrollableScrollPhysics(),
+                            ));
+                      },
+                    );
                   } else {
                     return LiquidPullToRefresh(
                       onRefresh: () async {
@@ -183,7 +202,7 @@ class _RidesBodyState extends State<RidesBody> {
                                     .map((e) => ownerOngoingcards(
                                           contact: e.user!.contact!,
                                           user: e.user!.contact!,
-                                          name: e.startLocation!,
+                                          name: e.distance!,
                                           quantitiy: e.distance.toString(),
                                           total: e.price!.toString(),
                                         ))
@@ -200,7 +219,7 @@ class _RidesBodyState extends State<RidesBody> {
             ));
       } else {
         return SizedBox(
-          height: 538,
+          height: 516,
           child: BlocConsumer<AcceptedRentalRequestCubit,
               AcceptedRentalRequestState>(
             listener: (context, state) {
@@ -215,16 +234,28 @@ class _RidesBodyState extends State<RidesBody> {
                 return progressIndicator;
               } else if (state is AcceptedRentalRequestLoaded) {
                 if (state.rentalRequest!.rentals!.isEmpty) {
-                  return LiquidPullToRefresh(
-                      onRefresh: () async {
-                        context
-                            .read<AcceptedRentalRequestCubit>()
-                            .getAcceptedRequests();
-                      },
-                      child: SingleChildScrollView(
-                        child: noAcceptedRequest,
-                        physics: AlwaysScrollableScrollPhysics(),
-                      ));
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      return LiquidPullToRefresh(
+                          onRefresh: () async {
+                            context
+                                .read<AcceptedRentalRequestCubit>()
+                                .getAcceptedRequests();
+                          },
+                          child: SingleChildScrollView(
+                            child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    minHeight: constraints.minHeight,
+                                    maxHeight: constraints.maxHeight,
+                                    minWidth: constraints.minWidth,
+                                    maxWidth: constraints.maxWidth),
+                                child: Center(
+                                  child: noAcceptedRequest,
+                                )),
+                            physics: AlwaysScrollableScrollPhysics(),
+                          ));
+                    },
+                  );
                 } else {
                   return LiquidPullToRefresh(
                     onRefresh: () async {

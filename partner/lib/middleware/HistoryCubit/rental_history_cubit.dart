@@ -8,27 +8,32 @@ import 'package:partner/middleware/Repository/AuthRepo.dart';
 part 'rental_history_state.dart';
 
 class RentalHistoryCubit extends Cubit<RentalHistoryState> {
-   final Authrepository _authrepository;
+  final Authrepository _authrepository;
   RentalHistoryCubit(this._authrepository) : super(RentalHistoryInitial());
-   String path = "/service/get-order-by-type";
-  void getHistory()async{
-      Map<String, String> headers = {
-     'Content-Type': 'application/json',
-  'Authorization': 'Bearer ${_authrepository.accessToken}',
+  String path = "/service/get-order-by-type";
+  void getHistory() async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_authrepository.accessToken}',
     };
-      emit(RentalHistoryLoading());
+    emit(RentalHistoryLoading());
 
     Map<String, dynamic> parameters = {
-      "type": RequestType.rental .name,
+      "type": RequestType.rental.name,
+      "search_by_user": 0.toString(),
       "status": StatusRideRental.completed.code.toString()
     };
     print(parameters);
     var response = await getData(
-            path: path, urlParameters: parameters, queryType: QueryType.get, headers: headers)
+            path: path,
+            urlParameters: parameters,
+            queryType: QueryType.get,
+            headers: headers)
         .onError((error, stackTrace) =>
             emit(RentalHistoryError(message: error.toString())));
     if (response != null) {
-      emit(RentalHistoryLoaded(rentalRequest: RentalRequestModal.fromJson(response)));
+      emit(RentalHistoryLoaded(
+          rentalRequest: RentalRequestModal.fromJson(response)));
     }
   }
 }

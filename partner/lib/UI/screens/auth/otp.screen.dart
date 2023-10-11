@@ -42,6 +42,7 @@ class _OtpScreenState extends State<OtpScreen> {
       ),
     );
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -60,13 +61,13 @@ class _OtpScreenState extends State<OtpScreen> {
           child: BlocConsumer<AuthCubit, AuthInitial>(
         listener: (context, state) {
           //! uncomment after opt api is corrected
-          // if (state.obj != null && state.obj!.authToken != null) {
-          //   Navigator.pushNamed(context, "/home");
-          // }
-          if (state.messaage != null) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.messaage!)));
+          if (state.obj != null && state.obj!.authToken != null) {
+            Navigator.pushNamed(context, "/home");
           }
+          // if (state.messaage != null) {
+          //   ScaffoldMessenger.of(context)
+          //       .showSnackBar(SnackBar(content: Text(state.messaage!)));
+          // }
         },
         builder: (context, state) {
           return Stack(
@@ -199,9 +200,9 @@ class _OtpScreenState extends State<OtpScreen> {
                     GradientCommonButton(
                       function: () {
                         if (pinController.length == 6) {
-                          if (pinController.text == "123456") {
-                            Navigator.pushNamed(context, "/home");
-                          }
+                          // if (pinController.text == "123456") {
+                          //   Navigator.pushNamed(context, "/home");
+                          // }
                           context
                               .read<AuthCubit>()
                               .loginWithOtp(pinController.text);

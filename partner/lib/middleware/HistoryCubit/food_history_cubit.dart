@@ -21,6 +21,7 @@ class FoodHistoryCubit extends Cubit<FoodHistoryState> {
 
     Map<String, dynamic> parameters = {
       "type": RequestType.food.name,
+      "search_by_user": 0.toString(),
       "status": StatusFood.completed.code.toString()
     };
     print(parameters);

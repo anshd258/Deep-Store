@@ -22,6 +22,7 @@ class AcceptedRideRequestCubit extends Cubit<AcceptedRideRequestState> {
 
     Map<String, dynamic> parameters = {
       "type": RequestType.ride.name,
+      "search_by_user": 0.toString(),
       "status": StatusRideRental.accepted.code.toString()
     };
     print(parameters);

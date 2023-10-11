@@ -24,7 +24,7 @@ class RidesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
+      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       height: 140,
       decoration: BoxDecoration(
           boxShadow: [
@@ -35,7 +35,7 @@ class RidesCard extends StatelessWidget {
           ],
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10))),
-      padding: EdgeInsets.only(left: 18, right: 18, top: 12, bottom: 20),
+      padding: EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 20),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,15 +85,13 @@ class RidesDetailsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
       height: 50,
+      width: 140,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             margin: EdgeInsets.only(bottom: 1),
-            width: double.infinity,
             child: Text(
               heading,
               style: GoogleFonts.lato(
@@ -105,7 +103,6 @@ class RidesDetailsContainer extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(top: 1),
-            width: double.infinity,
             child: Text(
               data,
               style: GoogleFonts.lato(

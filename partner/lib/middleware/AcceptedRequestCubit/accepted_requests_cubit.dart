@@ -25,6 +25,7 @@ class AcceptedRequestsCubit extends Cubit<AcceptedRequestsState> {
 
     Map<String, dynamic> parameters = {
       "type": RequestType.food.name,
+      "search_by_user": 0.toString(),
       "status": StatusFood.confirmed.code.toString()
     };
     print(parameters);

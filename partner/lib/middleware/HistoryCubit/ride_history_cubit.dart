@@ -8,28 +8,32 @@ import 'package:partner/middleware/Repository/AuthRepo.dart';
 part 'ride_history_state.dart';
 
 class RideHistoryCubit extends Cubit<RideHistoryState> {
-   final Authrepository _authrepository;
+  final Authrepository _authrepository;
   RideHistoryCubit(this._authrepository) : super(RideHistoryInitial());
   String path = "/service/get-order-by-type";
   void getHistory() async {
-      Map<String, String> headers = {
-     'Content-Type': 'application/json',
-  'Authorization': 'Bearer ${_authrepository.accessToken}',
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_authrepository.accessToken}',
     };
     emit(RideHistoryLoading());
 
     Map<String, dynamic> parameters = {
       "type": RequestType.rental.name,
+      "search_by_user": 0.toString(),
       "status": StatusRideRental.completed.code.toString()
     };
     print(parameters);
     var response = await getData(
-            path: path, urlParameters: parameters, queryType: QueryType.get, headers: headers)
+            path: path,
+            urlParameters: parameters,
+            queryType: QueryType.get,
+            headers: headers)
         .onError((error, stackTrace) =>
             emit(RideHistoryError(message: error.toString())));
     if (response != null) {
       emit(
-          RideHistoryLoaded(rideRequest:  RidesRequestModal.fromJson(response)));
+          RideHistoryLoaded(rideRequest: RidesRequestModal.fromJson(response)));
     }
   }
 }

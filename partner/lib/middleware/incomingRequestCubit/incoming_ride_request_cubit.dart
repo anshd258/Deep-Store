@@ -22,6 +22,7 @@ class IncomingRideRequestCubit extends Cubit<IncomingRideRequestState> {
     emit(IncomingRideRequestLoading());
     Map<String, dynamic> parameters = {
       "type": RequestType.ride.name,
+      "search_by_user": 0.toString(),
       "status": code
     };
     print(parameters);
@@ -64,7 +65,7 @@ class IncomingRideRequestCubit extends Cubit<IncomingRideRequestState> {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_authrepository.accessToken}',
     };
-    String path = "/service/set-status-rental/";
+    String path = "/service/set-status-ride/";
     Map<String, dynamic> body = {
       'ride_id': id,
       'status': StatusRideRental.accepted.code.toString()

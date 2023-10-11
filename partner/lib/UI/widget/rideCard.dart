@@ -33,7 +33,7 @@ class ownerOngoingcards extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10))),
       height: 130,
-      margin: EdgeInsets.symmetric(horizontal: 5),
+      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: Row(
         children: [
           Image.network(
@@ -58,11 +58,10 @@ class ownerOngoingcards extends StatelessWidget {
           Container(
             height: sizesMapPotrait[Component.ownerOngoingcardsDESC]
                 ?[Sizes.HEIGHT],
-            width: sizesMapPotrait[Component.ownerOngoingcardsDESC]
-                ?[Sizes.WIDTH],
             alignment: Alignment.centerLeft,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 textwidget("${name} ", "(x${quantitiy})", 16, FontWeight.w600),
                 textwidget("Name : ", user, 14, FontWeight.w400),

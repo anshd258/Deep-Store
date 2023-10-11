@@ -19,7 +19,7 @@ class HistoryBody extends StatelessWidget {
       var value = context.watch<HistoryFilterCubit>();
       if (value.tabIndex == 1) {
         return SizedBox(
-            height: 538,
+            height: 516,
             child: BlocConsumer<FoodHistoryCubit, FoodHistoryState>(
               listener: (context, state) {
                 if (state is FoodHistoryError) {
@@ -58,7 +58,7 @@ class HistoryBody extends StatelessWidget {
                                                 barrierDismissible: true,
                                                 context: context,
                                                 builder: (context) {
-                                                  return AlertDialog( 
+                                                  return AlertDialog(
                                                     elevation: 5,
                                                     content: Container(
                                                       height: 200,
@@ -105,7 +105,7 @@ class HistoryBody extends StatelessWidget {
             ));
       } else if (value.tabIndex == 2) {
         return SizedBox(
-            height: 538,
+            height: 516,
             child: BlocConsumer<RideHistoryCubit, RideHistoryState>(
               listener: (context, state) {
                 if (state is RideHistoryError) {
@@ -153,7 +153,7 @@ class HistoryBody extends StatelessWidget {
             ));
       } else {
         return SizedBox(
-          height: 538,
+          height: 516,
           child: BlocConsumer<RentalHistoryCubit, RentalHistoryState>(
             listener: (context, state) {
               if (state is RentalHistoryError) {
