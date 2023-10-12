@@ -24,20 +24,21 @@ class RentalRequestModal {
 class Rentals {
   int? id;
   User? user;
+  Rental? rental;
   String? startLocation;
   String? endLocation;
   String? startCoordinates;
   String? endCoordinates;
-  String? startTime;
-  String? endTime;
+  Null? startTime;
+  Null? endTime;
   int? status;
   String? distance;
   String? rating;
 
-
   Rentals(
       {this.id,
       this.user,
+      this.rental,
       this.startLocation,
       this.endLocation,
       this.startCoordinates,
@@ -46,22 +47,22 @@ class Rentals {
       this.endTime,
       this.status,
       this.distance,
-      this.rating,
-    });
+      this.rating});
 
   Rentals.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    startLocation = json['start_location'].toString();
-    endLocation = json['end_location'].toString();
-    startCoordinates = json['start_coordinates'].toString();
-    endCoordinates = json['end_coordinates'].toString();
-    startTime = json['start_time'].toString();
-    endTime = json['end_time'].toString();
+    rental =
+        json['rental'] != null ? new Rental.fromJson(json['rental']) : null;
+    startLocation = json['start_location'];
+    endLocation = json['end_location'];
+    startCoordinates = json['start_coordinates'];
+    endCoordinates = json['end_coordinates'];
+    startTime = json['start_time'];
+    endTime = json['end_time'];
     status = json['status'];
     distance = json['distance'].toString();
     rating = json['rating'].toString();
-   
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +70,9 @@ class Rentals {
     data['id'] = this.id;
     if (this.user != null) {
       data['user'] = this.user!.toJson();
+    }
+    if (this.rental != null) {
+      data['rental'] = this.rental!.toJson();
     }
     data['start_location'] = this.startLocation;
     data['end_location'] = this.endLocation;
@@ -79,38 +83,102 @@ class Rentals {
     data['status'] = this.status;
     data['distance'] = this.distance;
     data['rating'] = this.rating;
-    
     return data;
   }
 }
 
 class User {
   int? id;
-
+  User? user;
   String? contact;
-  String? otp;
   String? username;
   String? room;
+  int? propertyId;
 
-  User({this.id, this.contact, this.otp, this.username, this.room});
+  User(
+      {this.id,
+      this.user,
+      this.contact,
+      this.username,
+      this.room,
+      this.propertyId});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-
-    contact = json['contact'].toString();
-    otp = json['otp'].toString();
-    username = json['username'].toString();
-    room = json['room'].toString();
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    contact = json['contact'];
+    username = json['username'];
+    room = json['room'];
+    propertyId = json['property_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
     data['contact'] = this.contact;
-    data['otp'] = this.otp;
     data['username'] = this.username;
     data['room'] = this.room;
+    data['property_id'] = this.propertyId;
+    return data;
+  }
+}
+
+class Rental {
+  int? id;
+  String? name;
+  String? description;
+  String? price;
+  String? image;
+  String? engineCapacity;
+  String? mileage;
+  String? fuelType;
+  int? seatingCapacity;
+  String? sType;
+  int? quantity;
+
+  Rental(
+      {this.id,
+      this.name,
+      this.description,
+      this.price,
+      this.image,
+      this.engineCapacity,
+      this.mileage,
+      this.fuelType,
+      this.seatingCapacity,
+      this.sType,
+      this.quantity});
+
+  Rental.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    description = json['description'];
+    price = json['price'].toString();
+    image = json['image'];
+    engineCapacity = json['engineCapacity'];
+    mileage = json['mileage'];
+    fuelType = json['fuelType'];
+    seatingCapacity = json['seatingCapacity'];
+    sType = json['_type'];
+    quantity = json['quantity'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['price'] = this.price;
+    data['image'] = this.image;
+    data['engineCapacity'] = this.engineCapacity;
+    data['mileage'] = this.mileage;
+    data['fuelType'] = this.fuelType;
+    data['seatingCapacity'] = this.seatingCapacity;
+    data['_type'] = this.sType;
+    data['quantity'] = this.quantity;
     return data;
   }
 }

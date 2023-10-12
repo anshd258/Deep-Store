@@ -14,9 +14,7 @@ class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
 
   String path = "/service/get-order-by-type";
 
-  void getIncomingRequest(
-    String code,
-  ) async {
+  void getIncomingRequest() async {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_authrepository.accessToken}',
@@ -25,7 +23,7 @@ class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
     Map<String, dynamic> parameters = {
       "type": RequestType.rental.name,
       "search_by_user": 0.toString(),
-      "status": code
+      "status": StatusRideRental.pending.code.toString()
     };
     print(parameters);
 
@@ -38,6 +36,7 @@ class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
             emit(IncomingRentalRequestError(message: error.toString())));
 
     if (response != null) {
+      print(response);
       emit(IncomingRentalRequestCompleted(
           rentalRequest: RentalRequestModal.fromJson(response)));
     } else {}
@@ -59,7 +58,7 @@ class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
     await getData(
             path: path, queryType: QueryType.post, body: body, headers: headers)
         .then((value) =>
-            getIncomingRequest(StatusRideRental.pending.code.toString()))
+            getIncomingRequest())
         .onError((error, stackTrace) =>
             emit(IncomingRentalRequestError(message: error.toString())));
   }
@@ -80,7 +79,7 @@ class IncomingRentalRequestCubit extends Cubit<IncomingRentalRequestState> {
     await getData(
             path: path, queryType: QueryType.post, body: body, headers: headers)
         .then((value) =>
-            getIncomingRequest(StatusRideRental.pending.code.toString()))
+            getIncomingRequest())
         .onError((error, stackTrace) =>
             emit(IncomingRentalRequestError(message: error.toString())));
   }

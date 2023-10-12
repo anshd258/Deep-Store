@@ -94,9 +94,7 @@ class _RidesRequestState extends State<RidesRequest>
                           onRefresh: () async {
                             context
                                 .read<IncomingRentalRequestCubit>()
-                                .getIncomingRequest(
-                                  StatusFood.processing.code.toString(),
-                                );
+                                .getIncomingRequest();
                           },
                           child: SingleChildScrollView(
                             child: ConstrainedBox(
@@ -143,9 +141,7 @@ class _RidesRequestState extends State<RidesRequest>
                           onRefresh: () async {
                             context
                                 .read<IncomingRideRequestCubit>()
-                                .getIncomingRequest(
-                                  StatusFood.processing.code.toString(),
-                                );
+                                .getIncomingRequest();
                           },
                           child: SingleChildScrollView(
                             child: ConstrainedBox(
@@ -187,9 +183,7 @@ class RentalRequest extends StatelessWidget {
       height: double.infinity,
       child: LiquidPullToRefresh(
         onRefresh: () async {
-          context.read<IncomingRentalRequestCubit>().getIncomingRequest(
-                StatusRideRental.pending.code.toString(),
-              );
+          context.read<IncomingRentalRequestCubit>().getIncomingRequest();
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
@@ -225,9 +219,7 @@ class RideRequest extends StatelessWidget {
       height: double.infinity,
       child: LiquidPullToRefresh(
         onRefresh: () async {
-          context.read<IncomingRideRequestCubit>().getIncomingRequest(
-                StatusRideRental.pending.code.toString(),
-              );
+          context.read<IncomingRideRequestCubit>().getIncomingRequest();
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),

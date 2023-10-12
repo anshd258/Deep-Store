@@ -100,7 +100,7 @@ class PartnerFoodContainer extends StatelessWidget {
                     lable: "Remove",
                     width: 146),
                 GradientCommonButton(
-                    function: () {
+                    function: () {  
                       Navigator.of(context).pushNamed(
                         "/partner/food/list",
                       );

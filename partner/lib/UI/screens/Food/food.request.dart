@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:partner/UI/util/teamdisplay.dialog.dart';
 import 'package:partner/UI/widget/ownerRequestCard.dart';
 import 'package:partner/helpers/constants.dart';
 import 'package:partner/middleware/incomingRequestCubit/incoming_request_cubit.dart';
@@ -31,7 +32,7 @@ class _FoodRequestState extends State<FoodRequest> {
             'Food Requests',
             textAlign: TextAlign.center,
             style: GoogleFonts.lato(
-              color: Color(0xFF565656),
+              color:const Color(0xFF565656),
               fontSize: 20,
               fontWeight: FontWeight.w700,
               letterSpacing: -0.28,
@@ -75,6 +76,7 @@ class _FoodRequestState extends State<FoodRequest> {
                                     "567");
                           },
                           child: SingleChildScrollView(
+                            physics:const AlwaysScrollableScrollPhysics(),
                             child: ConstrainedBox(
                                 constraints: BoxConstraints(
                                     minHeight: constraints.minHeight,
@@ -84,7 +86,6 @@ class _FoodRequestState extends State<FoodRequest> {
                                 child: Center(
                                   child: noAcceptedRequest,
                                 )),
-                            physics: AlwaysScrollableScrollPhysics(),
                           ));
                     },
                   );
@@ -103,34 +104,7 @@ class _FoodRequestState extends State<FoodRequest> {
                             .map(
                               (e) => InkWell(
                                 onTap: () {
-                                  showDialog(
-                                    barrierLabel: "cancle",
-                                    barrierDismissible: true,
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        elevation: 5,
-                                        content: Container(
-                                          height: 200,
-                                          width: 300,
-                                          child: Column(
-                                              children: e.items!
-                                                  .map((e) => Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                              "${e.name} (X${e.quantity})"),
-                                                          Text(
-                                                              "₹${e.quantity}"),
-                                                        ],
-                                                      ))
-                                                  .toList()),
-                                        ),
-                                      );
-                                    },
-                                  );
+                                  IteamDisplayDialog(context, e);
                                 },
                                 child: OwnerRequestcard(
                                     heading1: "Guest name",
@@ -151,7 +125,7 @@ class _FoodRequestState extends State<FoodRequest> {
                   );
                 }
               } else {
-                return Center();
+                return const Center();
               }
             },
           )),

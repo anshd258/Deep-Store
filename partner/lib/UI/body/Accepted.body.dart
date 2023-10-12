@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:partner/UI/util/teamdisplay.dialog.dart';
 import 'package:partner/UI/widget/rentalCard.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
@@ -68,6 +69,7 @@ class _RidesBodyState extends State<RidesBody> {
                             .getAcceptedRequests();
                       },
                       child: SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
                         child: Column(
                             children: state.foodRequest!.orders!
                                 .map((e) => Container(
@@ -86,34 +88,7 @@ class _RidesBodyState extends State<RidesBody> {
                                           ),
                                           InkWell(
                                               onTap: () {
-                                                showDialog(
-                                                  barrierLabel: "cancle",
-                                                  barrierDismissible: true,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return AlertDialog(
-                                                      elevation: 5,
-                                                      content: Container(
-                                                        height: 200,
-                                                        width: 300,
-                                                        child: Column(
-                                                            children: e.items!
-                                                                .map((e) => Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                            "${e.name} (X${e.quantity})"),
-                                                                        Text(
-                                                                            "₹${e.quantity}"),
-                                                                      ],
-                                                                    ))
-                                                                .toList()),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
+                                                IteamDisplayDialog(context, e);
                                               },
                                               child: RidesCard(
                                                 heading1: "Guest name",
@@ -187,6 +162,7 @@ class _RidesBodyState extends State<RidesBody> {
                             .getAcceptedRequests();
                       },
                       child: SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
                         child: Column(
                           children: [
                             Text(
@@ -199,12 +175,15 @@ class _RidesBodyState extends State<RidesBody> {
                             ),
                             Column(
                                 children: state.rideRequest!.rides!
-                                    .map((e) => ownerOngoingcards(
-                                          contact: e.user!.contact!,
-                                          user: e.user!.contact!,
-                                          name: e.distance!,
-                                          quantitiy: e.distance.toString(),
-                                          total: e.price!.toString(),
+                                    .map((e) => RidesCard(
+                                          heading1: "Guest name",
+                                          heading2: "pickup location",
+                                          heading3: "Contact no",
+                                          heading4: "Dropoff location",
+                                          data1: e.user!.username!,
+                                          data2: e.startLocation!,
+                                          data3: e.user!.contact.toString(),
+                                          data4: e.endLocation!,
                                         ))
                                     .toList()),
                           ],
@@ -277,15 +256,14 @@ class _RidesBodyState extends State<RidesBody> {
                           ),
                           Column(
                               children: state.rentalRequest!.rentals!
-                                  .map((e) => RidesCard(
-                                        heading1: "Guest name",
-                                        heading2: "pickup location",
-                                        heading3: "Contact no",
-                                        heading4: "Dropoff location",
-                                        data1: e.user!.username!,
-                                        data2: e.startLocation!,
-                                        data3: e.user!.contact.toString(),
-                                        data4: e.endLocation!,
+                                  .map((e) => ownerOngoingcards(
+                                        contact: e.user!.contact!,
+                                        user: e.user!.username!,
+                                        imgLink: e.rental!.image,
+                                        name: e.rental!.name!,
+                                        quantitiy:
+                                            e.rental!.quantity!.toString(),
+                                        total: "${e.rental!.price} /- per hour",
                                       ))
                                   .toList()),
                         ],

@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
 import 'package:partner/helpers/api.service.dart';
 import 'package:partner/helpers/constants.dart';
 import 'package:partner/helpers/models/food.request.dart';

@@ -91,12 +91,8 @@ class ScreenSetup extends StatelessWidget {
     context
         .read<IncomingFoodRequestCubit>()
         .getIncomingRequest(StatusFood.processing.code.toString(), "567");
-    context
-        .read<IncomingRentalRequestCubit>()
-        .getIncomingRequest(StatusRideRental.pending.code.toString());
-    context
-        .read<IncomingRideRequestCubit>()
-        .getIncomingRequest(StatusRideRental.pending.code.toString());
+    context.read<IncomingRentalRequestCubit>().getIncomingRequest();
+    context.read<IncomingRideRequestCubit>().getIncomingRequest();
     context.read<AcceptedRentalRequestCubit>().getAcceptedRequests();
     context.read<AcceptedRequestsCubit>().getAcceptedRequests();
     context.read<AcceptedRideRequestCubit>().getAcceptedRequests();

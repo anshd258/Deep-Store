@@ -6,7 +6,8 @@ class AuthInitial {
   String? jwt;
   String? messaage;
   bool otpSent = false;
-  AuthInitial({this.obj, required this.otpSent, this.loading, this.messaage, this.jwt});
+  AuthInitial(
+      {this.obj, required this.otpSent, this.loading, this.messaage, this.jwt});
 }
 
 class Token {

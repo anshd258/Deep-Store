@@ -43,7 +43,7 @@ class RidesCard extends StatelessWidget {
             RidesDetailsContainer(
               data: data1,
               heading: heading1,
-              fontSize: 20,
+              fontSize: 15,
             ),
             RidesDetailsContainer(
               data: data2,

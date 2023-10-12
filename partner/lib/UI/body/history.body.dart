@@ -134,12 +134,15 @@ class HistoryBody extends StatelessWidget {
                           ),
                           Column(
                               children: state.rideRequest!.rides!
-                                  .map((e) => ownerOngoingcards(
-                                        contact: e.user!.contact!,
-                                        user: e.user!.username!,
-                                        name: e.startLocation!,
-                                        quantitiy: e.distance.toString(),
-                                        total: e.price!.toString(),
+                                  .map((e) => RidesCard(
+                                        heading1: "Guest name",
+                                        heading2: "pickup location",
+                                        heading3: "Contact no",
+                                        heading4: "Dropoff location",
+                                        data1: e.user!.username!,
+                                        data2: e.startLocation!,
+                                        data3: e.user!.contact.toString(),
+                                        data4: e.endLocation!,
                                       ))
                                   .toList()),
                         ],
@@ -182,15 +185,13 @@ class HistoryBody extends StatelessWidget {
                         ),
                         Column(
                             children: state.rentalRequest!.rentals!
-                                .map((e) => RidesCard(
-                                      heading1: "Guest name",
-                                      heading2: "pickup location",
-                                      heading3: "Contact no",
-                                      heading4: "Dropoff location",
-                                      data1: e.user!.username!,
-                                      data2: e.startLocation!,
-                                      data3: e.user!.contact.toString(),
-                                      data4: e.endLocation!,
+                                .map((e) => ownerOngoingcards(
+                                      contact: e.user!.contact!,
+                                      user: e.user!.username!,
+                                      imgLink: e.rental!.image!,
+                                      name: e.rental!.name!,
+                                      quantitiy: e.distance.toString(),
+                                      total: "${e.rental!.price} /- per hour",
                                     ))
                                 .toList()),
                       ],
