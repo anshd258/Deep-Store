@@ -10,11 +10,11 @@ import '../../presentation/screens/auth/otp.dart';
 class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case '/':
+      case '/login':
         return MaterialPageRoute(builder: (_) => const Loginscreen());
       case '/otp':
         return MaterialPageRoute(builder: (_) => const OtpScreen());
-      case '/home':
+      case '/':
         return MaterialPageRoute(builder: (_) => const ScreenSetup());
       case '/registername':
         return MaterialPageRoute(builder: (_) => const RegistrationName());
@@ -25,7 +25,7 @@ class AppRouter {
       case '/editprofile':
         return MaterialPageRoute(builder: (_) => const EditProfilePage());
       default:
-        return MaterialPageRoute(builder: (_) => const Loginscreen());
+        return MaterialPageRoute(builder: (_) => const ScreenSetup());
     }
   }
 }

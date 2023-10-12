@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_string_interpolations
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:customer/data/models/rentalrequest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,42 +42,53 @@ class RentalHistory extends StatelessWidget {
                             child: Container(
                               height: 120,
                               margin: const EdgeInsets.all(12),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: SquicircleContainer(
-                                      height: double.infinity,
-                                      child: Image.network(
-                                        "https://dummyimage.com/300",
-                                        fit: BoxFit.cover,
+                              child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SquicircleContainer(
+                                      width: constraints.maxWidth * 0.35,
+                                      height: constraints.maxWidth * 0.35,
+                                      child: CachedNetworkImage(
+                                          fit: BoxFit.cover,
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress)),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                          imageUrl: request.rental.image ??
+                                              "https://dummyimage.com/300"),
+                                    ),
+                                    const SizedBox(
+                                      width: 15.0,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          textwidget(' ${request.rental.name}',
+                                              "", 16, FontWeight.w600),
+                                          textwidget(
+                                              "Nos : ",
+                                              "${request.rental.quantity}",
+                                              14,
+                                              FontWeight.w400),
+                                          textwidget(
+                                              "Total : ",
+                                              '${request.rental.price * request.rental.quantity}',
+                                              14,
+                                              FontWeight.w400),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 15.0,
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        textwidget('Yamaha FZS-FI', "", 16,
-                                            FontWeight.w600),
-                                        textwidget(
-                                            "Nos : ",
-                                            "${request.rentalId}",
-                                            14,
-                                            FontWeight.w400),
-                                        textwidget("Total : ", "₹ 1500/ day",
-                                            14, FontWeight.w400),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
+                                    Container(
                                       padding: const EdgeInsets.all(6),
                                       margin: const EdgeInsets.symmetric(
                                           vertical: 8),
@@ -95,10 +107,10 @@ class RentalHistory extends StatelessWidget {
                                                 Color.fromRGBO(73, 204, 115, 1),
                                             fontWeight: FontWeight.w400),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                    )
+                                  ],
+                                );
+                              }),
                             ),
                           );
                         }).toList(),

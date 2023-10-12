@@ -1,5 +1,3 @@
-import 'package:customer/middleware/helpers/constants.dart';
-import 'package:customer/middleware/helpers/sharedprefrence.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -128,7 +126,8 @@ class _CheckInScreenState extends State<CheckInScreen> {
                         context
                             .read<AuthCubit>()
                             .updateUserDetails(
-                              roomNumberController.text,
+                              roomNumber:  roomNumberController.text,
+                              providerid: 
                               '123456',
                             )
                             .then((value) {
@@ -136,7 +135,7 @@ class _CheckInScreenState extends State<CheckInScreen> {
                             setState(() {
                               loading = false;
                             });
-                            Navigator.pushReplacementNamed(context, "/home");
+                            Navigator.pushReplacementNamed(context, "/");
                           }
                         });
                       }

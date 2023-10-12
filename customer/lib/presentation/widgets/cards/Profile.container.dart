@@ -15,41 +15,46 @@ class ProfileContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 108,
-      margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
-      child: Row(
-        children: [
-          Image.network(
-            "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-              return Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: child,
-                ),
-              );
-            },
-            height: 108,
-            width: 108,
-            fit: BoxFit.fill,
-          ),
-          Container(
-            height: 108,
-            alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                textwidget(name, "", 18, FontWeight.w600),
-                textwidget('Phone No. : ', phoneNumber, 14, FontWeight.w400),
-                textwidget('Email : ', email, 14, FontWeight.w400),
-                textwidget('Room Number : ', room, 14, FontWeight.w400),
-              ],
+    return Card(
+      elevation: 4,
+      margin: const EdgeInsets.all(20),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
+        height: 108,
+        child: Row(
+          children: [
+            Image.asset(
+              'assets/user.png',
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: child,
+                  ),
+                );
+              },
+              height: 108,
+              width: 108,
+              fit: BoxFit.cover,
             ),
-          )
-        ],
+            Container(
+              height: 108,
+              alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  textwidget(name, "", 18, FontWeight.w600),
+                  textwidget('Phone No. : ', phoneNumber, 14, FontWeight.w400),
+                  textwidget('', email, 14, FontWeight.w400),
+                  textwidget('Room Number : ', room, 14, FontWeight.w400),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

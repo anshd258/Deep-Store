@@ -3,19 +3,25 @@ import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import '../../../middleware/helpers/constants.dart';
 import '../../widgets/cards/rentalitemcard.dart';
 import '../../widgets/buttons/commonbutton.dart';
 import '../../widgets/squicircle.dart';
 
-class RideSelect extends StatelessWidget {
+class RideSelect extends StatefulWidget {
   const RideSelect({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    TextEditingController pickupController = TextEditingController();
+  State<RideSelect> createState() => _RideSelectState();
+}
+
+class _RideSelectState extends State<RideSelect> {
     TextEditingController dropoffController = TextEditingController();
+    TextEditingController pickupController = TextEditingController();
     String pickupCoordinates = '123';
     String dropOffCoordinates = '456';
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -24,9 +30,8 @@ class RideSelect extends StatelessWidget {
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Container(
+              child: SizedBox(
                 height: 200,
-                color: Colors.blue,
                 child: Image.asset(
                   'assets/map.png',
                   fit: BoxFit.cover,
@@ -35,38 +40,40 @@ class RideSelect extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16.0),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Enter pick-up location',
-                  style: GoogleFonts.lato(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: const Color.fromRGBO(85, 85, 85, 1)),
+          Form(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Enter pick-up location',
+                    style: GoogleFonts.lato(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: const Color.fromRGBO(85, 85, 85, 1)),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: TextField(
-                  controller: pickupController,
-                  keyboardType: TextInputType.streetAddress,
-                  decoration: InputDecoration(
-                    suffixIconColor: const Color.fromRGBO(73, 204, 115, 1),
-                    suffixIcon: const Icon(Icons.my_location),
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: const BorderSide(
-                        color: Color.fromRGBO(86, 86, 86, 0.2),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: TextField(
+                    controller: pickupController,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      suffixIconColor: const Color.fromRGBO(73, 204, 115, 1),
+                      suffixIcon: const Icon(Icons.my_location),
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: const BorderSide(
+                          color: Color.fromRGBO(86, 86, 86, 0.2),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +92,9 @@ class RideSelect extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: TextField(
                   controller: dropoffController,
-                  keyboardType: TextInputType.streetAddress,
+                  onChanged: (value) {
+                  },
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -103,6 +112,8 @@ class RideSelect extends StatelessWidget {
           CommonButton(
             onPressed: () {
               /// fire event to create ride request
+                                print(pickupController.text);
+                                print(dropoffController.text);
 
               showDialog(
                   barrierColor: Colors.black26,
@@ -129,6 +140,8 @@ class RideSelect extends StatelessWidget {
                                           dropOffCoordinates:
                                               dropOffCoordinates),
                                     );
+              pickupController.clear();
+              dropoffController.clear();
                                 return status;
                               },
                               processingText: 'trying to book a ride',
@@ -136,9 +149,6 @@ class RideSelect extends StatelessWidget {
                               faliureText: 'sorry! can\'t book')),
                     );
                   });
-              pickupController.clear();
-              dropoffController.clear();
-              
             },
             borderradius: 4,
             height: 48,

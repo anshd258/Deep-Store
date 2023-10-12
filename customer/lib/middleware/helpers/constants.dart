@@ -1,8 +1,8 @@
-enum RequestStatus { failed, hold, processing, confirmed, ready, delivered, completed}
+enum RequestStatus { pending, accepted,completed, cancelled, rejected }
+enum OrderStatus { failed, hold, processing, confirmed, ready, delivered, completed}
 
 enum QueryType { get, post }
 
-enum FilterValue { FOOD, RIDES, RENTALS }
 enum VehicleType { TWO_WHEELER, FOUR_WHEELER }
 
 class SharedPrefrencesKeys {
@@ -27,22 +27,59 @@ const baseUrl =
     "brisphere-django-backend.agreeablebush-b77b4bbe.southeastasia.azurecontainerapps.io";
 
 
+  int mapOrderStatusToInt(OrderStatus status) {
+    switch (status) {
+      case OrderStatus.failed:
+        return 0;
+      case OrderStatus.hold:
+        return 1;
+      case OrderStatus.processing:
+        return 2;
+      case OrderStatus.confirmed:
+        return 3;
+      case OrderStatus.ready:
+        return 4;
+      case OrderStatus.delivered:
+        return 5;
+      case OrderStatus.completed:
+        return 6;
+      default:
+        throw ArgumentError('Invalid OrderStatus value: $status');
+    }
+  }
+
+   OrderStatus mapIntToOrderStatus(int status) {
+    switch (status) {
+      case 0:
+        return OrderStatus.failed;
+      case 1:
+        return OrderStatus.hold;
+      case 2:
+        return OrderStatus.processing;
+      case 3:
+        return OrderStatus.confirmed;
+      case 4:
+        return OrderStatus.ready;
+      case 5:
+        return OrderStatus.delivered;
+      case 6:
+        return OrderStatus.completed;
+      default:
+        throw ArgumentError('Invalid OrderStatus integer: $status');
+    }
+  }
   int mapRequestStatusToInt(RequestStatus status) {
     switch (status) {
-      case RequestStatus.failed:
+      case RequestStatus.pending:
         return 0;
-      case RequestStatus.hold:
+      case RequestStatus.accepted:
         return 1;
-      case RequestStatus.processing:
-        return 2;
-      case RequestStatus.confirmed:
-        return 3;
-      case RequestStatus.ready:
-        return 4;
-      case RequestStatus.delivered:
-        return 5;
       case RequestStatus.completed:
-        return 6;
+        return 2;
+      case RequestStatus.cancelled:
+        return 3;
+      case RequestStatus.rejected:
+        return 4;
       default:
         throw ArgumentError('Invalid RequestStatus value: $status');
     }
@@ -51,19 +88,15 @@ const baseUrl =
    RequestStatus mapIntToRequestStatus(int status) {
     switch (status) {
       case 0:
-        return RequestStatus.failed;
+        return RequestStatus.pending;
       case 1:
-        return RequestStatus.hold;
+        return RequestStatus.accepted;
       case 2:
-        return RequestStatus.processing;
-      case 3:
-        return RequestStatus.confirmed;
-      case 4:
-        return RequestStatus.ready;
-      case 5:
-        return RequestStatus.delivered;
-      case 6:
         return RequestStatus.completed;
+      case 3:
+        return RequestStatus.cancelled;
+      case 4:
+        return RequestStatus.rejected;
       default:
         throw ArgumentError('Invalid RequestStatus integer: $status');
     }

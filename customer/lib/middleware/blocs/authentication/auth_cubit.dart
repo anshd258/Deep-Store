@@ -16,6 +16,10 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthState(otpSent: false, loading: false)) {}
 
+  void clear() {
+    emit(AuthState(otpSent: false, loading: false));
+  }
+
   Future<bool> getUserDetails() async {
     String? phone = await SharedPreferencesUtils.getString(
         key: SharedPrefrencesKeys.userPhoneNumber);
@@ -35,15 +39,16 @@ class AuthCubit extends Cubit<AuthState> {
     return false;
   }
 
-  Future<bool> updateUserDetails(
-    String roomNumber,
-    String providerid,
-  ) async {
-    String name = await SharedPreferencesUtils.getString(
+  Future<bool> updateUserDetails({required String roomNumber, required String providerid,
+      String? name, String? email, String? phone}) async {
+    name ??= await SharedPreferencesUtils.getString(
             key: SharedPrefrencesKeys.name) ??
         '';
-    String email = await SharedPreferencesUtils.getString(
-            key: SharedPrefrencesKeys.name) ??
+    email ??= await SharedPreferencesUtils.getString(
+            key: SharedPrefrencesKeys.email) ??
+        '';
+    phone ??= await SharedPreferencesUtils.getString(
+            key: SharedPrefrencesKeys.userPhoneNumber) ??
         '';
     print('got name and email : $name , $email');
     print({
@@ -65,7 +70,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       if (response != null) {
         print('we got a response ${response.body}');
-        if (json.decode(response.body)['status'] == 'User updated') {
+        if (json.decode(response.body)['status'] == 'success') {
           return true;
         }
       }

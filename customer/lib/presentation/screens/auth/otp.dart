@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../middleware/blocs/authentication/auth_cubit.dart';
 import '../../widgets/buttons/commonbutton.dart';
@@ -63,14 +62,14 @@ class _OtpScreenState extends State<OtpScreen> {
         listener: (context, state) {
           if (state.obj != null && state.obj!.accessToken != null) {
             if (state.obj!.newUser! == true) {
-              Navigator.pushReplacementNamed(context, "/registername");
+              Navigator.pushNamedAndRemoveUntil(context, "/registername", (route)=> false);
             } else {
               SharedPreferencesUtils.getString(
                       key: SharedPrefrencesKeys.accessToken)
                   .then((value) {
                 print(value);
               });
-              Navigator.pushNamed(context, "/home");
+              Navigator.pushNamedAndRemoveUntil(context, "/home", (route)=> false);
             }
           }
         },

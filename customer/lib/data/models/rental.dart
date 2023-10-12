@@ -13,6 +13,7 @@ class   Rental {
   final String? fuelType;
   final int? seatingCapacity;
   final VehicleType type;
+  int quantity;
 
   Rental({
     required this.id,
@@ -25,6 +26,7 @@ class   Rental {
     this.fuelType,
     this.seatingCapacity,
     required this.type,
+    required this.quantity,
   });
 
   factory Rental.fromJson(Map<String, dynamic> json) {
@@ -50,21 +52,9 @@ class   Rental {
       fuelType: json['fuelType'],
       seatingCapacity: json['seatingCapacity'],
       type: mapStringToVehicleType(json['_type']),
+      quantity: json['quantity'] as int,
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'description': description,
-      'price': price,
-      'image': image,
-      'engineCapacity': engineCapacity,
-      'mileage': mileage,
-      'fuelType': fuelType,
-      'seatingCapacity': seatingCapacity,
-      'type': type == VehicleType.TWO_WHEELER ? "Moterbike" : "Car",
-    };
-  }
+
 }

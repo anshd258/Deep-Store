@@ -102,7 +102,7 @@ class FoodHistory extends StatelessWidget {
                                             Color color = const Color.fromRGBO(
                                                 73, 204, 115, 1);
                                             if (order.status ==
-                                                RequestStatus.failed) {
+                                                OrderStatus.failed) {
                                               color = Colors.red;
                                             }
                                             return Container(

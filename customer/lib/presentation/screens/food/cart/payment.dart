@@ -1,6 +1,4 @@
 import 'package:customer/middleware/blocs/payment/payment_cubit.dart';
-import 'package:customer/middleware/helpers/constants.dart';
-import 'package:customer/middleware/helpers/sharedprefrence.utils.dart';
 import 'package:customer/presentation/screen.setup.dart';
 import 'package:customer/presentation/screens/food/cart/cart.dart';
 import 'package:customer/presentation/widgets/buttons/commonbutton.dart';
@@ -8,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../middleware/blocs/food/food_cubit.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({super.key});

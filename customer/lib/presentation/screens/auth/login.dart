@@ -1,4 +1,3 @@
-import 'package:customer/middleware/helpers/sharedprefrence.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -139,7 +138,7 @@ class _LoginscreenState extends State<Loginscreen> {
                       // },
                       listener: (context, state) {
                         if (state.otpSent!) {
-                          Navigator.pushReplacementNamed(context, "/otp");
+                          Navigator.pushNamed(context, "/otp");
                         }
                       },
                       builder: (context, state) {

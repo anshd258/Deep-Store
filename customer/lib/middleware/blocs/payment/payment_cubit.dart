@@ -18,6 +18,10 @@ class PaymentCubit extends Cubit<PaymentState> {
   PaymentCubit()
       : super(const PaymentInitial(paymentStatus: PaymentStatus.unInitialized));
 
+  void clear() {
+    emit(const PaymentInitial(paymentStatus: PaymentStatus.unInitialized));
+  }
+
   Future<void> initiatePayment(
       BuildContext context, FoodOrder order, String accessToken) async {
     print('initiatePayment function called');
@@ -55,7 +59,7 @@ class PaymentCubit extends Cubit<PaymentState> {
           if (verifyresponse != null) {
             if (json.decode(verifyresponse.body)['status'] == 'success') {
               print('payment verified!!');
-              await updateOrderStatus(order.id, RequestStatus.confirmed)
+              await updateOrderStatus(order.id, OrderStatus.confirmed)
                   .then((value) {
                 emit(const UpdatePaymentState(
                     paymentStatus: PaymentStatus.success));
@@ -73,7 +77,7 @@ class PaymentCubit extends Cubit<PaymentState> {
 
       Future<void> handlePaymentError(PaymentFailureResponse response) async {
         print('payment failed');
-        await updateOrderStatus(order.id, RequestStatus.hold).then((value) {
+        await updateOrderStatus(order.id, OrderStatus.hold).then((value) {
           emit(const UpdatePaymentState(
               paymentStatus: PaymentStatus.unInitialized));
         });
@@ -81,7 +85,7 @@ class PaymentCubit extends Cubit<PaymentState> {
 
       void handleExternalWallet(ExternalWalletResponse response) {}
 
-      updateOrderStatus(order.id, RequestStatus.processing).then((value) {
+      updateOrderStatus(order.id, OrderStatus.processing).then((value) {
         emit(const UpdatePaymentState(paymentStatus: PaymentStatus.processing));
         Razorpay razorpay = Razorpay();
         razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
@@ -92,7 +96,7 @@ class PaymentCubit extends Cubit<PaymentState> {
     }
   }
 
-  Future<bool> updateOrderStatus(String orderId, RequestStatus status) async {
+  Future<bool> updateOrderStatus(String orderId, OrderStatus status) async {
     print('trying to update order status');
     Map<String, dynamic> body = {
       "order": {"id": orderId, "status": status.index}

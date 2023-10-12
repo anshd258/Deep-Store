@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'middleware/blocs/authentication/auth_cubit.dart';
+import 'middleware/blocs/food/food_cubit.dart';
+import 'middleware/blocs/rental/rental_cubit.dart';
 import 'middleware/helpers/app.router.dart';
 
 Future<void> main() async {
@@ -17,8 +19,22 @@ Future<void> main() async {
       key: SharedPrefrencesKeys.accessToken);
   print(accessToken);
 
-  runApp(BlocProvider(
-    create: (context) => AuthCubit(),
+  runApp(MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context)=> AuthCubit()),
+      BlocProvider(
+        create: (context) => RideCubit(),
+      ),
+      BlocProvider(
+        create: (context) => RentalCubit(),
+      ),
+      BlocProvider(
+        create: (context) => FoodCubit(),
+      ),
+      BlocProvider(
+        create: (context) => PaymentCubit(),
+      ),
+    ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
       builder: (context, child) => ResponsiveBreakpoints.builder(
@@ -31,7 +47,7 @@ Future<void> main() async {
       theme: ThemeData(
         textTheme: GoogleFonts.latoTextTheme(),
       ),
-      initialRoute: accessToken == null ? '/' : '/home',
+      initialRoute: accessToken == null ? '/login' : '/',
       onGenerateRoute: (settings) => AppRouter().onGenerateRoute(settings),
     ),
   ));

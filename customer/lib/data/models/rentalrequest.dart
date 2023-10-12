@@ -1,37 +1,53 @@
+
+
+import 'package:customer/data/models/ride.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 
+import 'rental.dart';
 class RentalRequest {
-  final int requestId;
-  final int rentalId;
-  final String pickupLocation;
-  final String dropOffLocation;
-  final RequestStatus status;
+  int id;
+  Rental rental;
+  String startLocation;
+  String endLocation;
+  String startCoordinates;
+  String endCoordinates;
+  DateTime? startTime;
+  DateTime? endTime;
+  RequestStatus status;
+  double distance;
+  double rating;
 
   RentalRequest({
-    required this.rentalId,
-    required this.pickupLocation,
-    required this.dropOffLocation,
+    required this.id,
+    required this.rental,
+    required this.startLocation,
+    required this.endLocation,
+    required this.startCoordinates,
+    required this.endCoordinates,
+    this.startTime,
+    this.endTime,
     required this.status,
-    required this.requestId,
+    required this.distance,
+    required this.rating,
   });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': requestId,
-      'rental': rentalId,
-      'start_location': pickupLocation,
-      'end_location': dropOffLocation,
-      'status': status.toString(), 
-    };
-  }
 
   factory RentalRequest.fromJson(Map<String, dynamic> json) {
     return RentalRequest(
-      requestId: json['id'],
-      rentalId: json['rental'],
-      pickupLocation: json['start_location'],
-      dropOffLocation: json['end_location'],
-      status: mapIntToRequestStatus(json['status'])
+      id: json['id'] as int,
+      rental: Rental.fromJson(json['rental']),
+      startLocation: json['start_location'] as String,
+      endLocation: json['end_location'] as String,
+      startCoordinates: json['start_coordinates'] as String,
+      endCoordinates: json['end_coordinates'] as String,
+      startTime: json['start_time'] != null
+          ? DateTime.parse(json['start_time'] as String)
+          : null,
+      endTime: json['end_time'] != null
+          ? DateTime.parse(json['end_time'] as String)
+          : null,
+      status: mapIntToRequestStatus(json['status'] as int),
+      distance: json['distance'] as double,
+      rating: json['rating'] as double,
     );
   }
 }

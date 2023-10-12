@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileOptions extends StatelessWidget {
-  String lable;
-  VoidCallback function;
+ final  String lable;
+  final VoidCallback function;
 
-  ProfileOptions({super.key, required this.function, required this.lable});
+  const ProfileOptions({super.key, required this.function, required this.lable});
 
   @override
   Widget build(BuildContext context) {

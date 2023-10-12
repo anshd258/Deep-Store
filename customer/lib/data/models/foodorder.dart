@@ -9,7 +9,7 @@ class FoodOrder {
   final double taxes;
   final double charges;
   final double totalPrice;
-  final RequestStatus status;
+  final OrderStatus status;
   final DateTime eta;
 
   FoodOrder({
@@ -24,19 +24,7 @@ class FoodOrder {
     required this.eta,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'status': mapRequestStatusToInt(status),
-      'taxes': taxes,
-      'charges': charges,
-      'discount': discount,
-      'total': totalPrice,
-      'items': items.map((foodDetails) => foodDetails.toJson()).toList(),
-      'eta': eta.toIso8601String(),
-      'subTotal': subTotalPrice
-    };
-  }
+  
 
   factory FoodOrder.fromJson(Map<String, dynamic> json) {
     return FoodOrder(
@@ -49,7 +37,7 @@ class FoodOrder {
       taxes: json['taxes'],
       charges: json['charges'],
       totalPrice: json['total'],
-      status: mapIntToRequestStatus(json['status']),
+      status: mapIntToOrderStatus(json['status']),
       eta: DateTime.parse(json['created']),
     );
   }

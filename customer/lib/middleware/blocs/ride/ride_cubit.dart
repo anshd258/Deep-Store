@@ -10,6 +10,10 @@ part 'ride_state.dart';
 class RideCubit extends Cubit<RideState> {
   RideCubit() : super(const RideInitial());
 
+  void clear() {
+    emit(const RideInitial());
+  }
+
   Future<bool> fetchRideRequests() async {
     await DataSource.getData(
       path: DataSource.getAllRideRequests,

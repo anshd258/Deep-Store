@@ -1,4 +1,6 @@
-enum RequestStatus { cart, pending, ongoing, success, failed }
+
+
+import '../../middleware/helpers/constants.dart';
 
 class Ride {
   final int? id;
@@ -39,30 +41,14 @@ class Ride {
           : null,
       dropOffTime:
           json['end_time'] != null ? DateTime.parse(json['end_time']) : null,
-      status: _parseRequestStatus(json['status']),
+      status: mapIntToRequestStatus(json['status']),
       distance: json['distance']?.toDouble(),
       price: json['price']?.toDouble(),
       rating: json['rating']?.toDouble() ?? 0.0,
     );
   }
 
-  static RequestStatus _parseRequestStatus(int? status) {
-    switch (status) {
-      case 0:
-        return RequestStatus.cart;
-      case 1:
-        return RequestStatus.pending;
-      case 2:
-        return RequestStatus.ongoing;
-      case 3:
-        return RequestStatus.success;
-      case 4:
-        return RequestStatus.failed;
-      // Handle other integer values as needed.
-      default:
-        return RequestStatus.cart; // Default to some value if needed.
-    }
-  }
+
 
   Map<String, dynamic> toJson() {
     return {

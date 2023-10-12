@@ -43,7 +43,6 @@ class RidesHistory extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      flex: 4,
                                       child: Row(
                                         children: [
                                           Expanded(
@@ -88,27 +87,24 @@ class RidesHistory extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    Expanded(
-                                      child: Container(
-                                        margin:
-                                            EdgeInsets.symmetric(vertical: 8),
-                                        padding: const EdgeInsets.all(6),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
-                                            border: Border.all(
-                                                width: 2,
-                                                color: const Color.fromRGBO(
-                                                    73, 204, 115, 1))),
-                                        child: Text(
-                                          ride.status.name,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Color.fromRGBO(
-                                                  73, 204, 115, 1),
-                                              fontWeight: FontWeight.w400),
-                                        ),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(vertical: 8),
+                                      padding: const EdgeInsets.all(6),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                          border: Border.all(
+                                              width: 2,
+                                              color: const Color.fromRGBO(
+                                                  73, 204, 115, 1))),
+                                      child: Text(
+                                        ride.status.name,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            color:
+                                                Color.fromRGBO(73, 204, 115, 1),
+                                            fontWeight: FontWeight.w400),
                                       ),
                                     )
                                   ]),
@@ -151,15 +147,13 @@ class RidesDetailsContainer extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            FittedBox(
-              child: Text(
-                data,
-                softWrap: true,
-                style: GoogleFonts.lato(
-                  color: const Color(0xFF555555),
-                  fontSize: fontSize,
-                  fontWeight: FontWeight.w700,
-                ),
+            Text(
+              data,
+              softWrap: true,
+              style: GoogleFonts.lato(
+                color: const Color(0xFF555555),
+                fontSize: fontSize,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],

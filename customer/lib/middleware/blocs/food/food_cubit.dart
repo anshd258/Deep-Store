@@ -17,7 +17,11 @@ part 'food_state.dart';
 class FoodCubit extends Cubit<FoodState> {
   FoodCubit() : super(FoodInitial());
 
-  Future<bool> updateOrderStatus(String orderId, RequestStatus status) async {
+  void clear() {
+    emit(FoodInitial());
+  }
+
+  Future<bool> updateOrderStatus(String orderId, OrderStatus status) async {
     Map<String, dynamic> body = {
       "order": {"id": orderId, "status": status.index}
     };
@@ -84,7 +88,6 @@ class FoodCubit extends Cubit<FoodState> {
             cartOrder: order,
             foodList: state.foodList,
             foodOrderList: state.foodOrderList));
-
         return status;
       }
     } catch (e) {
@@ -121,7 +124,7 @@ class FoodCubit extends Cubit<FoodState> {
               (json.decode(value.body)['orders'] as List<dynamic>).map((e) {
             return FoodOrder.fromJson(e as Map<String, dynamic>);
           }).toList();
-          orders.removeWhere((element) => element.status == RequestStatus.hold);
+          orders.removeWhere((element) => element.status == OrderStatus.hold);
           emit(UpdateFoodState(
               foodOrderList: orders,
               cartOrder: state.cartOrder,
@@ -139,20 +142,24 @@ class FoodCubit extends Cubit<FoodState> {
     Map<String, dynamic> urlParameters = {
       'type': 'food',
       'status': '1',
+      'search_by_user': '1'
     };
     try {
       Response? response = await DataSource.get(
           path: DataSource.getOrderByType, urlParameters: urlParameters);
       if (response != null) {
-          List<FoodOrder> orders = (json.decode(response.body)['orders'] as List<dynamic>).map((e) {
-        return FoodOrder.fromJson(e as Map<String, dynamic>);
-      }).toList();
-          FoodOrder? cartOrder = orders.first;
-          emit(UpdateFoodState(
-              cartOrder: cartOrder,
-              foodList: state.foodList,
-              foodOrderList: state.foodOrderList));
-        
+        List<FoodOrder> orders =
+            (json.decode(response.body)['orders'] as List<dynamic>).map((e) {
+          return FoodOrder.fromJson(e as Map<String, dynamic>);
+        }).toList();
+        if (orders.isNotEmpty) {
+
+        FoodOrder? cartOrder = orders.first;
+        emit(UpdateFoodState(
+            cartOrder: cartOrder,
+            foodList: state.foodList,
+            foodOrderList: state.foodOrderList));
+        }
       }
     } catch (e) {
       print('unable to fetch cart order $e');

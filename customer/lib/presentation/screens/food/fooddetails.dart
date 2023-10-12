@@ -147,8 +147,7 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
               ),
               Expanded(
                 child: CommonButton(
-                  enabled: showLoadingIndicator,
-                  child:showLoadingIndicator ? CircularProgressIndicator() : null,
+                  enabled: !showLoadingIndicator,
                   height: 58,
                   lable: 'Add to Cart',
                   onPressed: () async {
@@ -163,19 +162,24 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
                         selectedAddons[item] = addOns[item] ?? 0;
                       }
                     }
-                    print('----------------------------');
                     bool status = await context
                         .read<FoodCubit>()
                         .addItemToCart(widget.food, 1, selectedAddons);
-                    // .add(AddItemToCartEvent(widget.food, 1, selectedAddons));
                     setState(() {
                       showLoadingIndicator = false;
                     });
-                    if (status) {
-                      context.read<FoodCubit>().fetchCartOrders();
-                      Navigator.pop(context);
+                    try {
+                      if (status) {
+                        context.read<FoodCubit>().fetchCartOrders();
+                        Navigator.pop(context);
+                      }
+                    } catch (e) {
+                      print(e);
                     }
                   },
+                  child: showLoadingIndicator
+                      ? const CircularProgressIndicator()
+                      : null,
                 ),
               ),
             ],

@@ -11,12 +11,12 @@ class CustomFormField extends StatelessWidget {
   final TextEditingController controller;
   const CustomFormField(
       {super.key,
-       this.maxlength,
+      this.maxlength,
       required this.keyBoardtype,
-       this.name,
+      this.name,
       required this.function,
       required this.hintText,
-       this.icon,
+      this.icon,
       required this.controller});
 
   @override
@@ -36,34 +36,36 @@ class CustomFormField extends StatelessWidget {
           width: 1),
     );
     return SizedBox(
-      height: 100,
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-           if(name != null) Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  color: const Color(0xFF555555),
-                  size: 18,
+            if (name != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      icon,
+                      color: const Color(0xFF555555),
+                      size: 22,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      name!,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Color(0xFF555555),
+                        fontSize: 16,
+                        fontFamily: 'Lato',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 4),
-                Text(
-                  name!,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Color(0xFF555555),
-                    fontSize: 16,
-                    fontFamily: 'Lato',
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: -0.48,
-                  ),
-                ),
-              ],
-            ),
+              ),
             SizedBox(
               child: TextFormField(
                 controller: controller,

@@ -1,12 +1,16 @@
 import 'package:customer/middleware/blocs/authentication/auth_cubit.dart';
+import 'package:customer/middleware/blocs/food/food_cubit.dart';
+import 'package:customer/middleware/blocs/payment/payment_cubit.dart';
+import 'package:customer/middleware/blocs/rental/rental_cubit.dart';
+import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../middleware/helpers/sharedprefrence.utils.dart';
 import '../../widgets/buttons/OutlinedDeclineButton.dart';
-import '../../widgets/cards/Profile.container.dart';
-import '../../widgets/cards/Profile.optionsContainer.dart';
+import '../../widgets/cards/profile.container.dart';
+import '../../widgets/cards/profile.options.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -39,7 +43,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       email: state.user!.email ?? '',
                       room: state.user?.room ?? '',
                     )
-                  : Center(child: CircularProgressIndicator()),
+                  : Container(
+                      height: 200,
+                      child: const Center(child: CircularProgressIndicator())),
               ProfileOptions(
                 lable: 'Request History',
                 function: () {},
@@ -64,9 +70,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       OutlinedDeclineButton(
                           function: () {
                             SharedPreferencesUtils.clear();
+                            context.read<FoodCubit>().clear();
+                            context.read<RentalCubit>().clear();
+                            context.read<RideCubit>().clear();
+                            context.read<PaymentCubit>().clear();
+                            context.read<AuthCubit>().clear();
 
                             Navigator.pushNamedAndRemoveUntil(
-                                context, '/', (route) => false);
+                                context, '/login', (route) => false);
                           },
                           color: const Color(0xFFC25C5C),
                           icon: Icons.logout_outlined,

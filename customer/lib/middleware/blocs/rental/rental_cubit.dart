@@ -13,6 +13,10 @@ part 'rental_state.dart';
 class RentalCubit extends Cubit<RentalState> {
   RentalCubit() : super(RentalInitial());
 
+  void clear() {
+    emit(RentalInitial());
+  }
+
   Future<void> fetchAllRentals() async {
     String? location = await SharedPreferencesUtils.getString(
         key: SharedPrefrencesKeys.location);
@@ -36,9 +40,8 @@ class RentalCubit extends Cubit<RentalState> {
       ).then((value) {
         if (value != null) {
           emit(UpdateRentalState(
-            rentalRequestList: value.rentalRequests,
-            rentalList: state.rentalList
-          ));
+              rentalRequestList: value.rentalRequests,
+              rentalList: state.rentalList));
           return true;
         } else {}
       });
