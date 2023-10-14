@@ -29,7 +29,7 @@ class AppSetup extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(providers: [
       RepositoryProvider<Authrepository>(create: (context) => Authrepository()),
-    ], child: MainApp());
+    ], child: const MainApp());
   }
 }
 

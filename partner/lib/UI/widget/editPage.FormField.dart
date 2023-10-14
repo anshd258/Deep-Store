@@ -23,7 +23,7 @@ class ProfileEditFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     var outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(4),
-      borderSide: BorderSide(
+      borderSide: const BorderSide(
           color: Color(0x99565656),
           strokeAlign: BorderSide.strokeAlignInside,
           width: 1),
@@ -48,10 +48,10 @@ class ProfileEditFormField extends StatelessWidget {
                 if (icon != null) ...[
                   Icon(
                     icon,
-                    color: Color(0xFF555555),
+                    color: const Color(0xFF555555),
                     size: 18,
                   ),
-                  SizedBox(width: 4),
+                  const SizedBox(width: 4),
                 ],
                 Text(
                   name,
@@ -73,20 +73,20 @@ class ProfileEditFormField extends StatelessWidget {
                 maxLines: 5,
                 maxLength: maxlength,
                 validator: function,
-                cursorColor: Color(0x99565656),
+                cursorColor: const Color(0x99565656),
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(5),
+                  contentPadding: const EdgeInsets.all(5),
                   errorBorder: outlineInputBorderError,
                   errorStyle: GoogleFonts.nunito(
-                    color: Color.fromARGB(153, 255, 54, 54),
+                    color: const Color.fromARGB(153, 255, 54, 54),
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     height: 1.25,
                   ),
-                  constraints: BoxConstraints(maxHeight: 70),
+                  constraints: const BoxConstraints(maxHeight: 70),
                   hintText: hintText,
                   hintStyle: GoogleFonts.nunito(
-                    color: Color(0x99565656),
+                    color: const Color(0x99565656),
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     height: 1.25,

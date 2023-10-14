@@ -29,7 +29,7 @@ class HistoryScreen extends StatelessWidget {
             'History',
             textAlign: TextAlign.center,
             style: GoogleFonts.lato(
-              color: Color(0xFF565656),
+              color: const Color(0xFF565656),
               fontSize: 14,
               fontWeight: FontWeight.w700,
               letterSpacing: -0.28,
@@ -41,7 +41,7 @@ class HistoryScreen extends StatelessWidget {
         children: [
           // RidesCard(),
           FilterWidget(type: "history"),
-          HistoryBody()
+          const HistoryBody()
         ],
       ),
     );

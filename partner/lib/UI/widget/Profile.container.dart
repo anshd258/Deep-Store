@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:partner/UI/widget/rentalCard.dart';
 
 class ProfileContainer extends StatelessWidget {
   const ProfileContainer({super.key});
@@ -16,9 +15,9 @@ class ProfileContainer extends StatelessWidget {
             "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
             frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
               return Padding(
-                padding: EdgeInsets.only(right: 20),
+                padding: const EdgeInsets.only(right: 20),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   child: child,
                 ),
               );

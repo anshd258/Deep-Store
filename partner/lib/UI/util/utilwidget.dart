@@ -6,7 +6,7 @@ var errorIcon = Center(
       Icon(Icons.error_outline_outlined, color: Colors.red.shade400, size: 100),
 );
 
-const progressIndicator = const Center(
+const progressIndicator = Center(
   child: CircularProgressIndicator.adaptive(),
 );
 

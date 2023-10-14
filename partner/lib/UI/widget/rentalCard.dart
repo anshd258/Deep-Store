@@ -24,7 +24,7 @@ class RidesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       height: 140,
       decoration: BoxDecoration(
           boxShadow: [
@@ -34,8 +34,8 @@ class RidesCard extends StatelessWidget {
                 blurStyle: BlurStyle.outer)
           ],
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10))),
-      padding: EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 20),
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 20),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,29 +84,29 @@ class RidesDetailsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 50,
       width: 140,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 1),
+            margin: const EdgeInsets.only(bottom: 1),
             child: Text(
               heading,
               style: GoogleFonts.lato(
-                color: Color(0xFF555555),
+                color: const Color(0xFF555555),
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 1),
+            margin: const EdgeInsets.only(top: 1),
             child: Text(
               data,
               style: GoogleFonts.lato(
-                color: Color(0xFF555555),
+                color: const Color(0xFF555555),
                 fontSize: fontSize,
                 fontWeight: FontWeight.w500,
               ),

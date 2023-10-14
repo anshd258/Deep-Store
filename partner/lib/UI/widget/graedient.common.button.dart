@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:partner/Constants/filterEnum.dart';
 
 class GradientCommonButton extends StatefulWidget {
   String lable;
@@ -35,7 +34,7 @@ class _GradientCommonButtonState extends State<GradientCommonButton>
         vsync: this,
         lowerBound: 0,
         upperBound: 1,
-        duration: Duration(milliseconds: 500));
+        duration: const Duration(milliseconds: 500));
     ctr!.stop();
 
     super.initState();
@@ -83,8 +82,8 @@ class _GradientCommonButtonState extends State<GradientCommonButton>
         ),
       ),
     ).animate().blur(
-        duration: Duration(milliseconds: 800),
-        begin: Offset(1, 1),
-        end: Offset(0, 0));
+        duration: const Duration(milliseconds: 800),
+        begin: const Offset(1, 1),
+        end: const Offset(0, 0));
   }
 }

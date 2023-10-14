@@ -2,7 +2,6 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:partner/UI/body/partner.body.dart';
 import 'package:partner/UI/screens/Profile/Profile.page.dart';
 import 'package:partner/UI/screens/Rides/rides.request.dart';
 import 'package:partner/UI/screens/partners/Partner.main.dart';
@@ -17,13 +16,23 @@ import 'package:partner/middleware/incomingRequestCubit/incoming_ride_request_cu
 import 'screens/Food/food.request.dart';
 import 'screens/home/home.dart';
 
-class ScreenSetup extends StatelessWidget {
+class ScreenSetup extends StatefulWidget {
   const ScreenSetup({super.key, this.appBar});
   final PreferredSizeWidget? appBar;
+
+  @override
+  State<ScreenSetup> createState() => _ScreenSetupState();
+}
+
+class _ScreenSetupState extends State<ScreenSetup> {
+  @override
+  void initState() {
+    initialData(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    initialData(context);
-
     return CustomTabView(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -45,12 +54,12 @@ class ScreenSetup extends StatelessWidget {
           ],
         ),
       ),
-      screens: [
-        const Home(),
+      screens: const [
+        Home(),
         FoodRequest(),
-        const RidesRequest(),
-        const PartnerMain(),
-        const ProfilePage(),
+        RidesRequest(),
+        PartnerMain(),
+        ProfilePage(),
       ],
       items: const [
         BottomNavigationBarItem(

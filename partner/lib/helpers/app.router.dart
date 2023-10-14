@@ -14,27 +14,27 @@ class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => Loginscreen());
+        return MaterialPageRoute(builder: (_) => const Loginscreen());
       case '/partner/food/addpartner':
-        return MaterialPageRoute(builder: (_) => PartnerAddPage());
+        return MaterialPageRoute(builder: (_) => const PartnerAddPage());
       case '/partner/food/list':
-        return MaterialPageRoute(builder: (_) => PartnerFoodEditPage());
+        return MaterialPageRoute(builder: (_) => const PartnerFoodEditPage());
       case '/partner/food/additem':
-        return MaterialPageRoute(builder: (_) => FoodProductAdd());
+        return MaterialPageRoute(builder: (_) => const FoodProductAdd());
       case '/partner/food/edit':
-        return MaterialPageRoute(builder: (_) => PartnerProductEdit());
+        return MaterialPageRoute(builder: (_) => const PartnerProductEdit());
       case '/history':
         return MaterialPageRoute(
-          builder: (_) => HistoryScreen(),
+          builder: (_) => const HistoryScreen(),
         );
       case '/editprofile':
-        return MaterialPageRoute(builder: (_) => EditProfilePage());
+        return MaterialPageRoute(builder: (_) => const EditProfilePage());
       case '/otpPage':
-        return MaterialPageRoute(builder: (_) => OtpScreen());
+        return MaterialPageRoute(builder: (_) => const OtpScreen());
       case '/home':
-        return MaterialPageRoute(builder: (_) => ScreenSetup());
+        return MaterialPageRoute(builder: (_) => const ScreenSetup());
       default:
-        return MaterialPageRoute(builder: (_) => ScreenSetup());
+        return MaterialPageRoute(builder: (_) => const ScreenSetup());
     }
   }
 }

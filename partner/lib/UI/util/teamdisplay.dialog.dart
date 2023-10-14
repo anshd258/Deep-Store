@@ -9,7 +9,7 @@ Future<dynamic> IteamDisplayDialog(BuildContext context, Orders e) {
     builder: (context) {
       return AlertDialog(
         elevation: 5,
-        content: Container(
+        content: SizedBox(
           height: 200,
           width: 300,
           child: Column(

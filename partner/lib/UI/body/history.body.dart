@@ -46,7 +46,7 @@ class HistoryBody extends StatelessWidget {
                                         Text(
                                           "Room no ${e.user}",
                                           style: GoogleFonts.lato(
-                                            color: Color.fromARGB(255, 0, 0, 0),
+                                            color: const Color.fromARGB(255, 0, 0, 0),
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,
                                           ),
@@ -60,7 +60,7 @@ class HistoryBody extends StatelessWidget {
                                                 builder: (context) {
                                                   return AlertDialog(
                                                     elevation: 5,
-                                                    content: Container(
+                                                    content: SizedBox(
                                                       height: 200,
                                                       width: 300,
                                                       child: Column(
@@ -99,7 +99,7 @@ class HistoryBody extends StatelessWidget {
                     );
                   }
                 } else {
-                  return Center();
+                  return const Center();
                 }
               },
             ));
@@ -127,7 +127,7 @@ class HistoryBody extends StatelessWidget {
                           Text(
                             "Room no ",
                             style: GoogleFonts.lato(
-                              color: Color.fromARGB(255, 0, 0, 0),
+                              color: const Color.fromARGB(255, 0, 0, 0),
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                             ),
@@ -150,7 +150,7 @@ class HistoryBody extends StatelessWidget {
                     );
                   }
                 } else {
-                  return Center();
+                  return const Center();
                 }
               },
             ));
@@ -178,7 +178,7 @@ class HistoryBody extends StatelessWidget {
                         Text(
                           "Room no ",
                           style: GoogleFonts.lato(
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color: const Color.fromARGB(255, 0, 0, 0),
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                           ),
@@ -199,7 +199,7 @@ class HistoryBody extends StatelessWidget {
                   );
                 }
               } else {
-                return Center();
+                return const Center();
               }
             },
           ),

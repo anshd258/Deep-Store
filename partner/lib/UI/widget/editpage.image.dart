@@ -8,7 +8,7 @@ class Editpageimage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 244,
       width: 328,
       child: Stack(
@@ -34,7 +34,7 @@ class Editpageimage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4)),
               ),
-              child: Icon(Icons.mode_edit_outline_outlined,
+              child: const Icon(Icons.mode_edit_outline_outlined,
                   color: Colors.white, size: 20),
             ),
           )

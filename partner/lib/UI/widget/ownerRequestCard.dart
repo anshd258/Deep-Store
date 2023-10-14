@@ -50,9 +50,9 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
                 blurStyle: BlurStyle.outer)
           ],
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10))),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -87,7 +87,7 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
                     }
                   },
                   height: 42,
-                  margin: EdgeInsets.all(2),
+                  margin: const EdgeInsets.all(2),
                   borderradius: 4,
                   lable: "Accept",
                   width: 146)
@@ -122,9 +122,9 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
                           .rejectRequest(widget.id);
                     }
                   },
-                  color: Color(0xFFC25C5C),
+                  color: const Color(0xFFC25C5C),
                   height: 42,
-                  margin: EdgeInsets.all(2),
+                  margin: const EdgeInsets.all(2),
                   borderradius: 4,
                   lable: "Decline",
                   width: 146)

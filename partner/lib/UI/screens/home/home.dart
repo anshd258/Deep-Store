@@ -7,12 +7,22 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // RidesCard(),
-        FilterWidget(type: "Accepted"),
-        RidesBody()
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SizedBox(
+          height: constraints.maxHeight,
+          width: constraints.maxWidth,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // RidesCard(),
+              FilterWidget(type: "Accepted"),
+              SizedBox(
+                  height: constraints.maxHeight - 88, child: const RidesBody())
+            ],
+          ),
+        );
+      },
     );
   }
 }

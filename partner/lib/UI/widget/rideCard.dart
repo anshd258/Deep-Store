@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:partner/Constants/SizesEnum.dart';
 import 'package:partner/Constants/componentsEnum.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/UI/util/textwidget.dart';
 
 import '../../../Constants/PotraitSizes.dart';
@@ -24,10 +23,7 @@ class ownerOngoingcards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (imgLink == null) {
-      imgLink =
-          "https://st.depositphotos.com/1016929/2741/i/600/depositphotos_27413021-stock-photo-sport-bike-enduro.jpg";
-    }
+    imgLink ??= "https://st.depositphotos.com/1016929/2741/i/600/depositphotos_27413021-stock-photo-sport-bike-enduro.jpg";
     return Container(
       decoration: BoxDecoration(
           boxShadow: [
@@ -37,9 +33,9 @@ class ownerOngoingcards extends StatelessWidget {
                 blurStyle: BlurStyle.outer)
           ],
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10))),
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
       height: 130,
-      margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: Row(
         children: [
           Image.network(
@@ -50,7 +46,7 @@ class ownerOngoingcards extends StatelessWidget {
                     horizontal: sizesMapPotrait[Component
                         .ownerOngoingcardsIMAGE]![Sizes.MARGINHORIZONTAL]!),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   child: child,
                 ),
               );
@@ -69,10 +65,10 @@ class ownerOngoingcards extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textwidget("${name} ", "(x${quantitiy})", 16, FontWeight.w600),
+                textwidget("$name ", "(x$quantitiy)", 16, FontWeight.w600),
                 textwidget("Name : ", user, 14, FontWeight.w400),
                 textwidget("Ph no :", contact, 14, FontWeight.w400),
-                textwidget("Total : ", "₹${total}", 14, FontWeight.w400),
+                textwidget("Total : ", "₹$total", 14, FontWeight.w400),
               ],
             ),
           )

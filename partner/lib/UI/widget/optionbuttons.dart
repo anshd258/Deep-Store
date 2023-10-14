@@ -34,16 +34,19 @@ class _OptionsButtonState extends State<OptionsButton>
     return Builder(
       builder: (context) {
         late var state;
-        
+     
+
         if (widget.type == "Accepted") {
           state = context.watch<FilterCubitCubit>().state;
+          
         } else if (widget.type == "history") {
           state = context.watch<HistoryFilterCubit>().state;
+           
         } else if (widget.type == "partner") {
           state = context.watch<PartnerFilterCubit>().state;
+          
         }
 
-       
         return GestureDetector(
           onTap: () {
             ctr!.forward().then((value) => ctr!.reset());
@@ -55,8 +58,8 @@ class _OptionsButtonState extends State<OptionsButton>
               context
                   .read<HistoryFilterCubit>()
                   .ChangeFilter(widget.e, widget.e.index + 1);
-            }else if(state is PartnerFilterState){
-               context
+            } else if (state is PartnerFilterState) {
+              context
                   .read<PartnerFilterCubit>()
                   .ChangeFilter(widget.e, widget.e.index + 1);
             }

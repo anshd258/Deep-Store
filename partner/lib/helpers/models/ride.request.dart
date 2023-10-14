@@ -7,15 +7,15 @@ class RidesRequestModal {
     if (json['rides'] != null) {
       rides = <Rides>[];
       json['rides'].forEach((v) {
-        rides!.add(new Rides.fromJson(v));
+        rides!.add(Rides.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.rides != null) {
-      data['rides'] = this.rides!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (rides != null) {
+      data['rides'] = rides!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -51,7 +51,7 @@ class Rides {
 
   Rides.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
     startLocation = json['start_location'].toString();
     endLocation = json['end_location'].toString();
     startCoordinates = json['start_coordinates'].toString();
@@ -65,21 +65,21 @@ class Rides {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
-    data['start_location'] = this.startLocation;
-    data['end_location'] = this.endLocation;
-    data['start_coordinates'] = this.startCoordinates;
-    data['end_coordinates'] = this.endCoordinates;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['status'] = this.status;
-    data['distance'] = this.distance;
-    data['price'] = this.price;
-    data['rating'] = this.rating;
+    data['start_location'] = startLocation;
+    data['end_location'] = endLocation;
+    data['start_coordinates'] = startCoordinates;
+    data['end_coordinates'] = endCoordinates;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['status'] = status;
+    data['distance'] = distance;
+    data['price'] = price;
+    data['rating'] = rating;
     return data;
   }
 }
@@ -104,12 +104,12 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['contact'] = this.contact;
-    data['username'] = this.username;
-    data['room'] = this.room;
-    data['property_id'] = this.propertyId;
+    data['contact'] = contact;
+    data['username'] = username;
+    data['room'] = room;
+    data['property_id'] = propertyId;
     return data;
   }
 }

@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-
 import 'package:partner/helpers/api.service.dart';
 import 'package:partner/helpers/constants.dart';
 import 'package:partner/middleware/Repository/AuthRepo.dart';
@@ -9,7 +8,7 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthInitial> {
   final Authrepository _authrepository;
   AuthCubit(this._authrepository)
-      : super(AuthInitial(otpSent: false, loading: false));
+      : super(AuthInitial(otpSent: false, loading: true));
 
   String pathGetOtp = "/user/login/";
 
@@ -77,6 +76,7 @@ class AuthCubit extends Cubit<AuthInitial> {
 
       print(response);
       if (response['access'] != null) {
+        _authrepository.setLocally(response['access'], response['refresh']);
         _authrepository.update(response['access'], response['refresh']);
         emit(
           AuthInitial(
@@ -96,5 +96,30 @@ class AuthCubit extends Cubit<AuthInitial> {
           messaage: e.toString(),
           obj: state.obj));
     }
+  }
+
+  void autoLogin() async {
+    var data = await _authrepository.getData();
+    if (data.first == "no data") {
+      emit(AuthInitial(otpSent: false, loading: false, autoLogin: false));
+    } else {
+      _authrepository.update(data.elementAt(1), data.elementAt(2));
+      emit(
+        AuthInitial(
+          otpSent: false,
+          loading: false,
+          autoLogin: true,
+          obj: Token(
+              phoneNumber: "",
+              authToken: data.elementAt(1),
+              refreshToken: data.elementAt(2)),
+        ),
+      );
+    }
+  }
+
+  Future<void> logout() async{
+    await _authrepository.delete();
+    emit(AuthInitial(otpSent: false));
   }
 }

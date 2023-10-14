@@ -20,7 +20,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        leading: BackButton(
+        leading: const BackButton(
           color: Color(0xFF565656),
         ),
         centerTitle: true,
@@ -28,7 +28,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           'Edit Account',
           textAlign: TextAlign.center,
           style: GoogleFonts.lato(
-            color: Color(0xFF565656),
+            color: const Color(0xFF565656),
             fontSize: 14,
             fontWeight: FontWeight.w700,
             letterSpacing: -0.28,
@@ -44,7 +44,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Form(
                   key: _formkey,
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                     child: Column(
                       children: [
                         ProfileEditFormField(
@@ -54,8 +54,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             function: (p0) {
                               if (p0!.isEmpty) {
                                 return "Please enter something";
-                              } else
+                              } else {
                                 return null;
+                              }
                             },
                             icon: Icons.person,
                             name: "Full Name"),
@@ -95,7 +96,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 height: 48,
                 width: 328,
                 lable: 'Save changes',
-                margin: EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 function: () {
                   _formkey.currentState!.validate();
                 },

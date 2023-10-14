@@ -16,7 +16,7 @@ class PartnerBody extends StatefulWidget {
 }
 
 class _PartnerBodyState extends State<PartnerBody> {
-  List _dummyValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  final List _dummyValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
@@ -30,15 +30,15 @@ class _PartnerBodyState extends State<PartnerBody> {
                 return LiquidPullToRefresh(
                   height: 50,
                   springAnimationDurationInMilliseconds: 500,
-                  color: Color.fromRGBO(34, 150, 199, 1),
+                  color: const Color.fromRGBO(34, 150, 199, 1),
                   borderWidth: 1,
                   showChildOpacityTransition: true,
                   onRefresh: () async {},
                   child: SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
+                    physics: const AlwaysScrollableScrollPhysics(),
                     child: Column(
                       children: _dummyValues
-                          .map((e) =>  PartnerFoodContainer(),
+                          .map((e) =>  const PartnerFoodContainer(),
                                
                               )
                           .toList(),
@@ -53,7 +53,7 @@ class _PartnerBodyState extends State<PartnerBody> {
             child: BlocConsumer<PartnerRideCubit, PartnerRideState>(
               listener: (context, state) {},
               builder: (context, state) {
-                return Center();
+                return const Center();
               },
             ));
       } else {
@@ -62,7 +62,7 @@ class _PartnerBodyState extends State<PartnerBody> {
           child: BlocConsumer<PartnerRentalCubit, PartnerRentalState>(
             listener: (context, state) {},
             builder: (context, state) {
-              return Center();
+              return const Center();
             },
           ),
         );

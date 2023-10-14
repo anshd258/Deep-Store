@@ -44,7 +44,7 @@ class _RidesRequestState extends State<RidesRequest>
       backgroundColor: Colors.white,
       appBar: AppBar(
         bottom: PreferredSize(
-          preferredSize: Size(double.infinity, 20),
+          preferredSize: const Size(double.infinity, 20),
           child: TabBar(
             controller: _controller,
             indicatorColor: Colors.white,
@@ -97,6 +97,7 @@ class _RidesRequestState extends State<RidesRequest>
                                 .getIncomingRequest();
                           },
                           child: SingleChildScrollView(
+                            physics: const AlwaysScrollableScrollPhysics(),
                             child: ConstrainedBox(
                                 constraints: BoxConstraints(
                                     minHeight: constraints.minHeight,
@@ -106,7 +107,6 @@ class _RidesRequestState extends State<RidesRequest>
                                 child: Center(
                                   child: noAcceptedRequest,
                                 )),
-                            physics: AlwaysScrollableScrollPhysics(),
                           ));
                     },
                   );
@@ -116,7 +116,7 @@ class _RidesRequestState extends State<RidesRequest>
                   );
                 }
               } else {
-                return Center();
+                return const Center();
               }
             },
           ),
@@ -144,6 +144,7 @@ class _RidesRequestState extends State<RidesRequest>
                                 .getIncomingRequest();
                           },
                           child: SingleChildScrollView(
+                            physics: const AlwaysScrollableScrollPhysics(),
                             child: ConstrainedBox(
                                 constraints: BoxConstraints(
                                     minHeight: constraints.minHeight,
@@ -153,7 +154,6 @@ class _RidesRequestState extends State<RidesRequest>
                                 child: Center(
                                   child: noAcceptedRequest,
                                 )),
-                            physics: AlwaysScrollableScrollPhysics(),
                           ));
                     },
                   );
@@ -163,7 +163,7 @@ class _RidesRequestState extends State<RidesRequest>
                   );
                 }
               } else {
-                return Center();
+                return const Center();
               }
             },
           ),

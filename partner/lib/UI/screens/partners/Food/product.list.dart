@@ -19,14 +19,14 @@ class _PartnerFoodEditPageState extends State<PartnerFoodEditPage> {
     String title = "Ladakh tea stall";
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
+        leading: const BackButton(
           color: Color.fromRGBO(86, 86, 86, 1),
         ),
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(title,
             style: GoogleFonts.lato(
-                color: Color.fromRGBO(86, 86, 86, 1),
+                color: const Color.fromRGBO(86, 86, 86, 1),
                 fontSize: 17,
                 fontWeight: FontWeight.w600)),
       ),
@@ -34,16 +34,16 @@ class _PartnerFoodEditPageState extends State<PartnerFoodEditPage> {
       body: LiquidPullToRefresh(
         height: 50,
         springAnimationDurationInMilliseconds: 500,
-        color: Color.fromRGBO(34, 150, 199, 1),
+        color: const Color.fromRGBO(34, 150, 199, 1),
         borderWidth: 1,
         showChildOpacityTransition: true,
         onRefresh: () async {},
         child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: dummyValues
                 .map((e) => InkWell(
-                      child: PartnerFoodContainer(),
+                      child: const PartnerFoodContainer(),
                       onTap: () {
                         Navigator.pushNamed(context, "/partner/food/edit");
                       },
@@ -71,7 +71,7 @@ class _PartnerFoodEditPageState extends State<PartnerFoodEditPage> {
             backgroundColor: Colors.transparent,
             child: Center(
               child: GradientText("+ Add new item",
-                  colors: [
+                  colors: const [
                     Color.fromRGBO(32, 171, 154, 1),
                     Color.fromRGBO(34, 150, 199, 1)
                   ],

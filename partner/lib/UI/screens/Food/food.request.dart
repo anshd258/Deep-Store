@@ -9,7 +9,7 @@ import 'package:partner/middleware/incomingRequestCubit/incoming_request_cubit.d
 import 'package:partner/UI/util/utilwidget.dart';
 
 class FoodRequest extends StatefulWidget {
-  FoodRequest({super.key});
+  const FoodRequest({super.key});
 
   @override
   State<FoodRequest> createState() => _FoodRequestState();

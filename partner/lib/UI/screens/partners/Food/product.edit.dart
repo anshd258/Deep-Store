@@ -7,7 +7,7 @@ import 'package:partner/UI/widget/graedient.common.button.dart';
 import 'package:file_picker/file_picker.dart';
 
 class PartnerProductEdit extends StatefulWidget {
-  PartnerProductEdit({super.key});
+  const PartnerProductEdit({super.key});
 
   @override
   State<PartnerProductEdit> createState() => _PartnerProductEditState();
@@ -37,14 +37,14 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
     String title = "Edit item";
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
+        leading: const BackButton(
           color: Color.fromRGBO(86, 86, 86, 1),
         ),
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(title,
             style: GoogleFonts.lato(
-                color: Color.fromRGBO(86, 86, 86, 1),
+                color: const Color.fromRGBO(86, 86, 86, 1),
                 fontSize: 17,
                 fontWeight: FontWeight.w600)),
       ),
@@ -65,7 +65,7 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
                           ? DecorationImage(
                               image: FileImage(file!), fit: BoxFit.cover)
                           : null,
-                      color: Color.fromRGBO(86, 86, 86, 0.2)),
+                      color: const Color.fromRGBO(86, 86, 86, 0.2)),
                   child: file != null
                       ? Align(
                           alignment: Alignment.topRight,
@@ -76,7 +76,7 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
                             splashColor: Colors.white,
                             iconSize: 18,
                             alignment: Alignment.topRight,
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.mode_edit_outline_outlined,
                               color: Colors.white,
                             ),
@@ -88,30 +88,36 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
                                 _getFromGallery();
                               },
                               height: 36,
-                              margin: EdgeInsets.all(0),
+                              margin: const EdgeInsets.all(0),
                               borderradius: 100,
                               lable: "+ Add Image",
                               width: 111)),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 7,
                 ),
                 ProfileEditFormField(
-                  function: (value) {},
+                  function: (value) {
+                    return null;
+                  },
                   keyBoardtype: TextInputType.name,
                   hintText: "Chicken Tandoori",
                   maxlength: 200,
                   name: "Name",
                 ),
                 ProfileEditFormField(
-                  function: (value) {},
+                  function: (value) {
+                    return null;
+                  },
                   keyBoardtype: TextInputType.number,
                   hintText: "325",
                   maxlength: 200,
                   name: "Price",
                 ),
                 ProfileEditFormField(
-                  function: (value) {},
+                  function: (value) {
+                    return null;
+                  },
                   keyBoardtype: TextInputType.multiline,
                   hintText:
                       "marinated in home made spices and delicious traditional soup",
@@ -123,14 +129,14 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               "Select Food Type*",
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Color(0xFF555555),
                                 fontSize: 16,
                                 fontFamily: 'Lato',
@@ -162,10 +168,10 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
                                   });
                                 },
                               ),
-                              Text(
+                              const Text(
                                 "Veg",
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: Color(0xFF555555),
                                   fontSize: 16,
                                   fontFamily: 'Lato',
@@ -173,7 +179,7 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
                                   letterSpacing: -0.48,
                                 ),
                               ),
-                              Stack(
+                              const Stack(
                                 alignment: Alignment.center,
                                 children: [
                                   Icon(
@@ -204,10 +210,10 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
                                   });
                                 },
                               ),
-                              Text(
+                              const Text(
                                 "Non-veg",
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: Color(0xFF555555),
                                   fontSize: 16,
                                   fontFamily: 'Lato',
@@ -215,7 +221,7 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
                                   letterSpacing: -0.48,
                                 ),
                               ),
-                              Stack(
+                              const Stack(
                                 alignment: Alignment.center,
                                 children: [
                                   Icon(
@@ -235,7 +241,7 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
                 GradientCommonButton(
                     function: () {},
                     height: 44,
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     borderradius: 8,
                     lable: "Save",
                     width: 328)

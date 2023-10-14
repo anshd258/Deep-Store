@@ -50,7 +50,7 @@ class _OtpScreenState extends State<OtpScreen> {
         title: Text(
           "Guest Login",
           style: GoogleFonts.lato(
-            color: Color(0xB2555555),
+            color: const Color(0xB2555555),
             fontSize: 16,
             fontWeight: FontWeight.w700,
             letterSpacing: -0.28,
@@ -78,7 +78,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       height: 90,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,7 +88,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             child: Text(
                               "OTP verification",
                               style: GoogleFonts.lato(
-                                  color: Color(0xE5555555),
+                                  color: const Color(0xE5555555),
                                   letterSpacing: -0.72,
                                   fontSize: 24,
                                   fontWeight: FontWeight.w600),
@@ -103,13 +103,13 @@ class _OtpScreenState extends State<OtpScreen> {
                                 Text(
                                   "Enter the OTP sent to +91${state.obj!.phoneNumber}",
                                   style: GoogleFonts.lato(
-                                    color: Color(0xB2555555),
+                                    color: const Color(0xB2555555),
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                     letterSpacing: -0.28,
                                   ),
                                 ),
-                                Icon(Icons.short_text_rounded)
+                                const Icon(Icons.short_text_rounded)
                               ],
                             ),
                           )
@@ -117,7 +117,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 18),
+                      margin: const EdgeInsets.symmetric(vertical: 18),
                       child: Pinput(
                         controller: pinController,
                         focusNode: focusNode,
@@ -168,7 +168,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -178,7 +178,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             'Didn’t receive OTP?',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                              color: Color(0xB2555555),
+                              color: const Color(0xB2555555),
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
@@ -188,7 +188,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             'Resend OTP',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                              color: Color(0xFF3BA365),
+                              color: const Color(0xFF3BA365),
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               letterSpacing: -0.42,
@@ -212,7 +212,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       },
                       borderradius: 4,
                       height: 48,
-                      margin: EdgeInsets.symmetric(vertical: 18),
+                      margin: const EdgeInsets.symmetric(vertical: 18),
                       width: 300,
                       lable: 'Verify & continue',
                     )
@@ -224,7 +224,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   height: double.infinity,
                   width: double.infinity,
                   color: Colors.white60,
-                  child: Center(
+                  child: const Center(
                     child: CircularProgressIndicator.adaptive(),
                   ),
                 )

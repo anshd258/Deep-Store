@@ -13,7 +13,7 @@ class Tabes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 115,
       height: 50,
       child: Column(
@@ -25,7 +25,7 @@ class Tabes extends StatelessWidget {
             lable,
             textAlign: TextAlign.center,
             style: GoogleFonts.lato(
-              color: Color(0xFF2B2B2B),
+              color: const Color(0xFF2B2B2B),
               fontSize: 14,
               fontWeight: FontWeight.w600,
               letterSpacing: -0.28,
@@ -38,7 +38,7 @@ class Tabes extends StatelessWidget {
               height: 5,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(colors: [
+                  gradient: const LinearGradient(colors: [
                     Color.fromRGBO(32, 171, 154, 1),
                     Color.fromRGBO(34, 150, 199, 1)
                   ], begin: Alignment.topLeft, end: Alignment.bottomRight)),

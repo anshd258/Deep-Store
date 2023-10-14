@@ -10,14 +10,14 @@ class PartnerMain extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: [FilterWidget(type: "partner"), PartnerBody()],
+        children: [FilterWidget(type: "partner"), const PartnerBody()],
       ),
       floatingActionButton: GradientCommonButton(
           function: () {
             Navigator.pushNamed(context, "/partner/food/addpartner");
           },
           height: 48,
-          margin: EdgeInsets.all(0),
+          margin: const EdgeInsets.all(0),
           borderradius: 100,
           lable: "+",
           fontSize: 30,
