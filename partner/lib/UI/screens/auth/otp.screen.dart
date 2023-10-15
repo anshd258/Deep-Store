@@ -6,7 +6,8 @@ import 'package:partner/middleware/auth_cubit.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  OtpScreen({super.key, required this.phoneNumber});
+  String phoneNumber;
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -61,13 +62,13 @@ class _OtpScreenState extends State<OtpScreen> {
           child: BlocConsumer<AuthCubit, AuthInitial>(
         listener: (context, state) {
           //! uncomment after opt api is corrected
-          if (state.obj != null && state.obj!.authToken != null) {
+          if (state.obj != null && state.obj!.accessToken != "") {
             Navigator.pushNamed(context, "/home");
           }
-          // if (state.messaage != null) {
-          //   ScaffoldMessenger.of(context)
-          //       .showSnackBar(SnackBar(content: Text(state.messaage!)));
-          // }
+          if (state.messaage != null) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.messaage!)));
+          }
         },
         builder: (context, state) {
           return Stack(
@@ -101,7 +102,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Enter the OTP sent to +91${state.obj!.phoneNumber}",
+                                  "Enter the OTP sent to +91${widget.phoneNumber}",
                                   style: GoogleFonts.lato(
                                     color: const Color(0xB2555555),
                                     fontSize: 12,

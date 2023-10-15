@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:partner/helpers/api.service.dart';
 import 'package:partner/helpers/constants.dart';
+import 'package:partner/helpers/models/user.dart';
 import 'package:partner/middleware/Repository/AuthRepo.dart';
 
 part 'auth_state.dart';
@@ -22,15 +23,10 @@ class AuthCubit extends Cubit<AuthInitial> {
         .then(
       (value) {
         String token = value['jwt'];
+        _authrepository.update(phone: phoneNumber);
         emit(
           AuthInitial(
-            jwt: token,
-            otpSent: true,
-            loading: false,
-            obj: Token(
-              phoneNumber: phoneNumber,
-            ),
-          ),
+              jwt: token, otpSent: true, loading: false, obj: _authrepository),
         );
       },
     );
@@ -38,7 +34,7 @@ class AuthCubit extends Cubit<AuthInitial> {
 
   void loginWithOtp(String otp) async {
     emit(AuthInitial(
-        otpSent: false, loading: true, obj: state.obj, jwt: state.jwt));
+        otpSent: false, loading: true, jwt: state.jwt, obj: state.obj));
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'jwt': state.jwt!
@@ -48,9 +44,9 @@ class AuthCubit extends Cubit<AuthInitial> {
       'otp': otp,
       'username': '',
       'room': '',
-      'phone': state.obj!.phoneNumber,
+      'phone': _authrepository.phoneNumber,
     };
-    print(state.obj!.phoneNumber);
+
     print(otp);
     try {
       // if (otp == "123456") {
@@ -76,25 +72,25 @@ class AuthCubit extends Cubit<AuthInitial> {
 
       print(response);
       if (response['access'] != null) {
-        _authrepository.setLocally(response['access'], response['refresh']);
-        _authrepository.update(response['access'], response['refresh']);
+        _authrepository.setLocally(
+            response['access'], response['refresh'], state.obj!.phoneNumber);
+        _authrepository.update(
+            access: response['access'],
+            refresh: response['refresh'],
+            phone: state.obj!.phoneNumber);
         emit(
           AuthInitial(
-            otpSent: false,
-            loading: false,
-            obj: Token(
-                phoneNumber: state.obj!.phoneNumber,
-                authToken: response['access'],
-                refreshToken: response['refresh']),
-          ),
+              otpSent: false, loading: false, obj: state.obj, jwt: state.jwt),
         );
       }
     } catch (e) {
       emit(AuthInitial(
-          otpSent: false,
-          loading: false,
-          messaage: e.toString(),
-          obj: state.obj));
+        otpSent: false,
+        loading: false,
+        obj: state.obj,
+        jwt: state.jwt,
+        messaage: e.toString(),
+      ));
     }
   }
 
@@ -103,23 +99,93 @@ class AuthCubit extends Cubit<AuthInitial> {
     if (data.first == "no data") {
       emit(AuthInitial(otpSent: false, loading: false, autoLogin: false));
     } else {
-      _authrepository.update(data.elementAt(1), data.elementAt(2));
+      _authrepository.update(
+          access: data.elementAt(1),
+          refresh: data.elementAt(2),
+          phone: data.elementAt(3));
       emit(
         AuthInitial(
           otpSent: false,
           loading: false,
           autoLogin: true,
-          obj: Token(
-              phoneNumber: "",
-              authToken: data.elementAt(1),
-              refreshToken: data.elementAt(2)),
         ),
       );
     }
   }
 
-  Future<void> logout() async{
+  Future<void> logout() async {
     await _authrepository.delete();
     emit(AuthInitial(otpSent: false));
+  }
+
+  Future<bool> updateUserDetails(
+      {required String roomNumber,
+      required String providerid,
+      String? name,
+      String? email,
+      String? phone}) async {
+    name ??= state.userObj!.userdata!.username ?? '';
+    email ??= state.userObj!.userdata!.user!.email ?? '';
+    phone ??= state.userObj!.userdata!.contact ?? '';
+    print('got name and email : $name , $email');
+    print({
+      'room': roomNumber,
+      'username': name,
+      'property_id': providerid,
+      'email': email
+    });
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_authrepository.accessToken}',
+    };
+    try {
+      Map<String, dynamic> response = await await getData(
+          path: "/user/update-user/",
+          headers: headers,
+          body: {
+            'room': roomNumber,
+            'username': name,
+            'property_id': providerid,
+            'email': email
+          },
+          queryType: QueryType.post);
+
+      print('we got a response ${response}');
+      if (response['status'] == 'success') {
+        getUserDetails();
+        return true;
+      }
+    } catch (e) {
+      print('unable to update user details $e');
+    }
+    return false;
+  }
+
+  Future<bool> getUserDetails() async {
+    String? phone = _authrepository.phoneNumber;
+    emit(
+      AuthInitial(
+        otpSent: false,
+        loading: true,
+      ),
+    );
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_authrepository.accessToken}',
+    };
+    try {
+      Map<String, dynamic> response = await getData(
+          headers: headers,
+          path: "/user/get-user",
+          urlParameters: {'phone': phone});
+      UserModal? user = UserModal.fromJson(response);
+      emit(
+        AuthInitial(otpSent: false, loading: false, userObj: user),
+      );
+      return true;
+    } catch (e) {
+      AuthInitial(otpSent: false, loading: false, messaage: e.toString());
+      return false;
+    }
   }
 }

@@ -30,7 +30,9 @@ class AppRouter {
       case '/editprofile':
         return MaterialPageRoute(builder: (_) => const EditProfilePage());
       case '/otpPage':
-        return MaterialPageRoute(builder: (_) => const OtpScreen());
+        return MaterialPageRoute(
+            builder: (_) =>
+                OtpScreen(phoneNumber: routeSettings.arguments! as String));
       case '/home':
         return MaterialPageRoute(builder: (_) => const ScreenSetup());
       default:

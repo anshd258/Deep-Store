@@ -9,6 +9,7 @@ import 'package:partner/helpers/constants.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_ride_request_cubit.dart';
+import 'package:partner/middleware/auth_cubit.dart';
 import 'package:partner/middleware/incomingRequestCubit/incoming_rental_request_cubit.dart';
 import 'package:partner/middleware/incomingRequestCubit/incoming_request_cubit.dart';
 import 'package:partner/middleware/incomingRequestCubit/incoming_ride_request_cubit.dart';
@@ -58,7 +59,7 @@ class _ScreenSetupState extends State<ScreenSetup> {
         Home(),
         FoodRequest(),
         RidesRequest(),
-        PartnerMain(),
+        // PartnerMain(),
         ProfilePage(),
       ],
       items: const [
@@ -80,12 +81,12 @@ class _ScreenSetupState extends State<ScreenSetup> {
           ),
           label: 'Rides',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            Icons.diamond_outlined,
-          ),
-          label: 'Partners',
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(
+        //     Icons.diamond_outlined,
+        //   ),
+        //   label: 'Partners',
+        // ),
         BottomNavigationBarItem(
           icon: Icon(
             NavBarIcons.account,
@@ -105,5 +106,6 @@ class _ScreenSetupState extends State<ScreenSetup> {
     context.read<AcceptedRentalRequestCubit>().getAcceptedRequests();
     context.read<AcceptedRequestsCubit>().getAcceptedRequests();
     context.read<AcceptedRideRequestCubit>().getAcceptedRequests();
+    context.read<AuthCubit>().getUserDetails();
   }
 }

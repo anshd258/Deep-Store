@@ -48,6 +48,7 @@ class _LoginscreenState extends State<Loginscreen> {
           child: BlocConsumer<AuthCubit, AuthInitial>(
         listener: (context, state) {
           if (state.autoLogin == true) {
+            print(state.autoLogin);
             Navigator.pushNamedAndRemoveUntil(
                 context, "/home", (route) => false);
           }
@@ -163,7 +164,8 @@ class _LoginscreenState extends State<Loginscreen> {
                       },
                       listener: (context, state) {
                         if (state.otpSent) {
-                          Navigator.pushNamed(context, "/otpPage");
+                          Navigator.pushNamed(context, "/otpPage",
+                              arguments: _text.text);
                         }
                       },
                       builder: (context, state) {

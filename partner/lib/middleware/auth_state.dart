@@ -1,10 +1,11 @@
 part of 'auth_cubit.dart';
 
 class AuthInitial {
-  Token? obj;
+  Authrepository? obj;
   bool? loading = false;
   bool? autoLogin;
   String? jwt;
+  UserModal? userObj;
   String? messaage;
   bool otpSent = false;
   AuthInitial(
@@ -13,12 +14,6 @@ class AuthInitial {
       this.loading,
       this.messaage,
       this.jwt,
-      this.autoLogin});
-}
-
-class Token {
-  String? authToken;
-  String phoneNumber;
-  String? refreshToken;
-  Token({this.authToken, this.refreshToken, required this.phoneNumber});
+      this.autoLogin,
+      this.userObj});
 }

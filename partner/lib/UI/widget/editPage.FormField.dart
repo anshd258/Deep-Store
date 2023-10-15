@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ProfileEditFormField extends StatelessWidget {
   String name;
+  TextEditingController? ctr;
   IconData? icon;
   int maxlength;
   int maxLines;
@@ -11,6 +12,7 @@ class ProfileEditFormField extends StatelessWidget {
   String? Function(String?)? function;
   ProfileEditFormField(
       {super.key,
+       this.ctr,
       required this.maxlength,
       required this.keyBoardtype,
       required this.name,
@@ -70,6 +72,7 @@ class ProfileEditFormField extends StatelessWidget {
               child: TextFormField(
                 keyboardType: keyBoardtype,
                 minLines: maxLines,
+                controller: ctr,
                 maxLines: 5,
                 maxLength: maxlength,
                 validator: function,
