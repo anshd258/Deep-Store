@@ -15,12 +15,12 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  TextEditingController _name = TextEditingController();
-  TextEditingController _roomNumber = TextEditingController();
-  TextEditingController _email = TextEditingController();
+ final  TextEditingController _name = TextEditingController();
+ final TextEditingController _roomNumber = TextEditingController();
+ final TextEditingController _email = TextEditingController();
 
-  TextEditingController _contact = TextEditingController();
-  TextEditingController _providerId = TextEditingController();
+ final TextEditingController _contact = TextEditingController();
+ final TextEditingController _providerId = TextEditingController();
   final _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
