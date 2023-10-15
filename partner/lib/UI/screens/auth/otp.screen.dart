@@ -63,7 +63,11 @@ class _OtpScreenState extends State<OtpScreen> {
         listener: (context, state) {
           //! uncomment after opt api is corrected
           if (state.obj != null && state.obj!.accessToken != "") {
-            Navigator.pushNamed(context, "/home");
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              "/home",
+              (route) => false,
+            );
           }
           if (state.messaage != null) {
             ScaffoldMessenger.of(context)

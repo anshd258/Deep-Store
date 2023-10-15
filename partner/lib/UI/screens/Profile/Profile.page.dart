@@ -27,6 +27,7 @@ class ProfilePage extends StatelessWidget {
                 height: constrains.maxHeight,
                 width: constrains.maxWidth,
                 child: Column(
+                  mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     ProfileContainer(
                       email: state.userObj!.userdata!.user!.email!,
@@ -50,37 +51,48 @@ class ProfilePage extends StatelessWidget {
                       lable: 'Terms & Conditions',
                       function: () {},
                     ),
-                    Container(
-                      height: 200,
-                      alignment: Alignment.bottomCenter,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            OutlinedDeclineButton(
-                                function: () {
-                                  context.read<AuthCubit>().logout().then(
-                                      (value) =>
-                                          Navigator.pushNamedAndRemoveUntil(
-                                              context, "/", (route) => false));
-                                },
-                                color: const Color(0xFFC25C5C),
-                                icon: Icons.logout_outlined,
-                                height: 42,
-                                margin: const EdgeInsets.all(2),
-                                borderradius: 4,
-                                lable: "Log out",
-                                width: 158),
-                            OutlinedDeclineButton(
-                                function: () {},
-                                icon: Icons.headset_mic_outlined,
-                                color: const Color.fromRGBO(34, 150, 199, 1),
-                                height: 42,
-                                margin: const EdgeInsets.all(2),
-                                borderradius: 4,
-                                lable: "call Support",
-                                width: 158)
-                          ]),
+                    Expanded(
+                      flex: 1,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          height: 100,
+                          alignment: Alignment.bottomCenter,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: Row(
+                              verticalDirection: VerticalDirection.down,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                OutlinedDeclineButton(
+                                    function: () {
+                                      context.read<AuthCubit>().logout().then(
+                                          (value) =>
+                                              Navigator.pushNamedAndRemoveUntil(
+                                                  context,
+                                                  "/",
+                                                  (route) => false));
+                                    },
+                                    color: const Color(0xFFC25C5C),
+                                    icon: Icons.logout_outlined,
+                                    height: 42,
+                                    margin: const EdgeInsets.all(2),
+                                    borderradius: 4,
+                                    lable: "Log out",
+                                    width: 158),
+                                OutlinedDeclineButton(
+                                    function: () {},
+                                    icon: Icons.headset_mic_outlined,
+                                    color:
+                                        const Color.fromRGBO(34, 150, 199, 1),
+                                    height: 42,
+                                    margin: const EdgeInsets.all(2),
+                                    borderradius: 4,
+                                    lable: "call Support",
+                                    width: 158)
+                              ]),
+                        ),
+                      ),
                     ),
                   ],
                 ),

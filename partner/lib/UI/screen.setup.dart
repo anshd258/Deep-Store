@@ -36,25 +36,6 @@ class _ScreenSetupState extends State<ScreenSetup> {
   Widget build(BuildContext context) {
     return CustomTabView(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Welcome back!',
-                style: GoogleFonts.lato(
-                    color: const Color.fromRGBO(86, 86, 86, 1),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700)),
-            Text('Rahul',
-                style: GoogleFonts.lato(
-                    color: const Color.fromRGBO(121, 121, 121, 1),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500)),
-          ],
-        ),
-      ),
       screens: const [
         Home(),
         FoodRequest(),

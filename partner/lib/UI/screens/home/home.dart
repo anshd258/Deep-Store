@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:partner/UI/body/Accepted.body.dart';
 import 'package:partner/UI/widget/FilterContainer.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int dropDownValue = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +20,21 @@ class Home extends StatelessWidget {
           height: constraints.maxHeight,
           width: constraints.maxWidth,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
             children: [
               // RidesCard(),
-              FilterWidget(type: "Accepted"),
+
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: constraints.maxWidth - (constraints.maxWidth - 252),
+                    child: FilterWidget(type: "Accepted"),
+                  ),
+                ],
+              ),
+
               SizedBox(
                   height: constraints.maxHeight - 88, child: const RidesBody())
             ],
