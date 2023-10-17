@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/Constants/filterEnum.dart';
-import 'package:partner/UI/widget/optionbuttons.dart';
+import 'package:partner/UI/widget/Buttons/optionbuttons.dart';
+
 
 class FilterWidget extends StatefulWidget {
   String type;

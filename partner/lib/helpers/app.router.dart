@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:partner/UI/screen.setup.dart';
 import 'package:partner/UI/screens/History/history.screen.dart';
 import 'package:partner/UI/screens/Profile/Edit.profile.dart';
+import 'package:partner/UI/screens/Profile/terms.dart';
 import 'package:partner/UI/screens/auth/login.screen.dart';
 
 import 'package:partner/UI/screens/auth/otp.screen.dart';
@@ -15,6 +16,8 @@ class AppRouter {
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => const Loginscreen());
+      case '/terms':
+        return MaterialPageRoute(builder: (_) => const TermsAndConditions());
       case '/partner/food/addpartner':
         return MaterialPageRoute(builder: (_) => const PartnerAddPage());
       case '/partner/food/list':

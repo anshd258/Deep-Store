@@ -8,16 +8,17 @@ import 'package:partner/middleware/HistoryCubit/food_history_cubit.dart';
 import 'package:partner/middleware/HistoryCubit/rental_history_cubit.dart';
 import 'package:partner/middleware/HistoryCubit/ride_history_cubit.dart';
 
-
-
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    context.read<FoodHistoryCubit>().getHistory();
-    context.read<RentalHistoryCubit>().getHistory();
-    context.read<RideHistoryCubit>().getHistory();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<FoodHistoryCubit>().getHistory();
+      context.read<RentalHistoryCubit>().getHistory();
+      context.read<RideHistoryCubit>().getHistory();
+    });
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

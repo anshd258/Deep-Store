@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:partner/UI/util/textwidget.dart';
-import 'package:partner/UI/widget/OutlinedDeclineButton.dart';
-import 'package:partner/UI/widget/graedient.common.button.dart';
+import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
+import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
+
 
 class PartnerFoodContainer extends StatelessWidget {
   const PartnerFoodContainer({super.key});

@@ -19,80 +19,82 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SizedBox(
-          height: constraints.maxHeight,
-          width: constraints.maxWidth,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              // RidesCard(),
-
-              Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width:
-                          constraints.maxWidth - (constraints.maxWidth - 252),
-                      child: FilterWidget(type: "Accepted"),
-                    ),
-                    BlocConsumer<FilterCubitCubit, FilterCubitState>(
-                      listener: (context, state) {
-                        // TODO: implement listener
-                      },
-                      builder: (context, state) {
-                        if (state.tabIndex == 1) {
-                          return SizedBox(
-                            width: 40,
-                            height: 50,
-                            child: BlocBuilder<AcceptedRequestsCubit,
-                                AcceptedRequestsState>(
-                              builder: (context, state) {
-                                if (state is AcceptedRequestsLoaded) {
-                                  return DropdownButton<int>(
-                                    value: dropDownValue,
-                                    elevation: 16,
-                                    style:
-                                        const TextStyle(color: Colors.black54),
-                                    underline: Container(
-                                      height: 2,
-                                      color: Colors.black54,
-                                    ),
-                                    onChanged: (int? value) {
-                                      // This is called when the user selects an item.
-                                      setState(() {
-                                        dropDownValue = value!;
-                                      });
-                                    },
-                                    items: values.map<DropdownMenuItem<int>>(
-                                        (int value) {
-                                      return DropdownMenuItem<int>(
-                                        value: value,
-                                        child: Text(value.toString()),
-                                      );
-                                    }).toList(),
-                                  );
-                                } else {
-                                  return Center();
-                                }
-                              },
-                            ),
-                          );
-                        } else {
-                          return Center();
-                        }
-                      },
-                    )
-                  ]),
-
-              SizedBox(
-                  height: constraints.maxHeight - 88, child: const RidesBody())
-            ],
-          ),
-        );
-      },
+    return SafeArea(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SizedBox(
+            height: constraints.maxHeight,
+            width: constraints.maxWidth,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                // RidesCard(),
+    
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width:
+                            constraints.maxWidth - (constraints.maxWidth - 252),
+                        child: FilterWidget(type: "Accepted"),
+                      ),
+                      BlocConsumer<FilterCubitCubit, FilterCubitState>(
+                        listener: (context, state) {
+                          // TODO: implement listener
+                        },
+                        builder: (context, state) {
+                          if (state.tabIndex == 1) {
+                            return SizedBox(
+                              width: 40,
+                              height: 50,
+                              child: BlocBuilder<AcceptedRequestsCubit,
+                                  AcceptedRequestsState>(
+                                builder: (context, state) {
+                                  if (state is AcceptedRequestsLoaded) {
+                                    return DropdownButton<int>(
+                                      value: dropDownValue,
+                                      elevation: 16,
+                                      style:
+                                          const TextStyle(color: Colors.black54),
+                                      underline: Container(
+                                        height: 2,
+                                        color: Colors.black54,
+                                      ),
+                                      onChanged: (int? value) {
+                                        // This is called when the user selects an item.
+                                        setState(() {
+                                          dropDownValue = value!;
+                                        });
+                                      },
+                                      items: values.map<DropdownMenuItem<int>>(
+                                          (int value) {
+                                        return DropdownMenuItem<int>(
+                                          value: value,
+                                          child: Text(value.toString()),
+                                        );
+                                      }).toList(),
+                                    );
+                                  } else {
+                                    return Center();
+                                  }
+                                },
+                              ),
+                            );
+                          } else {
+                            return Center();
+                          }
+                        },
+                      )
+                    ]),
+    
+                SizedBox(
+                    height: constraints.maxHeight - 88, child: const RidesBody())
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

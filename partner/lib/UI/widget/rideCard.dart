@@ -23,7 +23,8 @@ class ownerOngoingcards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    imgLink ??= "https://st.depositphotos.com/1016929/2741/i/600/depositphotos_27413021-stock-photo-sport-bike-enduro.jpg";
+    imgLink ??=
+        "https://st.depositphotos.com/1016929/2741/i/600/depositphotos_27413021-stock-photo-sport-bike-enduro.jpg";
     return Container(
       decoration: BoxDecoration(
           boxShadow: [
@@ -65,7 +66,7 @@ class ownerOngoingcards extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textwidget("$name ", "(x$quantitiy)", 16, FontWeight.w600),
+                textwidget("$name ", "", 16, FontWeight.w600),
                 textwidget("Name : ", user, 14, FontWeight.w400),
                 textwidget("Ph no :", contact, 14, FontWeight.w400),
                 textwidget("Total : ", "₹$total", 14, FontWeight.w400),

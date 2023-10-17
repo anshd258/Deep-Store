@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:partner/UI/widget/graedient.common.button.dart';
+import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
+import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 import 'package:partner/middleware/auth_cubit.dart';
 import 'package:pinput/pinput.dart';
 
@@ -61,7 +62,6 @@ class _OtpScreenState extends State<OtpScreen> {
       body: Center(
           child: BlocConsumer<AuthCubit, AuthInitial>(
         listener: (context, state) {
-          //! uncomment after opt api is corrected
           if (state.obj != null && state.obj!.accessToken != "") {
             Navigator.pushNamedAndRemoveUntil(
               context,
