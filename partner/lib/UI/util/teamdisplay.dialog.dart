@@ -13,18 +13,22 @@ Future<dynamic> IteamDisplayDialog(BuildContext context, Orders e) {
           height: 200,
           width: 300,
           child: Column(
-              children: e.items!
-                  .map((e) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("${e.name} (X${e.quantity})"),
-                            Text("₹${e.quantity}"),
-                          ],
-                        ),
-                      ))
-                  .toList()),
+              children: e.items!.map((e) {
+            if (e.quantity == 0) {
+              return Center();
+            } else {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("${e.name} (X${e.quantity})"),
+                    Text("₹${e.listedPrice}"),
+                  ],
+                ),
+              );
+            }
+          }).toList()),
         ),
       );
     },
