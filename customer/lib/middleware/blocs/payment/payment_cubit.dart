@@ -28,7 +28,7 @@ class PaymentCubit extends Cubit<PaymentState> {
     OrderPaymentData? orderPaymentData = await createOrder(order.id);
     if (orderPaymentData != null) {
       String itemNames = order.items
-          .map((item) => item.food.name.toString())
+          .map((item) => item.itemName.toString())
           .toList()
           .join(", ");
 

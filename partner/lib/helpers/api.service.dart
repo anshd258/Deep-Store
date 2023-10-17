@@ -21,12 +21,13 @@ Future getData({
   final String bodyAsString = json.encode(body);
 
   late Response response;
-  print(body);
+  // print(body);
+  // print(headers);
 
   try {
     switch (queryType) {
       case QueryType.get:
-        response = await get(endpoint);
+        response = await get(endpoint, headers: headers);
         break;
       case QueryType.post:
         response = await post(endpoint, body: bodyAsString, headers: headers);
@@ -34,7 +35,7 @@ Future getData({
     }
 
     if (response.statusCode == 200) {
-      print(response.body);
+      // print(response.body);
       return json.decode(response.body);
     } else {
       print(response.statusCode);
@@ -42,7 +43,7 @@ Future getData({
       Map body = json.decode(response.body);
       throw (Exception(body['status']));
     }
-  } on Exception catch (e) {
+  } on Exception {
     rethrow;
   }
 }

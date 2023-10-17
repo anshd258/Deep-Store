@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:customer/data/datasource.dart';
 import 'package:customer/middleware/helpers/constants.dart';
@@ -21,13 +23,16 @@ class RentalCubit extends Cubit<RentalState> {
     String? location = await SharedPreferencesUtils.getString(
         key: SharedPrefrencesKeys.location);
     Map<String, dynamic> parameters = {"location": "$location"};
-    await DataSource.getData(
+    await DataSource.get(
       path: DataSource.getAllRentals,
       urlParameters: parameters,
     ).then((value) {
       if (value != null) {
+        List<dynamic> jsondata = json.decode(value.body) ;
+        List<Rental> rentals = jsondata.map((e) => Rental.fromJson(e)).toList();
+
         emit(UpdateRentalState(
-          rentalList: value.rentalItems,
+          rentalList: rentals,
         ));
       } else {}
     });
@@ -51,7 +56,7 @@ class RentalCubit extends Cubit<RentalState> {
     return false;
   }
 
-  Future<bool> createRentalRequest(String rentalId) async {
+  Future<bool> createRentalRequest(String rentalId, int quantity) async {
     String location = await SharedPreferencesUtils.getString(
             key: SharedPrefrencesKeys.location) ??
         '';

@@ -7,15 +7,15 @@ class RentalRequestModal {
     if (json['rentals'] != null) {
       rentals = <Rentals>[];
       json['rentals'].forEach((v) {
-        rentals!.add(new Rentals.fromJson(v));
+        rentals!.add(Rentals.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.rentals != null) {
-      data['rentals'] = this.rentals!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (rentals != null) {
+      data['rentals'] = rentals!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -24,6 +24,7 @@ class RentalRequestModal {
 class Rentals {
   int? id;
   User? user;
+  Rental? rental;
   String? startLocation;
   String? endLocation;
   String? startCoordinates;
@@ -31,13 +32,13 @@ class Rentals {
   String? startTime;
   String? endTime;
   int? status;
-  double? distance;
-  double? rating;
-
+  String? distance;
+  String? rating;
 
   Rentals(
       {this.id,
       this.user,
+      this.rental,
       this.startLocation,
       this.endLocation,
       this.startCoordinates,
@@ -46,12 +47,13 @@ class Rentals {
       this.endTime,
       this.status,
       this.distance,
-      this.rating,
-    });
+      this.rating});
 
   Rentals.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    rental =
+        json['rental'] != null ? Rental.fromJson(json['rental']) : null;
     startLocation = json['start_location'];
     endLocation = json['end_location'];
     startCoordinates = json['start_coordinates'];
@@ -59,58 +61,124 @@ class Rentals {
     startTime = json['start_time'];
     endTime = json['end_time'];
     status = json['status'];
-    distance = json['distance'];
-    rating = json['rating'];
-   
+    distance = json['distance'].toString();
+    rating = json['rating'].toString();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
-    data['start_location'] = this.startLocation;
-    data['end_location'] = this.endLocation;
-    data['start_coordinates'] = this.startCoordinates;
-    data['end_coordinates'] = this.endCoordinates;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['status'] = this.status;
-    data['distance'] = this.distance;
-    data['rating'] = this.rating;
-    
+    if (rental != null) {
+      data['rental'] = rental!.toJson();
+    }
+    data['start_location'] = startLocation;
+    data['end_location'] = endLocation;
+    data['start_coordinates'] = startCoordinates;
+    data['end_coordinates'] = endCoordinates;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['status'] = status;
+    data['distance'] = distance;
+    data['rating'] = rating;
     return data;
   }
 }
 
 class User {
   int? id;
-
+  User? user;
   String? contact;
-  String? otp;
   String? username;
-  Null? room;
+  String? room;
+  int? propertyId;
 
-  User({this.id, this.contact, this.otp, this.username, this.room});
+  User(
+      {this.id,
+      this.user,
+      this.contact,
+      this.username,
+      this.room,
+      this.propertyId});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
     contact = json['contact'];
-    otp = json['otp'];
     username = json['username'];
     room = json['room'];
+    propertyId = json['property_id'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    if (user != null) {
+      data['user'] = user!.toJson();
+    }
+    data['contact'] = contact;
+    data['username'] = username;
+    data['room'] = room;
+    data['property_id'] = propertyId;
+    return data;
+  }
+}
 
-    data['contact'] = this.contact;
-    data['otp'] = this.otp;
-    data['username'] = this.username;
-    data['room'] = this.room;
+class Rental {
+  int? id;
+  String? name;
+  String? description;
+  String? price;
+  String? image;
+  String? engineCapacity;
+  String? mileage;
+  String? fuelType;
+  int? seatingCapacity;
+  String? sType;
+  int? quantity;
+
+  Rental(
+      {this.id,
+      this.name,
+      this.description,
+      this.price,
+      this.image,
+      this.engineCapacity,
+      this.mileage,
+      this.fuelType,
+      this.seatingCapacity,
+      this.sType,
+      this.quantity});
+
+  Rental.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    description = json['description'];
+    price = json['price'].toString();
+    image = json['image'];
+    engineCapacity = json['engineCapacity'];
+    mileage = json['mileage'];
+    fuelType = json['fuelType'];
+    seatingCapacity = json['seatingCapacity'];
+    sType = json['_type'];
+    quantity = json['quantity'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['description'] = description;
+    data['price'] = price;
+    data['image'] = image;
+    data['engineCapacity'] = engineCapacity;
+    data['mileage'] = mileage;
+    data['fuelType'] = fuelType;
+    data['seatingCapacity'] = seatingCapacity;
+    data['_type'] = sType;
+    data['quantity'] = quantity;
     return data;
   }
 }

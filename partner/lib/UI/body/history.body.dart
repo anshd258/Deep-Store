@@ -19,7 +19,7 @@ class HistoryBody extends StatelessWidget {
       var value = context.watch<HistoryFilterCubit>();
       if (value.tabIndex == 1) {
         return SizedBox(
-            height: 538,
+            height: 516,
             child: BlocConsumer<FoodHistoryCubit, FoodHistoryState>(
               listener: (context, state) {
                 if (state is FoodHistoryError) {
@@ -46,7 +46,7 @@ class HistoryBody extends StatelessWidget {
                                         Text(
                                           "Room no ${e.user}",
                                           style: GoogleFonts.lato(
-                                            color: Color.fromARGB(255, 0, 0, 0),
+                                            color: const Color.fromARGB(255, 0, 0, 0),
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400,
                                           ),
@@ -58,22 +58,26 @@ class HistoryBody extends StatelessWidget {
                                                 barrierDismissible: true,
                                                 context: context,
                                                 builder: (context) {
-                                                  return AlertDialog( 
+                                                  return AlertDialog(
                                                     elevation: 5,
-                                                    content: Column(
-                                                        children: e.items!
-                                                            .map((e) => Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Text(
-                                                                        "${e.name} (X${e.quantity})"),
-                                                                    Text(
-                                                                        "₹${e.quantity}"),
-                                                                  ],
-                                                                ))
-                                                            .toList()),
+                                                    content: SizedBox(
+                                                      height: 200,
+                                                      width: 300,
+                                                      child: Column(
+                                                          children: e.items!
+                                                              .map((e) => Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Text(
+                                                                          "${e.name} (X${e.quantity})"),
+                                                                      Text(
+                                                                          "₹${e.quantity}"),
+                                                                    ],
+                                                                  ))
+                                                              .toList()),
+                                                    ),
                                                   );
                                                 },
                                               );
@@ -95,13 +99,13 @@ class HistoryBody extends StatelessWidget {
                     );
                   }
                 } else {
-                  return Center();
+                  return const Center();
                 }
               },
             ));
       } else if (value.tabIndex == 2) {
         return SizedBox(
-            height: 538,
+            height: 516,
             child: BlocConsumer<RideHistoryCubit, RideHistoryState>(
               listener: (context, state) {
                 if (state is RideHistoryError) {
@@ -123,19 +127,22 @@ class HistoryBody extends StatelessWidget {
                           Text(
                             "Room no ",
                             style: GoogleFonts.lato(
-                              color: Color.fromARGB(255, 0, 0, 0),
+                              color: const Color.fromARGB(255, 0, 0, 0),
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           Column(
                               children: state.rideRequest!.rides!
-                                  .map((e) => ownerOngoingcards(
-                                        contact: e.user!.contact!,
-                                        user: e.user!.username!,
-                                        name: e.startLocation!,
-                                        quantitiy: e.distance.toString(),
-                                        total: e.price!.toString(),
+                                  .map((e) => RidesCard(
+                                        heading1: "Guest name",
+                                        heading2: "pickup location",
+                                        heading3: "Contact no",
+                                        heading4: "Dropoff location",
+                                        data1: e.user!.username!,
+                                        data2: e.startLocation!,
+                                        data3: e.user!.contact.toString(),
+                                        data4: e.endLocation!,
                                       ))
                                   .toList()),
                         ],
@@ -143,13 +150,13 @@ class HistoryBody extends StatelessWidget {
                     );
                   }
                 } else {
-                  return Center();
+                  return const Center();
                 }
               },
             ));
       } else {
         return SizedBox(
-          height: 538,
+          height: 516,
           child: BlocConsumer<RentalHistoryCubit, RentalHistoryState>(
             listener: (context, state) {
               if (state is RentalHistoryError) {
@@ -171,22 +178,20 @@ class HistoryBody extends StatelessWidget {
                         Text(
                           "Room no ",
                           style: GoogleFonts.lato(
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color: const Color.fromARGB(255, 0, 0, 0),
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         Column(
                             children: state.rentalRequest!.rentals!
-                                .map((e) => RidesCard(
-                                      heading1: "Guest name",
-                                      heading2: "pickup location",
-                                      heading3: "Contact no",
-                                      heading4: "Dropoff location",
-                                      data1: e.user!.username!,
-                                      data2: e.startLocation!,
-                                      data3: e.user!.contact.toString(),
-                                      data4: e.endLocation!,
+                                .map((e) => ownerOngoingcards(
+                                      contact: e.user!.contact!,
+                                      user: e.user!.username!,
+                                      imgLink: e.rental!.image!,
+                                      name: e.rental!.name!,
+                                      quantitiy: e.distance.toString(),
+                                      total: "${e.rental!.price} /- per hour",
                                     ))
                                 .toList()),
                       ],
@@ -194,7 +199,7 @@ class HistoryBody extends StatelessWidget {
                   );
                 }
               } else {
-                return Center();
+                return const Center();
               }
             },
           ),

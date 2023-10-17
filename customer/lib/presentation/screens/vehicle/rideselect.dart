@@ -127,6 +127,7 @@ class _RideSelectState extends State<RideSelect> {
                           color: Colors.white,
                           child: PopUpMessage(
                               function: () async {
+                                FocusManager.instance.primaryFocus?.unfocus();
                                 bool status = await context
                                     .read<RideCubit>()
                                     .createRideRequest(

@@ -36,15 +36,15 @@ class _RentalItemCardState extends State<RentalItemCard> {
               child: SquicircleContainer(
                 height: constraints.maxHeight - 10,
                 child: CachedNetworkImage(
-                  fit: BoxFit.cover,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      Center(
-                          child: CircularProgressIndicator(
-                              value: downloadProgress.progress)),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  imageUrl: widget.rental.image ?? "https://dummyimage.com/300"),
-                
-            
+                    fit: BoxFit.cover,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Center(
+                            child: CircularProgressIndicator(
+                                value: downloadProgress.progress)),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    imageUrl:
+                        widget.rental.image ?? "https://dummyimage.com/300"),
               ),
             ),
             Expanded(
@@ -72,23 +72,23 @@ class _RentalItemCardState extends State<RentalItemCard> {
                           ? [
                               Expanded(
                                   child: IconText(
-                                      icon: NavBarIcons.burger,
+                                      icon: NavBarIcons.engine,
                                       text:
                                           '${widget.rental.engineCapacity}cc')),
                               Expanded(
                                 child: IconText(
-                                    icon: NavBarIcons.burger,
+                                    icon: NavBarIcons.mileage,
                                     text: '${widget.rental.mileage} kmpl'),
                               ),
                             ]
                           : [
                               Expanded(
                                   child: IconText(
-                                      icon: NavBarIcons.burger,
+                                      icon: NavBarIcons.mileage,
                                       text: widget.rental.fuelType.toString())),
                               Expanded(
                                 child: IconText(
-                                    icon: NavBarIcons.burger,
+                                    icon: NavBarIcons.account,
                                     text:
                                         '${widget.rental.seatingCapacity} Seater'),
                               ),
@@ -151,7 +151,8 @@ class _RentalItemCardState extends State<RentalItemCard> {
                                           return await context
                                               .read<RentalCubit>()
                                               .createRentalRequest(
-                                                  widget.rental.id.toString());
+                                                  widget.rental.id.toString(),
+                                                  vehicleCount);
                                         },
                                         processingText:
                                             'trying to book a rental',

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:customer/data/models/fooddetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,10 +9,10 @@ import '../../../../middleware/blocs/food/food_cubit.dart';
 class ItemTile extends StatefulWidget {
   const ItemTile({
     Key? key,
-    required this.item,
+    required this.foodDetails,
   }) : super(key: key);
 
-  final FoodDetails item;
+  final FoodDetails foodDetails;
 
   @override
   State<ItemTile> createState() => _ItemTileState();
@@ -22,19 +24,24 @@ class _ItemTileState extends State<ItemTile> {
   Widget build(BuildContext context) {
     return BlocBuilder<FoodCubit, FoodState>(
       builder: (context, state) {
-        FoodDetails item = state.cartOrder!.items.firstWhere((element) => element.food.foodID == widget.item.food.foodID);
-    String options = item.selectedAddons.keys.map((e) => e).join(', ');
+        FoodDetails item = state.cartOrder!.items.firstWhere(
+            (element) => element.itemId == widget.foodDetails.itemId);
+        String options = item.selectedAddons.keys.map((e) => e).join(', ');
         return Container(
-          decoration: const BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.all(
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color.fromRGBO(204, 204, 204, 1)),
+            // gradient: const LinearGradient(colors: [
+            //   Color.fromRGBO(32, 171, 154, 1),
+            //   Color.fromRGBO(34, 150, 199, 1)
+            // ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            borderRadius: const BorderRadius.all(
               Radius.circular(
                 10.0,
               ),
             ),
           ),
           child: ListTile(
-            title: Text(item.food.name),
+            title: Text(item.itemName),
             subtitle: options.isNotEmpty
                 ? Text(
                     options,
@@ -74,15 +81,16 @@ class _ItemTileState extends State<ItemTile> {
                             children: [
                               IconButton(
                                 onPressed: () async {
-                                    setState(() {
+                                  setState(() {
                                     busy = true;
                                   });
                                   await context.read<FoodCubit>().addItemToCart(
+                                    item.total,
+                                    item.discount,
 
-                                      item.food,
-                                      1,
-                                      item.selectedAddons);
-                                        setState(() {
+                                      item.itemId,
+                                       1, item.selectedAddons);
+                                  setState(() {
                                     busy = false;
                                   });
                                 },
@@ -101,7 +109,7 @@ class _ItemTileState extends State<ItemTile> {
                                   await context
                                       .read<FoodCubit>()
                                       .removeFoodItemFromCart(
-                                        item.food,
+                                        widget.foodDetails.foodDetailId,
                                       );
 
                                   setState(() {
@@ -125,7 +133,7 @@ class _ItemTileState extends State<ItemTile> {
                               child: SizedBox(
                                 width: 110,
                                 child: LinearProgressIndicator(
-                                  color: Colors.orange,
+                                  color: Color.fromRGBO(32, 171, 154, 1),
                                   backgroundColor: Colors.black12,
                                 ),
                               ),
@@ -138,7 +146,7 @@ class _ItemTileState extends State<ItemTile> {
                     width: 10.0,
                   ),
                   Text(
-                    'Rs. ${item.finalPrice.toStringAsFixed(2)}',
+                    'Rs. ${item.total.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 16.0,
                     ),

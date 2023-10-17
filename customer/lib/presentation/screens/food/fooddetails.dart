@@ -17,6 +17,8 @@ class FoodDetailSelector extends StatefulWidget {
 class _FoodDetailSelectorState extends State<FoodDetailSelector> {
   bool showLoadingIndicator = false;
   List<String> selecteditems = [];
+  double selectedItemsAmount = 0;
+  int quantity = 1;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,7 +55,7 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
                     child: Row(
                       children: [
                         Text(
-                          '${widget.food.name},Rs. ${widget.food.price}',
+                          '${widget.food.name},Rs. ${widget.food.finalPrice}',
                           style: const TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
@@ -76,6 +78,36 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
                         ),
                       ],
                     ),
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            if (quantity > 1) {
+                              setState(() {
+                                quantity = quantity - 1;
+                              });
+                            }
+                          },
+                          icon: const Icon(Icons.remove_circle),
+                          color: const Color.fromRGBO(65, 65, 65, 0.7)),
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      Text(quantity.toString()),
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            quantity = quantity + 1;
+                          });
+                        },
+                        icon: const Icon(Icons.add_circle),
+                        color: const Color.fromRGBO(73, 204, 115, 1),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -119,8 +151,11 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
                       onChanged: (status) {
                         if (status ?? false) {
                           selecteditems.add(addon.key);
+                          selectedItemsAmount =
+                              selectedItemsAmount + addon.value;
                         } else {
                           selecteditems.remove(addon.key);
+                             selectedItemsAmount = selectedItemsAmount - addon.value;
                         }
                         setState(() {});
                       },
@@ -137,13 +172,15 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(18.0),
-                child: Text(
-                  'Rs. ${widget.food.price}',
-                  style: const TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: Builder(builder: (context) {
+                  return Text(
+                    'Rs. ${selectedItemsAmount + widget.food.finalPrice}',
+                    style: const TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                }),
               ),
               Expanded(
                 child: CommonButton(
@@ -162,9 +199,13 @@ class _FoodDetailSelectorState extends State<FoodDetailSelector> {
                         selectedAddons[item] = addOns[item] ?? 0;
                       }
                     }
-                    bool status = await context
-                        .read<FoodCubit>()
-                        .addItemToCart(widget.food, 1, selectedAddons);
+                    print(selectedAddons);
+                    bool status = await context.read<FoodCubit>().addItemToCart(
+                        widget.food.finalPrice,
+                        0,
+                        widget.food.foodID,
+                        quantity,
+                        selectedAddons);
                     setState(() {
                       showLoadingIndicator = false;
                     });

@@ -47,6 +47,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
+        toolbarHeight: 70,
         backgroundColor: Colors.white,
         leading: const BackButton(
           color: Color(0xFF565656),
@@ -57,7 +58,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           textAlign: TextAlign.center,
           style: GoogleFonts.lato(
             color: const Color(0xFF565656),
-            fontSize: 14,
+            fontSize: 18,
             fontWeight: FontWeight.w700,
             letterSpacing: -0.28,
           ),

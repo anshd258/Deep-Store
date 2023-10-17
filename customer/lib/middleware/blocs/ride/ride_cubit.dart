@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
@@ -15,12 +17,16 @@ class RideCubit extends Cubit<RideState> {
   }
 
   Future<bool> fetchRideRequests() async {
-    await DataSource.getData(
+    await DataSource.get(
       path: DataSource.getAllRideRequests,
     ).then((value) {
       if (value != null) {
+                List<dynamic> jsondata = json.decode(value.body) ;
+        List<Ride> rides = jsondata.map((e) => Ride.fromJson(e)).toList();
+
+
         emit(UpdateRideRequestsState(
-          rideRequests: value.rideRequests,
+          rideRequests: rides,
         ));
         return true;
       }

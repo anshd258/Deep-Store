@@ -11,7 +11,27 @@ import 'package:partner/middleware/incomingRequestCubit/incoming_ride_request_cu
 class OwnerRequestcard extends StatefulWidget {
   RequestType type;
   String id;
-  OwnerRequestcard({super.key, required this.type, required this.id});
+  String heading1;
+  String heading2;
+  String heading3;
+  String heading4;
+  String data1;
+  String data2;
+  String data3;
+  String data4;
+
+  OwnerRequestcard(
+      {super.key,
+      required this.type,
+      required this.id,
+      required this.heading1,
+      required this.data1,
+      required this.heading2,
+      required this.data2,
+      required this.heading3,
+      required this.data3,
+      required this.heading4,
+      required this.data4});
 
   @override
   State<OwnerRequestcard> createState() => _OwnerRequestcardState();
@@ -22,7 +42,17 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
   Widget build(BuildContext context) {
     return Container(
       height: 180,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.shade400,
+                blurRadius: 5,
+                blurStyle: BlurStyle.outer)
+          ],
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -30,13 +60,13 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               RidesDetailsContainer(
-                heading: 'Guest name',
-                data: 'Alice lee',
+                heading: widget.heading1,
+                data: widget.data1,
                 fontSize: 16,
               ),
               RidesDetailsContainer(
-                heading: 'Room no',
-                data: '403',
+                heading: widget.heading2,
+                data: widget.data2,
                 fontSize: 16,
               ),
               GradientCommonButton(
@@ -44,8 +74,9 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
                     if (widget.type == RequestType.food) {
                       context
                           .read<IncomingFoodRequestCubit>()
-                          .acceptRequest(widget.id);
+                          .acceptRequest(widget.id, "5345");
                     } else if (widget.type == RequestType.ride) {
+                      print("calling rides api");
                       context
                           .read<IncomingRideRequestCubit>()
                           .acceptRequest(widget.id);
@@ -56,23 +87,23 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
                     }
                   },
                   height: 42,
-                  margin: EdgeInsets.all(2),
+                  margin: const EdgeInsets.all(2),
                   borderradius: 4,
                   lable: "Accept",
-                  width: 158)
+                  width: 146)
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               RidesDetailsContainer(
-                heading: 'Order name',
-                data: 'Ice-cream (x 2)',
+                heading: widget.heading3,
+                data: widget.data3,
                 fontSize: 16,
               ),
               RidesDetailsContainer(
-                heading: 'Total Price',
-                data: '170',
+                heading: widget.heading4,
+                data: widget.data4,
                 fontSize: 16,
               ),
               OutlinedDeclineButton(
@@ -80,7 +111,7 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
                     if (widget.type == RequestType.food) {
                       context
                           .read<IncomingFoodRequestCubit>()
-                          .rejectRequest(widget.id);
+                          .rejectRequest(widget.id, "345");
                     } else if (widget.type == RequestType.ride) {
                       context
                           .read<IncomingRideRequestCubit>()
@@ -91,12 +122,12 @@ class _OwnerRequestcardState extends State<OwnerRequestcard> {
                           .rejectRequest(widget.id);
                     }
                   },
-                  color: Color(0xFFC25C5C),
+                  color: const Color(0xFFC25C5C),
                   height: 42,
-                  margin: EdgeInsets.all(2),
+                  margin: const EdgeInsets.all(2),
                   borderradius: 4,
                   lable: "Decline",
-                  width: 158)
+                  width: 146)
             ],
           )
         ],

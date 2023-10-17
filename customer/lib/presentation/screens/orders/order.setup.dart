@@ -19,39 +19,49 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 3, vsync: this, animationDuration: const Duration(microseconds: 0));
+    controller = TabController(
+        length: 3,
+        vsync: this,
+        animationDuration: const Duration(microseconds: 0));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Container(
           width: 200,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
           child: Text(
             "Ongoing requests",
-            style: GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.w700),
+            style: GoogleFonts.lato(
+                fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),
           ),
         ),
-        const SizedBox(
-          height: 5,
+      ),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            OrderTabBar(
+                controller: controller,
+                labels: const ['FOOD', 'RIDES', 'RENTALS']),
+            Expanded(
+              child: TabBarView(
+                controller: controller,
+                children: const [
+                  FoodHistory(),
+                  RidesHistory(),
+                  RentalHistory()
+                ],
+              ),
+            )
+          ],
         ),
-        OrderTabBar(
-            controller: controller, labels: const ['FOOD', 'RIDES', 'RENTALS']),
-        Expanded(
-          child: TabBarView(
-
-            controller: controller,
-
-            children: const [FoodHistory(), RidesHistory(), RentalHistory()],
-          ),
-        )
-      ],
+      ),
     );
   }
 }

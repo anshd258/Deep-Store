@@ -10,17 +10,16 @@ class DataSource {
   static String backend =
       'brisphere-django-backend.agreeablebush-b77b4bbe.southeastasia.azurecontainerapps.io';
 
-  // static const String getMenu = 'service/get-menu/';
 
   static const String getFoodOrder = '/service/find-foodorder/';
   static const String getOrderByType = '/service/get-order-by-type';
 
   static const String getAllFoodOrder = '/service/find-all-foodorders';
-  static const String getAllRideRequests = '/service/find-all-riderequests';
+  static const String getAllRideRequests = '/service/get-user-ride';
   static const String getAllRentalRequests = '/service/find-all-rentalrequests';
 
   static const String getAllFoods = '/service/get-all-foods';
-  static const String getAllRentals = '/service/find-all-rentals';
+  static const String getAllRentals = '/service/get-all-rentals';
 
   static const String createFoodOrder = '/service/create-foodorder';
   static const String createRideRequest = '/service/create-ride/';
@@ -34,7 +33,7 @@ class DataSource {
   static const String getUserDetails = '/user/get-user/';
 
   static const String orderPayment = '/service/order-payment/';
-  static const String orderVerification = '/service/order-verify/' ;
+  static const String orderVerification = '/service/order-verify/';
 
   static Future<ApiResponse?> getData({
     QueryType queryType = QueryType.get,
@@ -49,7 +48,7 @@ class DataSource {
         urlParameters);
 
     final String bodyAsString = json.encode(body);
-    print(path);
+    // print(path);
     String? accessToken = await SharedPreferencesUtils.getString(
         key: SharedPrefrencesKeys.accessToken);
     if (accessToken == null) {
@@ -81,7 +80,7 @@ class DataSource {
           break;
       }
       if (response.statusCode == 200) {
-        print(response.body);
+        // print(response.body);
         ApiResponse apiResponse =
             ApiResponse.fromJson(json.decode(response.body));
         return apiResponse;
@@ -137,7 +136,7 @@ class DataSource {
           );
           break;
       }
-      print(response.body);
+      // print(response.body);
       return response;
     } catch (e) {
       if (kDebugMode) {

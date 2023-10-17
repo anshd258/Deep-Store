@@ -17,7 +17,9 @@ class CartBody extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: RefreshIndicator(
-        onRefresh: () async {},
+        onRefresh: () async {
+         await context.read<FoodCubit>().fetchCartOrders();
+        },
         child: BlocBuilder<FoodCubit, FoodState>(
           builder: (context, state) {
                 SchedulerBinding.instance.addPostFrameCallback(
@@ -34,9 +36,9 @@ class CartBody extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: state.cartOrder!.items.length,
                   itemBuilder: (BuildContext _, int index) {
-                    if (state.cartOrder!.items.elementAt(index).quantity > 0) {
+                    if (state.cartOrder!.items.elementAt(index).quantity > 0) { 
                       return ItemTile(
-                        item: state.cartOrder!.items.elementAt(index),
+                        foodDetails: state.cartOrder!.items.elementAt(index),
                       );
                     }
 

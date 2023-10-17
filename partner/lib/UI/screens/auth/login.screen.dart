@@ -12,7 +12,7 @@ class Loginscreen extends StatefulWidget {
 }
 
 class _LoginscreenState extends State<Loginscreen> {
-  TextEditingController _text = TextEditingController();
+  final TextEditingController _text = TextEditingController();
   bool _validate = false;
   @override
   void dispose() {
@@ -22,12 +22,14 @@ class _LoginscreenState extends State<Loginscreen> {
 
   @override
   void initState() {
+    autoLogin(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -35,7 +37,7 @@ class _LoginscreenState extends State<Loginscreen> {
         title: Text(
           "Guest Login",
           style: GoogleFonts.lato(
-            color: Color(0xB2555555),
+            color: const Color(0xB2555555),
             fontSize: 16,
             fontWeight: FontWeight.w700,
             letterSpacing: -0.28,
@@ -45,7 +47,11 @@ class _LoginscreenState extends State<Loginscreen> {
       body: Center(
           child: BlocConsumer<AuthCubit, AuthInitial>(
         listener: (context, state) {
-          // TODO: implement listener
+          if (state.autoLogin == true) {
+            print(state.autoLogin);
+            Navigator.pushNamedAndRemoveUntil(
+                context, "/home", (route) => false);
+          }
         },
         builder: (context, state) {
           return Stack(
@@ -56,7 +62,7 @@ class _LoginscreenState extends State<Loginscreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       height: 90,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,7 +72,7 @@ class _LoginscreenState extends State<Loginscreen> {
                             child: Text(
                               "Enter your Phone number",
                               style: GoogleFonts.lato(
-                                  color: Color(0xE5555555),
+                                  color: const Color(0xE5555555),
                                   letterSpacing: -0.72,
                                   fontSize: 24,
                                   fontWeight: FontWeight.w600),
@@ -77,7 +83,7 @@ class _LoginscreenState extends State<Loginscreen> {
                             child: Text(
                               "Enter your Phone number",
                               style: GoogleFonts.lato(
-                                color: Color(0xB2555555),
+                                color: const Color(0xB2555555),
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 letterSpacing: -0.28,
@@ -88,7 +94,7 @@ class _LoginscreenState extends State<Loginscreen> {
                       ),
                     ),
                     ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 328),
+                      constraints: const BoxConstraints(maxWidth: 328),
                       child: TextField(
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
@@ -103,14 +109,14 @@ class _LoginscreenState extends State<Loginscreen> {
                               _validate ? "please enter 10 numbers" : null,
                           prefixText: "+91",
                           prefixStyle: GoogleFonts.nunito(
-                            color: Color(0x99565656),
+                            color: const Color(0x99565656),
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             height: 1.25,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               width: 0.50,
                               color: Color(0x33565656),
                             ),
@@ -119,7 +125,7 @@ class _LoginscreenState extends State<Loginscreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +135,7 @@ class _LoginscreenState extends State<Loginscreen> {
                             'Not a guest?',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                              color: Color(0xB2555555),
+                              color: const Color(0xB2555555),
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
@@ -139,7 +145,7 @@ class _LoginscreenState extends State<Loginscreen> {
                             ' Login as stay owner',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                              color: Color(0xFF3BA365),
+                              color: const Color(0xFF3BA365),
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               letterSpacing: -0.42,
@@ -158,7 +164,8 @@ class _LoginscreenState extends State<Loginscreen> {
                       },
                       listener: (context, state) {
                         if (state.otpSent) {
-                          Navigator.pushNamed(context, "/otpPage");
+                          Navigator.pushNamed(context, "/otpPage",
+                              arguments: _text.text);
                         }
                       },
                       builder: (context, state) {
@@ -179,7 +186,7 @@ class _LoginscreenState extends State<Loginscreen> {
                           },
                           borderradius: 4,
                           height: 48,
-                          margin: EdgeInsets.symmetric(vertical: 18),
+                          margin: const EdgeInsets.symmetric(vertical: 18),
                           width: 300,
                           lable: "Generate OTP",
                         );
@@ -193,7 +200,7 @@ class _LoginscreenState extends State<Loginscreen> {
                   height: double.infinity,
                   width: double.infinity,
                   color: Colors.white60,
-                  child: Center(
+                  child: const Center(
                     child: CircularProgressIndicator.adaptive(),
                   ),
                 )
@@ -203,5 +210,9 @@ class _LoginscreenState extends State<Loginscreen> {
         },
       )),
     );
+  }
+
+  void autoLogin(BuildContext context) {
+    context.read<AuthCubit>().autoLogin();
   }
 }

@@ -30,7 +30,7 @@ class FoodOrder {
     return FoodOrder(
       id: json['id'].toString(),
       items: (json['items'] as List<dynamic>).map((foodJson) {
-        return FoodDetails.fromBackendJson(foodJson);
+        return FoodDetails.fromJson(foodJson);
       }).toList(),
       discount: json['discount'],
       subTotalPrice: json['subtotal'],

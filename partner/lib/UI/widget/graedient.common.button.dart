@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:partner/Constants/filterEnum.dart';
 
 class GradientCommonButton extends StatefulWidget {
   String lable;
   VoidCallback function;
   double height;
+  double fontSize;
   double width;
   double borderradius;
   EdgeInsets margin;
@@ -18,6 +18,7 @@ class GradientCommonButton extends StatefulWidget {
       required this.margin,
       required this.borderradius,
       required this.lable,
+      this.fontSize = 12,
       required this.width});
 
   @override
@@ -33,7 +34,7 @@ class _GradientCommonButtonState extends State<GradientCommonButton>
         vsync: this,
         lowerBound: 0,
         upperBound: 1,
-        duration: Duration(milliseconds: 500));
+        duration: const Duration(milliseconds: 500));
     ctr!.stop();
 
     super.initState();
@@ -70,15 +71,19 @@ class _GradientCommonButtonState extends State<GradientCommonButton>
         alignment: Alignment.center,
         constraints:
             BoxConstraints(maxWidth: widget.width, maxHeight: widget.height),
-        child: Text(
-          widget.lable,
-          style: GoogleFonts.lato(
-              fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white),
+        child: Center(
+          child: Text(
+            widget.lable,
+            style: GoogleFonts.lato(
+                fontSize: widget.fontSize,
+                fontWeight: FontWeight.w500,
+                color: Colors.white),
+          ),
         ),
       ),
     ).animate().blur(
-        duration: Duration(milliseconds: 800),
-        begin: Offset(1, 1),
-        end: Offset(0, 0));
+        duration: const Duration(milliseconds: 800),
+        begin: const Offset(1, 1),
+        end: const Offset(0, 0));
   }
 }

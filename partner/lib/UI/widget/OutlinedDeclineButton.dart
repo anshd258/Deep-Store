@@ -34,7 +34,7 @@ class _OutlinedDeclineButtonState extends State<OutlinedDeclineButton>
         vsync: this,
         lowerBound: 0,
         upperBound: 1,
-        duration: Duration(milliseconds: 500));
+        duration: const Duration(milliseconds: 500));
     ctr!.stop();
 
     super.initState();

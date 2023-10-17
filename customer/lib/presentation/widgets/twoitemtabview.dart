@@ -12,15 +12,16 @@ class TwoItemTabView extends StatelessWidget {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: TabBar(
-            labelColor: const Color.fromRGBO(44,44,44,1),
-            labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            indicatorColor: Colors.blue,
-indicatorSize: TabBarIndicatorSize.label,
-            indicator: const UnderlineTabIndicator(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(color: Colors.blue, width: 4)),
-            tabs: [tab1,tab2]),
+          
+            appBar: TabBar(
+              labelColor: const Color.fromRGBO(44,44,44,1),
+              labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              indicatorColor: Colors.blue,
+  indicatorSize: TabBarIndicatorSize.label,
+              indicator: const UnderlineTabIndicator(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderSide: BorderSide(color: Colors.blue, width: 4)),
+              tabs: [tab1,tab2]),
           body: TabBarView(
             children: [child1, child2],
           ),

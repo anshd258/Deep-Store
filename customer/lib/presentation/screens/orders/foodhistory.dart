@@ -34,7 +34,7 @@ class FoodHistory extends StatelessWidget {
                       : ListView(
                           children: data.map((order) {
                             List<String> itemnames = order.items
-                                .map((item) => item.food.name.toString())
+                                .map((item) => item.itemName.toString())
                                 .toList();
                             String names = itemnames.join(", ");
                             return LayoutBuilder(

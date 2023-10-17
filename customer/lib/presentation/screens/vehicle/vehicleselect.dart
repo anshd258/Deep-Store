@@ -13,17 +13,23 @@ class VehicleSelect extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<RentalCubit>().fetchAllRentals();
 
-    return TwoItemTabView(
-      child1: BlocBuilder<RentalCubit, RentalState>(
-        builder: (context, state) {
-          return state.rentalList != null ? RentalSelect(
-              rentalList: state.rentalList) : Center(child: CircularProgressIndicator());
-        },
-      ),
-      child2: const RideSelect(),
-      tab1: const Tab(text: 'rent a ride'),
-      tab2: const Tab(
-        text: 'book a ride',
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: TwoItemTabView(
+          child1: BlocBuilder<RentalCubit, RentalState>(
+            builder: (context, state) {
+              return state.rentalList != null
+                  ? RentalSelect(rentalList: state.rentalList)
+                  : Center(child: CircularProgressIndicator());
+            },
+          ),
+          child2: const RideSelect(),
+          tab1: const Tab(text: 'rent a ride'),
+          tab2: const Tab(
+            text: 'book a ride',
+          ),
+        ),
       ),
     );
   }

@@ -27,7 +27,7 @@ class RidesHistory extends StatelessWidget {
                         child: Text('no rides booked'),
                       )
                     : ListView(
-                        children: data.map((ride) {
+                        children: data.reversed.map((ride) {
                           return Card(
                             elevation: 4,
                             shape: RoundedRectangleBorder(

@@ -31,12 +31,11 @@ class   Rental {
 
   factory Rental.fromJson(Map<String, dynamic> json) {
     VehicleType mapStringToVehicleType(String typeString) {
-      if (typeString == "Moterbike") {
+      if (typeString == "TWO_WHEELER") {
         return VehicleType.TWO_WHEELER;
-      } else if (typeString == "Car") {
+      } else if (typeString == "FOUR_WHEELER") {
         return VehicleType.FOUR_WHEELER;
       } else {
-        // Default to TWO_WHEELER if the typeString is unknown
         return VehicleType.TWO_WHEELER;
       }
     }

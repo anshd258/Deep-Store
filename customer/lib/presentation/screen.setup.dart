@@ -13,29 +13,9 @@ class ScreenSetup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      SharedPreferencesUtils.storeString(
-      key: SharedPrefrencesKeys.location, value: 'manali');
+    SharedPreferencesUtils.storeString(
+        key: SharedPrefrencesKeys.location, value: 'manali');
     return CustomTabView(
-      appBar: AppBar(
-        toolbarHeight: 80,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: const Icon(
-          NavBarIcons.nestafar,
-          size: 35,
-          color: Color.fromARGB(255, 8, 176, 176),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Welcome back!',
-                style: GoogleFonts.lato(
-                    color: const Color.fromRGBO(86, 86, 86, 1),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700)),
-          ],
-        ),
-      ),
       screens: const [Home(), FoodSelect(), VehicleSelect(), ProfilePage()],
       items: [
         BottomNavigationBarItem(

@@ -1,71 +1,68 @@
-import 'food.dart';
 
 class FoodDetails {
-  final Food food;
+  final int foodDetailId;
+  final String itemName;
+  final String desc;
+  final int providerId;
+  final String providerName;
   final Map<String, int> selectedAddons;
-  final int quantity;
-  final double finalPrice;
+  final double listedPrice;
+  final double total;
   final double discount;
+  final int quantity;
+  final int orderId;
+  final int itemId;
 
-  FoodDetails(this.food, this.selectedAddons, this.finalPrice, this.quantity,
-      this.discount);
 
-  Map<String, dynamic> toJson() {
-    return {
-      'food': food.toJson(),
-      'selectedAddons': selectedAddons,
-      'finalPrice': finalPrice,
-      'quantity': quantity,
-      'discount': discount
-    };
-  }
+
 
   factory FoodDetails.fromJson(Map<String, dynamic> json) {
     return FoodDetails(
-        Food.fromJson(json['food']),
-        Map<String, int>.from(json['selectedAddons']),
-        json['finalPrice'],
-        json['quantity'],
-        json['discount']);
+          foodDetailId: json['id'],
+      itemName: json['name'],
+      desc: json['desc'],
+      providerId: json['provider_id'],
+      providerName: json['provider_name'],
+      selectedAddons:Map<String, int>.from(json['option'] ?? {}),
+      listedPrice: json['listed_price'] as double,
+      total: json['total'] as double,
+      discount: json['discount'] as double,
+      quantity: json['quantity'],
+      orderId: json['order'],
+      itemId: json['item'],
+        
+        );
   }
-  factory FoodDetails.fromBackendJson(Map<String, dynamic> json) {
-    return FoodDetails(
-        Food(foodID: json['id'], name: json['name'], description: json['desc'], category: 'food', type: 'food', veg: true, available: true, finalPrice: json['total'], price: json['listed_price']),
-        Map<String, int>.from(json['option'] ?? {}),
-        json['total'],
-        json['quantity'],
-        json['discount']);
-  }
+
+  FoodDetails({required this.foodDetailId, required this.itemName, required this.desc, required this.providerId, required this.providerName, required this.selectedAddons, required this.listedPrice, required this.total, required this.discount, required this.quantity, required this.orderId, required this.itemId});
 }
+// import 'food.dart';
 
-
-// class FoodDetailsResponse {
-//   final Food food;
+// class FoodDetails {
+//   final Food? food;
 //   final Map<String, int> selectedAddons;
 //   final int quantity;
 //   final double finalPrice;
 //   final double discount;
 
-//   FoodDetailsResponse(this.food, this.selectedAddons, this.finalPrice, this.quantity,
+//   FoodDetails(this.food, this.selectedAddons, this.finalPrice, this.quantity,
 //       this.discount);
 
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'food': food.toJson(),
-//       'selectedAddons': selectedAddons,
-//       'finalPrice': finalPrice,
-//       'quantity': quantity,
-//       'discount': discount
-//     };
-//   }
-
-//   factory FoodDetailsResponse.fromJson(Map<String, dynamic> json) {
-//     return FoodDetailsResponse(
-//         Food(foodID: json['id'], name: json['name'], description: json['desc'], category: 'food', type: 'food', veg: true, available: true, finalPrice: json['listed_price'], price: json['listed_price']),
-//         Map<String, int>.from(json['option']),
+//   factory FoodDetails.fromJson(Map<String, dynamic> json) {
+//     return FoodDetails(
+//         Food(
+//             foodID: json['item'],
+//             name: json['name'],
+//             description: json['desc'],
+//             category: 'food',
+//             type: 'food',
+//             veg: true,
+//             available: true,
+//             finalPrice: json['total'],
+//             price: json['listed_price']),
+//         Map<String, int>.from(json['option'] ?? {}),
 //         json['total'],
 //         json['quantity'],
 //         json['discount']);
 //   }
 // }
-

@@ -7,7 +7,6 @@ import 'package:meta/meta.dart';
 import '../../../data/datasource.dart';
 import '../../../data/models/apiresponse.dart';
 import '../../../data/models/food.dart';
-import '../../../data/models/fooddetail.dart';
 import '../../../data/models/foodorder.dart';
 import '../../helpers/constants.dart';
 import '../../helpers/sharedprefrence.utils.dart';
@@ -35,8 +34,8 @@ class FoodCubit extends Cubit<FoodState> {
     return false;
   }
 
-  Future<bool> addItemToCart(
-      Food food, int quantity, Map<String, int> selectedAddons) async {
+  Future<bool> addItemToCart(double finalPrice, double discount, int itemId,
+      int quantity, Map<String, int> selectedAddons) async {
     bool status = false;
     FoodOrder? order = state.cartOrder;
 
@@ -54,18 +53,17 @@ class FoodCubit extends Cubit<FoodState> {
     }
 
     ///Adding selected addons to order.
-    FoodDetails selectedItem =
-        FoodDetails(food, selectedAddons, food.finalPrice, 1, 0);
+
     Map<String, dynamic> body = {
       'order': {
         'id': order!.id,
         'items': [
           {
-            'id': selectedItem.food.foodID,
-            'final_price': selectedItem.finalPrice,
-            'options': selectedItem.selectedAddons,
-            'quantity': selectedItem.quantity,
-            'discount': selectedItem.discount
+            'id': itemId,
+            'final_price': finalPrice,
+            'option': selectedAddons,
+            'quantity': quantity,
+            'discount': discount
           }
         ],
       }
@@ -78,10 +76,23 @@ class FoodCubit extends Cubit<FoodState> {
 
         /// fetching the latest cart order.
         Map<String, dynamic> urlParameters = {
-          'id': (order.id).toString(),
+          'id': order.id,
         };
+        print(urlParameters);
+
+        Response? temp = await DataSource.get(
+            queryType: QueryType.post,
+            path: DataSource.getFoodOrder,
+            body: urlParameters);
+        print(json.decode(temp!.body));
+        FoodOrder orderrr = FoodOrder.fromJson(
+            json.decode(temp.body)['order'] as Map<String, dynamic>);
+        print(orderrr);
+
         ApiResponse? apiResponse = await DataSource.getData(
-            path: DataSource.getFoodOrder, urlParameters: urlParameters);
+            queryType: QueryType.post,
+            path: DataSource.getFoodOrder,
+            body: urlParameters);
 
         order = apiResponse!.foodOrder;
         emit(UpdateFoodState(
@@ -153,12 +164,11 @@ class FoodCubit extends Cubit<FoodState> {
           return FoodOrder.fromJson(e as Map<String, dynamic>);
         }).toList();
         if (orders.isNotEmpty) {
-
-        FoodOrder? cartOrder = orders.first;
-        emit(UpdateFoodState(
-            cartOrder: cartOrder,
-            foodList: state.foodList,
-            foodOrderList: state.foodOrderList));
+          FoodOrder? cartOrder = orders.first;
+          emit(UpdateFoodState(
+              cartOrder: cartOrder,
+              foodList: state.foodList,
+              foodOrderList: state.foodOrderList));
         }
       }
     } catch (e) {
@@ -167,11 +177,11 @@ class FoodCubit extends Cubit<FoodState> {
     print('cart updated');
   }
 
-  Future<bool> removeFoodItemFromCart(Food food) async {
+  Future<bool> removeFoodItemFromCart(int foodDetailsId) async {
     FoodOrder? order = state.cartOrder;
 
     if (order!.items
-            .firstWhere((element) => element.food.foodID == food.foodID)
+            .firstWhere((element) => element.foodDetailId == foodDetailsId)
             .quantity >
         0) {}
     Map<String, dynamic> body = {
@@ -179,12 +189,13 @@ class FoodCubit extends Cubit<FoodState> {
         'id': order.id,
         'items': [
           {
-            'id': food.foodID,
+            'id': foodDetailsId,
             'quantity': 1,
           }
         ]
       }
     };
+    print(body);
 
     Response? response = await DataSource.get(
       path: DataSource.removeFoodItem,
@@ -192,6 +203,7 @@ class FoodCubit extends Cubit<FoodState> {
       body: body,
     );
     if (response != null) {
+      print(json.decode(response.body)['status']);
       if (json.decode(response.body)['status'] == 'success') {
         /// update the items offline
         return await fetchCartOrders().then((value) {

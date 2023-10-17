@@ -7,22 +7,22 @@ class RidesRequestModal {
     if (json['rides'] != null) {
       rides = <Rides>[];
       json['rides'].forEach((v) {
-        rides!.add(new Rides.fromJson(v));
+        rides!.add(Rides.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.rides != null) {
-      data['rides'] = this.rides!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (rides != null) {
+      data['rides'] = rides!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Rides {
-  int? id;
+  String? id;
   User? user;
   String? startLocation;
   String? endLocation;
@@ -31,9 +31,9 @@ class Rides {
   String? startTime;
   String? endTime;
   int? status;
-  double? distance;
-  double? price;
-
+  String? distance;
+  String? price;
+  String? rating;
 
   Rides(
       {this.id,
@@ -47,98 +47,69 @@ class Rides {
       this.status,
       this.distance,
       this.price,
-     });
+      this.rating});
 
   Rides.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    startLocation = json['start_location'];
-    endLocation = json['end_location'];
-    startCoordinates = json['start_coordinates'];
-    endCoordinates = json['end_coordinates'];
-    startTime = json['start_time'];
-    endTime = json['end_time'];
+    id = json['id'].toString();
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    startLocation = json['start_location'].toString();
+    endLocation = json['end_location'].toString();
+    startCoordinates = json['start_coordinates'].toString();
+    endCoordinates = json['end_coordinates'].toString();
+    startTime = json['start_time'].toString();
+    endTime = json['end_time'].toString();
     status = json['status'];
-    distance = json['distance'];
-    price = json['price'];
-  
+    distance = json['distance'].toString();
+    price = json['price'].toString();
+    rating = json['rating'].toString();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
-    data['start_location'] = this.startLocation;
-    data['end_location'] = this.endLocation;
-    data['start_coordinates'] = this.startCoordinates;
-    data['end_coordinates'] = this.endCoordinates;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['status'] = this.status;
-    data['distance'] = this.distance;
-    data['price'] = this.price;
-   
+    data['start_location'] = startLocation;
+    data['end_location'] = endLocation;
+    data['start_coordinates'] = startCoordinates;
+    data['end_coordinates'] = endCoordinates;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['status'] = status;
+    data['distance'] = distance;
+    data['price'] = price;
+    data['rating'] = rating;
     return data;
   }
 }
 
 class User {
-  int? id;
+  String? id;
 
   String? contact;
-  String? otp;
   String? username;
-  Null? room;
+  String? room;
+  String? propertyId;
 
-  User({this.id, this.contact, this.otp, this.username, this.room});
+  User({this.id, this.contact, this.username, this.room, this.propertyId});
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['id'].toString();
 
-    contact = json['contact'];
-    otp = json['otp'];
-    username = json['username'];
-    room = json['room'];
+    contact = json['contact'].toString();
+    username = json['username'].toString();
+    room = json['room'].toString();
+    propertyId = json['property_id'].toString();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['contact'] = this.contact;
-    data['otp'] = this.otp;
-    data['username'] = this.username;
-    data['room'] = this.room;
+    data['contact'] = contact;
+    data['username'] = username;
+    data['room'] = room;
+    data['property_id'] = propertyId;
     return data;
   }
 }
-
-// class User {
-//   int? id;
-//   String? username;
-//   String? firstName;
-//   String? lastName;
-//   String? email;
-
-//   User({this.id, this.username, this.firstName, this.lastName, this.email});
-
-//   User.fromJson(Map<String, dynamic> json) {
-//     id = json['id'];
-//     username = json['username'];
-//     firstName = json['first_name'];
-//     lastName = json['last_name'];
-//     email = json['email'];
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['id'] = this.id;
-//     data['username'] = this.username;
-//     data['first_name'] = this.firstName;
-//     data['last_name'] = this.lastName;
-//     data['email'] = this.email;
-//     return data;
-//   }
-// }

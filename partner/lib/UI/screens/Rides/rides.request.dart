@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:partner/UI/widget/ownerRequestCard.dart';
 import 'package:partner/UI/widget/rides.tabe.dart';
 import 'package:partner/helpers/constants.dart';
@@ -43,7 +44,7 @@ class _RidesRequestState extends State<RidesRequest>
       backgroundColor: Colors.white,
       appBar: AppBar(
         bottom: PreferredSize(
-          preferredSize: Size(double.infinity, 20),
+          preferredSize: const Size(double.infinity, 20),
           child: TabBar(
             controller: _controller,
             indicatorColor: Colors.white,
@@ -87,14 +88,35 @@ class _RidesRequestState extends State<RidesRequest>
               }
               if (state is IncomingRentalRequestCompleted) {
                 if (state.rentalRequest!.rentals!.isEmpty) {
-                  return noIncomingRequest;
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      return LiquidPullToRefresh(
+                          onRefresh: () async {
+                            context
+                                .read<IncomingRentalRequestCubit>()
+                                .getIncomingRequest();
+                          },
+                          child: SingleChildScrollView(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    minHeight: constraints.minHeight,
+                                    maxHeight: constraints.maxHeight,
+                                    minWidth: constraints.minWidth,
+                                    maxWidth: constraints.maxWidth),
+                                child: Center(
+                                  child: noAcceptedRequest,
+                                )),
+                          ));
+                    },
+                  );
                 } else {
                   return RentalRequest(
                     data: state,
                   );
                 }
               } else {
-                return Center();
+                return const Center();
               }
             },
           ),
@@ -113,14 +135,35 @@ class _RidesRequestState extends State<RidesRequest>
               }
               if (state is IncomingRideRequestLoaded) {
                 if (state.rideRequest!.rides!.isEmpty) {
-                  return noIncomingRequest;
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      return LiquidPullToRefresh(
+                          onRefresh: () async {
+                            context
+                                .read<IncomingRideRequestCubit>()
+                                .getIncomingRequest();
+                          },
+                          child: SingleChildScrollView(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    minHeight: constraints.minHeight,
+                                    maxHeight: constraints.maxHeight,
+                                    minWidth: constraints.minWidth,
+                                    maxWidth: constraints.maxWidth),
+                                child: Center(
+                                  child: noAcceptedRequest,
+                                )),
+                          ));
+                    },
+                  );
                 } else {
                   return RideRequest(
                     data: state,
                   );
                 }
               } else {
-                return Center();
+                return const Center();
               }
             },
           ),
@@ -138,14 +181,28 @@ class RentalRequest extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: double.infinity,
-      child: SingleChildScrollView(
-        child: Column(
-          children: data.rentalRequest!.rentals!
-              .map((e) => OwnerRequestcard(
-                    type: RequestType.rental,
-                    id: e.id!.toString(),
-                  ))
-              .toList(),
+      child: LiquidPullToRefresh(
+        onRefresh: () async {
+          context.read<IncomingRentalRequestCubit>().getIncomingRequest();
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: data.rentalRequest!.rentals!
+                .map((e) => OwnerRequestcard(
+                      heading1: "Guest name",
+                      heading2: "Contact no",
+                      heading3: "Pickup location",
+                      heading4: "Drop off location",
+                      data1: e.user!.username!,
+                      data2: e.user!.room!,
+                      data3: e.startLocation!,
+                      data4: e.endLocation!,
+                      type: RequestType.rental,
+                      id: e.id!.toString(),
+                    ))
+                .toList(),
+          ),
         ),
       ),
     );
@@ -160,14 +217,28 @@ class RideRequest extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: double.infinity,
-      child: SingleChildScrollView(
-        child: Column(
-          children: data.rideRequest!.rides!
-              .map((e) => OwnerRequestcard(
-                    type: RequestType.ride,
-                    id: e.id!.toString(),
-                  ))
-              .toList(),
+      child: LiquidPullToRefresh(
+        onRefresh: () async {
+          context.read<IncomingRideRequestCubit>().getIncomingRequest();
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: data.rideRequest!.rides!
+                .map((e) => OwnerRequestcard(
+                      heading1: "Guest name",
+                      heading2: "Room no",
+                      heading3: "Order name",
+                      heading4: "Total Price",
+                      data1: e.user!.username!,
+                      data2: e.user!.room!,
+                      data3: e.distance!,
+                      data4: e.price!,
+                      type: RequestType.ride,
+                      id: e.id!.toString(),
+                    ))
+                .toList(),
+          ),
         ),
       ),
     );
