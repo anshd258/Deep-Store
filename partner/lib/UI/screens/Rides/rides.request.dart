@@ -191,13 +191,13 @@ class RentalRequest extends StatelessWidget {
             children: data.rentalRequest!.rentals!
                 .map((e) => OwnerRequestcard(
                       heading1: "Guest name",
-                      heading2: "Contact no",
-                      heading3: "Pickup location",
-                      heading4: "Drop off location",
+                      heading2: "Room no",
+                      heading3: "Order Name",
+                      heading4: "Total Price",
                       data1: e.user!.username!,
                       data2: e.user!.room!,
-                      data3: e.startLocation!,
-                      data4: e.endLocation!,
+                      data3: "${e.rental!.name!} (x${e.rental!.quantity!})",
+                      data4: "₹ ${e.rental!.price!}",
                       type: RequestType.rental,
                       id: e.id!.toString(),
                     ))

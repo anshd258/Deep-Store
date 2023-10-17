@@ -14,8 +14,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<int> values = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  int dropDownValue = 1;
+  String dropDownValue = "";
+  List<String> distinct = [];
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 // RidesCard(),
-    
+
                 Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,32 +46,49 @@ class _HomeState extends State<Home> {
                         builder: (context, state) {
                           if (state.tabIndex == 1) {
                             return SizedBox(
-                              width: 40,
+                              width: 60,
                               height: 50,
-                              child: BlocBuilder<AcceptedRequestsCubit,
+                              child: BlocConsumer<AcceptedRequestsCubit,
                                   AcceptedRequestsState>(
+                                listenWhen: (previous, current) {
+                                  if (previous is AcceptedRequestsLoading &&
+                                      current is AcceptedRequestsLoaded) {
+                                    return true;
+                                  } else {
+                                    return false;
+                                  }
+                                },
+                                listener: (context, state) {
+                                  List<String> debu = state.foodRequest!.orders!
+                                      .map<String>((e) {
+                                    return e.user!.room!;
+                                  }).toList();
+                                  distinct = debu.toSet().toList();
+                                  dropDownValue = distinct.first;
+                                  print(distinct);
+                                },
                                 builder: (context, state) {
                                   if (state is AcceptedRequestsLoaded) {
-                                    return DropdownButton<int>(
+                                    return DropdownButton<String>(
                                       value: dropDownValue,
                                       elevation: 16,
-                                      style:
-                                          const TextStyle(color: Colors.black54),
+                                      style: const TextStyle(
+                                          color: Colors.black54),
                                       underline: Container(
                                         height: 2,
                                         color: Colors.black54,
                                       ),
-                                      onChanged: (int? value) {
+                                      onChanged: (String? value) {
                                         // This is called when the user selects an item.
                                         setState(() {
                                           dropDownValue = value!;
                                         });
                                       },
-                                      items: values.map<DropdownMenuItem<int>>(
-                                          (int value) {
-                                        return DropdownMenuItem<int>(
-                                          value: value,
-                                          child: Text(value.toString()),
+                                      items: distinct.map((e) {
+                                        print(e);
+                                        return DropdownMenuItem<String>(
+                                          value: e,
+                                          child: Text(e.toString()),
                                         );
                                       }).toList(),
                                     );
@@ -87,9 +104,10 @@ class _HomeState extends State<Home> {
                         },
                       )
                     ]),
-    
+
                 SizedBox(
-                    height: constraints.maxHeight - 88, child: const RidesBody())
+                    height: constraints.maxHeight - 88,
+                    child: const RidesBody())
               ],
             ),
           );

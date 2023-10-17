@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner/UI/util/utilwidget.dart';
 import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:partner/UI/widget/Profile.container.dart';
 import 'package:partner/UI/widget/Profile.optionsContainer.dart';
 import 'package:partner/middleware/auth_cubit.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-
+  ProfilePage({super.key});
+  final _uri = Uri(scheme: 'tel', path: '9804440913');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +44,7 @@ class ProfilePage extends StatelessWidget {
                       ProfileOptions(
                         lable: 'Edit Profile',
                         function: () {
-                          Navigator.of(context).pushNamed('/editprofile');
+                          Navigator.of(context).pushNamed('/editprofile', arguments: state.userObj!);
                         },
                       ),
                       ProfileOptions(
@@ -84,7 +84,13 @@ class ProfilePage extends StatelessWidget {
                                       lable: "Log out",
                                       width: 158),
                                   OutlinedDeclineButton(
-                                      function: () {},
+                                      function: () async {
+                                        if (await canLaunchUrl(_uri)) {
+                                          await launchUrl(_uri,
+                                              mode: LaunchMode
+                                                  .externalApplication);
+                                        }
+                                      },
                                       icon: Icons.headset_mic_outlined,
                                       color:
                                           const Color.fromRGBO(34, 150, 199, 1),

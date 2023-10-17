@@ -28,10 +28,10 @@ class ScreenSetup extends StatelessWidget {
     });
     return CustomTabView(
       backgroundColor: Colors.white,
-      screens: const [
-        Home(),
-        FoodRequest(),
-        RidesRequest(),
+      screens: [
+        const Home(),
+        const FoodRequest(),
+        const RidesRequest(),
         // PartnerMain(),
         ProfilePage(),
       ],

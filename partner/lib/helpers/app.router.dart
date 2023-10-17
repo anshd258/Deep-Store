@@ -10,6 +10,7 @@ import 'package:partner/UI/screens/partners/Food/partner.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.edit.dart';
 import 'package:partner/UI/screens/partners/Food/product.list.dart';
+import 'package:partner/helpers/models/user.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
@@ -31,7 +32,10 @@ class AppRouter {
           builder: (_) => const HistoryScreen(),
         );
       case '/editprofile':
-        return MaterialPageRoute(builder: (_) => const EditProfilePage());
+        return MaterialPageRoute(
+            builder: (_) => EditProfilePage(
+                  data: routeSettings.arguments! as UserModal,
+                ));
       case '/otpPage':
         return MaterialPageRoute(
             builder: (_) =>

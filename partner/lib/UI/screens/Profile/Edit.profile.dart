@@ -5,11 +5,13 @@ import 'package:partner/UI/util/utilwidget.dart';
 import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 import 'package:partner/UI/widget/editPage.FormField.dart';
 import 'package:partner/UI/widget/editpage.image.dart';
-
+import 'package:partner/helpers/models/user.dart';
 import 'package:partner/middleware/auth_cubit.dart';
+import 'package:pinput/pinput.dart';
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
+  UserModal data;
+  EditProfilePage({super.key, required this.data});
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
@@ -25,6 +27,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    _name.text = widget.data.userdata!.username ?? '';
+    _roomNumber.text = widget.data.userdata!.room ?? '';
+    _email.text = widget.data.userdata!.user!.email ?? '';
+    _contact.text = widget.data.userdata!.contact ?? '';
+    _providerId.text = widget.data.userdata!.propertyId ?? '';
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -93,7 +100,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   icon: Icons.phone_android,
                                   name: "Phone Number"),
                             ),
-                            Expanded(flex: 1, child: SizedBox()),
+                            const Expanded(flex: 1, child: SizedBox()),
                             Expanded(
                               flex: 6,
                               child: ProfileEditFormField(
