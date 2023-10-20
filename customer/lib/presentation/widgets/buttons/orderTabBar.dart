@@ -21,20 +21,18 @@ class _OrderTabBarState extends State<OrderTabBar> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-       widget.controller.addListener(() {
-      setState(() {
+      widget.controller.addListener(() {
+        setState(() {});
       });
-    });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       width: double.infinity,
-      height: 33,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      // height: 33,
+      margin: const EdgeInsets.all(8),
       child: Row(
         children: widget.labels
             .map(
@@ -65,22 +63,18 @@ class _OrderTabBarState extends State<OrderTabBar> {
                                 begin: Alignment.bottomCenter,
                                 end: Alignment.topRight),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                   alignment: Alignment.center,
-                  constraints:
-                      const BoxConstraints(minHeight: 33, minWidth: 60),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      label,
-                      style: GoogleFonts.lato(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: widget.controller.index ==
-                                  widget.labels.indexOf(label)
-                              ? Colors.white
-                              : Colors.grey.shade700),
-                    ),
+                  child: Text(
+                    label,
+                    style: GoogleFonts.lato(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: widget.controller.index ==
+                                widget.labels.indexOf(label)
+                            ? Colors.white
+                            : Color.fromRGBO(86, 86, 86, 1)),
                   ),
                 ),
               ),

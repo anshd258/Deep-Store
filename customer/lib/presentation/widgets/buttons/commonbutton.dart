@@ -53,11 +53,10 @@ class _GradientCommonButtonState extends State<CommonButton>
     return GestureDetector(
       onTap: () {
         if (widget.enabled) {
-          
-        ctr!.forward().then((value) => ctr!.reset());
+          ctr!.forward().then((value) => ctr!.reset());
 
-        setState(() {});
-        widget.onPressed();
+          setState(() {});
+          widget.onPressed();
         }
       },
       child: Container(
@@ -80,7 +79,7 @@ class _GradientCommonButtonState extends State<CommonButton>
             Text(
               widget.lable,
               style: GoogleFonts.lato(
-                  fontSize: 12,
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Colors.white),
             ),

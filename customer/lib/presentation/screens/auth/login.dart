@@ -16,12 +16,12 @@ class _LoginscreenState extends State<Loginscreen> {
   TextEditingController phoneNumber = TextEditingController();
   bool _validate = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(245, 245, 245, 1),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(245, 245, 245, 1),
         elevation: 0,
         centerTitle: true,
         title: Text(
@@ -39,135 +39,145 @@ class _LoginscreenState extends State<Loginscreen> {
           return Stack(
             alignment: Alignment.center,
             children: [
-              Container(
-                color: Colors.white,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 90,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            height: 29,
-                            child: Text(
-                              "Enter your Phone number",
-                              style: GoogleFonts.lato(
-                                  color: const Color(0xE5555555),
-                                  letterSpacing: -0.72,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                        ],
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 10),
+                        child: Text(
+                          "Enter your Phone number",
+                          style: GoogleFonts.lato(
+                              color: const Color(0xE5555555),
+                              letterSpacing: -0.72,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
-                    ),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 328),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          setState(() {
-                            _validate = false;
-                          });
-                        },
-                        maxLength: 10,
-                        controller: phoneNumber,
-                        decoration: InputDecoration(
-                          errorText:
-                              _validate ? "please enter 10 numbers" : null,
-                          prefixText: "+91",
-                          prefixStyle: GoogleFonts.nunito(
-                            color: const Color(0x99565656),
-                            fontSize: 16,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 20),
+                        child: Text(
+                          'We will send you a 6 digit verification code',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.lato(
+                            color: const Color(0xB2555555),
+                            fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            height: 1.25,
                           ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: const BorderSide(
-                              width: 0.50,
-                              color: Color(0x33565656),
-                            ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    width: double.infinity,
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          _validate = false;
+                        });
+                      },
+                      maxLength: 10,
+                      controller: phoneNumber,
+                      decoration: InputDecoration(
+                        errorText:
+                            _validate ? "please enter 10 numbers" : null,
+                        prefixText: "+91",
+                        prefixStyle: GoogleFonts.nunito(
+                          color: const Color(0x99565656),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          height: 1.25,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: const BorderSide(
+                            width: 0.50,
+                            color: Color(0x33565656),
                           ),
                         ),
                       ),
                     ),
-                    // Container(
-                    //   margin: const EdgeInsets.symmetric(vertical: 5),
-                    //   child: Row(
-                    //     mainAxisSize: MainAxisSize.min,
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     crossAxisAlignment: CrossAxisAlignment.center,
-                    //     children: [
-                    //       Text(
-                    //         'Don\'t have an account?',
-                    //         textAlign: TextAlign.center,
-                    //         style: GoogleFonts.lato(
-                    //           color: const Color(0xB2555555),
-                    //           fontSize: 14,
-                    //           fontWeight: FontWeight.w600,
-                    //         ),
-                    //       ),
-                    //       TextButton(
-                    //         onPressed: () {
-                    //           Navigator.pushReplacementNamed(context, '/');
-                    //         },
-                    //         child: Text(
-                    //           ' Register',
-                    //           textAlign: TextAlign.center,
-                    //           style: GoogleFonts.lato(
-                    //             color: const Color(0xFF3BA365),
-                    //             fontSize: 14,
-                    //             fontWeight: FontWeight.w500,
-                    //             letterSpacing: -0.42,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    BlocConsumer<AuthCubit, AuthState>(
-                      // buildWhen: (previous, current) {
-                      //   if (previous.otpSent == current.otpSent) {
-                      //     return true;
-                      //   } else {
-                      //     return false;
-                      //   }
-                      // },
-                      listener: (context, state) {
-                        if (state.otpSent!) {
-                          Navigator.pushNamed(context, "/otp");
-                        }
-                      },
-                      builder: (context, state) {
-                        return CommonButton(
-                          onPressed: () {
-                            setState(() {
-                              if (phoneNumber.text.isEmpty ||
-                                  phoneNumber.text.length != 10) {
-                                _validate = true;
-                              } else {
-                                _validate = false;
-                              }
-                            });
-                            if (!_validate) {
-                              context
-                                  .read<AuthCubit>()
-                                  .getOTP(phoneNumber.text);
+                  ),
+                  // Container(
+                  //   margin: const EdgeInsets.symmetric(vertical: 5),
+                  //   child: Row(
+                  //     mainAxisSize: MainAxisSize.min,
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     crossAxisAlignment: CrossAxisAlignment.center,
+                  //     children: [
+                  //       Text(
+                  //         'Don\'t have an account?',
+                  //         textAlign: TextAlign.center,
+                  //         style: GoogleFonts.lato(
+                  //           color: const Color(0xB2555555),
+                  //           fontSize: 14,
+                  //           fontWeight: FontWeight.w600,
+                  //         ),
+                  //       ),
+                  //       TextButton(
+                  //         onPressed: () {
+                  //           Navigator.pushReplacementNamed(context, '/');
+                  //         },
+                  //         child: Text(
+                  //           ' Register',
+                  //           textAlign: TextAlign.center,
+                  //           style: GoogleFonts.lato(
+                  //             color: const Color(0xFF3BA365),
+                  //             fontSize: 14,
+                  //             fontWeight: FontWeight.w500,
+                  //             letterSpacing: -0.42,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  BlocConsumer<AuthCubit, AuthState>(
+                    // buildWhen: (previous, current) {
+                    //   if (previous.otpSent == current.otpSent) {
+                    //     return true;
+                    //   } else {
+                    //     return false;
+                    //   }
+                    // },
+                    listener: (context, state) {
+                      if (state.otpSent!) {
+                        Navigator.pushNamed(context, "/otp");
+                      }
+                    },
+                    builder: (context, state) {
+                      return CommonButton(
+                        onPressed: () {
+                          setState(() {
+                            if (phoneNumber.text.isEmpty ||
+                                phoneNumber.text.length != 10) {
+                              _validate = true;
+                            } else {
+                              _validate = false;
                             }
-                          },
-                          borderradius: 4,
-                          height: 48,
-                          margin: const EdgeInsets.symmetric(vertical: 18),
-                          width: 300,
-                          lable: "Generate OTP",
-                        );
-                      },
-                    )
-                  ],
-                ),
+                          });
+                          if (!_validate) {
+                            context
+                                .read<AuthCubit>()
+                                .getOTP(phoneNumber.text);
+                          }
+                        },
+                        borderradius: 4,
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 10),
+                        lable: "Generate OTP",
+                      );
+                    },
+                  )
+                ],
               ),
               if (state.loading != null && state.loading == true) ...[
                 Container(

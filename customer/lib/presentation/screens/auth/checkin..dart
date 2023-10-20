@@ -22,8 +22,9 @@ class _CheckInScreenState extends State<CheckInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:  const Color.fromRGBO(245, 245, 245, 1),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor:  const Color.fromRGBO(245, 245, 245, 1),
         elevation: 0,
         centerTitle: true,
         title: Text(

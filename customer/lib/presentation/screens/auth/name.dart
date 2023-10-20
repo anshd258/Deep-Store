@@ -21,10 +21,10 @@ class _RegistrationState extends State<RegistrationName> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor:  Color.fromRGBO(245, 245, 245, 1),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor:  Color.fromRGBO(245, 245, 245, 1),
         leading: const BackButton(
           color: Color(0xFF565656),
         ),

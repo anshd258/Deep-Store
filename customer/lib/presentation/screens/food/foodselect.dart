@@ -25,8 +25,9 @@ class FoodSelect extends StatelessWidget {
       child: BlocBuilder<FoodCubit, FoodState>(
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: Color.fromRGBO(245, 245, 245, 1),
             appBar: AppBar(
-              backgroundColor: Colors.white,
+              backgroundColor: Color.fromRGBO(245, 245, 245, 1),
               elevation: 0,
               centerTitle: true,
               toolbarHeight: 70,

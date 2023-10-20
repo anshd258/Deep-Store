@@ -28,34 +28,54 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Container(
-          width: 200,
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-          child: Text(
-            "Ongoing requests",
-            style: GoogleFonts.lato(
-                fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),
-          ),
-        ),
-      ),
+      backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+      //   elevation: 0,
+      //   title: Container(
+      //     width: 200,
+      //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+      //     child: Text(
+      //       "Ongoing requests",
+      //       style: GoogleFonts.lato(
+      //           fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),
+      //     ),
+      //   ),
+      // ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            OrderTabBar(
-                controller: controller,
-                labels: const ['FOOD', 'RIDES', 'RENTALS']),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 10),
+                    child: Text(
+                      "Ongoing requests",
+                      style: GoogleFonts.lato(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromRGBO(30, 30, 30, 1)),
+                    ),
+                  ),
+                  OrderTabBar(
+                      controller: controller,
+                      labels: const ['Food', 'Rentals', 'Rides']),
+                ],
+              ),
+            ),
             Expanded(
               child: TabBarView(
                 controller: controller,
                 children: const [
                   FoodHistory(),
+                  RentalHistory(),
                   RidesHistory(),
-                  RentalHistory()
                 ],
               ),
             )
