@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:partner/UI/screen.setup.dart';
 import 'package:partner/UI/screens/History/history.screen.dart';
 import 'package:partner/UI/screens/Profile/Edit.profile.dart';
+import 'package:partner/UI/screens/Profile/terms.dart';
 import 'package:partner/UI/screens/auth/login.screen.dart';
 
 import 'package:partner/UI/screens/auth/otp.screen.dart';
@@ -9,12 +10,15 @@ import 'package:partner/UI/screens/partners/Food/partner.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.edit.dart';
 import 'package:partner/UI/screens/partners/Food/product.list.dart';
+import 'package:partner/helpers/models/user.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => const Loginscreen());
+      case '/terms':
+        return MaterialPageRoute(builder: (_) => const TermsAndConditions());
       case '/partner/food/addpartner':
         return MaterialPageRoute(builder: (_) => const PartnerAddPage());
       case '/partner/food/list':
@@ -28,7 +32,10 @@ class AppRouter {
           builder: (_) => const HistoryScreen(),
         );
       case '/editprofile':
-        return MaterialPageRoute(builder: (_) => const EditProfilePage());
+        return MaterialPageRoute(
+            builder: (_) => EditProfilePage(
+                  data: routeSettings.arguments! as UserModal,
+                ));
       case '/otpPage':
         return MaterialPageRoute(
             builder: (_) =>

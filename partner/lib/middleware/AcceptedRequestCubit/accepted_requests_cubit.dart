@@ -20,7 +20,7 @@ class AcceptedRequestsCubit extends Cubit<AcceptedRequestsState> {
       'Authorization': 'Bearer ${_authrepository.accessToken}',
     };
     emit(AcceptedRequestsLoading());
-
+    FoodRequest temp;
     Map<String, dynamic> parameters = {
       "type": RequestType.food.name,
       "search_by_user": 0.toString(),
@@ -35,7 +35,10 @@ class AcceptedRequestsCubit extends Cubit<AcceptedRequestsState> {
         .onError((error, stackTrace) =>
             emit(AcceptedRequestsError(message: error.toString())));
     if (response != null) {
-      emit(AcceptedRequestsLoaded(foodRequest: FoodRequest.fromJson(response)));
+      temp = FoodRequest.fromJson(response);
+      emit(AcceptedRequestsLoaded(foodRequest: temp));
     }
   }
+
+  void dropDownValueChange(String roomNumber) {}
 }

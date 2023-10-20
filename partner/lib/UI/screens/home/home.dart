@@ -14,85 +14,105 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<int> values = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  int dropDownValue = 1;
+  String dropDownValue = "";
+  List<String> distinct = [];
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SizedBox(
-          height: constraints.maxHeight,
-          width: constraints.maxWidth,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              // RidesCard(),
+    return SafeArea(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SizedBox(
+            height: constraints.maxHeight,
+            width: constraints.maxWidth,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                // RidesCard(),
 
-              Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width:
-                          constraints.maxWidth - (constraints.maxWidth - 252),
-                      child: FilterWidget(type: "Accepted"),
-                    ),
-                    BlocConsumer<FilterCubitCubit, FilterCubitState>(
-                      listener: (context, state) {
-                        // TODO: implement listener
-                      },
-                      builder: (context, state) {
-                        if (state.tabIndex == 1) {
-                          return SizedBox(
-                            width: 40,
-                            height: 50,
-                            child: BlocBuilder<AcceptedRequestsCubit,
-                                AcceptedRequestsState>(
-                              builder: (context, state) {
-                                if (state is AcceptedRequestsLoaded) {
-                                  return DropdownButton<int>(
-                                    value: dropDownValue,
-                                    elevation: 16,
-                                    style:
-                                        const TextStyle(color: Colors.black54),
-                                    underline: Container(
-                                      height: 2,
-                                      color: Colors.black54,
-                                    ),
-                                    onChanged: (int? value) {
-                                      // This is called when the user selects an item.
-                                      setState(() {
-                                        dropDownValue = value!;
-                                      });
-                                    },
-                                    items: values.map<DropdownMenuItem<int>>(
-                                        (int value) {
-                                      return DropdownMenuItem<int>(
-                                        value: value,
-                                        child: Text(value.toString()),
-                                      );
-                                    }).toList(),
-                                  );
-                                } else {
-                                  return Center();
-                                }
-                              },
-                            ),
-                          );
-                        } else {
-                          return Center();
-                        }
-                      },
-                    )
-                  ]),
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width:
+                            constraints.maxWidth - (constraints.maxWidth - 252),
+                        child: FilterWidget(type: "Accepted"),
+                      ),
+                      BlocConsumer<FilterCubitCubit, FilterCubitState>(
+                        listener: (context, state) {
+                          // TODO: implement listener
+                        },
+                        builder: (context, state) {
+                          if (state.tabIndex == 1) {
+                            return SizedBox(
+                              width: 60,
+                              height: 50,
+                              child: BlocConsumer<AcceptedRequestsCubit,
+                                  AcceptedRequestsState>(
+                                listenWhen: (previous, current) {
+                                  if (previous is AcceptedRequestsLoading &&
+                                      current is AcceptedRequestsLoaded) {
+                                    return true;
+                                  } else {
+                                    return false;
+                                  }
+                                },
+                                listener: (context, state) {
+                                  List<String> debu = state.foodRequest!.orders!
+                                      .map<String>((e) {
+                                    return e.user!.room!;
+                                  }).toList();
+                                  distinct = debu.toSet().toList();
+                                  dropDownValue = distinct.first;
+                                  print(distinct);
+                                },
+                                builder: (context, state) {
+                                  if (state is AcceptedRequestsLoaded) {
+                                    return DropdownButton<String>(
+                                      value: dropDownValue,
+                                      elevation: 16,
+                                      style: const TextStyle(
+                                          color: Colors.black54),
+                                      underline: Container(
+                                        height: 2,
+                                        color: Colors.black54,
+                                      ),
+                                      onChanged: (String? value) {
+                                        // This is called when the user selects an item.
+                                        setState(() {
+                                          dropDownValue = value!;
+                                        });
+                                      },
+                                      items: distinct.map((e) {
+                                        print(e);
+                                        return DropdownMenuItem<String>(
+                                          value: e,
+                                          child: Text(e.toString()),
+                                        );
+                                      }).toList(),
+                                    );
+                                  } else {
+                                    return Center();
+                                  }
+                                },
+                              ),
+                            );
+                          } else {
+                            return Center();
+                          }
+                        },
+                      )
+                    ]),
 
-              SizedBox(
-                  height: constraints.maxHeight - 88, child: const RidesBody())
-            ],
-          ),
-        );
-      },
+                SizedBox(
+                    height: constraints.maxHeight - 88,
+                    child: const RidesBody())
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

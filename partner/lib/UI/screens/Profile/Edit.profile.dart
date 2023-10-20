@@ -2,28 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/UI/util/utilwidget.dart';
+import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 import 'package:partner/UI/widget/editPage.FormField.dart';
 import 'package:partner/UI/widget/editpage.image.dart';
-import 'package:partner/UI/widget/graedient.common.button.dart';
+import 'package:partner/helpers/models/user.dart';
 import 'package:partner/middleware/auth_cubit.dart';
+import 'package:pinput/pinput.dart';
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
+  UserModal data;
+  EditProfilePage({super.key, required this.data});
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
- final  TextEditingController _name = TextEditingController();
- final TextEditingController _roomNumber = TextEditingController();
- final TextEditingController _email = TextEditingController();
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _roomNumber = TextEditingController();
+  final TextEditingController _email = TextEditingController();
 
- final TextEditingController _contact = TextEditingController();
- final TextEditingController _providerId = TextEditingController();
+  final TextEditingController _contact = TextEditingController();
+  final TextEditingController _providerId = TextEditingController();
   final _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    _name.text = widget.data.userdata!.username ?? '';
+    _roomNumber.text = widget.data.userdata!.room ?? '';
+    _email.text = widget.data.userdata!.user!.email ?? '';
+    _contact.text = widget.data.userdata!.contact ?? '';
+    _providerId.text = widget.data.userdata!.propertyId ?? '';
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -73,34 +81,45 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             },
                             icon: Icons.person,
                             name: "Full Name"),
-                        ProfileEditFormField(
-                            keyBoardtype: TextInputType.name,
-                            ctr: _contact,
-                            hintText: "9911004536",
-                            maxlength: 20,
-                            function: (p0) {
-                              if (p0!.isEmpty) {
-                                return "Please enter something";
-                              } else {
-                                return null;
-                              }
-                            },
-                            icon: Icons.phone_android,
-                            name: "Phone Number"),
-                        ProfileEditFormField(
-                            keyBoardtype: TextInputType.number,
-                            ctr: _roomNumber,
-                            maxlength: 20,
-                            hintText: "201",
-                            function: (p0) {
-                              if (p0!.isEmpty) {
-                                return "Please enter something";
-                              } else {
-                                return null;
-                              }
-                            },
-                            icon: Icons.meeting_room_outlined,
-                            name: "Room No"),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 10,
+                              child: ProfileEditFormField(
+                                  keyBoardtype: TextInputType.name,
+                                  ctr: _contact,
+                                  hintText: "9911004536",
+                                  maxlength: 10,
+                                  function: (p0) {
+                                    if (p0!.isEmpty) {
+                                      return "Please enter something";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  icon: Icons.phone_android,
+                                  name: "Phone Number"),
+                            ),
+                            const Expanded(flex: 1, child: SizedBox()),
+                            Expanded(
+                              flex: 6,
+                              child: ProfileEditFormField(
+                                  keyBoardtype: TextInputType.number,
+                                  ctr: _roomNumber,
+                                  maxlength: 5,
+                                  hintText: "201",
+                                  function: (p0) {
+                                    if (p0!.isEmpty) {
+                                      return "Please enter something";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  icon: Icons.meeting_room_outlined,
+                                  name: "Room No"),
+                            ),
+                          ],
+                        ),
                         ProfileEditFormField(
                             keyBoardtype: TextInputType.emailAddress,
                             ctr: _email,

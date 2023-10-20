@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:partner/UI/widget/graedient.common.button.dart';
+import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
+import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 import 'package:partner/middleware/auth_cubit.dart';
 
 class Loginscreen extends StatefulWidget {
@@ -35,7 +36,7 @@ class _LoginscreenState extends State<Loginscreen> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          "Guest Login",
+          "Partner Login",
           style: GoogleFonts.lato(
             color: const Color(0xB2555555),
             fontSize: 16,
@@ -65,7 +66,7 @@ class _LoginscreenState extends State<Loginscreen> {
                     SizedBox(
                       height: 90,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
                             height: 29,
@@ -78,18 +79,18 @@ class _LoginscreenState extends State<Loginscreen> {
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
-                          SizedBox(
-                            height: 40,
-                            child: Text(
-                              "Enter your Phone number",
-                              style: GoogleFonts.lato(
-                                color: const Color(0xB2555555),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: -0.28,
-                              ),
-                            ),
-                          )
+                          // SizedBox(
+                          //   height: 40,
+                          //   child: Text(
+                          //     "Enter your Phone number",
+                          //     style: GoogleFonts.lato(
+                          //       color: const Color(0xB2555555),
+                          //       fontSize: 14,
+                          //       fontWeight: FontWeight.w600,
+                          //       letterSpacing: -0.28,
+                          //     ),
+                          //   ),
+                          // )
                         ],
                       ),
                     ),
@@ -124,36 +125,36 @@ class _LoginscreenState extends State<Loginscreen> {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Not a guest?',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.lato(
-                              color: const Color(0xB2555555),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(width: 2),
-                          Text(
-                            ' Login as stay owner',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.lato(
-                              color: const Color(0xFF3BA365),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: -0.42,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   margin: const EdgeInsets.symmetric(vertical: 5),
+                    //   child: Row(
+                    //     mainAxisSize: MainAxisSize.min,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         'Not a guest?',
+                    //         textAlign: TextAlign.center,
+                    //         style: GoogleFonts.lato(
+                    //           color: const Color(0xB2555555),
+                    //           fontSize: 14,
+                    //           fontWeight: FontWeight.w600,
+                    //         ),
+                    //       ),
+                    //       const SizedBox(width: 2),
+                    //       Text(
+                    //         ' Login as stay owner',
+                    //         textAlign: TextAlign.center,
+                    //         style: GoogleFonts.lato(
+                    //           color: const Color(0xFF3BA365),
+                    //           fontSize: 14,
+                    //           fontWeight: FontWeight.w500,
+                    //           letterSpacing: -0.42,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     BlocConsumer<AuthCubit, AuthInitial>(
                       buildWhen: (previous, current) {
                         if (previous.otpSent == current.otpSent) {

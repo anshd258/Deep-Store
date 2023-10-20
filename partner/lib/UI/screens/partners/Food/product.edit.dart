@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 import 'package:partner/UI/widget/editPage.FormField.dart';
-import 'package:partner/UI/widget/graedient.common.button.dart';
+
 import 'package:file_picker/file_picker.dart';
 
 class PartnerProductEdit extends StatefulWidget {
