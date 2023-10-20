@@ -6,7 +6,7 @@ import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../../../middleware/helpers/sharedprefrence.utils.dart';
 import '../../widgets/buttons/OutlinedDeclineButton.dart';
 import '../../widgets/cards/profile.container.dart';
@@ -20,6 +20,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final _uri = Uri(scheme: 'tel', path: '9804440913');
   @override
   void initState() {
     super.initState();
@@ -94,7 +95,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             lable: "Log out",
                             width: 158),
                         OutlinedDeclineButton(
-                            function: () {},
+                            function: () async {
+                              if (await canLaunchUrl(_uri)) {
+                                await launchUrl(_uri,
+                                    mode: LaunchMode.externalApplication);
+                              }
+                            },
                             icon: Icons.headset_mic_outlined,
                             color: const Color.fromRGBO(34, 150, 199, 1),
                             height: 42,
