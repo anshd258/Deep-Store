@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileOptions extends StatelessWidget {
- final  String lable;
+  final String lable;
   final VoidCallback function;
 
-  const ProfileOptions({super.key, required this.function, required this.lable});
+  const ProfileOptions(
+      {super.key, required this.function, required this.lable});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +15,7 @@ class ProfileOptions extends StatelessWidget {
       child: InkWell(
         onTap: function,
         child: Container(
-          width: 328,
-          padding: const EdgeInsets.all(16),
-          height: 56,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             border: Border.all(
@@ -31,7 +30,7 @@ class ProfileOptions extends StatelessWidget {
               textAlign: TextAlign.center,
               style: GoogleFonts.lato(
                 color: const Color(0xFF2B2B2B),
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w600,
                 letterSpacing: -0.28,
               ),

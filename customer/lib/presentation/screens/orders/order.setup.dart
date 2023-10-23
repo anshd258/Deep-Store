@@ -1,6 +1,6 @@
-import 'package:customer/presentation/screens/orders/foodhistory.dart';
-import 'package:customer/presentation/screens/orders/rentalhistory.dart';
-import 'package:customer/presentation/screens/orders/ridehistory.dart';
+import 'package:customer/presentation/screens/orders/foodorder.card.dart';
+import 'package:customer/presentation/screens/orders/rentalrequest.card.dart';
+import 'package:customer/presentation/screens/orders/riderequest.card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -73,9 +73,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               child: TabBarView(
                 controller: controller,
                 children: const [
-                  FoodHistory(),
-                  RentalHistory(),
-                  RidesHistory(),
+                  FoodOrderCard(),
+                  RentalRequestCard(),
+                  RidesRequestCard(),
                 ],
               ),
             )

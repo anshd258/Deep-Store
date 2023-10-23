@@ -16,14 +16,14 @@ class RideSelect extends StatefulWidget {
 }
 
 class _RideSelectState extends State<RideSelect> {
-    TextEditingController dropoffController = TextEditingController();
-    TextEditingController pickupController = TextEditingController();
-    String pickupCoordinates = '123';
-    String dropOffCoordinates = '456';
+  TextEditingController dropoffController = TextEditingController();
+  TextEditingController pickupController = TextEditingController();
+  String pickupCoordinates = '123';
+  String dropOffCoordinates = '456';
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -31,7 +31,6 @@ class _RideSelectState extends State<RideSelect> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: SizedBox(
-                height: 200,
                 child: Image.asset(
                   'assets/map.png',
                   fit: BoxFit.cover,
@@ -39,82 +38,92 @@ class _RideSelectState extends State<RideSelect> {
               ),
             ),
           ),
-          const SizedBox(height: 16.0),
           Form(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Enter pick-up location',
-                    style: GoogleFonts.lato(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: const Color.fromRGBO(85, 85, 85, 1)),
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'Enter pick-up location',
+                          style: GoogleFonts.lato(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: const Color.fromRGBO(85, 85, 85, 1)),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: SizedBox(
+                          height: 58,
+                          child: TextField(
+                            controller: pickupController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              suffixIconColor:
+                                  const Color.fromRGBO(73, 204, 115, 1),
+                              suffixIcon:
+                                  const Icon(Icons.my_location_outlined),
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: Color.fromRGBO(86, 86, 86, 0.2),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextField(
-                    controller: pickupController,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      suffixIconColor: const Color.fromRGBO(73, 204, 115, 1),
-                      suffixIcon: const Icon(Icons.my_location),
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: const BorderSide(
-                          color: Color.fromRGBO(86, 86, 86, 0.2),
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'Enter drop-off location',
+                          style: GoogleFonts.lato(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: const Color.fromRGBO(85, 85, 85, 1)),
                         ),
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: SizedBox(
+                          height: 58,
+                          child: TextField(
+                            controller: dropoffController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(
+                                  color: Color.fromRGBO(86, 86, 86, 0.2),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Enter drop-off location',
-                  style: GoogleFonts.lato(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: const Color.fromRGBO(85, 85, 85, 1)),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: TextField(
-                  controller: dropoffController,
-                  onChanged: (value) {
-                  },
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      borderSide: const BorderSide(
-                        color: Color.fromRGBO(86, 86, 86, 0.2),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 32.0),
           CommonButton(
             onPressed: () {
-              /// fire event to create ride request
-                                print(pickupController.text);
-                                print(dropoffController.text);
-
               showDialog(
                   barrierColor: Colors.black26,
                   context: context,
@@ -141,21 +150,18 @@ class _RideSelectState extends State<RideSelect> {
                                           dropOffCoordinates:
                                               dropOffCoordinates),
                                     );
-              pickupController.clear();
-              dropoffController.clear();
+                                pickupController.clear();
+                                dropoffController.clear();
                                 return status;
                               },
-                              processingText: 'trying to book a ride',
-                              successText: 'Ride Request Sent',
-                              faliureText: 'sorry! can\'t book')),
+                              entity: 'Ride',)),
                     );
                   });
             },
             borderradius: 4,
-            height: 48,
-            width: 328,
+            height: 50,
             lable: 'Request Ride',
-            margin: const EdgeInsets.symmetric(vertical: 10),
+            margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
           )
         ],
       ),

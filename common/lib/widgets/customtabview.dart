@@ -33,7 +33,7 @@ class _CustomTabViewState extends State<CustomTabView>
                         color: Color.fromRGBO(229, 229, 229, 1), width: 1))),
             child: BottomNavigationBar(
                 elevation: 0,
-                iconSize: 24,
+                iconSize: 18,
                 selectedFontSize: 14,
                 unselectedFontSize: 14,
                 onTap: (value) {
@@ -57,7 +57,6 @@ class _CustomTabViewState extends State<CustomTabView>
                     fontWeight: FontWeight.w600),
                 unselectedLabelStyle: GoogleFonts.lato(
                     color: const Color.fromRGBO(34, 34, 34, 0.6),
-                    height: 1.5,
                     fontWeight: FontWeight.w600),
                 type: BottomNavigationBarType.fixed,
                 currentIndex: index,

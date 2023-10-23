@@ -24,16 +24,14 @@ class CustomFormField extends StatelessWidget {
     var outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(4),
       borderSide: const BorderSide(
-          color: Color(0x99565656),
-          strokeAlign: BorderSide.strokeAlignInside,
-          width: 1),
+        color: Color(0x99565656),
+      ),
     );
     var outlineInputBorderError = OutlineInputBorder(
       borderRadius: BorderRadius.circular(4),
       borderSide: const BorderSide(
-          color: Color.fromARGB(153, 255, 54, 54),
-          strokeAlign: BorderSide.strokeAlignInside,
-          width: 1),
+        color: Color.fromARGB(153, 255, 54, 54),
+      ),
     );
     return SizedBox(
       child: Column(
@@ -42,7 +40,7 @@ class CustomFormField extends StatelessWidget {
           children: [
             if (name != null)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,7 +48,7 @@ class CustomFormField extends StatelessWidget {
                     Icon(
                       icon,
                       color: const Color(0xFF555555),
-                      size: 22,
+                      size: 24,
                     ),
                     const SizedBox(width: 4),
                     Text(

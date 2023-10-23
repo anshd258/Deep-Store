@@ -17,11 +17,10 @@ class ProfileContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      margin: const EdgeInsets.all(20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 18, horizontal: 18),
-        height: 108,
         child: Row(
           children: [
             Image.asset(

@@ -11,6 +11,7 @@ class CommonButton extends StatefulWidget {
   final EdgeInsets margin;
   final Widget? child;
   final bool enabled;
+  final double fontSize;
 
   const CommonButton(
       {super.key,
@@ -21,7 +22,8 @@ class CommonButton extends StatefulWidget {
       this.borderradius = 4,
       required this.lable,
       this.width = 300,
-      this.enabled = true});
+      this.enabled = true,
+      this.fontSize = 16});
 
   @override
   State<CommonButton> createState() => _GradientCommonButtonState();
@@ -71,7 +73,7 @@ class _GradientCommonButtonState extends State<CommonButton>
           ], begin: Alignment.topLeft, end: Alignment.bottomRight),
         ),
         margin: widget.margin,
-        padding: const EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
         alignment: Alignment.center,
         constraints:
             BoxConstraints(maxWidth: widget.width, maxHeight: widget.height),
@@ -79,14 +81,11 @@ class _GradientCommonButtonState extends State<CommonButton>
             Text(
               widget.lable,
               style: GoogleFonts.lato(
-                  fontSize: 16,
+                  fontSize: widget.fontSize,
                   fontWeight: FontWeight.w500,
                   color: Colors.white),
             ),
       ),
-    ).animate().blur(
-        duration: Duration(milliseconds: 800),
-        begin: Offset(1, 1),
-        end: Offset(0, 0));
+    );
   }
 }

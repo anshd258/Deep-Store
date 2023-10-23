@@ -66,7 +66,8 @@ class RentalCubit extends Cubit<RentalState> {
       "start_location": location,
       "end_location": 'mount abu',
       'start_coordinates': '123456',
-      'end_coordinates': '78910'
+      'end_coordinates': '78910',
+      'quantity':quantity
     };
     try {
       http.Response? response = await DataSource.get(
@@ -82,7 +83,7 @@ class RentalCubit extends Cubit<RentalState> {
 
       return false;
     } catch (e) {
-      print('someting when wrong while requesting ride');
+      print('someting went wrong while requesting ride');
       return false;
     }
   }

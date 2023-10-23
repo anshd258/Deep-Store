@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OutlinedDeclineButton extends StatefulWidget {
@@ -65,26 +65,26 @@ class _OutlinedDeclineButtonState extends State<OutlinedDeclineButton>
                 width: 2,
                 color: widget.color,
                 strokeAlign: BorderSide.strokeAlignInside)),
-        margin: widget.margin,
-        padding: const EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 15),
         alignment: Alignment.center,
-        constraints:
-            BoxConstraints(maxWidth: widget.width, maxHeight: widget.height),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               widget.lable,
               style: GoogleFonts.lato(
-                  fontSize: 12,
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: widget.color),
             ),
             if (widget.icon != null) ...[
-              Icon(
-                widget.icon!,
-                color: widget.color,
-                size: 20,
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Icon(
+                  widget.icon!,
+                  color: widget.color,
+                  size: 20,
+                ),
               )
             ]
           ],

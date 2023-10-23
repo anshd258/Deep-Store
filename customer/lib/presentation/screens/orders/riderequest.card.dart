@@ -1,16 +1,19 @@
 import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
+import 'package:customer/middleware/helpers/constants.dart';
+import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../data/models/ride.dart';
 
-class RidesHistory extends StatelessWidget {
-  const RidesHistory({super.key});
+class RidesRequestCard extends StatelessWidget {
+  const RidesRequestCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if(context.read<RideCubit>().state.rideRequests == null)
       context.read<RideCubit>().fetchRideRequests();
     });
     return RefreshIndicator(
@@ -30,13 +33,13 @@ class RidesHistory extends StatelessWidget {
                         children: data.reversed.map((ride) {
                           return Card(
                             elevation: 4,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
                             margin: const EdgeInsets.symmetric(
-                                horizontal: 18, vertical: 9),
+                                horizontal: 16, vertical: 10),
+                            shape: SmoothRectangleBorder(
+                                borderRadius:
+                                    SmoothBorderRadius(cornerRadius: 10)),
                             child: Container(
-                              padding: const EdgeInsets.only(
-                                  left: 25, right: 25, top: 12, bottom: 20),
+                              margin: const EdgeInsets.all(12),
                               child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
@@ -45,26 +48,6 @@ class RidesHistory extends StatelessWidget {
                                     Expanded(
                                       child: Row(
                                         children: [
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                RidesDetailsContainer(
-                                                  data:
-                                                      ride.pickUpLocation ?? '',
-                                                  heading: "Pickup location",
-                                                  fontSize: 18,
-                                                ),
-                                                RidesDetailsContainer(
-                                                  data: ride.dropOffLocation ??
-                                                      '',
-                                                  heading: "Drop off location",
-                                                  fontSize: 18,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
                                           Expanded(
                                             child: Column(
                                               crossAxisAlignment:
@@ -84,29 +67,52 @@ class RidesHistory extends StatelessWidget {
                                               ],
                                             ),
                                           ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              RidesDetailsContainer(
+                                                data: ride.pickUpLocation ?? '',
+                                                heading: "Pickup location",
+                                                fontSize: 18,
+                                              ),
+                                              RidesDetailsContainer(
+                                                data:
+                                                    ride.dropOffLocation ?? '',
+                                                heading: "Drop off location",
+                                                fontSize: 18,
+                                              ),
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.symmetric(vertical: 8),
-                                      padding: const EdgeInsets.all(6),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                          border: Border.all(
-                                              width: 2,
-                                              color: const Color.fromRGBO(
-                                                  73, 204, 115, 1))),
-                                      child: Text(
-                                        ride.status.name,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            color:
-                                                Color.fromRGBO(73, 204, 115, 1),
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    )
+                                    Builder(builder: (context) {
+                                      Color color =
+                                          const Color.fromRGBO(73, 204, 115, 1);
+                                      if (ride.status ==
+                                          RequestStatus.rejected) {
+                                        color = Colors.red;
+                                      }
+                                      return Container(
+                                        padding: const EdgeInsets.all(4),
+                                        margin: const EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                            border: Border.all(
+                                                width: 1.5, color: color)),
+                                        child: Center(
+                                          child: Text(
+                                            ride.status.name,
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: color,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        ),
+                                      );
+                                    })
                                   ]),
                             ),
                           );
@@ -152,8 +158,8 @@ class RidesDetailsContainer extends StatelessWidget {
               softWrap: true,
               style: GoogleFonts.lato(
                 color: const Color(0xFF555555),
-                fontSize: fontSize,
-                fontWeight: FontWeight.w700,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],

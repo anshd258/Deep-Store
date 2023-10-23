@@ -8,7 +8,7 @@ class Editpageimage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.only(bottom: 10),
         child: SizedBox(
           child: Stack(
             alignment: Alignment.center,

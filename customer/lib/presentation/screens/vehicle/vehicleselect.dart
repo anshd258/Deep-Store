@@ -25,9 +25,9 @@ class VehicleSelect extends StatelessWidget {
             },
           ),
           child2: const RideSelect(),
-          tab1: const Tab(text: 'rent a ride'),
+          tab1: const Tab(text: 'Rent a ride'),
           tab2: const Tab(
-            text: 'book a ride',
+            text: 'Book a ride',
           ),
         ),
       ),

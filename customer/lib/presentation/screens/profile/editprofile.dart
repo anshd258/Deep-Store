@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../widgets/buttons/commonbutton.dart';
 import '../../widgets/customformfield.dart';
-import 'profileImage.dart';
+import '../../widgets/profileImage.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -65,34 +65,36 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
       ),
       body: Center(
-        child: Column(
-          children: [
-            const Expanded(
-                flex: 4, child: Editpageimage(path: 'assets/user.png')),
-            Expanded(
-              flex: 6,
-              child: SingleChildScrollView(
-                child: Form(
-                    key: _formkey,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 20),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              const Expanded(
+                  flex: 4, child: Editpageimage(path: 'assets/user.png')),
+              Expanded(
+                flex: 6,
+                child: SingleChildScrollView(
+                  child: Form(
+                      key: _formkey,
                       child: Column(
                         children: [
-                          CustomFormField(
-                              keyBoardtype: TextInputType.name,
-                              controller: nameController,
-                              hintText: "",
-                              maxlength: 30,
-                              function: (p0) {
-                                if (p0!.isEmpty) {
-                                  return "Please enter something";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              icon: Icons.person,
-                              name: "Username"),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: CustomFormField(
+                                keyBoardtype: TextInputType.name,
+                                controller: nameController,
+                                hintText: "",
+                                maxlength: 30,
+                                function: (p0) {
+                                  if (p0!.isEmpty) {
+                                    return "Please enter something";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                icon: Icons.person,
+                                name: "Username"),
+                          ),
                           Row(
                             children: [
                               Expanded(
@@ -136,28 +138,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ),
                             ],
                           ),
-                          CustomFormField(
-                              controller: emailController,
-                              keyBoardtype: TextInputType.emailAddress,
-                              maxlength: 50,
-                              hintText: "",
-                              function: (p0) {
-                                return null;
-                              },
-                              icon: Icons.phone,
-                              name: "Email"),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: CustomFormField(
+                                controller: emailController,
+                                keyBoardtype: TextInputType.emailAddress,
+                                maxlength: 50,
+                                hintText: "",
+                                function: (p0) {
+                                  return null;
+                                },
+                                icon: Icons.phone,
+                                name: "Email"),
+                          ),
                         ],
-                      ),
-                    )),
+                      )),
+                ),
               ),
-            ),
-            Expanded(
-              child: CommonButton(
+              CommonButton(
                 borderradius: 4,
-                height: 48,
-                width: 328,
+                height: 52,
+                width: double.infinity,
                 lable: 'Save changes',
-                margin: const EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 0),
                 onPressed: () {
                   setState(() {
                     loading = true;
@@ -184,7 +187,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         setState(() {
                           loading = false;
                         });
-                        Future.delayed(Duration(seconds: 1)).then((value) {
+                        Future.delayed(const Duration(seconds: 1)).then((value) {
                           Navigator.pop(context);
                         });
                       } else {
@@ -201,9 +204,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     : (loading!
                         ? const CircularProgressIndicator()
                         : const Icon(Icons.done)),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
