@@ -5,6 +5,7 @@ import 'package:customer/data/models/apiresponse.dart';
 import 'package:customer/data/models/authentication.dart';
 import 'package:customer/data/datasource.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
 import '../../../data/models/user.dart';
@@ -14,7 +15,7 @@ import '../../helpers/sharedprefrence.utils.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthState(otpSent: false, loading: false)) {}
+  AuthCubit() : super(AuthState(otpSent: false, loading: false));
 
   void clear() {
     emit(AuthState(otpSent: false, loading: false));
@@ -39,8 +40,12 @@ class AuthCubit extends Cubit<AuthState> {
     return false;
   }
 
-  Future<bool> updateUserDetails({required String roomNumber, required String providerid,
-      String? name, String? email, String? phone}) async {
+  Future<bool> updateUserDetails(
+      {required String roomNumber,
+      required String providerid,
+      String? name,
+      String? email,
+      String? phone}) async {
     name ??= await SharedPreferencesUtils.getString(
             key: SharedPrefrencesKeys.name) ??
         '';
@@ -50,13 +55,6 @@ class AuthCubit extends Cubit<AuthState> {
     phone ??= await SharedPreferencesUtils.getString(
             key: SharedPrefrencesKeys.userPhoneNumber) ??
         '';
-    print('got name and email : $name , $email');
-    print({
-      'room': roomNumber,
-      'username': name,
-      'property_id': providerid,
-      'email': email
-    });
     try {
       Response? response = await DataSource.get(
           path: DataSource.updateUserDetails,
@@ -69,13 +67,14 @@ class AuthCubit extends Cubit<AuthState> {
           });
 
       if (response != null) {
-        print('we got a response ${response.body}');
         if (json.decode(response.body)['status'] == 'success') {
           return true;
         }
       }
     } catch (e) {
-      print('unable to update user details $e');
+      if (kDebugMode) {
+        print('unable to update user details $e');
+      }
     }
     return false;
   }
@@ -84,16 +83,13 @@ class AuthCubit extends Cubit<AuthState> {
     await SharedPreferencesUtils.storeString(
         key: SharedPrefrencesKeys.userPhoneNumber,
         value: phoneNumber.toString());
-    print(phoneNumber);
     Map<String, dynamic> parameters = {"phone": phoneNumber};
     emit(AuthState(otpSent: false, loading: true));
-    print(Uri.https(DataSource.backend, DataSource.getOtp, parameters));
 
     try {
       Response response = await get(
               Uri.https(DataSource.backend, DataSource.getOtp, parameters))
           .then((value) {
-        print(value.body);
         return value;
       });
 
@@ -108,7 +104,9 @@ class AuthCubit extends Cubit<AuthState> {
         );
       }
     } catch (e) {
-      print('unable to request for otp $e');
+      if (kDebugMode) {
+        print('unable to request for otp $e');
+      }
       emit(AuthState(otpSent: false, loading: false));
     }
   }
@@ -133,7 +131,6 @@ class AuthCubit extends Cubit<AuthState> {
       //     body: body,
       //     headers: {'jwt': state.obj!.authToken.toString()});
       if (credentials['access'] != null) {
-        print(credentials);
         emit(
           AuthState(
             otpSent: false,

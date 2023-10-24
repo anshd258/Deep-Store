@@ -33,21 +33,32 @@ class _OrderTabBarState extends State<OrderTabBar> {
       width: double.infinity,
       // height: 33,
       margin: const EdgeInsets.all(8),
-      child: Row(
-        children: widget.labels
-            .map(
-              (label) => GestureDetector(
-                onTap: () {
-                  widget.controller.animateTo(widget.labels.indexOf(label));
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(100),
-                    ),
-                    gradient:
-                        widget.controller.index == widget.labels.indexOf(label)
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 13),
+            child: Text(
+              'Filter by',
+              style:
+                  GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+          ),
+          Row(
+            children: widget.labels
+                .map(
+                  (label) => GestureDetector(
+                    onTap: () {
+                      widget.controller.animateTo(widget.labels.indexOf(label));
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(100),
+                        ),
+                        gradient: widget.controller.index ==
+                                widget.labels.indexOf(label)
                             ? const LinearGradient(
                                 colors: [
                                     Color.fromRGBO(32, 171, 154, 1),
@@ -62,24 +73,26 @@ class _OrderTabBarState extends State<OrderTabBar> {
                                   ],
                                 begin: Alignment.bottomCenter,
                                 end: Alignment.topRight),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 18, vertical: 12),
+                      alignment: Alignment.center,
+                      child: Text(
+                        label,
+                        style: GoogleFonts.lato(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: widget.controller.index ==
+                                    widget.labels.indexOf(label)
+                                ? Colors.white
+                                : Color.fromRGBO(86, 86, 86, 1)),
+                      ),
+                    ),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                  alignment: Alignment.center,
-                  child: Text(
-                    label,
-                    style: GoogleFonts.lato(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: widget.controller.index ==
-                                widget.labels.indexOf(label)
-                            ? Colors.white
-                            : Color.fromRGBO(86, 86, 86, 1)),
-                  ),
-                ),
-              ),
-            )
-            .toList(),
+                )
+                .toList(),
+          ),
+        ],
       ),
     );
   }

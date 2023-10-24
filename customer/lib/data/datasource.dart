@@ -88,7 +88,9 @@ class DataSource {
         return null;
       }
     } catch (e) {
-      print('unable to fetch data! for $path  $e');
+      if (kDebugMode) {
+        print('unable to fetch data! for $path  $e');
+      }
       return null;
     }
   }

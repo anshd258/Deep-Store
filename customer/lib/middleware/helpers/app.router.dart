@@ -1,7 +1,6 @@
 import 'package:customer/presentation/screens/auth/checkin..dart';
 import 'package:customer/presentation/screens/auth/email.dart';
 import 'package:customer/presentation/screens/auth/login.dart';
-import 'package:customer/presentation/screens/orders/order.setup.dart';
 import 'package:customer/presentation/screens/profile/editprofile.dart';
 import 'package:customer/presentation/screens/profile/history/history.setup.dart';
 import 'package:customer/presentation/screens/profile/terms.dart';

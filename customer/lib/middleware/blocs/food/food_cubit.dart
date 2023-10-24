@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+// ignore: depend_on_referenced_packages, unnecessary_import
 import 'package:meta/meta.dart';
 
 import '../../../data/datasource.dart';
@@ -78,16 +80,8 @@ class FoodCubit extends Cubit<FoodState> {
         Map<String, dynamic> urlParameters = {
           'id': order.id,
         };
-        print(urlParameters);
 
-        Response? temp = await DataSource.get(
-            queryType: QueryType.post,
-            path: DataSource.getFoodOrder,
-            body: urlParameters);
-        print(json.decode(temp!.body));
-        FoodOrder orderrr = FoodOrder.fromJson(
-            json.decode(temp.body)['order'] as Map<String, dynamic>);
-        print(orderrr);
+      
 
         ApiResponse? apiResponse = await DataSource.getData(
             queryType: QueryType.post,
@@ -102,7 +96,9 @@ class FoodCubit extends Cubit<FoodState> {
         return status;
       }
     } catch (e) {
-      print('something went wrong while adding foodItemtoCart : $e');
+      if (kDebugMode) {
+        print('something went wrong while adding foodItemtoCart : $e');
+      }
     }
     fetchFoodOrders();
     return status;
@@ -144,7 +140,9 @@ class FoodCubit extends Cubit<FoodState> {
         } else {}
       });
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
     return false;
   }
@@ -172,9 +170,10 @@ class FoodCubit extends Cubit<FoodState> {
         }
       }
     } catch (e) {
-      print('unable to fetch cart order $e');
+      if (kDebugMode) {
+        print('unable to fetch cart order $e');
+      }
     }
-    print('cart updated');
   }
 
   Future<bool> removeFoodItemFromCart(int foodDetailsId) async {
@@ -195,7 +194,6 @@ class FoodCubit extends Cubit<FoodState> {
         ]
       }
     };
-    print(body);
 
     Response? response = await DataSource.get(
       path: DataSource.removeFoodItem,
@@ -203,7 +201,6 @@ class FoodCubit extends Cubit<FoodState> {
       body: body,
     );
     if (response != null) {
-      print(json.decode(response.body)['status']);
       if (json.decode(response.body)['status'] == 'success') {
         /// update the items offline
         return await fetchCartOrders().then((value) {

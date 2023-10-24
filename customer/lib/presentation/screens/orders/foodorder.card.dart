@@ -47,6 +47,7 @@ class FoodOrderCard extends StatelessWidget {
                                 padding: const EdgeInsets.all(10),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  
                                   children: [
                                     Expanded(
                                       flex: 5,

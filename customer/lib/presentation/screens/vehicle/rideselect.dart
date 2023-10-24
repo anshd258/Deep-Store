@@ -148,7 +148,9 @@ class _RideSelectState extends State<RideSelect> {
                                               dropoffController.text,
                                           pickUpCoordinates: pickupCoordinates,
                                           dropOffCoordinates:
-                                              dropOffCoordinates),
+                                              dropOffCoordinates,
+                                              pickUpTime: DateTime.now()
+                                              ),
                                     );
                                 pickupController.clear();
                                 dropoffController.clear();

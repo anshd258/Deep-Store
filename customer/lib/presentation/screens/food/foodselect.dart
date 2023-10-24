@@ -1,4 +1,3 @@
-import 'package:common/widgets/nav_bar_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,9 +24,9 @@ class FoodSelect extends StatelessWidget {
       child: BlocBuilder<FoodCubit, FoodState>(
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+            backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
             appBar: AppBar(
-              backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+              backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
               elevation: 0,
               centerTitle: true,
               toolbarHeight: 70,

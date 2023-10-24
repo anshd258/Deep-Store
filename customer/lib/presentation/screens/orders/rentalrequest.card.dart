@@ -17,9 +17,8 @@ class RentalRequestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-     if(context.read<RentalCubit>().state.rentalRequestList == null)
-      context.read<RentalCubit>().fetchAllRentalRequests();
-      
+      if (context.read<RentalCubit>().state.rentalRequestList == null)
+        context.read<RentalCubit>().fetchAllRentalRequests();
     });
     return RefreshIndicator(
       onRefresh: () async {
@@ -73,23 +72,27 @@ class RentalRequestCard extends StatelessWidget {
                                       width: 15.0,
                                     ),
                                     Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          textwidget(' ${request.rental.name}',
-                                              "", 17, FontWeight.w600),
-                                          textwidget(
-                                              "Nos : ",
-                                              "${request.rental.quantity}",
-                                              16,
-                                              FontWeight.w400),
-                                          textwidget(
-                                              "Total : ",
-                                              '${request.rental.price * request.rental.quantity}',
-                                              16,
-                                              FontWeight.w400),
-                                        ],
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            textwidget('${request.rental.name}',
+                                                "", 18, FontWeight.w500),
+                                            textwidget(
+                                                "Nos     :   ",
+                                                "${request.rental.quantity}",
+                                                16,
+                                                FontWeight.w400),
+                                            textwidget(
+                                                "Total   :   ",
+                                                'Rs.  ${request.rental.price * request.rental.quantity}/day',
+                                                16,
+                                                FontWeight.w400),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     Builder(builder: (context) {
@@ -99,24 +102,28 @@ class RentalRequestCard extends StatelessWidget {
                                           RequestStatus.rejected) {
                                         color = Colors.red;
                                       }
-                                      return Container(
-                                        padding: const EdgeInsets.all(4),
-                                        margin: const EdgeInsets.all(4),
-                                        height: 26,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
-                                            border: Border.all(
-                                                width: 1.5, color: color)),
-                                        child: Center(
-                                          child: Text(
-                                            request.status.name,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: color,
-                                                fontWeight: FontWeight.w400),
+                                      return Column(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(4),
+                                            margin: const EdgeInsets.all(4),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                                border: Border.all(
+                                                    width: 1.5, color: color)),
+                                            child: Center(
+                                              child: Text(
+                                                request.status.name,
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: color,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       );
                                     })
                                   ],

@@ -25,7 +25,9 @@ class FoodHistoryCard extends StatelessWidget {
       },
       child: BlocBuilder<FoodCubit, FoodState>(
         builder: (context, foodstate) {
-          List<FoodOrder>? data = foodstate.foodOrderList == null ? null : foodstate.foodOrderList!.reversed.toList();
+          List<FoodOrder>? data = foodstate.foodOrderList == null
+              ? null
+              : foodstate.foodOrderList!.reversed.toList();
           return data != null
               ? SizedBox(
                   child: data.isEmpty
@@ -47,6 +49,7 @@ class FoodHistoryCard extends StatelessWidget {
                                 showDate = true;
                               }
                             }
+
                             ///
 
                             List<String> itemnames = data[index]
@@ -78,6 +81,8 @@ class FoodHistoryCard extends StatelessWidget {
                                     child: Padding(
                                       padding: const EdgeInsets.all(10),
                                       child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -86,73 +91,51 @@ class FoodHistoryCard extends StatelessWidget {
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                              child: Row(
+                                                // mainAxisAlignment:
+                                                //     MainAxisAlignment.start,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  textwidget(
-                                                    'Items',
-                                                    names,
-                                                    16,
+                                                  Expanded(
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        textwidget(
+                                                          "Total Items ordered ",
+                                                          "${itemnames.length}",
+                                                          16,
+                                                        ),
+                                                        SizedBox(
+                                                          height: 8,
+                                                        ),
+                                                        textwidget(
+                                                          "Total amount to pay",
+                                                          "₹${data[index].totalPrice}",
+                                                          16,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                   const SizedBox(
                                                     height: 10,
                                                   ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      textwidget(
-                                                        "Items ordered ",
-                                                        "${itemnames.length}",
-                                                        16,
-                                                      ),
-                                                      textwidget(
-                                                        "Total amount",
-                                                        "₹${data[index].totalPrice}",
-                                                        16,
-                                                      ),
-                                                    ],
-                                                  )
+                                                  Expanded(
+                                                    child: textwidget(
+                                                      'Items',
+                                                      names,
+                                                      16,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Builder(builder: (context) {
-                                            Color color = const Color.fromRGBO(
-                                                73, 204, 115, 1);
-                                            if (data[index].status ==
-                                                OrderStatus.failed) {
-                                              color = Colors.red;
-                                            }
-                                            return Container(
-                                              padding: const EdgeInsets.all(4),
-                                              margin: const EdgeInsets.all(4),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(4),
-                                                  border: Border.all(
-                                                      width: 1.5,
-                                                      color: color)),
-                                              child: Center(
-                                                child: Text(
-                                                  data[index].status.name,
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: color,
-                                                      fontWeight:
-                                                          FontWeight.w400),
-                                                ),
-                                              ),
-                                            );
-                                          })
                                         ],
                                       ),
                                     ),
@@ -161,7 +144,6 @@ class FoodHistoryCard extends StatelessWidget {
                               );
                             });
                           },
-                         
                         ),
                 )
               : const Center(

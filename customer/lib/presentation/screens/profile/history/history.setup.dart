@@ -1,3 +1,4 @@
+import 'package:common/common.dart';
 import 'package:customer/presentation/screens/profile/history/foodhistory.dart';
 import 'package:customer/presentation/screens/profile/history/rentalhistory.dart';
 import 'package:customer/presentation/screens/profile/history/ridehistory.dart';
@@ -34,6 +35,15 @@ class _HomeState extends State<History> with SingleTickerProviderStateMixin {
         elevation: 0,
         centerTitle: true,
         toolbarHeight: 70,
+        leading: IconButton(
+          icon: Icon(
+            NavBarIcons.left_arrow,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

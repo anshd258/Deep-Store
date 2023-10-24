@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:customer/data/datasource.dart';
 import 'package:customer/middleware/helpers/constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+// ignore: depend_on_referenced_packages, unnecessary_import
 import 'package:meta/meta.dart';
 
 import '../../../data/models/rental.dart';
@@ -51,7 +53,9 @@ class RentalCubit extends Cubit<RentalState> {
         } else {}
       });
     } catch (e) {
-      print('unable to fetch rental requests $e');
+      if (kDebugMode) {
+        print('unable to fetch rental requests $e');
+      }
     }
     return false;
   }
@@ -67,7 +71,8 @@ class RentalCubit extends Cubit<RentalState> {
       "end_location": 'mount abu',
       'start_coordinates': '123456',
       'end_coordinates': '78910',
-      'quantity':quantity
+      'quantity':quantity,
+      'start_time': DateTime.now().toString()
     };
     try {
       http.Response? response = await DataSource.get(
@@ -83,7 +88,9 @@ class RentalCubit extends Cubit<RentalState> {
 
       return false;
     } catch (e) {
-      print('someting went wrong while requesting ride');
+      if (kDebugMode) {
+        print('someting went wrong while requesting ride');
+      }
       return false;
     }
   }

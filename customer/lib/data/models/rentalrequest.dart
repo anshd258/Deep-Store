@@ -1,6 +1,5 @@
 
 
-import 'package:customer/data/models/ride.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 
 import 'rental.dart';

@@ -3,6 +3,7 @@ import 'package:customer/middleware/blocs/payment/payment_cubit.dart';
 import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
 import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/middleware/helpers/sharedprefrence.utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +18,9 @@ Future<void> main() async {
 
   String? accessToken = await SharedPreferencesUtils.getString(
       key: SharedPrefrencesKeys.accessToken);
-  print(accessToken);
+  if (kDebugMode) {
+    print(accessToken);
+  }
 
   runApp(MultiBlocProvider(
         providers: [

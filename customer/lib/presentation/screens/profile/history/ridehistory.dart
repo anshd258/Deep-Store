@@ -13,8 +13,9 @@ class RidesHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (context.read<RideCubit>().state.rideRequests == null)
+      if (context.read<RideCubit>().state.rideRequests == null) {
         context.read<RideCubit>().fetchRideRequests();
+      }
     });
     return RefreshIndicator(
       onRefresh: () async {
@@ -22,23 +23,44 @@ class RidesHistoryCard extends StatelessWidget {
       },
       child: BlocBuilder<RideCubit, RideState>(
         builder: (context, ridestate) {
-          List<Ride>? data = ridestate.rideRequests;
-          DateTime? currentDate;
+          List<Ride>? data = ridestate.rideRequests == null
+              ? null
+              : ridestate.rideRequests!.reversed.toList();
+
           return SizedBox(
             child: data != null
                 ? data.isEmpty
                     ? const Center(
                         child: Text('no rides booked'),
                       )
-                    : ListView(
-                        children: data.reversed.map((ride) {
-                          // if (currentDate == null) {
-                            
-                          // }
-                          // if (DateFormat('dd/MM/yy').format(currentDate) ==
-                          //     DateFormat('dd/MM/yy').format(ride.pickUpTime)) {}
+                    : ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          bool showDate = false;
+                          if (index == 0) {
+                            showDate = true;
+                          } else {
+                            if (DateFormat('dd/MM/yy').format(
+                                    data[index - 1].pickUpTime ??
+                                        DateTime.now()) !=
+                                DateFormat('dd/MM/yy').format(
+                                    data[index].pickUpTime ?? DateTime.now())) {
+                              showDate = true;
+                            }
+                          }
+
                           return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              if (showDate)
+                                Builder(builder: (context) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 10),
+                                    child: Text(
+                                        ' ${DateFormat('dd/MM/yy').format(data[index].pickUpTime ?? DateTime.now())}'),
+                                  );
+                                }),
                               Card(
                                 elevation: 4,
                                 margin: const EdgeInsets.symmetric(
@@ -63,76 +85,83 @@ class RidesHistoryCard extends StatelessWidget {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     RidesDetailsContainer(
-                                                      data: ride.distance
+                                                      data: data[index]
+                                                          .distance
                                                           .toString(),
-                                                      heading: "Distance",
+                                                      heading: "Total Distance",
                                                       fontSize: 18,
                                                     ),
                                                     RidesDetailsContainer(
-                                                      data:
-                                                          ride.price.toString(),
-                                                      heading: "Price",
+                                                      data: data[index]
+                                                          .price
+                                                          .toString(),
+                                                      heading:
+                                                          "Total Price to pay",
                                                       fontSize: 18,
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  RidesDetailsContainer(
-                                                    data: ride.pickUpLocation ??
-                                                        '',
-                                                    heading: "Pickup location",
-                                                    fontSize: 18,
-                                                  ),
-                                                  RidesDetailsContainer(
-                                                    data:
-                                                        ride.dropOffLocation ??
-                                                            '',
-                                                    heading:
-                                                        "Drop off location",
-                                                    fontSize: 18,
-                                                  ),
-                                                ],
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    RidesDetailsContainer(
+                                                      data: data[index]
+                                                              .pickUpLocation ??
+                                                          '-',
+                                                      heading:
+                                                          "Pickup location",
+                                                      fontSize: 18,
+                                                    ),
+                                                    RidesDetailsContainer(
+                                                      data: data[index]
+                                                              .dropOffLocation ??
+                                                          '-',
+                                                      heading:
+                                                          "Drop off location",
+                                                      fontSize: 18,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        Builder(builder: (context) {
-                                          Color color = const Color.fromRGBO(
-                                              73, 204, 115, 1);
-                                          if (ride.status ==
-                                              RequestStatus.rejected) {
-                                            color = Colors.red;
-                                          }
-                                          return Container(
-                                            padding: const EdgeInsets.all(4),
-                                            margin: const EdgeInsets.all(4),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                border: Border.all(
-                                                    width: 1.5, color: color)),
-                                            child: Center(
-                                              child: Text(
-                                                ride.status.name,
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: color,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
-                                            ),
-                                          );
-                                        })
+                                        // Builder(builder: (context) {
+                                        //   Color color = const Color.fromRGBO(
+                                        //       73, 204, 115, 1);
+                                        //   if (data[index].status ==
+                                        //       RequestStatus.rejected) {
+                                        //     color = Colors.red;
+                                        //   }
+                                        //   return Container(
+                                        //     padding: const EdgeInsets.all(4),
+                                        //     margin: const EdgeInsets.all(4),
+                                        //     decoration: BoxDecoration(
+                                        //         borderRadius:
+                                        //             BorderRadius.circular(4),
+                                        //         border: Border.all(
+                                        //             width: 1.5, color: color)),
+                                        //     child: Center(
+                                        //       child: Text(
+                                        //         data[index].status.name,
+                                        //         style: TextStyle(
+                                        //             fontSize: 14,
+                                        //             color: color,
+                                        //             fontWeight:
+                                        //                 FontWeight.w400),
+                                        //       ),
+                                        //     ),
+                                        //   );
+                                        // })
                                       ]),
                                 ),
                               ),
                             ],
                           );
-                        }).toList(),
+                        },
                       )
                 : const Center(child: CircularProgressIndicator()),
           );

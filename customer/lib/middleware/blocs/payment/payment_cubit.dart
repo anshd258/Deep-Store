@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:customer/data/models/payment.model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
+// ignore: unnecessary_import, depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -24,7 +26,6 @@ class PaymentCubit extends Cubit<PaymentState> {
 
   Future<void> initiatePayment(
       BuildContext context, FoodOrder order, String accessToken) async {
-    print('initiatePayment function called');
     OrderPaymentData? orderPaymentData = await createOrder(order.id);
     if (orderPaymentData != null) {
       String itemNames = order.items
@@ -47,7 +48,6 @@ class PaymentCubit extends Cubit<PaymentState> {
 
       Future<void> handlePaymentSuccess(PaymentSuccessResponse response) async {
         try {
-          print('starting payment verification');
           Response? verifyresponse = await DataSource.get(
               path: DataSource.orderVerification,
               queryType: QueryType.post,
@@ -58,25 +58,24 @@ class PaymentCubit extends Cubit<PaymentState> {
               });
           if (verifyresponse != null) {
             if (json.decode(verifyresponse.body)['status'] == 'success') {
-              print('payment verified!!');
               await updateOrderStatus(order.id, OrderStatus.confirmed)
                   .then((value) {
                 emit(const UpdatePaymentState(
                     paymentStatus: PaymentStatus.success));
               });
             } else {
-              print('payment not verified');
               emit(const UpdatePaymentState(
                   paymentStatus: PaymentStatus.rejected));
             }
           }
         } catch (e) {
-          print('unable to verify payment success status $e');
+          if (kDebugMode) {
+            print('unable to verify payment status');
+          }
         }
       }
 
       Future<void> handlePaymentError(PaymentFailureResponse response) async {
-        print('payment failed');
         await updateOrderStatus(order.id, OrderStatus.hold).then((value) {
           emit(const UpdatePaymentState(
               paymentStatus: PaymentStatus.unInitialized));
@@ -97,7 +96,6 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 
   Future<bool> updateOrderStatus(String orderId, OrderStatus status) async {
-    print('trying to update order status');
     Map<String, dynamic> body = {
       "order": {"id": orderId, "status": status.index}
     };
@@ -122,4 +120,5 @@ Future<OrderPaymentData?> createOrder(String orderId) async {
   if (response != null) {
     return OrderPaymentData.fromJson(json.decode(response.body));
   }
+  return null;
 }

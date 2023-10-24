@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CommonButton extends StatefulWidget {
@@ -38,7 +37,7 @@ class _GradientCommonButtonState extends State<CommonButton>
         vsync: this,
         lowerBound: 0,
         upperBound: 1,
-        duration: Duration(milliseconds: 500));
+        duration: const Duration(milliseconds: 500));
     ctr!.stop();
 
     super.initState();

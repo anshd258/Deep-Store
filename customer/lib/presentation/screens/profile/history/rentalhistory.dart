@@ -7,10 +7,10 @@ import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../middleware/blocs/rental/rental_cubit.dart';
 import '../../../widgets/squicircle.dart';
-
 
 class RentalHistoryCard extends StatelessWidget {
   const RentalHistoryCard({super.key});
@@ -18,8 +18,9 @@ class RentalHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if(context.read<RentalCubit>().state.rentalRequestList == null)
-      context.read<RentalCubit>().fetchAllRentalRequests();
+      if (context.read<RentalCubit>().state.rentalRequestList == null) {
+        context.read<RentalCubit>().fetchAllRentalRequests();
+      }
     });
     return RefreshIndicator(
       onRefresh: () async {
@@ -27,104 +28,118 @@ class RentalHistoryCard extends StatelessWidget {
       },
       child: BlocBuilder<RentalCubit, RentalState>(
         builder: (context, rentalstate) {
-          List<RentalRequest>? data = rentalstate.rentalRequestList;
+          List<RentalRequest>? data = rentalstate.rentalRequestList == null
+              ? null
+              : rentalstate.rentalRequestList!.reversed.toList();
           return SizedBox(
             child: data != null
                 ? data.isEmpty
                     ? const Center(
                         child: Text('no rentals booked yet'),
                       )
-                    : ListView(
-                        children: data.map((request) {
-                          return Card(
-                            elevation: 4,
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 10),
-                            shape: SmoothRectangleBorder(
-                                borderRadius:
-                                    SmoothBorderRadius(cornerRadius: 10)),
-                            child: Container(
-                              height: 120,
-                              margin: const EdgeInsets.all(12),
-                              child: LayoutBuilder(
-                                  builder: (context, constraints) {
-                                return Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SquicircleContainer(
-                                      width: constraints.maxWidth * 0.35,
-                                      height: constraints.maxWidth * 0.35,
-                                      child: CachedNetworkImage(
-                                          fit: BoxFit.cover,
-                                          progressIndicatorBuilder: (context,
-                                                  url, downloadProgress) =>
-                                              Center(
-                                                  child:
-                                                      CircularProgressIndicator(
+                    : ListView.builder(
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          bool showDate = false;
+                          if (index == 0) {
+                            showDate = true;
+                          } else {
+                            if (DateFormat('dd/MM/yy').format(
+                                    data[index - 1].startTime ??
+                                        DateTime.now()) !=
+                                DateFormat('dd/MM/yy').format(
+                                    data[index].startTime ?? DateTime.now())) {
+                              showDate = true;
+                            }
+                          }
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (showDate)
+                                Builder(builder: (context) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 10),
+                                    child: Text(
+                                        ' ${DateFormat('dd/MM/yy').format(data[index].startTime ?? DateTime.now())}'),
+                                  );
+                                }),
+                              Card(
+                                elevation: 4,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 10),
+                                shape: SmoothRectangleBorder(
+                                    borderRadius:
+                                        SmoothBorderRadius(cornerRadius: 10)),
+                                child: Container(
+                                  height: 120,
+                                  margin: const EdgeInsets.all(12),
+                                  child: LayoutBuilder(
+                                      builder: (context, constraints) {
+                                    return Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SquicircleContainer(
+                                          width: constraints.maxWidth * 0.35,
+                                          height: constraints.maxWidth * 0.35,
+                                          child: CachedNetworkImage(
+                                              fit: BoxFit.cover,
+                                              progressIndicatorBuilder: (context,
+                                                      url, downloadProgress) =>
+                                                  Center(
+                                                      child: CircularProgressIndicator(
                                                           value:
                                                               downloadProgress
                                                                   .progress)),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                          imageUrl: request.rental.image ??
-                                              "https://dummyimage.com/300"),
-                                    ),
-                                    const SizedBox(
-                                      width: 15.0,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          textwidget(' ${request.rental.name}',
-                                              "", 17, FontWeight.w600),
-                                          textwidget(
-                                              "Nos : ",
-                                              "${request.rental.quantity}",
-                                              16,
-                                              FontWeight.w400),
-                                          textwidget(
-                                              "Total : ",
-                                              '${request.rental.price * request.rental.quantity}',
-                                              16,
-                                              FontWeight.w400),
-                                        ],
-                                      ),
-                                    ),
-                                    Builder(builder: (context) {
-                                      Color color =
-                                          const Color.fromRGBO(73, 204, 115, 1);
-                                      if (request.status ==
-                                          RequestStatus.rejected) {
-                                        color = Colors.red;
-                                      }
-                                      return Container(
-                                        padding: const EdgeInsets.all(4),
-                                        margin: const EdgeInsets.all(4),
-                                        height: 26,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
-                                            border: Border.all(
-                                                width: 1.5, color: color)),
-                                        child: Center(
-                                          child: Text(
-                                            request.status.name,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: color,
-                                                fontWeight: FontWeight.w400),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      const Icon(Icons.error),
+                                              imageUrl: data[index]
+                                                      .rental
+                                                      .image ??
+                                                  "https://dummyimage.com/300"),
+                                        ),
+                                        const SizedBox(
+                                          width: 15.0,
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                textwidget(
+                                                    ' ${data[index].rental.name}',
+                                                    "",
+                                                    17,
+                                                    FontWeight.w600),
+                                                textwidget(
+                                                    "Nos     :   ",
+                                                    "${data[index].rental.quantity}",
+                                                    16,
+                                                    FontWeight.w400),
+                                                textwidget(
+                                                    "Total   :   ",
+                                                    'Rs.  ${data[index].rental.price * data[index].rental.quantity}/day',
+                                                    16,
+                                                    FontWeight.w400),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      );
-                                    })
-                                  ],
-                                );
-                              }),
-                            ),
+                                      ],
+                                    );
+                                  }),
+                                ),
+                              ),
+                            ],
                           );
-                        }).toList(),
+                        },
                       )
                 : const Center(
                     child: CircularProgressIndicator(),
