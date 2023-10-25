@@ -12,9 +12,10 @@ class DataSource {
 
 
   static const String getFoodOrder = '/service/find-foodorder/';
+  ///TODO: remove this api
   static const String getOrderByType = '/service/get-order-by-type';
 
-  static const String getAllFoodOrder = '/service/find-all-foodorders';
+  static const String getAllFoodOrder = '/service/get-user-order';
   static const String getAllRideRequests = '/service/get-user-ride';
   static const String getAllRentalRequests = '/service/find-all-rentalrequests';
 

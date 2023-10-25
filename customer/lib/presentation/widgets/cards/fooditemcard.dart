@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:customer/presentation/widgets/buttons/commonbutton.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
+import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/models/food.dart';
@@ -20,90 +21,96 @@ class FoodItemCard extends StatefulWidget {
 class _FoodItemCardState extends State<FoodItemCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 160,
-      margin: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: SquicircleContainer(
-              height: double.infinity,
-              child: CachedNetworkImage(
-                  fit: BoxFit.cover,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      Center(
-                          child: CircularProgressIndicator(
-                              value: downloadProgress.progress)),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  imageUrl: widget.food.images ?? "https://dummyimage.com/300"),
-              // child: Image.network(
-              //   widget.food.images ?? "https://dummyimage.com/300",
-              //   fit: BoxFit.cover,
-              // ),
+    return Card(
+        elevation: 4,
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      shape: SmoothRectangleBorder(
+          borderRadius: SmoothBorderRadius(cornerRadius: 10)),
+      child: Container(
+        height: 160,
+        margin: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: SquicircleContainer(
+                height: double.infinity,
+                child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    progressIndicatorBuilder: (context, url, downloadProgress) =>
+                        Center(
+                            child: CircularProgressIndicator(
+                                value: downloadProgress.progress)),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    imageUrl: widget.food.images ?? "https://dummyimage.com/300"),
+                // child: Image.network(
+                //   widget.food.images ?? "https://dummyimage.com/300",
+                //   fit: BoxFit.cover,
+                // ),
+              ),
             ),
-          ),
-          const SizedBox(
-            width: 15.0,
-          ),
-          Expanded(
-            flex: 4,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.food.name,
-                  style: const TextStyle(
-                    fontSize: 16.0,
-                    color: Color.fromRGBO(85, 85, 85, 1),
-                    fontWeight: FontWeight.w600,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Text(
-                  widget.food.description,
-                  style: const TextStyle(
-                    fontSize: 12.0,
-                    color: Color.fromRGBO(85, 85, 85, 1),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  'Rs. ${widget.food.price.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color.fromRGBO(85, 85, 85, 1),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                CommonButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        clipBehavior: Clip.hardEdge,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        builder: (context) {
-                          return FoodDetailSelector(
-                              food: widget.food, outerContext: context);
-                        });
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => FoodDetailSelector(
-                    //             food: widget.food, outerContext: context)));
-                  },
-                  borderradius: 4,
-                  height: 48,
-                  width: 328,
-                  lable: 'More details',
-                  margin: const EdgeInsets.symmetric(vertical: 0),
-                ),
-              ],
+            const SizedBox(
+              width: 15.0,
             ),
-          ),
-        ],
+            Expanded(
+              flex: 4,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.food.name,
+                    style: const TextStyle(
+                      fontSize: 16.0,
+                      color: Color.fromRGBO(85, 85, 85, 1),
+                      fontWeight: FontWeight.w600,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Text(
+                    widget.food.description,
+                    style: const TextStyle(
+                      fontSize: 12.0,
+                      color: Color.fromRGBO(85, 85, 85, 1),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    'Rs. ${widget.food.price.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Color.fromRGBO(85, 85, 85, 1),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  CommonButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          clipBehavior: Clip.hardEdge,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          builder: (context) {
+                            return FoodDetailSelector(
+                                food: widget.food, outerContext: context);
+                          });
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => FoodDetailSelector(
+                      //             food: widget.food, outerContext: context)));
+                    },
+                    borderradius: 4,
+                    height: 48,
+                    width: 328,
+                    lable: 'More details',
+                    margin: const EdgeInsets.symmetric(vertical: 0),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

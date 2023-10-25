@@ -28,7 +28,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(245, 245, 245, 1),
+      backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
       // appBar: AppBar(
       //   automaticallyImplyLeading: false,
       //   backgroundColor: Color.fromRGBO(245, 245, 245, 1),
@@ -58,9 +58,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     child: Text(
                       "Ongoing requests",
                       style: GoogleFonts.lato(
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(30, 30, 30, 1)),
+                          color: const Color.fromRGBO(30, 30, 30, 1)),
                     ),
                   ),
                   OrderTabBar(

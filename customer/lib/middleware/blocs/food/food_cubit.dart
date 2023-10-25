@@ -124,11 +124,11 @@ class FoodCubit extends Cubit<FoodState> {
   Future<bool> fetchFoodOrders() async {
     try {
       await DataSource.get(
-          path: DataSource.getOrderByType,
-          urlParameters: {'type': 'food', 'search_by_user': '1'}).then((value) {
+          path: DataSource.getAllFoodOrder
+        ).then((value) {
         if (value != null) {
           List<FoodOrder> orders =
-              (json.decode(value.body)['orders'] as List<dynamic>).map((e) {
+              (json.decode(value.body) as List<dynamic>).map((e) {
             return FoodOrder.fromJson(e as Map<String, dynamic>);
           }).toList();
           orders.removeWhere((element) => element.status == OrderStatus.hold);

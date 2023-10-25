@@ -43,7 +43,7 @@ class RentalRequestCard extends StatelessWidget {
                                 borderRadius:
                                     SmoothBorderRadius(cornerRadius: 10)),
                             child: Container(
-                              height: 120,
+                              height: 110,
                               margin: const EdgeInsets.all(12),
                               child: LayoutBuilder(
                                   builder: (context, constraints) {
@@ -51,8 +51,8 @@ class RentalRequestCard extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SquicircleContainer(
-                                      width: constraints.maxWidth * 0.35,
-                                      height: constraints.maxWidth * 0.35,
+                                      width: constraints.maxWidth * 0.30,
+                                      height: constraints.maxWidth * 0.30,
                                       child: CachedNetworkImage(
                                           fit: BoxFit.cover,
                                           progressIndicatorBuilder: (context,
@@ -69,7 +69,7 @@ class RentalRequestCard extends StatelessWidget {
                                               "https://dummyimage.com/300"),
                                     ),
                                     const SizedBox(
-                                      width: 15.0,
+                                      width: 10.0,
                                     ),
                                     Expanded(
                                       child: Padding(
@@ -82,12 +82,12 @@ class RentalRequestCard extends StatelessWidget {
                                             textwidget('${request.rental.name}',
                                                 "", 18, FontWeight.w500),
                                             textwidget(
-                                                "Nos     :   ",
+                                                "Nos    :  ",
                                                 "${request.rental.quantity}",
                                                 16,
                                                 FontWeight.w400),
                                             textwidget(
-                                                "Total   :   ",
+                                                "Total  :  ",
                                                 'Rs.  ${request.rental.price * request.rental.quantity}/day',
                                                 16,
                                                 FontWeight.w400),

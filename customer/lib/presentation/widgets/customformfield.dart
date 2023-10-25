@@ -50,7 +50,7 @@ class CustomFormField extends StatelessWidget {
                       color: const Color(0xFF555555),
                       size: 24,
                     ),
-                    const SizedBox(width: 4),
+                    const SizedBox(width: 8),
                     Text(
                       name!,
                       textAlign: TextAlign.center,
@@ -72,6 +72,8 @@ class CustomFormField extends StatelessWidget {
                 validator: function,
                 cursorColor: const Color(0x99565656),
                 decoration: InputDecoration(
+                  focusColor: Colors.white,
+                  fillColor: Colors.white,
                   errorBorder: outlineInputBorderError,
                   errorStyle: GoogleFonts.nunito(
                     color: const Color.fromARGB(153, 255, 54, 54),
@@ -79,7 +81,7 @@ class CustomFormField extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     height: 1.25,
                   ),
-                  constraints: const BoxConstraints(maxHeight: 70),
+                  isDense: true,
                   hintText: hintText,
                   hintStyle: GoogleFonts.nunito(
                     color: const Color(0x99565656),
