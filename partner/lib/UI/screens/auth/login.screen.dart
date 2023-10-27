@@ -50,8 +50,8 @@ class _LoginscreenState extends State<Loginscreen> {
         listener: (context, state) {
           if (state.autoLogin == true) {
             print(state.autoLogin);
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/home", (route) => false);
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil("/home", (route) => false);
           }
         },
         builder: (context, state) {
@@ -66,7 +66,7 @@ class _LoginscreenState extends State<Loginscreen> {
                     SizedBox(
                       height: 90,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           SizedBox(
                             height: 29,
@@ -79,18 +79,18 @@ class _LoginscreenState extends State<Loginscreen> {
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
-                          // SizedBox(
-                          //   height: 40,
-                          //   child: Text(
-                          //     "Enter your Phone number",
-                          //     style: GoogleFonts.lato(
-                          //       color: const Color(0xB2555555),
-                          //       fontSize: 14,
-                          //       fontWeight: FontWeight.w600,
-                          //       letterSpacing: -0.28,
-                          //     ),
-                          //   ),
-                          // )
+                          SizedBox(
+                            height: 40,
+                            child: Text(
+                              "We will send you a 6 digit verification code",
+                              style: GoogleFonts.lato(
+                                color: const Color(0xB2555555),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: -0.28,
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -114,6 +114,20 @@ class _LoginscreenState extends State<Loginscreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             height: 1.25,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: const BorderSide(
+                              width: 0.50,
+                              color: Color(0x33565656),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            borderSide: const BorderSide(
+                              width: 1.5,
+                              color: Color(0x33565656),
+                            ),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
@@ -165,7 +179,8 @@ class _LoginscreenState extends State<Loginscreen> {
                       },
                       listener: (context, state) {
                         if (state.otpSent) {
-                          Navigator.pushNamed(context, "/otpPage",
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              "/otpPage", (route) => false,
                               arguments: _text.text);
                         }
                       },

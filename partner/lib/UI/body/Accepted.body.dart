@@ -79,13 +79,21 @@ class _RidesBodyState extends State<RidesBody> {
                                             horizontal: 5),
                                         child: Column(
                                           children: [
-                                            Text(
-                                              "Room no ${e.user!.room}",
-                                              style: GoogleFonts.lato(
-                                                color: const Color.fromARGB(
-                                                    255, 0, 0, 0),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                child: Text(
+                                                  "Room no ${e.user!.room}",
+                                                  style: GoogleFonts.lato(
+                                                    color: const Color.fromARGB(
+                                                        255, 0, 0, 0),
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                             InkWell(

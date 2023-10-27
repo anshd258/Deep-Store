@@ -12,6 +12,7 @@ class AcceptedRequestsCubit extends Cubit<AcceptedRequestsState> {
   AcceptedRequestsCubit(this._authrepository)
       : super(AcceptedRequestsInitial());
 
+  FoodRequest value = FoodRequest();
   String path = "/service/get-order-by-type";
 
   void getAcceptedRequests() async {
@@ -20,7 +21,7 @@ class AcceptedRequestsCubit extends Cubit<AcceptedRequestsState> {
       'Authorization': 'Bearer ${_authrepository.accessToken}',
     };
     emit(AcceptedRequestsLoading());
-    FoodRequest temp;
+
     Map<String, dynamic> parameters = {
       "type": RequestType.food.name,
       "search_by_user": 0.toString(),
@@ -35,10 +36,36 @@ class AcceptedRequestsCubit extends Cubit<AcceptedRequestsState> {
         .onError((error, stackTrace) =>
             emit(AcceptedRequestsError(message: error.toString())));
     if (response != null) {
-      temp = FoodRequest.fromJson(response);
-      emit(AcceptedRequestsLoaded(foodRequest: temp));
+      value = FoodRequest.fromJson(response);
+      List<String> dropDownValue = setMaker();
+      dropDownValue.insert(0, "All");
+      emit(AcceptedRequestsLoaded(
+          foodRequest: value, dropDownValues: dropDownValue));
     }
   }
 
-  void dropDownValueChange(String roomNumber) {}
+  List<String> setMaker() {
+    List<String> debu = value.orders!.map<String>((e) {
+      return e.user!.room!;
+    }).toList();
+    return debu.toSet().toList();
+  }
+
+  void dropDownValueChange(String roomNumber) {
+    FoodRequest temp = FoodRequest();
+    if (roomNumber == "All") {
+      emit(AcceptedRequestsLoaded(
+          currentDropDownValue: roomNumber,
+          dropDownValues: state.dropDownValues,
+          foodRequest: value));
+    } else {
+      temp.orders = value.orders!
+          .where((element) => element.user!.room == roomNumber)
+          .toList();
+      emit(AcceptedRequestsLoaded(
+          currentDropDownValue: roomNumber,
+          dropDownValues: state.dropDownValues,
+          foodRequest: temp));
+    }
+  }
 }

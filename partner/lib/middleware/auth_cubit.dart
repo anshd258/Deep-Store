@@ -22,6 +22,7 @@ class AuthCubit extends Cubit<AuthInitial> {
             queryType: QueryType.get)
         .then(
       (value) {
+        print('otp sent');
         String token = value['jwt'];
         _authrepository.update(phone: phoneNumber);
         emit(

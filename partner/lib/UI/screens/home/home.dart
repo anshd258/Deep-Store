@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:partner/Constants/filterEnum.dart';
 import 'package:partner/UI/body/Accepted.body.dart';
+import 'package:partner/UI/util/utilwidget.dart';
 import 'package:partner/UI/widget/FilterContainer.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/filter_cubit_cubit.dart';
@@ -14,8 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String dropDownValue = "";
-  List<String> distinct = [];
+  String dropDownValue = "All";
 
   @override
   Widget build(BuildContext context) {
@@ -46,54 +45,68 @@ class _HomeState extends State<Home> {
                         builder: (context, state) {
                           if (state.tabIndex == 1) {
                             return SizedBox(
-                              width: 60,
-                              height: 50,
+                              height: 40,
                               child: BlocConsumer<AcceptedRequestsCubit,
                                   AcceptedRequestsState>(
-                                listenWhen: (previous, current) {
-                                  if (previous is AcceptedRequestsLoading &&
-                                      current is AcceptedRequestsLoaded) {
-                                    return true;
-                                  } else {
-                                    return false;
-                                  }
-                                },
+                                // buildWhen: (previous, current) {
+                                //   if (previous is AcceptedRequestsLoading &&
+                                //       current is AcceptedRequestsLoaded) {
+                                //     return true;
+                                //   } else {
+                                //     return false;
+                                //   }
+                                // },
                                 listener: (context, state) {
-                                  List<String> debu = state.foodRequest!.orders!
-                                      .map<String>((e) {
-                                    return e.user!.room!;
-                                  }).toList();
-                                  distinct = debu.toSet().toList();
-                                  dropDownValue = distinct.first;
-                                  print(distinct);
+                                  dropDownValue = state.currentDropDownValue;
                                 },
                                 builder: (context, state) {
                                   if (state is AcceptedRequestsLoaded) {
-                                    return DropdownButton<String>(
-                                      value: dropDownValue,
-                                      elevation: 16,
-                                      style: const TextStyle(
-                                          color: Colors.black54),
-                                      underline: Container(
-                                        height: 2,
-                                        color: Colors.black54,
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 5,
                                       ),
-                                      onChanged: (String? value) {
-                                        // This is called when the user selects an item.
-                                        setState(() {
-                                          dropDownValue = value!;
-                                        });
-                                      },
-                                      items: distinct.map((e) {
-                                        print(e);
-                                        return DropdownMenuItem<String>(
-                                          value: e,
-                                          child: Text(e.toString()),
-                                        );
-                                      }).toList(),
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                                width: 1,
+                                                color: Color.fromRGBO(
+                                                    194, 194, 194, 1))),
+                                        child: DropdownButton<String>(
+                                          value: dropDownValue,
+                                          icon: const Icon(Icons
+                                              .keyboard_arrow_down_rounded),
+                                          elevation: 16,
+                                          style: const TextStyle(
+                                              color: Colors.black54),
+                                          underline: Container(
+                                            height: 2,
+                                            color: Colors.transparent,
+                                          ),
+                                          onChanged: (String? value) {
+                                            // This is called when the user selects an item.
+                                            setState(() {
+                                              dropDownValue = value!;
+                                              context
+                                                  .read<AcceptedRequestsCubit>()
+                                                  .dropDownValueChange(value);
+                                            });
+                                          },
+                                          items: state.dropDownValues!.map((e) {
+                                            print(e);
+                                            return DropdownMenuItem<String>(
+                                              value: e,
+                                              child: Text(e.toString()),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
                                     );
                                   } else {
-                                    return Center();
+                                    return progressIndicator;
                                   }
                                 },
                               ),
@@ -115,4 +128,13 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+  // void setMaker(AcceptedRequestsState state) {
+  //   List<String> debu = state.foodRequest!.orders!.map<String>((e) {
+  //     return e.user!.room!;
+  //   }).toList();
+  //   distinct = debu.toSet().toList();
+  //   dropDownValue = distinct.first;
+  //   print(distinct);
+  // }
 }

@@ -30,21 +30,23 @@ class _OptionsButtonState extends State<OptionsButton>
   }
 
   @override
+  void dispose() {
+    ctr!.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
         late var state;
-     
 
         if (widget.type == "Accepted") {
           state = context.watch<FilterCubitCubit>().state;
-          
         } else if (widget.type == "history") {
           state = context.watch<HistoryFilterCubit>().state;
-           
         } else if (widget.type == "partner") {
           state = context.watch<PartnerFilterCubit>().state;
-          
         }
 
         return GestureDetector(
