@@ -30,9 +30,9 @@ class ScreenSetup extends StatelessWidget {
       backgroundColor: Colors.white,
       screens: [
         const Home(),
-        const FoodRequest(),
+        // const FoodRequest(),
         const RidesRequest(),
-        // PartnerMain(),
+        PartnerMain(),
         ProfilePage(),
       ],
       items: const [
@@ -42,24 +42,24 @@ class ScreenSetup extends StatelessWidget {
           ),
           label: 'Home',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            NavBarIcons.burger,
-          ),
-          label: 'Food',
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(
+        //     NavBarIcons.burger,
+        //   ),
+        //   label: 'Food',
+        // ),
         BottomNavigationBarItem(
           icon: Icon(
             NavBarIcons.ride,
           ),
           label: 'Rides',
         ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(
-        //     Icons.diamond_outlined,
-        //   ),
-        //   label: 'Partners',
-        // ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.diamond_outlined,
+          ),
+          label: 'Partners',
+        ),
         BottomNavigationBarItem(
           icon: Icon(
             NavBarIcons.account,
