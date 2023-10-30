@@ -10,6 +10,8 @@ import 'package:partner/UI/screens/partners/Food/partner.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.edit.dart';
 import 'package:partner/UI/screens/partners/Food/product.list.dart';
+import 'package:partner/UI/screens/partners/Rental/rental.edit.dart';
+import 'package:partner/UI/widget/editPage.FormField.dart';
 import 'package:partner/helpers/models/user.dart';
 
 class AppRouter {
@@ -27,6 +29,9 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const FoodProductAdd());
       case '/partner/food/edit':
         return MaterialPageRoute(builder: (_) => const PartnerProductEdit());
+      case '/partner/rental/edit':
+        return MaterialPageRoute(builder: (_) => const RentalEditPage());
+
       case '/history':
         return MaterialPageRoute(
           builder: (_) => const HistoryScreen(),

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:partner/UI/screens/Profile/Profile.page.dart';
 import 'package:partner/UI/screens/Rides/rides.request.dart';
+import 'package:partner/UI/screens/partners/Partner.main.dart';
 
 import 'package:partner/helpers/constants.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';

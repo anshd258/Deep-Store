@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:partner/UI/widget/Partner.rental.container.dart';
 import 'package:partner/UI/widget/partner.food.container.dart';
 
 import 'package:partner/middleware/partnercubit/partner_filter_cubit.dart';
@@ -23,30 +24,29 @@ class _PartnerBodyState extends State<PartnerBody> {
       var value = context.watch<PartnerFilterCubit>();
       if (value.tabIndex == 1) {
         return SizedBox(
-            height: 512,
             child: BlocConsumer<PartnerFoodCubit, PartnerFoodState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                return LiquidPullToRefresh(
-                  height: 50,
-                  springAnimationDurationInMilliseconds: 500,
-                  color: const Color.fromRGBO(34, 150, 199, 1),
-                  borderWidth: 1,
-                  showChildOpacityTransition: true,
-                  onRefresh: () async {},
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Column(
-                      children: _dummyValues
-                          .map((e) =>  const PartnerFoodContainer(),
-                               
-                              )
-                          .toList(),
-                    ),
-                  ),
-                );
-              },
-            ));
+          listener: (context, state) {},
+          builder: (context, state) {
+            return LiquidPullToRefresh(
+              height: 50,
+              springAnimationDurationInMilliseconds: 500,
+              color: const Color.fromRGBO(34, 150, 199, 1),
+              borderWidth: 1,
+              showChildOpacityTransition: true,
+              onRefresh: () async {},
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: _dummyValues
+                      .map(
+                        (e) => const PartnerFoodContainer(),
+                      )
+                      .toList(),
+                ),
+              ),
+            );
+          },
+        ));
       } else if (value.tabIndex == 2) {
         return SizedBox(
             height: 538,
@@ -58,11 +58,27 @@ class _PartnerBodyState extends State<PartnerBody> {
             ));
       } else {
         return SizedBox(
-          height: 538,
           child: BlocConsumer<PartnerRentalCubit, PartnerRentalState>(
             listener: (context, state) {},
             builder: (context, state) {
-              return const Center();
+              return LiquidPullToRefresh(
+                height: 50,
+                springAnimationDurationInMilliseconds: 500,
+                color: const Color.fromRGBO(34, 150, 199, 1),
+                borderWidth: 1,
+                showChildOpacityTransition: true,
+                onRefresh: () async {},
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: _dummyValues
+                        .map(
+                          (e) => const PartnerRentalContainer(),
+                        )
+                        .toList(),
+                  ),
+                ),
+              );
             },
           ),
         );
