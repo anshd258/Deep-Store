@@ -41,7 +41,7 @@ Future getData({
       print(response.statusCode);
       print(response.body);
       Map body = json.decode(response.body);
-      throw (Exception(body['status']));
+      throw (Exception(body['code']));
     }
   } on Exception {
     rethrow;

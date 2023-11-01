@@ -57,6 +57,16 @@ class _HomeState extends State<Home> {
                                 //   }
                                 // },
                                 listener: (context, state) {
+                                  if (state is AcceptedRequestsError) {
+                                    // if (state.message == "token_not_valid") {
+                                    //   Future.delayed(
+                                    //     Duration(milliseconds: 500),
+                                    //     () => Navigator.pushNamedAndRemoveUntil(
+                                    //         context, "/", (route) => false),
+                                    //   );
+                                    // }
+                                  }
+
                                   dropDownValue = state.currentDropDownValue;
                                 },
                                 builder: (context, state) {

@@ -34,7 +34,7 @@ class _RentalEditPageState extends State<RentalEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    String title = "Edit item";
+    String title = "Edit Ride Partner";
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(
@@ -49,104 +49,101 @@ class _RentalEditPageState extends State<RentalEditPage> {
                 fontWeight: FontWeight.w600)),
       ),
       backgroundColor: Colors.white,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 200,
-                  width: 328,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: file != null
-                          ? DecorationImage(
-                              image: FileImage(file!), fit: BoxFit.cover)
-                          : null,
-                      color: const Color.fromRGBO(86, 86, 86, 0.2)),
-                  child: file != null
-                      ? Align(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                height: 200,
+                width: 328,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    image: file != null
+                        ? DecorationImage(
+                            image: FileImage(file!), fit: BoxFit.cover)
+                        : null,
+                    color: const Color.fromRGBO(86, 86, 86, 0.2)),
+                child: file != null
+                    ? Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          onPressed: () {
+                            _getFromGallery();
+                          },
+                          splashColor: Colors.white,
+                          iconSize: 18,
                           alignment: Alignment.topRight,
-                          child: IconButton(
-                            onPressed: () {
+                          icon: const Icon(
+                            Icons.mode_edit_outline_outlined,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    : Center(
+                        child: GradientCommonButton(
+                            function: () {
                               _getFromGallery();
                             },
-                            splashColor: Colors.white,
-                            iconSize: 18,
-                            alignment: Alignment.topRight,
-                            icon: const Icon(
-                              Icons.mode_edit_outline_outlined,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )
-                      : Center(
-                          child: GradientCommonButton(
-                              function: () {
-                                _getFromGallery();
-                              },
-                              height: 36,
-                              margin: const EdgeInsets.all(0),
-                              borderradius: 100,
-                              lable: "+ Add Image",
-                              width: 111)),
-                ),
-                const SizedBox(
-                  height: 7,
-                ),
-                ProfileEditFormField(
-                  function: (value) {
-                    return null;
-                  },
-                  keyBoardtype: TextInputType.name,
-                  hintText: "Driver's name",
-                  maxlength: 50,
-                  name: "Name*",
-                ),
-                ProfileEditFormField(
-                  function: (value) {
-                    return null;
-                  },
-                  keyBoardtype: TextInputType.number,
-                  hintText: "+91 9985467145",
-                  maxlength: 10,
-                  name: "Number*",
-                ),
-                ProfileEditFormField(
-                  function: (value) {
-                    return null;
-                  },
-                  keyBoardtype: TextInputType.streetAddress,
-                  hintText: "license number",
-                  maxlength: 50,
-                  name: "Driving license number *",
-                ),
-                ProfileEditFormField(
-                  function: (value) {
-                    return null;
-                  },
-                  keyBoardtype: TextInputType.text,
-                  hintText: "Vehicle number",
-                  maxlength: 50,
-                  name: "Vehicle number *",
-                ),
-                GradientCommonButton(
-                    function: () {
-                      Navigator.pop(context);
-                    },
-                    height: 44,
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    borderradius: 8,
-                    lable: "Save",
-                    width: 328)
-              ],
-            ),
+                            height: 36,
+                            margin: const EdgeInsets.all(0),
+                            borderradius: 100,
+                            lable: "+ Add Image",
+                            width: 111)),
+              ),
+              const SizedBox(
+                height: 7,
+              ),
+              ProfileEditFormField(
+                function: (value) {
+                  return null;
+                },
+                keyBoardtype: TextInputType.name,
+                hintText: "Driver's name",
+                maxlength: 50,
+                name: "Name*",
+              ),
+              ProfileEditFormField(
+                function: (value) {
+                  return null;
+                },
+                keyBoardtype: TextInputType.number,
+                hintText: "+91 9985467145",
+                maxlength: 10,
+                name: "Number*",
+              ),
+              ProfileEditFormField(
+                function: (value) {
+                  return null;
+                },
+                keyBoardtype: TextInputType.streetAddress,
+                hintText: "license number",
+                maxlength: 50,
+                name: "Driving license number *",
+              ),
+              ProfileEditFormField(
+                function: (value) {
+                  return null;
+                },
+                keyBoardtype: TextInputType.text,
+                hintText: "Vehicle number",
+                maxlength: 50,
+                name: "Vehicle number *",
+              ),
+            ],
           ),
         ),
       ),
+      bottomNavigationBar: GradientCommonButton(
+          function: () {
+            Navigator.pop(context);
+          },
+          height: 44,
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          borderradius: 8,
+          lable: "Save",
+          width: 328),
     );
   }
 }

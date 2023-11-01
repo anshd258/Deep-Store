@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:partner/UI/widget/Partner.rental.container.dart';
 import 'package:partner/UI/widget/partner.food.container.dart';
+import 'package:partner/UI/widget/partner.ride.container.dart';
 
 import 'package:partner/middleware/partnercubit/partner_filter_cubit.dart';
 import 'package:partner/middleware/partnercubit/partner_food_cubit.dart';
@@ -53,7 +54,27 @@ class _PartnerBodyState extends State<PartnerBody> {
             child: BlocConsumer<PartnerRideCubit, PartnerRideState>(
               listener: (context, state) {},
               builder: (context, state) {
-                return const Center();
+                return LiquidPullToRefresh(
+                  height: 50,
+                  springAnimationDurationInMilliseconds: 500,
+                  color: const Color.fromRGBO(34, 150, 199, 1),
+                  borderWidth: 1,
+                  showChildOpacityTransition: true,
+                  onRefresh: () async {},
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      children: _dummyValues
+                          .map(
+                            (e) => PartnreRideContainer(callback: () {
+                              Navigator.pushNamed(
+                                  context, "/partner/ride/items");
+                            }),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                );
               },
             ));
       } else {

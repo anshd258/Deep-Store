@@ -22,20 +22,23 @@ class PartnerMain extends StatelessWidget {
       ),
       floatingActionButton: Builder(builder: (context) {
         var value = context.watch<PartnerFilterCubit>();
-        if (value.tabIndex == 1) {
-          return GradientCommonButton(
-              function: () {
+
+        return GradientCommonButton(
+            function: () {
+              if (value.tabIndex == 1) {
                 Navigator.pushNamed(context, "/partner/food/addpartner");
-              },
-              height: 48,
-              margin: const EdgeInsets.all(0),
-              borderradius: 100,
-              lable: "+",
-              fontSize: 30,
-              width: 48);
-        } else {
-          return Center();
-        }
+              } else if (value.tabIndex == 3) {
+                Navigator.pushNamed(context, "/partner/rental/edit");
+              } else {
+                Navigator.pushNamed(context, "/partner/ride/edit");
+              }
+            },
+            height: 48,
+            margin: const EdgeInsets.all(0),
+            borderradius: 100,
+            lable: "+",
+            fontSize: 30,
+            width: 48);
       }),
     );
   }

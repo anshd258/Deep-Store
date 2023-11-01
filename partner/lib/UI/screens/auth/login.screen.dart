@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:partner/UI/util/utilwidget.dart';
 import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 import 'package:partner/middleware/auth_cubit.dart';
@@ -52,6 +53,9 @@ class _LoginscreenState extends State<Loginscreen> {
             print(state.autoLogin);
             Navigator.of(context)
                 .pushNamedAndRemoveUntil("/home", (route) => false);
+          } else if (state.autoLogin == false) {
+            print(state.messaage);
+            errorSnackBar(context, state.messaage!);
           }
         },
         builder: (context, state) {

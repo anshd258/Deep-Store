@@ -9,7 +9,7 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthInitial> {
   final Authrepository _authrepository;
   AuthCubit(this._authrepository)
-      : super(AuthInitial(otpSent: false, loading: true));
+      : super(AuthInitial(otpSent: false, loading: false));
 
   String pathGetOtp = "/user/login/";
 
@@ -98,19 +98,39 @@ class AuthCubit extends Cubit<AuthInitial> {
   void autoLogin() async {
     var data = await _authrepository.getData();
     if (data.first == "no data") {
-      emit(AuthInitial(otpSent: false, loading: false, autoLogin: false));
+      emit(AuthInitial(otpSent: false, loading: true, autoLogin: false));
     } else {
       _authrepository.update(
           access: data.elementAt(1),
           refresh: data.elementAt(2),
           phone: data.elementAt(3));
-      emit(
-        AuthInitial(
+      Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${_authrepository.accessToken}',
+      };
+
+      try {
+        Map<String, dynamic> response = await getData(
+            headers: headers,
+            path: "/user/get-user",
+            urlParameters: {'phone': _authrepository.phoneNumber});
+        if (response.toString() != "Exception: token_not_valid") {
+          emit(
+            AuthInitial(
+              otpSent: false,
+              loading: false,
+              autoLogin: true,
+            ),
+          );
+        }
+      } catch (e) {
+        emit(AuthInitial(
           otpSent: false,
           loading: false,
-          autoLogin: true,
-        ),
-      );
+          messaage: e.toString(),
+          autoLogin: false,
+        ));
+      }
     }
   }
 
