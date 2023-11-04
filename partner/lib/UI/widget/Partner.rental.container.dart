@@ -4,9 +4,8 @@ import 'package:partner/UI/widget/Aleartdialog/partner.rental.remove.dart';
 import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 
-class PartnerFoodContainer extends StatelessWidget {
-  const PartnerFoodContainer({super.key});
-
+class PartnerRentalContainer extends StatelessWidget {
+  const PartnerRentalContainer({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,18 +26,18 @@ class PartnerFoodContainer extends StatelessWidget {
           Row(
             children: [
               Image.network(
-                "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                "https://media.wired.co.uk/photos/63e15d1d8867ad9df8cc4ef2/master/w_1600,c_limit/Rolls-Royce-Spectre-EV-First-Drive-2-Gear.jpg",
                 frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      borderRadius: const BorderRadius.all(Radius.circular(4)),
                       child: child,
                     ),
                   );
                 },
-                height: 130,
-                width: 165,
+                height: 120,
+                width: 146,
                 fit: BoxFit.fill,
               ),
               Container(
@@ -49,36 +48,10 @@ class PartnerFoodContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    textwidget("Ladakh ", "Tea stall", 16, FontWeight.w600),
-                    textwidget("+91 ", "9911005213", 14, FontWeight.w400),
-                    Row(
-                      children: [
-                        const Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Icon(
-                              Icons.crop_square_sharp,
-                              color: Colors.green,
-                              size: 36,
-                            ),
-                            Icon(Icons.circle, color: Colors.green, size: 14),
-                          ],
-                        ),
-                        textwidget(" ", "/ ", 25, FontWeight.w400),
-                        const Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Icon(
-                              Icons.crop_square_sharp,
-                              color: Colors.red,
-                              size: 36,
-                            ),
-                            Icon(Icons.circle, color: Colors.red, size: 14),
-                          ],
-                        ),
-                      ],
-                    ),
-                    textwidget("9 ", "items listed", 14, FontWeight.w400),
+                    textwidget("", "Joginder singh", 16, FontWeight.w400),
+                    textwidget("", "+91 8686845848", 14, FontWeight.w400),
+                    textwidget("", "KLPQ726389JED", 16, FontWeight.w400),
+                    textwidget("", "LA 01 B 2013", 16, FontWeight.w400),
                   ],
                 ),
               )
@@ -93,7 +66,8 @@ class PartnerFoodContainer extends StatelessWidget {
                 OutlinedDeclineButton(
                     color: Colors.redAccent.shade400,
                     function: () {
-                      rentalRemovalDialog(context, "Ladakh Tea stall");
+                      String name = "Joginder Singh";
+                      rentalRemovalDialog(context, name);
                     },
                     height: 34,
                     margin: const EdgeInsets.symmetric(
@@ -104,16 +78,14 @@ class PartnerFoodContainer extends StatelessWidget {
                     width: 146),
                 GradientCommonButton(
                     function: () {
-                      Navigator.of(context).pushNamed(
-                        "/partner/food/list",
-                      );
+                      Navigator.pushNamed(context, "/partner/rental/edit");
                     },
                     height: 34,
                     margin: const EdgeInsets.symmetric(
                       horizontal: 5,
                     ),
                     borderradius: 5,
-                    lable: "Items",
+                    lable: "Edit",
                     width: 146)
               ],
             ),

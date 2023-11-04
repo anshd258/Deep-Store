@@ -3,18 +3,17 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:partner/UI/widget/editPage.FormField.dart';
-import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
+import 'package:partner/UI/widget/editPage.FormField.dart';
 
-class PartnerAddPage extends StatefulWidget {
-  const PartnerAddPage({super.key});
+class PartnerRideEdit extends StatefulWidget {
+  const PartnerRideEdit({super.key});
 
   @override
-  State<PartnerAddPage> createState() => _PartnerAddPageState();
+  State<PartnerRideEdit> createState() => _PartnerRideEditState();
 }
 
-class _PartnerAddPageState extends State<PartnerAddPage> {
+class _PartnerRideEditState extends State<PartnerRideEdit> {
   bool value = false;
 
   bool value3 = false;
@@ -35,7 +34,7 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    String title = "Edit Food Partner";
+    String title = "Edit Rental Partner";
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(
@@ -51,7 +50,7 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
       ),
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -101,18 +100,18 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                   return null;
                 },
                 keyBoardtype: TextInputType.name,
-                hintText: "Chicken Tandoori",
+                hintText: "Active 6G",
                 maxlength: 200,
-                name: "Name",
+                name: "Name *",
               ),
               ProfileEditFormField(
                 function: (value) {
                   return null;
                 },
                 keyBoardtype: TextInputType.number,
-                hintText: "+91 9911007788",
+                hintText: "325",
                 maxlength: 200,
-                name: "Phone Number",
+                name: "Phone *",
               ),
               SizedBox(
                 child: Column(
@@ -123,7 +122,7 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Select Food Type*",
+                            "Select Vejical Type*",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Color(0xFF555555),
@@ -158,13 +157,13 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                               },
                             ),
                             const Text(
-                              "Veg",
+                              "Two wheeler",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFF555555),
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontFamily: 'Lato',
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w400,
                                 letterSpacing: -0.48,
                               ),
                             ),
@@ -172,16 +171,14 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                               alignment: Alignment.center,
                               children: [
                                 Icon(
-                                  Icons.crop_square_sharp,
+                                  Icons.directions_bike,
                                   color: Colors.green,
-                                  size: 36,
+                                  size: 30,
                                 ),
-                                Icon(Icons.circle,
-                                    color: Colors.green, size: 14),
                               ],
                             ),
                             Checkbox.adaptive(
-                              checkColor: Colors.red,
+                              checkColor: Colors.green,
                               fillColor:
                                   MaterialStateProperty.resolveWith<Color>(
                                       (Set<MaterialState> states) {
@@ -200,13 +197,13 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                               },
                             ),
                             const Text(
-                              "Non-veg",
+                              "Four wheeler",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFF555555),
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontFamily: 'Lato',
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w400,
                                 letterSpacing: -0.48,
                               ),
                             ),
@@ -214,11 +211,10 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                               alignment: Alignment.center,
                               children: [
                                 Icon(
-                                  Icons.crop_square_sharp,
-                                  color: Colors.red,
+                                  Icons.car_rental_rounded,
+                                  color: Colors.green,
                                   size: 36,
                                 ),
-                                Icon(Icons.circle, color: Colors.red, size: 14),
                               ],
                             ),
                           ],
@@ -231,7 +227,9 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
         ),
       ),
       bottomNavigationBar: GradientCommonButton(
-          function: () {},
+          function: () {
+            Navigator.pop(context);
+          },
           height: 44,
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           borderradius: 8,

@@ -35,7 +35,7 @@ class _PartnerProductEditState extends State<PartnerProductEdit> {
 
   @override
   Widget build(BuildContext context) {
-    String title = "Edit item";
+    String title = "Edit Product";
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:partner/UI/util/utilwidget.dart';
 import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 import 'package:partner/middleware/auth_cubit.dart';
@@ -114,7 +115,17 @@ class _OtpScreenState extends State<OtpScreen> {
                                     letterSpacing: -0.28,
                                   ),
                                 ),
-                                const Icon(Icons.short_text_rounded)
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, "/", (route) => false);
+                                  },
+                                  child: const Icon(
+                                    Icons.edit_outlined,
+                                    color: const Color(0xB2555555),
+                                    size: 20,
+                                  ),
+                                )
                               ],
                             ),
                           )
@@ -189,14 +200,22 @@ class _OtpScreenState extends State<OtpScreen> {
                             ),
                           ),
                           const SizedBox(width: 2),
-                          Text(
-                            'Resend OTP',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.lato(
-                              color: const Color(0xFF3BA365),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: -0.42,
+                          InkWell(
+                            onTap: () {
+                              context
+                                  .read<AuthCubit>()
+                                  .getOTP(widget.phoneNumber);
+                              errorSnackBar(context, "OTP sent");
+                            },
+                            child: Text(
+                              'Resend OTP',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.lato(
+                                color: const Color(0xFF3BA365),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: -0.42,
+                              ),
                             ),
                           ),
                         ],

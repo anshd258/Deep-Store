@@ -3,18 +3,17 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:partner/UI/widget/editPage.FormField.dart';
-import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
+import 'package:partner/UI/widget/editPage.FormField.dart';
 
-class PartnerAddPage extends StatefulWidget {
-  const PartnerAddPage({super.key});
+class PartnerVehicalEdit extends StatefulWidget {
+  const PartnerVehicalEdit({super.key});
 
   @override
-  State<PartnerAddPage> createState() => _PartnerAddPageState();
+  State<PartnerVehicalEdit> createState() => _PartnerVehicalEditState();
 }
 
-class _PartnerAddPageState extends State<PartnerAddPage> {
+class _PartnerVehicalEditState extends State<PartnerVehicalEdit> {
   bool value = false;
 
   bool value3 = false;
@@ -35,7 +34,7 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
 
   @override
   Widget build(BuildContext context) {
-    String title = "Edit Food Partner";
+    String title = "Add New Vehical";
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(
@@ -51,47 +50,54 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
       ),
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+        ),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 200,
-                width: 328,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    image: file != null
-                        ? DecorationImage(
-                            image: FileImage(file!), fit: BoxFit.cover)
-                        : null,
-                    color: const Color.fromRGBO(86, 86, 86, 0.2)),
-                child: file != null
-                    ? Align(
-                        alignment: Alignment.topRight,
-                        child: IconButton(
-                          onPressed: () {
-                            _getFromGallery();
-                          },
-                          splashColor: Colors.white,
-                          iconSize: 18,
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
+                child: Container(
+                  height: 200,
+                  width: 328,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      image: file != null
+                          ? DecorationImage(
+                              image: FileImage(file!), fit: BoxFit.cover)
+                          : null,
+                      color: const Color.fromRGBO(86, 86, 86, 0.2)),
+                  child: file != null
+                      ? Align(
                           alignment: Alignment.topRight,
-                          icon: const Icon(
-                            Icons.mode_edit_outline_outlined,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
-                    : Center(
-                        child: GradientCommonButton(
-                            function: () {
+                          child: IconButton(
+                            onPressed: () {
                               _getFromGallery();
                             },
-                            height: 36,
-                            margin: const EdgeInsets.all(0),
-                            borderradius: 100,
-                            lable: "+ Add Image",
-                            width: 111)),
+                            splashColor: Colors.white,
+                            iconSize: 18,
+                            alignment: Alignment.topRight,
+                            icon: const Icon(
+                              Icons.mode_edit_outline_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      : Center(
+                          child: GradientCommonButton(
+                              function: () {
+                                _getFromGallery();
+                              },
+                              height: 36,
+                              margin: const EdgeInsets.all(0),
+                              borderradius: 100,
+                              lable: "+ Add Image",
+                              width: 111)),
+                ),
               ),
               const SizedBox(
                 height: 7,
@@ -101,18 +107,48 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                   return null;
                 },
                 keyBoardtype: TextInputType.name,
-                hintText: "Chicken Tandoori",
+                hintText: "Active 6G",
                 maxlength: 200,
-                name: "Name",
+                name: "Name *",
               ),
               ProfileEditFormField(
                 function: (value) {
                   return null;
                 },
                 keyBoardtype: TextInputType.number,
-                hintText: "+91 9911007788",
+                hintText: "325",
                 maxlength: 200,
-                name: "Phone Number",
+                name: "Price *",
+              ),
+              ProfileEditFormField(
+                function: (value) {
+                  return null;
+                },
+                keyBoardtype: TextInputType.number,
+                hintText: "500",
+                maxlength: 200,
+                maxLines: 2,
+                name: "Engine Power (in cc) *",
+              ),
+              ProfileEditFormField(
+                function: (value) {
+                  return null;
+                },
+                keyBoardtype: TextInputType.number,
+                hintText: "13",
+                maxlength: 200,
+                maxLines: 2,
+                name: "Fuel Capacity (in liter) *",
+              ),
+              ProfileEditFormField(
+                function: (value) {
+                  return null;
+                },
+                keyBoardtype: TextInputType.number,
+                hintText: "55",
+                maxlength: 200,
+                maxLines: 2,
+                name: "Fuel milage *",
               ),
               SizedBox(
                 child: Column(
@@ -123,7 +159,7 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Select Food Type*",
+                            "Select Vejical Type*",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Color(0xFF555555),
@@ -154,17 +190,18 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                               onChanged: (val) {
                                 setState(() {
                                   value = val ?? true;
+                                  value3 = false;
                                 });
                               },
                             ),
                             const Text(
-                              "Veg",
+                              "Two wheeler",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFF555555),
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontFamily: 'Lato',
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w400,
                                 letterSpacing: -0.48,
                               ),
                             ),
@@ -172,16 +209,14 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                               alignment: Alignment.center,
                               children: [
                                 Icon(
-                                  Icons.crop_square_sharp,
+                                  Icons.directions_bike,
                                   color: Colors.green,
-                                  size: 36,
+                                  size: 30,
                                 ),
-                                Icon(Icons.circle,
-                                    color: Colors.green, size: 14),
                               ],
                             ),
                             Checkbox.adaptive(
-                              checkColor: Colors.red,
+                              checkColor: Colors.green,
                               fillColor:
                                   MaterialStateProperty.resolveWith<Color>(
                                       (Set<MaterialState> states) {
@@ -196,17 +231,18 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                               onChanged: (val) {
                                 setState(() {
                                   value3 = val ?? true;
+                                  value = false;
                                 });
                               },
                             ),
                             const Text(
-                              "Non-veg",
+                              "Four wheeler",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFF555555),
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontFamily: 'Lato',
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w400,
                                 letterSpacing: -0.48,
                               ),
                             ),
@@ -214,11 +250,10 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
                               alignment: Alignment.center,
                               children: [
                                 Icon(
-                                  Icons.crop_square_sharp,
-                                  color: Colors.red,
+                                  Icons.car_rental_rounded,
+                                  color: Colors.green,
                                   size: 36,
                                 ),
-                                Icon(Icons.circle, color: Colors.red, size: 14),
                               ],
                             ),
                           ],
@@ -231,7 +266,9 @@ class _PartnerAddPageState extends State<PartnerAddPage> {
         ),
       ),
       bottomNavigationBar: GradientCommonButton(
-          function: () {},
+          function: () {
+            Navigator.pop(context);
+          },
           height: 44,
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           borderradius: 8,

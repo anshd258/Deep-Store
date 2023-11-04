@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:partner/UI/screens/Profile/Profile.page.dart';
 import 'package:partner/UI/screens/Rides/rides.request.dart';
+import 'package:partner/UI/screens/partners/Partner.main.dart';
 
 import 'package:partner/helpers/constants.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
@@ -30,9 +31,9 @@ class ScreenSetup extends StatelessWidget {
       backgroundColor: Colors.white,
       screens: [
         const Home(),
-        const FoodRequest(),
+        // const FoodRequest(),
         const RidesRequest(),
-        // PartnerMain(),
+        PartnerMain(),
         ProfilePage(),
       ],
       items: const [
@@ -42,24 +43,24 @@ class ScreenSetup extends StatelessWidget {
           ),
           label: 'Home',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            NavBarIcons.burger,
-          ),
-          label: 'Food',
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(
+        //     NavBarIcons.burger,
+        //   ),
+        //   label: 'Food',
+        // ),
         BottomNavigationBarItem(
           icon: Icon(
             NavBarIcons.ride,
           ),
           label: 'Rides',
         ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(
-        //     Icons.diamond_outlined,
-        //   ),
-        //   label: 'Partners',
-        // ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.diamond_outlined,
+          ),
+          label: 'Partners',
+        ),
         BottomNavigationBarItem(
           icon: Icon(
             NavBarIcons.account,

@@ -104,13 +104,13 @@ class MainApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-         builder: (context, child) => ResponsiveBreakpoints.builder(
-        child: child!,
-        breakpoints: [
-          const Breakpoint(start: 0, end: 450, name: MOBILE),
-          const Breakpoint(start: 451, end: 800, name: TABLET),
-        ],
-      ),
+        builder: (context, child) => ResponsiveBreakpoints.builder(
+          child: child!,
+          breakpoints: [
+            const Breakpoint(start: 0, end: 450, name: MOBILE),
+            const Breakpoint(start: 451, end: 800, name: TABLET),
+          ],
+        ),
         onGenerateRoute: (settings) => AppRouter().onGenerateRoute(settings),
       ),
     );

@@ -12,7 +12,7 @@ class ProfileEditFormField extends StatelessWidget {
   String? Function(String?)? function;
   ProfileEditFormField(
       {super.key,
-       this.ctr,
+      this.ctr,
       required this.maxlength,
       required this.keyBoardtype,
       required this.name,
@@ -78,6 +78,7 @@ class ProfileEditFormField extends StatelessWidget {
                 validator: function,
                 cursorColor: const Color(0x99565656),
                 decoration: InputDecoration(
+                  counter: null,
                   contentPadding: const EdgeInsets.all(5),
                   errorBorder: outlineInputBorderError,
                   errorStyle: GoogleFonts.nunito(

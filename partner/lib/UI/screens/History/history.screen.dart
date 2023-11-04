@@ -22,16 +22,17 @@ class HistoryScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leadingWidth: 0,
         backgroundColor: Colors.white,
         elevation: 0,
         title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 6),
           child: Text(
             'History',
             textAlign: TextAlign.center,
             style: GoogleFonts.lato(
               color: const Color(0xFF565656),
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w700,
               letterSpacing: -0.28,
             ),
