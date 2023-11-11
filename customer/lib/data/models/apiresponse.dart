@@ -7,12 +7,15 @@ import 'ride.dart';
 
 class ApiResponse {
   final List<Food>? foodItems;
-  final List<Rental>? rentalItems;
   final FoodOrder? foodOrder;
   final List<FoodOrder>? foodOrders;
+
+  final List<Rental>? rentalItems;
+  final List<RentalRequest>? rentalRequests;
+
   final Ride? ride;
   final List<Ride>? rideRequests;
-  final List<RentalRequest>? rentalRequests;
+  
   final User? userData;
 
   final String? accessToken;

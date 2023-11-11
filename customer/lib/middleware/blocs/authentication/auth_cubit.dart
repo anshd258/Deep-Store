@@ -1,41 +1,46 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:customer/data/models/apiresponse.dart';
+import 'dart:io';
+import 'package:customer/data/apiservice.dart';
 import 'package:customer/data/models/authentication.dart';
-import 'package:customer/data/datasource.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
-
+import '../../../constants.dart';
 import '../../../data/models/user.dart';
 import '../../helpers/constants.dart';
-import '../../helpers/sharedprefrence.utils.dart';
+import '../../helpers/storage.utils.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthState(otpSent: false, loading: false));
 
+  /// Authentication bloc
+  /// following are the methods:
+  ///   [getUserDetails]
+  ///   [updateUserDetails]
+  ///   [getOTP]
+  ///   [loginWithOtp]
+
   void clear() {
     emit(AuthState(otpSent: false, loading: false));
   }
 
   Future<bool> getUserDetails() async {
-    String? phone = await SharedPreferencesUtils.getString(
-        key: SharedPrefrencesKeys.userPhoneNumber);
+    String? phone =
+        await LocalStorage.read(key: LocalStorageKeys.userPhoneNumber);
     if (phone != null) {
-      ApiResponse? apiResponse = await DataSource.getData(
-          path: DataSource.getUserDetails, urlParameters: {'phone': phone});
-      if (apiResponse!.userData != null) {
-        User? user = apiResponse.userData;
-        emit(AuthState(
-            loading: state.loading,
-            obj: state.obj,
-            otpSent: state.otpSent,
-            user: user));
-        return true;
-      }
+      Map<String, dynamic>? apiResponse = await ApiService.get(
+          endpoint: Constants.getUserDetails, urlParameters: {'phone': phone});
+      var userData = User.fromJson(apiResponse!['userdata']);
+      User? user = userData;
+      emit(AuthState(
+          loading: state.loading,
+          obj: state.obj,
+          otpSent: state.otpSent,
+          user: user));
+      return true;
     }
     return false;
   }
@@ -46,19 +51,13 @@ class AuthCubit extends Cubit<AuthState> {
       String? name,
       String? email,
       String? phone}) async {
-    name ??= await SharedPreferencesUtils.getString(
-            key: SharedPrefrencesKeys.name) ??
-        '';
-    email ??= await SharedPreferencesUtils.getString(
-            key: SharedPrefrencesKeys.email) ??
-        '';
-    phone ??= await SharedPreferencesUtils.getString(
-            key: SharedPrefrencesKeys.userPhoneNumber) ??
-        '';
+    name ??= await LocalStorage.read(key: LocalStorageKeys.name) ?? '';
+    email ??= await LocalStorage.read(key: LocalStorageKeys.email) ?? '';
+    phone ??=
+        await LocalStorage.read(key: LocalStorageKeys.userPhoneNumber) ?? '';
     try {
-      Response? response = await DataSource.get(
-          path: DataSource.updateUserDetails,
-          queryType: QueryType.post,
+      Map<String, dynamic>? response = await ApiService.post(
+          endpoint: Constants.updateUserDetails,
           body: {
             'room': roomNumber,
             'username': name,
@@ -67,7 +66,7 @@ class AuthCubit extends Cubit<AuthState> {
           });
 
       if (response != null) {
-        if (json.decode(response.body)['status'] == 'success') {
+        if (response['status'] == 'success') {
           return true;
         }
       }
@@ -80,16 +79,15 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void getOTP(String phoneNumber) async {
-    await SharedPreferencesUtils.storeString(
-        key: SharedPrefrencesKeys.userPhoneNumber,
-        value: phoneNumber.toString());
+    await LocalStorage.write(
+        key: LocalStorageKeys.userPhoneNumber, value: phoneNumber.toString());
     Map<String, dynamic> parameters = {"phone": phoneNumber};
     emit(AuthState(otpSent: false, loading: true));
 
     try {
-      Response response = await get(
-              Uri.https(DataSource.backend, DataSource.getOtp, parameters))
-          .then((value) {
+      Response response =
+          await get(Uri.https(Constants.backend, Constants.getOtp, parameters))
+              .then((value) {
         return value;
       });
 
@@ -114,23 +112,17 @@ class AuthCubit extends Cubit<AuthState> {
   void loginWithOtp(String otp) async {
     emit(AuthState(otpSent: false, loading: true, obj: state.obj));
 
-    Map<String, dynamic> body = {
-      'otp': otp,
-      'phone': state.obj!.phoneNumber,
-    };
+    Map<String, dynamic> body = {'phone': state.obj!.phoneNumber, 'otp': otp};
+    print(body);
+    print(state.obj!.authToken.toString());
     try {
-      Response? response = await DataSource.get(
-          queryType: QueryType.post,
-          path: DataSource.getOtp,
+      Map<String, dynamic>? credentials = await ApiService.post(
+          endpoint: Constants.getOtp,
           body: body,
           headers: {'jwt': state.obj!.authToken.toString()});
-      Map<String, dynamic> credentials = json.decode(response!.body);
-      // ApiResponse? response = await DataSource.getData(
-      //     queryType: QueryType.post,
-      //     path: DataSource.getOtp,
-      //     body: body,
-      //     headers: {'jwt': state.obj!.authToken.toString()});
-      if (credentials['access'] != null) {
+
+      print(credentials);
+      if (credentials!['access'] != null) {
         emit(
           AuthState(
             otpSent: false,
@@ -143,17 +135,21 @@ class AuthCubit extends Cubit<AuthState> {
           ),
         );
 
-        SharedPreferencesUtils.storeString(
-            key: SharedPrefrencesKeys.accessToken,
+        LocalStorage.write(
+            key: LocalStorageKeys.accessToken,
             value: credentials['access'] ?? '');
-        SharedPreferencesUtils.storeString(
-            key: SharedPrefrencesKeys.refreshToken,
+        LocalStorage.write(
+            key: LocalStorageKeys.refreshToken,
             value: credentials['access'] ?? '');
-        SharedPreferencesUtils.storeString(
-            key: SharedPrefrencesKeys.userPhoneNumber,
+        LocalStorage.write(
+            key: LocalStorageKeys.userPhoneNumber,
             value: state.obj!.phoneNumber ?? '');
       }
+      if (credentials['status'] == 'Login failed') {
+        emit(AuthState(otpSent: false, loading: false, obj: state.obj));
+      }
     } catch (e) {
+      print('unable to login with OTP: $e');
       emit(AuthState(otpSent: false, loading: false, obj: state.obj));
     }
   }

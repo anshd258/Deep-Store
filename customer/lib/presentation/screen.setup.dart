@@ -3,7 +3,8 @@ import 'package:customer/presentation/screens/orders/order.setup.dart';
 import 'package:customer/presentation/screens/vehicle/vehicleselect.dart';
 import 'package:flutter/material.dart';
 import '../middleware/helpers/constants.dart';
-import '../middleware/helpers/sharedprefrence.utils.dart';
+
+import '../middleware/helpers/storage.utils.dart';
 import 'screens/food/foodselect.dart';
 import 'screens/profile/profile.dart';
 
@@ -12,8 +13,7 @@ class ScreenSetup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SharedPreferencesUtils.storeString(
-        key: SharedPrefrencesKeys.location, value: 'manali');
+    LocalStorage.write(key: LocalStorageKeys.location, value: 'manali');
     return const CustomTabView(
       screens: [Home(), FoodSelect(), VehicleSelect(), ProfilePage()],
       items: [

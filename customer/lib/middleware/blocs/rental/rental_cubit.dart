@@ -1,16 +1,13 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
-import 'package:customer/data/datasource.dart';
+import 'package:customer/data/apiservice.dart';
 import 'package:customer/middleware/helpers/constants.dart';
+import 'package:customer/middleware/helpers/storage.utils.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-// ignore: depend_on_referenced_packages, unnecessary_import
 import 'package:meta/meta.dart';
 
+import '../../../constants.dart';
 import '../../../data/models/rental.dart';
 import '../../../data/models/rentalrequest.dart';
-import '../../helpers/sharedprefrence.utils.dart';
 
 part 'rental_state.dart';
 
@@ -22,16 +19,15 @@ class RentalCubit extends Cubit<RentalState> {
   }
 
   Future<void> fetchAllRentals() async {
-    String? location = await SharedPreferencesUtils.getString(
-        key: SharedPrefrencesKeys.location);
+    String? location = await LocalStorage.read(key: LocalStorageKeys.location);
     Map<String, dynamic> parameters = {"location": "$location"};
-    await DataSource.get(
-      path: DataSource.getAllRentals,
+    await ApiService.get(
+      endpoint: Constants.getAllRentals,
       urlParameters: parameters,
     ).then((value) {
       if (value != null) {
-        List<dynamic> jsondata = json.decode(value.body) ;
-        List<Rental> rentals = jsondata.map((e) => Rental.fromJson(e)).toList();
+        var jsonData = value as List;
+        List<Rental> rentals = jsonData.map((e) => Rental.fromJson(e)).toList();
 
         emit(UpdateRentalState(
           rentalList: rentals,
@@ -42,15 +38,16 @@ class RentalCubit extends Cubit<RentalState> {
 
   Future<bool> fetchAllRentalRequests() async {
     try {
-      await DataSource.getData(
-        path: DataSource.getAllRentalRequests,
+      await ApiService.get(
+        endpoint: Constants.getAllRentalRequests,
       ).then((value) {
-        if (value != null) {
-          emit(UpdateRentalState(
-              rentalRequestList: value.rentalRequests,
-              rentalList: state.rentalList));
-          return true;
-        } else {}
+        List<RentalRequest>? requests =
+            (value!['rentalrequests'] as List<dynamic>?)
+                ?.map((e) => RentalRequest.fromJson(e as Map<String, dynamic>))
+                .toList();
+        emit(UpdateRentalState(
+            rentalRequestList: requests, rentalList: state.rentalList));
+        return true;
       });
     } catch (e) {
       if (kDebugMode) {
@@ -61,9 +58,8 @@ class RentalCubit extends Cubit<RentalState> {
   }
 
   Future<bool> createRentalRequest(String rentalId, int quantity) async {
-    String location = await SharedPreferencesUtils.getString(
-            key: SharedPrefrencesKeys.location) ??
-        '';
+    String location =
+        await LocalStorage.read(key: LocalStorageKeys.location) ?? '';
 
     Map<String, dynamic> body = {
       "rental_id": rentalId,
@@ -71,22 +67,17 @@ class RentalCubit extends Cubit<RentalState> {
       "end_location": 'mount abu',
       'start_coordinates': '123456',
       'end_coordinates': '78910',
-      'quantity':quantity,
+      'quantity': quantity,
       'start_time': DateTime.now().toString()
     };
     try {
-      http.Response? response = await DataSource.get(
-        queryType: QueryType.post,
-        path: DataSource.createRentalRequest,
+      Map<String, dynamic>? response = await ApiService.post(
+        endpoint: Constants.createRentalRequest,
         body: body,
       );
 
-      if (response!.statusCode == 200) {
-        fetchAllRentalRequests();
-        return true;
-      }
-
-      return false;
+      fetchAllRentalRequests();
+      return true;
     } catch (e) {
       if (kDebugMode) {
         print('someting went wrong while requesting ride');

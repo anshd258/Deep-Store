@@ -1,16 +1,14 @@
-import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:customer/data/apiservice.dart';
 import 'package:customer/data/models/payment.model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
-// ignore: unnecessary_import, depend_on_referenced_packages
 import 'package:meta/meta.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-import '../../../data/datasource.dart';
+import '../../../constants.dart';
 import '../../../data/models/foodorder.dart';
 import '../../helpers/constants.dart';
 
@@ -48,16 +46,15 @@ class PaymentCubit extends Cubit<PaymentState> {
 
       Future<void> handlePaymentSuccess(PaymentSuccessResponse response) async {
         try {
-          Response? verifyresponse = await DataSource.get(
-              path: DataSource.orderVerification,
-              queryType: QueryType.post,
+  Map<String,dynamic>? verifyresponse = await ApiService.post(
+              endpoint: Constants.orderVerification,
               body: {
                 'order_id': response.orderId,
                 'payment_id': response.paymentId,
                 'signature': response.signature
               });
           if (verifyresponse != null) {
-            if (json.decode(verifyresponse.body)['status'] == 'success') {
+            if (verifyresponse['status'] == 'success') {
               await updateOrderStatus(order.id, OrderStatus.confirmed)
                   .then((value) {
                 emit(const UpdatePaymentState(
@@ -99,12 +96,11 @@ class PaymentCubit extends Cubit<PaymentState> {
     Map<String, dynamic> body = {
       "order": {"id": orderId, "status": status.index}
     };
-    Response? response = await DataSource.get(
-        path: DataSource.updateFoodOrder,
-        queryType: QueryType.post,
+    Map<String, dynamic>? response = await ApiService.post(
+        endpoint: Constants.updateFoodOrder,
         body: body);
     if (response != null) {
-      if (json.decode(response.body)['id'] == orderId) {
+      if (response['id'] == orderId) {
         return true;
       }
     }
@@ -113,12 +109,11 @@ class PaymentCubit extends Cubit<PaymentState> {
 }
 
 Future<OrderPaymentData?> createOrder(String orderId) async {
-  Response? response = await DataSource.get(
-      queryType: QueryType.post,
-      path: DataSource.orderPayment,
+  Map<String, dynamic>? response = await ApiService.post(
+ endpoint: Constants.orderPayment,
       body: {'order_id': orderId});
   if (response != null) {
-    return OrderPaymentData.fromJson(json.decode(response.body));
+    return OrderPaymentData.fromJson(response);
   }
   return null;
 }

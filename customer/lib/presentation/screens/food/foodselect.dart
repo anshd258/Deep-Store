@@ -51,14 +51,18 @@ class FoodSelect extends StatelessWidget {
                     List<Food>? foodList =
                         context.read<FoodCubit>().state.foodList;
                     return foodList != null
-                        ? ListView.builder(
-                            itemCount: foodList.length,
-                            itemBuilder: (itemContext, index) {
-                              Food food = foodList[index];
-                              return FoodItemCard(
-                                food: food,
-                              );
-                            })
+                        ? foodList.isEmpty
+                            ? const Center(
+                                child: Text(
+                                    'No food items in your location!'))
+                            : ListView.builder(
+                                itemCount: foodList.length,
+                                itemBuilder: (itemContext, index) {
+                                  Food food = foodList[index];
+                                  return FoodItemCard(
+                                    food: food,
+                                  );
+                                })
                         : const Center(
                             child: CircularProgressIndicator.adaptive());
                   }),

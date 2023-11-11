@@ -1,5 +1,5 @@
 import 'package:customer/middleware/helpers/constants.dart';
-import 'package:customer/middleware/helpers/sharedprefrence.utils.dart';
+import 'package:customer/middleware/helpers/storage.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -66,8 +66,7 @@ class _OtpScreenState extends State<OtpScreen> {
               Navigator.pushNamedAndRemoveUntil(
                   context, "/registername", (route) => false);
             } else {
-              SharedPreferencesUtils.getString(
-                      key: SharedPrefrencesKeys.accessToken)
+              LocalStorage.read(key: LocalStorageKeys.accessToken)
                   .then((value) {
                 print(value);
               });

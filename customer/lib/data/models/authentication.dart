@@ -1,4 +1,4 @@
-class Authentication {
+class   Authentication {
   final String? accessToken;
   final String? refreshToken;
   final String? authToken;

@@ -1,11 +1,9 @@
-import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:http/http.dart';
+import 'package:customer/data/apiservice.dart';
 import 'package:meta/meta.dart';
-import '../../../data/datasource.dart';
+import '../../../constants.dart';
 import '../../../data/models/ride.dart';
-import '../../helpers/constants.dart';
 
 part 'ride_state.dart';
 
@@ -17,13 +15,12 @@ class RideCubit extends Cubit<RideState> {
   }
 
   Future<bool> fetchRideRequests() async {
-    await DataSource.get(
-      path: DataSource.getAllRideRequests,
+    await ApiService.get(
+      endpoint: Constants.getAllRideRequests,
     ).then((value) {
       if (value != null) {
-                List<dynamic> jsondata = json.decode(value.body) ;
+        List jsondata = value as List;
         List<Ride> rides = jsondata.map((e) => Ride.fromJson(e)).toList();
-
 
         emit(UpdateRideRequestsState(
           rideRequests: rides,
@@ -42,17 +39,10 @@ class RideCubit extends Cubit<RideState> {
       "end_coordinates": "2323.3423",
       "price": 2000
     };
-    // Map<String, dynamic> body = {
-    //   "start_location": ride.pickUpLocation,
-    //   "end_location": ride.dropOffLocation,
-    //   "start_coordinates": ride.pickUpCoordinates,
-    //   "end_coordinates": ride.dropOffCoordinates,
-    //   "price": 2000
-    // };
+ 
     try {
-      Response? response = await DataSource.get(
-        queryType: QueryType.post,
-        path: DataSource.createRideRequest,
+      Map<String, dynamic>? response = await ApiService.post(
+        endpoint: Constants.createRideRequest,
         body: body,
       );
       if (response != null) {

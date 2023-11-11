@@ -80,16 +80,19 @@ class _RentalSelectState extends State<RentalSelect> {
           Expanded(
             child: RefreshIndicator(
               onRefresh: () async {
-        context.read<RentalCubit>().fetchAllRentals();
-      },
-              child: ListView.builder(
-                    itemCount: displayList.length,
-                    itemBuilder: (context, index) {
-                      Rental rental = displayList[index];
-                      return RentalItemCard(
-                        rental: rental,
-                      );
-                    }),
+                context.read<RentalCubit>().fetchAllRentals();
+              },
+              child: displayList.isEmpty
+                  ? Center(
+                      child: Text('No rental available in your location!!'))
+                  : ListView.builder(
+                      itemCount: displayList.length,
+                      itemBuilder: (context, index) {
+                        Rental rental = displayList[index];
+                        return RentalItemCard(
+                          rental: rental,
+                        );
+                      }),
             ),
           ),
         ],

@@ -4,10 +4,10 @@ import 'package:customer/middleware/blocs/payment/payment_cubit.dart';
 import 'package:customer/middleware/blocs/rental/rental_cubit.dart';
 import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
 import 'package:customer/middleware/helpers/constants.dart';
+import 'package:customer/middleware/helpers/storage.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../middleware/helpers/sharedprefrence.utils.dart';
 import '../../widgets/buttons/OutlinedDeclineButton.dart';
 import '../../widgets/cards/profile.container.dart';
 import '../../widgets/cards/profile.options.dart';
@@ -24,8 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    SharedPreferencesUtils.getString(key: SharedPrefrencesKeys.userPhoneNumber)
-        .then((value) {
+    LocalStorage.read(key: LocalStorageKeys.userPhoneNumber).then((value) {
       context.read<AuthCubit>().getUserDetails();
     });
   }
@@ -84,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Expanded(
                             child: OutlinedDeclineButton(
                                 function: () {
-                                  SharedPreferencesUtils.clear();
+                                  LocalStorage.clear();
                                   context.read<FoodCubit>().clear();
                                   context.read<RentalCubit>().clear();
                                   context.read<RideCubit>().clear();

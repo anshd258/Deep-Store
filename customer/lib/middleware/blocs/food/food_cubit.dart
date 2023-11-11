@@ -1,17 +1,14 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:customer/data/apiservice.dart';
+import 'package:customer/middleware/helpers/storage.utils.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart';
-// ignore: depend_on_referenced_packages, unnecessary_import
 import 'package:meta/meta.dart';
-
-import '../../../data/datasource.dart';
-import '../../../data/models/apiresponse.dart';
+import '../../../constants.dart';
 import '../../../data/models/food.dart';
 import '../../../data/models/foodorder.dart';
 import '../../helpers/constants.dart';
-import '../../helpers/sharedprefrence.utils.dart';
 
 part 'food_state.dart';
 
@@ -26,10 +23,8 @@ class FoodCubit extends Cubit<FoodState> {
     Map<String, dynamic> body = {
       "order": {"id": orderId, "status": status.index}
     };
-    Response? response = await DataSource.get(
-        path: DataSource.updateFoodOrder,
-        queryType: QueryType.post,
-        body: body);
+    Map<String, dynamic>? response =
+        await ApiService.post(endpoint: Constants.updateFoodOrder, body: body);
     if (response != null) {
       return true;
     }
@@ -49,9 +44,9 @@ class FoodCubit extends Cubit<FoodState> {
         'location': 'manali',
       };
 
-      ApiResponse? apiResponse = await DataSource.getData(
-          path: DataSource.createFoodOrder, urlParameters: urlParameters);
-      order = apiResponse!.foodOrder;
+      Map<String, dynamic>? response = await ApiService.get(
+          endpoint: Constants.createFoodOrder, urlParameters: urlParameters);
+      order = FoodOrder.fromJson(response!['order']);
     }
 
     ///Adding selected addons to order.
@@ -71,30 +66,24 @@ class FoodCubit extends Cubit<FoodState> {
       }
     };
     try {
-      Response? response = await DataSource.get(
-          path: DataSource.addFoodItem, queryType: QueryType.post, body: body);
-      if (response != null) {
-        status = json.decode(response.body)['status'] == 'success';
+      Map<String, dynamic>? response =
+          await ApiService.post(endpoint: Constants.addFoodItem, body: body);
+      status = response!['status'] == 'success';
 
-        /// fetching the latest cart order.
-        Map<String, dynamic> urlParameters = {
-          'id': order.id,
-        };
+      /// fetching the latest cart order.
+      Map<String, dynamic> urlParameters = {
+        'id': order.id,
+      };
 
-      
+      Map<String, dynamic>? getresponse = await ApiService.post(
+          endpoint: Constants.getFoodOrder, body: urlParameters);
 
-        ApiResponse? apiResponse = await DataSource.getData(
-            queryType: QueryType.post,
-            path: DataSource.getFoodOrder,
-            body: urlParameters);
-
-        order = apiResponse!.foodOrder;
-        emit(UpdateFoodState(
-            cartOrder: order,
-            foodList: state.foodList,
-            foodOrderList: state.foodOrderList));
-        return status;
-      }
+      order = FoodOrder.fromJson(getresponse!['order'] as Map<String, dynamic>);
+      emit(UpdateFoodState(
+          cartOrder: order,
+          foodList: state.foodList,
+          foodOrderList: state.foodOrderList));
+      return status;
     } catch (e) {
       if (kDebugMode) {
         print('something went wrong while adding foodItemtoCart : $e');
@@ -105,30 +94,38 @@ class FoodCubit extends Cubit<FoodState> {
   }
 
   Future<void> fetchFoods() async {
-    String? location = await SharedPreferencesUtils.getString(
-        key: SharedPrefrencesKeys.location);
+    String? location = await LocalStorage.read(key: LocalStorageKeys.location);
     Map<String, dynamic> parameters = {"location": "$location"};
-    await DataSource.getData(
-      path: DataSource.getAllFoods,
+    await ApiService.get(
+      endpoint: Constants.getAllFoods,
       urlParameters: parameters,
     ).then((value) {
       if (value != null) {
-        emit(UpdateFoodState(
-            foodList: value.foodItems,
-            cartOrder: state.cartOrder,
-            foodOrderList: state.foodOrderList));
-      } else {}
+        if (value['catalog']['status'] == 'Enter a valid location') {
+          print('Enter a Location!!');
+          emit(UpdateFoodState(
+              foodList: [],
+              cartOrder: state.cartOrder,
+              foodOrderList: state.foodOrderList));
+        } else {
+          print(value);
+          List<Food>? items = (value['catalog'] as List<dynamic>?)
+              ?.map((e) => Food.fromJson(e as Map<String, dynamic>))
+              .toList();
+          emit(UpdateFoodState(
+              foodList: items,
+              cartOrder: state.cartOrder,
+              foodOrderList: state.foodOrderList));
+        }
+      }
     });
   }
 
   Future<bool> fetchFoodOrders() async {
     try {
-      await DataSource.get(
-          path: DataSource.getAllFoodOrder
-        ).then((value) {
+      await ApiService.get(endpoint: Constants.getAllFoodOrder).then((value) {
         if (value != null) {
-          List<FoodOrder> orders =
-              (json.decode(value.body) as List<dynamic>).map((e) {
+          List<FoodOrder> orders = (value as List<dynamic>).map((e) {
             return FoodOrder.fromJson(e as Map<String, dynamic>);
           }).toList();
           orders.removeWhere((element) => element.status == OrderStatus.hold);
@@ -154,11 +151,10 @@ class FoodCubit extends Cubit<FoodState> {
       'search_by_user': '1'
     };
     try {
-      Response? response = await DataSource.get(
-          path: DataSource.getOrderByType, urlParameters: urlParameters);
+      Map<String, dynamic>? response = await ApiService.get(
+          endpoint: Constants.getOrderByType, urlParameters: urlParameters);
       if (response != null) {
-        List<FoodOrder> orders =
-            (json.decode(response.body)['orders'] as List<dynamic>).map((e) {
+        List<FoodOrder> orders = (response['orders'] as List<dynamic>).map((e) {
           return FoodOrder.fromJson(e as Map<String, dynamic>);
         }).toList();
         if (orders.isNotEmpty) {
@@ -195,13 +191,12 @@ class FoodCubit extends Cubit<FoodState> {
       }
     };
 
-    Response? response = await DataSource.get(
-      path: DataSource.removeFoodItem,
-      queryType: QueryType.post,
+    Map<String, dynamic>? response = await ApiService.post(
+      endpoint: Constants.removeFoodItem,
       body: body,
     );
     if (response != null) {
-      if (json.decode(response.body)['status'] == 'success') {
+      if (response['status'] == 'success') {
         /// update the items offline
         return await fetchCartOrders().then((value) {
           return true;

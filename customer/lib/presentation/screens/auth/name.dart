@@ -1,5 +1,5 @@
 import 'package:customer/middleware/helpers/constants.dart';
-import 'package:customer/middleware/helpers/sharedprefrence.utils.dart';
+import 'package:customer/middleware/helpers/storage.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -21,10 +21,10 @@ class _RegistrationState extends State<RegistrationName> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  Color.fromRGBO(245, 245, 245, 1),
+      backgroundColor: Color.fromRGBO(245, 245, 245, 1),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor:  Color.fromRGBO(245, 245, 245, 1),
+        backgroundColor: Color.fromRGBO(245, 245, 245, 1),
         leading: const BackButton(
           color: Color(0xFF565656),
         ),
@@ -115,9 +115,8 @@ class _RegistrationState extends State<RegistrationName> {
                 onPressed: () {
                   bool readyToProceed = _formkey.currentState!.validate();
                   if (readyToProceed) {
-
-                    SharedPreferencesUtils.storeString(
-                        key: SharedPrefrencesKeys.name, value: nameController.text);
+                    LocalStorage.write(
+                        key: LocalStorageKeys.name, value: nameController.text);
                     Navigator.pushReplacementNamed(context, '/registeremail');
                   }
                 },
