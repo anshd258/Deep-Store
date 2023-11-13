@@ -9,7 +9,7 @@ import 'package:partner/middleware/HistoryCubit/history_filter_cubit.dart';
 import 'package:partner/middleware/HistoryCubit/rental_history_cubit.dart';
 import 'package:partner/middleware/HistoryCubit/ride_history_cubit.dart';
 import 'package:partner/middleware/Repository/AuthRepo.dart';
-
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:partner/middleware/auth_cubit.dart';
 
 import 'package:partner/middleware/incomingRequestCubit/incoming_rental_request_cubit.dart';
@@ -19,8 +19,6 @@ import 'package:partner/middleware/partnercubit/partner_filter_cubit.dart';
 import 'package:partner/middleware/partnercubit/partner_food_cubit.dart';
 import 'package:partner/middleware/partnercubit/partner_rental_cubit.dart';
 import 'package:partner/middleware/partnercubit/partner_ride_cubit.dart';
-import 'package:responsive_framework/breakpoint.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import 'app.router.dart';
 
@@ -104,13 +102,15 @@ class MainApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        builder: (context, child) => ResponsiveBreakpoints.builder(
-          child: child!,
-          breakpoints: [
-            const Breakpoint(start: 0, end: 450, name: MOBILE),
-            const Breakpoint(start: 451, end: 800, name: TABLET),
-          ],
-        ),
+        builder: (context, child) => ResponsiveWrapper.builder(
+            ClampingScrollWrapper.builder(context, child!),
+            breakpoints: [
+              ResponsiveBreakpoint.autoScaleDown(350, name: MOBILE),
+              ResponsiveBreakpoint.resize(350, name: MOBILE),
+              ResponsiveBreakpoint.autoScale(600, name: TABLET),
+              ResponsiveBreakpoint.resize(800, name: DESKTOP),
+              ResponsiveBreakpoint.autoScale(1700, name: DESKTOP),
+            ]),
         onGenerateRoute: (settings) => AppRouter().onGenerateRoute(settings),
       ),
     );

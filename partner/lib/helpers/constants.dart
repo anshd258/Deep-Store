@@ -29,5 +29,4 @@ enum StatusFood {
   const StatusFood(this.code);
 }
 
-const baseUrl =
-    "brisphere-django-backend.agreeablebush-b77b4bbe.southeastasia.azurecontainerapps.io";
+const baseUrl = "nestafar-2023.web.app";
