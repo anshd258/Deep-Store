@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../middleware/blocs/food/food_cubit.dart';
-import '../../../../middleware/helpers/constants.dart';
 
 class FoodHistoryCard extends StatelessWidget {
   const FoodHistoryCard({super.key});

@@ -1,5 +1,5 @@
 import 'package:customer/middleware/blocs/ride/ride_cubit.dart';
-import 'package:customer/middleware/helpers/constants.dart';
+import 'package:customer/constants/enums.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

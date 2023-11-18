@@ -16,6 +16,7 @@ class ProfileContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      
       elevation: 4,
       margin: const EdgeInsets.symmetric(vertical: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),

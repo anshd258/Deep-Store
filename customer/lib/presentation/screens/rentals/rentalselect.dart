@@ -1,5 +1,5 @@
+import 'package:customer/constants/colors.dart';
 import 'package:customer/data/models/rental.dart';
-import 'package:customer/middleware/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,7 +46,7 @@ class _RentalSelectState extends State<RentalSelect> {
                     const SizedBox(width: 10),
                     Switch(
                       activeColor: Colors.white,
-                      activeTrackColor: const Color.fromRGBO(168, 217, 119, 1),
+                      activeTrackColor: CustomColors.lightGreen,
                       value: twoWheelers,
                       onChanged: (value) {
                         setState(() {
@@ -63,7 +63,7 @@ class _RentalSelectState extends State<RentalSelect> {
                     const SizedBox(width: 10),
                     Switch(
                       activeColor: Colors.white,
-                      activeTrackColor: const Color.fromRGBO(168, 217, 119, 1),
+                      activeTrackColor: CustomColors.lightGreen,
                       value: fourWheelers,
                       onChanged: (value) {
                         setState(() {
@@ -83,7 +83,7 @@ class _RentalSelectState extends State<RentalSelect> {
                 context.read<RentalCubit>().fetchAllRentals();
               },
               child: displayList.isEmpty
-                  ? Center(
+                  ? const Center(
                       child: Text('No rental available in your location!!'))
                   : ListView.builder(
                       itemCount: displayList.length,
@@ -100,51 +100,5 @@ class _RentalSelectState extends State<RentalSelect> {
     } else {
       return Container();
     }
-  }
-}
-
-class LabeledToggleButton extends StatefulWidget {
-  final String label;
-  final bool value;
-  final ValueChanged<bool> onChanged;
-  const LabeledToggleButton({
-    super.key,
-    required this.label,
-    required this.value,
-    required this.onChanged,
-  });
-
-  @override
-  _LabeledToggleButtonState createState() => _LabeledToggleButtonState();
-}
-
-class _LabeledToggleButtonState extends State<LabeledToggleButton> {
-  late bool _value;
-
-  @override
-  void initState() {
-    super.initState();
-    _value = widget.value;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(widget.label),
-        const SizedBox(width: 10),
-        Switch(
-          activeColor: Colors.white,
-          activeTrackColor: const Color.fromRGBO(168, 217, 119, 1),
-          value: _value,
-          onChanged: (newValue) {
-            setState(() {
-              _value = newValue;
-            });
-            widget.onChanged(newValue);
-          },
-        ),
-      ],
-    );
   }
 }

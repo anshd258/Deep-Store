@@ -1,3 +1,4 @@
+import 'package:customer/constants/textstyles.dart';
 import 'package:customer/data/models/foodorder.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../middleware/blocs/food/food_cubit.dart';
-import '../../../middleware/helpers/constants.dart';
+import '../../../constants/enums.dart';
 
 class FoodOrderCard extends StatelessWidget {
   const FoodOrderCard({super.key});
@@ -47,7 +48,6 @@ class FoodOrderCard extends StatelessWidget {
                                 padding: const EdgeInsets.all(10),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  
                                   children: [
                                     Expanded(
                                       flex: 5,
@@ -106,13 +106,9 @@ class FoodOrderCard extends StatelessWidget {
                                             border: Border.all(
                                                 width: 1.5, color: color)),
                                         child: Center(
-                                          child: Text(
-                                            order.status.name,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: color,
-                                                fontWeight: FontWeight.w400),
-                                          ),
+                                          child: Text(order.status.name,
+                                              style: CustomTextStyles.body(
+                                                  color: color)),
                                         ),
                                       );
                                     })
@@ -137,7 +133,7 @@ class FoodOrderCard extends StatelessWidget {
       children: [
         Text(text1,
             style: GoogleFonts.lato(
-                color: Color.fromRGBO(44, 44, 44, 1),
+                color: const Color.fromRGBO(44, 44, 44, 1),
                 fontSize: fontSize - 2,
                 fontWeight: FontWeight.w400)),
         const SizedBox(
@@ -145,7 +141,7 @@ class FoodOrderCard extends StatelessWidget {
         ),
         Text(text2,
             style: GoogleFonts.lato(
-                color: Color.fromRGBO(44, 44, 44, 1),
+                color: const Color.fromRGBO(44, 44, 44, 1),
                 fontSize: fontSize + 2,
                 fontWeight: FontWeight.w500))
       ],

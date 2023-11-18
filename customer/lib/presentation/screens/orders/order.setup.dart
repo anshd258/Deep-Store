@@ -1,8 +1,8 @@
+import 'package:customer/constants/textstyles.dart';
 import 'package:customer/presentation/screens/orders/foodorder.card.dart';
 import 'package:customer/presentation/screens/orders/rentalrequest.card.dart';
 import 'package:customer/presentation/screens/orders/riderequest.card.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../widgets/buttons/orderTabBar.dart';
 
@@ -28,40 +28,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
-      // appBar: AppBar(
-      //   automaticallyImplyLeading: false,
-      //   backgroundColor: Color.fromRGBO(245, 245, 245, 1),
-      //   elevation: 0,
-      //   title: Container(
-      //     width: 200,
-      //     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-      //     child: Text(
-      //       "Ongoing requests",
-      //       style: GoogleFonts.lato(
-      //           fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),
-      //     ),
-      //   ),
-      // ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 14),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 10),
-                    child: Text(
-                      "Ongoing requests",
-                      style: GoogleFonts.lato(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: const Color.fromRGBO(30, 30, 30, 1)),
-                    ),
+                    child: Text("Ongoing requests",
+                        style: CustomTextStyles.subHeading()),
                   ),
                   OrderTabBar(
                       controller: controller,

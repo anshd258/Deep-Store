@@ -29,7 +29,7 @@ class TermsAndConditions extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: DefaultAssetBundle.of(context)
-            .loadString('assets/termsandconditions.json'),
+            .loadString('assets/dummydata/termsandconditions.json'),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             print(snapshot.data);

@@ -1,5 +1,5 @@
 import 'package:customer/data/models/fooddetail.dart';
-import '../../middleware/helpers/constants.dart';
+import '../../constants/enums.dart';
 
 class FoodOrder {
   final String id;

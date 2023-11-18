@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:common/common.dart';
-import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/presentation/widgets/squicircle.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../constants/nav_bar_icons_icons.dart';
 import '../../../data/models/rental.dart';
 import '../../../middleware/blocs/rental/rental_cubit.dart';
 import '../buttons/commonbutton.dart';
@@ -86,7 +85,7 @@ class _RentalItemCardState extends State<RentalItemCard> {
                                     child: IconText(
                                         icon: NavBarIcons.engine,
                                         text:
-                                            '${widget.rental.engineCapacity}cc')),
+                                            '${widget.rental.engineCapacity} cc')),
                                 Expanded(
                                   child: IconText(
                                       icon: NavBarIcons.mileage,

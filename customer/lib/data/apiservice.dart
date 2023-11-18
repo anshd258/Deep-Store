@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/middleware/helpers/storage.utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-import '../constants.dart';
+import '../constants/apiendpoints.dart';
+import '../constants/localstorage.keys.dart';
 
 enum QueryType { get, post }
 
@@ -24,13 +24,13 @@ class ApiService {
 
     /// step 2: call API
     try {
-      response =
-          await http.get(Uri.https(Constants.backend, endpoint, urlParameters),
-              headers: headers ??
-                  {
-                    HttpHeaders.contentTypeHeader: "application/json",
-                    HttpHeaders.authorizationHeader: "Bearer $accessToken"
-                  });
+      response = await http.get(
+          Uri.http(ApiEndpoints.baseURL, endpoint, urlParameters),
+          headers: headers ??
+              {
+                HttpHeaders.contentTypeHeader: "application/json",
+                HttpHeaders.authorizationHeader: "Bearer $accessToken"
+              });
 
       return json.decode(response.body);
     } catch (e) {
@@ -51,7 +51,7 @@ class ApiService {
         await LocalStorage.read(key: LocalStorageKeys.accessToken);
 
     try {
-      response = await http.post(Uri.https(Constants.backend, endpoint),
+      response = await http.post(Uri.http(ApiEndpoints.baseURL, endpoint),
           body: json.encode(body),
           headers: headers ??
               {

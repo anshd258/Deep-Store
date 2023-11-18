@@ -1,14 +1,14 @@
-import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:customer/data/apiservice.dart';
 import 'package:customer/middleware/helpers/storage.utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
-import '../../../constants.dart';
+import '../../../constants/apiendpoints.dart';
+import '../../../constants/localstorage.keys.dart';
 import '../../../data/models/food.dart';
 import '../../../data/models/foodorder.dart';
-import '../../helpers/constants.dart';
+import '../../../constants/enums.dart';
 
 part 'food_state.dart';
 
@@ -23,8 +23,8 @@ class FoodCubit extends Cubit<FoodState> {
     Map<String, dynamic> body = {
       "order": {"id": orderId, "status": status.index}
     };
-    Map<String, dynamic>? response =
-        await ApiService.post(endpoint: Constants.updateFoodOrder, body: body);
+    Map<String, dynamic>? response = await ApiService.post(
+        endpoint: ApiEndpoints.updateFoodOrder, body: body);
     if (response != null) {
       return true;
     }
@@ -45,7 +45,7 @@ class FoodCubit extends Cubit<FoodState> {
       };
 
       Map<String, dynamic>? response = await ApiService.get(
-          endpoint: Constants.createFoodOrder, urlParameters: urlParameters);
+          endpoint: ApiEndpoints.createFoodOrder, urlParameters: urlParameters);
       order = FoodOrder.fromJson(response!['order']);
     }
 
@@ -53,7 +53,7 @@ class FoodCubit extends Cubit<FoodState> {
 
     Map<String, dynamic> body = {
       'order': {
-        'id': order!.id,
+        'id': order.id,
         'items': [
           {
             'id': itemId,
@@ -67,7 +67,7 @@ class FoodCubit extends Cubit<FoodState> {
     };
     try {
       Map<String, dynamic>? response =
-          await ApiService.post(endpoint: Constants.addFoodItem, body: body);
+          await ApiService.post(endpoint: ApiEndpoints.addFoodItem, body: body);
       status = response!['status'] == 'success';
 
       /// fetching the latest cart order.
@@ -76,7 +76,7 @@ class FoodCubit extends Cubit<FoodState> {
       };
 
       Map<String, dynamic>? getresponse = await ApiService.post(
-          endpoint: Constants.getFoodOrder, body: urlParameters);
+          endpoint: ApiEndpoints.getFoodOrder, body: urlParameters);
 
       order = FoodOrder.fromJson(getresponse!['order'] as Map<String, dynamic>);
       emit(UpdateFoodState(
@@ -97,10 +97,11 @@ class FoodCubit extends Cubit<FoodState> {
     String? location = await LocalStorage.read(key: LocalStorageKeys.location);
     Map<String, dynamic> parameters = {"location": "$location"};
     await ApiService.get(
-      endpoint: Constants.getAllFoods,
+      endpoint: ApiEndpoints.getAllFoods,
       urlParameters: parameters,
     ).then((value) {
       if (value != null) {
+        print(value);
         if (value['catalog']['status'] == 'Enter a valid location') {
           print('Enter a Location!!');
           emit(UpdateFoodState(
@@ -123,7 +124,8 @@ class FoodCubit extends Cubit<FoodState> {
 
   Future<bool> fetchFoodOrders() async {
     try {
-      await ApiService.get(endpoint: Constants.getAllFoodOrder).then((value) {
+      await ApiService.get(endpoint: ApiEndpoints.getAllFoodOrder)
+          .then((value) {
         if (value != null) {
           List<FoodOrder> orders = (value as List<dynamic>).map((e) {
             return FoodOrder.fromJson(e as Map<String, dynamic>);
@@ -152,7 +154,7 @@ class FoodCubit extends Cubit<FoodState> {
     };
     try {
       Map<String, dynamic>? response = await ApiService.get(
-          endpoint: Constants.getOrderByType, urlParameters: urlParameters);
+          endpoint: ApiEndpoints.getOrderByType, urlParameters: urlParameters);
       if (response != null) {
         List<FoodOrder> orders = (response['orders'] as List<dynamic>).map((e) {
           return FoodOrder.fromJson(e as Map<String, dynamic>);
@@ -192,7 +194,7 @@ class FoodCubit extends Cubit<FoodState> {
     };
 
     Map<String, dynamic>? response = await ApiService.post(
-      endpoint: Constants.removeFoodItem,
+      endpoint: ApiEndpoints.removeFoodItem,
       body: body,
     );
     if (response != null) {

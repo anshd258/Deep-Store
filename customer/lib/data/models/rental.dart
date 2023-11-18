@@ -1,6 +1,6 @@
 
-import '../../middleware/helpers/constants.dart';
 
+enum VehicleType { TWO_WHEELER, FOUR_WHEELER }
 
 class   Rental {
   final int id;

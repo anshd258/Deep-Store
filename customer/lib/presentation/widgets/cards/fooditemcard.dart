@@ -22,7 +22,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 4,
+      elevation: 4,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       shape: SmoothRectangleBorder(
           borderRadius: SmoothBorderRadius(cornerRadius: 10)),
@@ -37,12 +37,14 @@ class _FoodItemCardState extends State<FoodItemCard> {
                 height: double.infinity,
                 child: CachedNetworkImage(
                     fit: BoxFit.cover,
-                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                        Center(
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Center(
                             child: CircularProgressIndicator(
                                 value: downloadProgress.progress)),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                    imageUrl: widget.food.images ?? "https://dummyimage.com/300"),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    imageUrl:
+                        widget.food.images ?? "https://dummyimage.com/300"),
                 // child: Image.network(
                 //   widget.food.images ?? "https://dummyimage.com/300",
                 //   fit: BoxFit.cover,
@@ -100,9 +102,6 @@ class _FoodItemCardState extends State<FoodItemCard> {
                       //         builder: (context) => FoodDetailSelector(
                       //             food: widget.food, outerContext: context)));
                     },
-                    borderradius: 4,
-                    height: 48,
-                    width: 328,
                     lable: 'More details',
                     margin: const EdgeInsets.symmetric(vertical: 0),
                   ),

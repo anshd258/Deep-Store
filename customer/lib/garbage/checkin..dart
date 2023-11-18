@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_code_dart_scan/qr_code_dart_scan.dart';
 
-import '../../../middleware/blocs/authentication/auth_cubit.dart';
-import '../../widgets/buttons/commonbutton.dart';
+import '../middleware/blocs/authentication/auth_cubit.dart';
+import '../presentation/widgets/buttons/commonbutton.dart';
 
 class CheckInScreen extends StatefulWidget {
   const CheckInScreen({super.key});

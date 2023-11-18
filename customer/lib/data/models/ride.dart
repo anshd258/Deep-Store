@@ -1,6 +1,6 @@
 
 
-import '../../middleware/helpers/constants.dart';
+import '../../constants/enums.dart';
 
 class Ride {
   final int? id;

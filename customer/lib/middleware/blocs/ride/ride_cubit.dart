@@ -1,8 +1,7 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:customer/data/apiservice.dart';
 import 'package:meta/meta.dart';
-import '../../../constants.dart';
+import '../../../constants/apiendpoints.dart';
 import '../../../data/models/ride.dart';
 
 part 'ride_state.dart';
@@ -16,7 +15,7 @@ class RideCubit extends Cubit<RideState> {
 
   Future<bool> fetchRideRequests() async {
     await ApiService.get(
-      endpoint: Constants.getAllRideRequests,
+      endpoint: ApiEndpoints.getAllRideRequests,
     ).then((value) {
       if (value != null) {
         List jsondata = value as List;
@@ -39,10 +38,10 @@ class RideCubit extends Cubit<RideState> {
       "end_coordinates": "2323.3423",
       "price": 2000
     };
- 
+
     try {
       Map<String, dynamic>? response = await ApiService.post(
-        endpoint: Constants.createRideRequest,
+        endpoint: ApiEndpoints.createRideRequest,
         body: body,
       );
       if (response != null) {

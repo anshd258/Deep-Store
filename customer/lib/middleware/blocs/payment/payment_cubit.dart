@@ -1,16 +1,15 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:customer/data/apiservice.dart';
-import 'package:customer/data/models/payment.model.dart';
+import 'package:customer/data/models/payment.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-import '../../../constants.dart';
+import '../../../constants/apiendpoints.dart';
 import '../../../data/models/foodorder.dart';
-import '../../helpers/constants.dart';
+import '../../../constants/enums.dart';
 
 part 'payment_state.dart';
 
@@ -46,8 +45,8 @@ class PaymentCubit extends Cubit<PaymentState> {
 
       Future<void> handlePaymentSuccess(PaymentSuccessResponse response) async {
         try {
-  Map<String,dynamic>? verifyresponse = await ApiService.post(
-              endpoint: Constants.orderVerification,
+          Map<String, dynamic>? verifyresponse = await ApiService.post(
+              endpoint: ApiEndpoints.orderVerification,
               body: {
                 'order_id': response.orderId,
                 'payment_id': response.paymentId,
@@ -97,8 +96,7 @@ class PaymentCubit extends Cubit<PaymentState> {
       "order": {"id": orderId, "status": status.index}
     };
     Map<String, dynamic>? response = await ApiService.post(
-        endpoint: Constants.updateFoodOrder,
-        body: body);
+        endpoint: ApiEndpoints.updateFoodOrder, body: body);
     if (response != null) {
       if (response['id'] == orderId) {
         return true;
@@ -110,8 +108,7 @@ class PaymentCubit extends Cubit<PaymentState> {
 
 Future<OrderPaymentData?> createOrder(String orderId) async {
   Map<String, dynamic>? response = await ApiService.post(
- endpoint: Constants.orderPayment,
-      body: {'order_id': orderId});
+      endpoint: ApiEndpoints.orderPayment, body: {'order_id': orderId});
   if (response != null) {
     return OrderPaymentData.fromJson(response);
   }

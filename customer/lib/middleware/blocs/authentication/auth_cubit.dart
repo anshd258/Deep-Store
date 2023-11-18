@@ -1,14 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'package:customer/data/apiservice.dart';
 import 'package:customer/data/models/authentication.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart';
-import '../../../constants.dart';
+import '../../../constants/apiendpoints.dart';
+import '../../../constants/localstorage.keys.dart';
 import '../../../data/models/user.dart';
-import '../../helpers/constants.dart';
 import '../../helpers/storage.utils.dart';
 
 part 'auth_state.dart';
@@ -22,6 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
   ///   [updateUserDetails]
   ///   [getOTP]
   ///   [loginWithOtp]
+  ///   [clear]
 
   void clear() {
     emit(AuthState(otpSent: false, loading: false));
@@ -32,7 +30,8 @@ class AuthCubit extends Cubit<AuthState> {
         await LocalStorage.read(key: LocalStorageKeys.userPhoneNumber);
     if (phone != null) {
       Map<String, dynamic>? apiResponse = await ApiService.get(
-          endpoint: Constants.getUserDetails, urlParameters: {'phone': phone});
+          endpoint: ApiEndpoints.getUserDetails,
+          urlParameters: {'phone': phone});
       var userData = User.fromJson(apiResponse!['userdata']);
       User? user = userData;
       emit(AuthState(
@@ -57,7 +56,7 @@ class AuthCubit extends Cubit<AuthState> {
         await LocalStorage.read(key: LocalStorageKeys.userPhoneNumber) ?? '';
     try {
       Map<String, dynamic>? response = await ApiService.post(
-          endpoint: Constants.updateUserDetails,
+          endpoint: ApiEndpoints.updateUserDetails,
           body: {
             'room': roomNumber,
             'username': name,
@@ -85,14 +84,13 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthState(otpSent: false, loading: true));
 
     try {
-      Response response =
-          await get(Uri.https(Constants.backend, Constants.getOtp, parameters))
-              .then((value) {
+      Map<String, dynamic>? response = await ApiService.get(endpoint: ApiEndpoints.getOtp,urlParameters: parameters, headers: {})
+              
+          .then((value) {
         return value;
       });
 
-      if (response.statusCode == 200) {
-        String jwtToken = json.decode(response.body)['jwt'];
+        String jwtToken = response!['jwt'];
         emit(
           AuthState(
             otpSent: true,
@@ -100,7 +98,6 @@ class AuthCubit extends Cubit<AuthState> {
             obj: Authentication(phoneNumber: phoneNumber, authToken: jwtToken),
           ),
         );
-      }
     } catch (e) {
       if (kDebugMode) {
         print('unable to request for otp $e');
@@ -117,7 +114,7 @@ class AuthCubit extends Cubit<AuthState> {
     print(state.obj!.authToken.toString());
     try {
       Map<String, dynamic>? credentials = await ApiService.post(
-          endpoint: Constants.getOtp,
+          endpoint: ApiEndpoints.getOtp,
           body: body,
           headers: {'jwt': state.obj!.authToken.toString()});
 

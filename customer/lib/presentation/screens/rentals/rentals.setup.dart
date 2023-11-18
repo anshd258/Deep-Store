@@ -4,10 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../middleware/blocs/rental/rental_cubit.dart';
 import '../../widgets/twoitemtabview.dart';
 import 'rentalselect.dart';
-import 'rideselect.dart';
 
-class VehicleSelect extends StatelessWidget {
-  const VehicleSelect({super.key});
+class RentalSetup extends StatelessWidget {
+  const RentalSetup({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +23,16 @@ class VehicleSelect extends StatelessWidget {
                   : Center(child: CircularProgressIndicator());
             },
           ),
-          child2: const RideSelect(),
-          tab1: const Tab(text: 'Rent a ride'),
+          child2: BlocBuilder<RentalCubit, RentalState>(
+            builder: (context, state) {
+              return state.rentalList != null
+                  ? RentalSelect(rentalList: state.rentalList)
+                  : Center(child: CircularProgressIndicator());
+            },
+          ),
+          tab1: const Tab(text: 'Vehicles'),
           tab2: const Tab(
-            text: 'Book a ride',
+            text: 'Essentials',
           ),
         ),
       ),

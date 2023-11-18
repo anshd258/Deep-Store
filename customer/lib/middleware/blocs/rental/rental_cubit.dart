@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:customer/data/apiservice.dart';
-import 'package:customer/middleware/helpers/constants.dart';
 import 'package:customer/middleware/helpers/storage.utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 
-import '../../../constants.dart';
+import '../../../constants/apiendpoints.dart';
+import '../../../constants/localstorage.keys.dart';
 import '../../../data/models/rental.dart';
 import '../../../data/models/rentalrequest.dart';
 
@@ -22,10 +22,11 @@ class RentalCubit extends Cubit<RentalState> {
     String? location = await LocalStorage.read(key: LocalStorageKeys.location);
     Map<String, dynamic> parameters = {"location": "$location"};
     await ApiService.get(
-      endpoint: Constants.getAllRentals,
+      endpoint: ApiEndpoints.getAllRentals,
       urlParameters: parameters,
     ).then((value) {
       if (value != null) {
+        print(value);
         var jsonData = value as List;
         List<Rental> rentals = jsonData.map((e) => Rental.fromJson(e)).toList();
 
@@ -39,7 +40,7 @@ class RentalCubit extends Cubit<RentalState> {
   Future<bool> fetchAllRentalRequests() async {
     try {
       await ApiService.get(
-        endpoint: Constants.getAllRentalRequests,
+        endpoint: ApiEndpoints.getAllRentalRequests,
       ).then((value) {
         List<RentalRequest>? requests =
             (value!['rentalrequests'] as List<dynamic>?)
@@ -72,7 +73,7 @@ class RentalCubit extends Cubit<RentalState> {
     };
     try {
       Map<String, dynamic>? response = await ApiService.post(
-        endpoint: Constants.createRentalRequest,
+        endpoint: ApiEndpoints.createRentalRequest,
         body: body,
       );
 

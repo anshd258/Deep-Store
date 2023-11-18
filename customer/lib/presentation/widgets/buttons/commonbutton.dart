@@ -18,11 +18,11 @@ class CommonButton extends StatefulWidget {
       required this.onPressed,
       this.height = 48,
       this.margin = const EdgeInsets.symmetric(vertical: 18),
-      this.borderradius = 4,
+      this.borderradius = 8,
       required this.lable,
       this.width = 300,
       this.enabled = true,
-      this.fontSize = 16});
+      this.fontSize = 18});
 
   @override
   State<CommonButton> createState() => _GradientCommonButtonState();
@@ -30,33 +30,11 @@ class CommonButton extends StatefulWidget {
 
 class _GradientCommonButtonState extends State<CommonButton>
     with SingleTickerProviderStateMixin {
-  AnimationController? ctr;
-  @override
-  void initState() {
-    ctr = AnimationController(
-        vsync: this,
-        lowerBound: 0,
-        upperBound: 1,
-        duration: const Duration(milliseconds: 500));
-    ctr!.stop();
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    ctr!.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         if (widget.enabled) {
-          ctr!.forward().then((value) => ctr!.reset());
-
-          setState(() {});
           widget.onPressed();
         }
       },
@@ -81,7 +59,7 @@ class _GradientCommonButtonState extends State<CommonButton>
               widget.lable,
               style: GoogleFonts.lato(
                   fontSize: widget.fontSize,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   color: Colors.white),
             ),
       ),

@@ -1,13 +1,11 @@
-import 'package:customer/presentation/screens/auth/checkin..dart';
-import 'package:customer/presentation/screens/auth/email.dart';
-import 'package:customer/presentation/screens/auth/login.dart';
+import 'package:customer/presentation/screens/authentication/login.dart';
+import 'package:customer/presentation/screens/checkin/checkin.dart';
 import 'package:customer/presentation/screens/profile/editprofile.dart';
 import 'package:customer/presentation/screens/profile/history/history.setup.dart';
 import 'package:customer/presentation/screens/profile/terms.dart';
 import 'package:flutter/material.dart';
 import '../../presentation/screen.setup.dart';
-import '../../presentation/screens/auth/name.dart';
-import '../../presentation/screens/auth/otp.dart';
+import '../../presentation/screens/authentication/otp.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
@@ -18,12 +16,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const Loginscreen());
       case '/otp':
         return MaterialPageRoute(builder: (_) => const OtpScreen());
-      case '/registername':
-        return MaterialPageRoute(builder: (_) => const RegistrationName());
-      case '/registeremail':
-        return MaterialPageRoute(builder: (_) => const RegistrationEmail());
       case '/checkin':
-        return MaterialPageRoute(builder: (_) => const CheckInScreen());
+        return MaterialPageRoute(builder: (_) =>  CheckIn());
       case '/history':
         return MaterialPageRoute(builder: (_) => const History());
       case '/editprofile':

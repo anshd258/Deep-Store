@@ -1,7 +1,7 @@
-class Constants{
-  static String backend = 'nestafar-backend-3iyl4griiq-ue.a.run.app'; 
-  // static String backend = '10.0.2.2:8000';  /// for AVD
-
+class ApiEndpoints {
+  // static String baseURL = 'nestafar-backend-3iyl4griiq-ue.a.run.app';
+  static String baseURL = '10.0.2.2:8000';  /// for AVD
+  // static String baseURL = 'localhost:8000';  /// for real android phone testing
 
   static const String getFoodOrder = '/service/find-foodorder/';
   static const String getOrderByType = '/service/get-order-by-type';
@@ -28,4 +28,6 @@ class Constants{
 
   static const String orderPayment = '/service/order-payment/';
   static const String orderVerification = '/service/order-verify/';
-}
+} 
+
+

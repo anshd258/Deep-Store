@@ -1,10 +1,9 @@
-import 'package:common/common.dart';
 import 'package:customer/presentation/screens/orders/order.setup.dart';
-import 'package:customer/presentation/screens/vehicle/vehicleselect.dart';
+import 'package:customer/presentation/screens/rentals/rentals.setup.dart';
+import 'package:customer/presentation/screens/taxi/taxi.setup.dart';
 import 'package:flutter/material.dart';
-import '../middleware/helpers/constants.dart';
-
-import '../middleware/helpers/storage.utils.dart';
+import 'widgets/customtabview.dart';
+import '../constants/nav_bar_icons_icons.dart';
 import 'screens/food/foodselect.dart';
 import 'screens/profile/profile.dart';
 
@@ -13,16 +12,24 @@ class ScreenSetup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocalStorage.write(key: LocalStorageKeys.location, value: 'manali');
+
     return const CustomTabView(
-      screens: [Home(), FoodSelect(), VehicleSelect(), ProfilePage()],
+      screens: [Home(), TaxiSetup(), FoodSelect(), RentalSetup(), ProfilePage()],
       items: [
         BottomNavigationBarItem(
+
           activeIcon: Icon(NavBarIcons.home),
           icon: Icon(
             NavBarIcons.home,
           ),
           label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          activeIcon: Icon(NavBarIcons.ride),
+          icon: Icon(
+            NavBarIcons.ride,
+          ),
+          label: 'Taxi',
         ),
         BottomNavigationBarItem(
           activeIcon: Icon(NavBarIcons.burger),
@@ -32,11 +39,11 @@ class ScreenSetup extends StatelessWidget {
           label: 'Food',
         ),
         BottomNavigationBarItem(
-          activeIcon: Icon(NavBarIcons.ride),
+          activeIcon: Icon(NavBarIcons.bike),
           icon: Icon(
-            NavBarIcons.ride,
+            NavBarIcons.bike,
           ),
-          label: 'Rides',
+          label: 'Rental',
         ),
         BottomNavigationBarItem(
           activeIcon: Icon(NavBarIcons.account),

@@ -1,6 +1,6 @@
 
 
-import 'package:customer/middleware/helpers/constants.dart';
+import 'package:customer/constants/enums.dart';
 
 import 'rental.dart';
 class RentalRequest {
