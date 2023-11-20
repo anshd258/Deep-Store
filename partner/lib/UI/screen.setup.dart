@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:partner/UI/screens/Profile/Profile.page.dart';
 import 'package:partner/UI/screens/Rides/rides.request.dart';
+import 'package:partner/UI/screens/guest/guest.main.dart';
 import 'package:partner/UI/screens/partners/Partner.main.dart';
 
 import 'package:partner/helpers/constants.dart';
@@ -31,7 +32,7 @@ class ScreenSetup extends StatelessWidget {
       backgroundColor: Colors.white,
       screens: [
         const Home(),
-        // const FoodRequest(),
+        const GuestMain(),
         const RidesRequest(),
         PartnerMain(),
         ProfilePage(),
@@ -43,17 +44,17 @@ class ScreenSetup extends StatelessWidget {
           ),
           label: 'Home',
         ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(
-        //     NavBarIcons.burger,
-        //   ),
-        //   label: 'Food',
-        // ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.people_alt,
+          ),
+          label: 'Guest',
+        ),
         BottomNavigationBarItem(
           icon: Icon(
             NavBarIcons.ride,
           ),
-          label: 'Rides',
+          label: 'Services',
         ),
         BottomNavigationBarItem(
           icon: Icon(

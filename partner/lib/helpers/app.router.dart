@@ -6,6 +6,7 @@ import 'package:partner/UI/screens/Profile/terms.dart';
 import 'package:partner/UI/screens/auth/login.screen.dart';
 
 import 'package:partner/UI/screens/auth/otp.screen.dart';
+import 'package:partner/UI/screens/guest/checkInGuestDetails.dart';
 import 'package:partner/UI/screens/partners/Food/partner.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.edit.dart';
@@ -54,6 +55,11 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) =>
                 OtpScreen(phoneNumber: routeSettings.arguments! as String));
+                  case '/CheckInGuestDetails':
+        return MaterialPageRoute(
+            builder: (_) =>
+                CheckInGuestDetails());
+                
       case '/home':
         return MaterialPageRoute(builder: (_) => const ScreenSetup());
       default:

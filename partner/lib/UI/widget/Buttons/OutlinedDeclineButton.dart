@@ -6,7 +6,7 @@ class OutlinedDeclineButton extends StatefulWidget {
   VoidCallback function;
   double height;
   Color color;
-  double width;
+  double? width;
   IconData? icon;
   double borderradius;
   EdgeInsets margin;
@@ -19,7 +19,7 @@ class OutlinedDeclineButton extends StatefulWidget {
       required this.margin,
       required this.borderradius,
       required this.lable,
-      required this.width});
+       this.width});
 
   @override
   State<OutlinedDeclineButton> createState() => _OutlinedDeclineButtonState();
@@ -56,6 +56,8 @@ class _OutlinedDeclineButtonState extends State<OutlinedDeclineButton>
         widget.function();
       },
       child: Container(
+        height: widget.height,
+        width: widget.width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(widget.borderradius),
@@ -68,8 +70,7 @@ class _OutlinedDeclineButtonState extends State<OutlinedDeclineButton>
         margin: widget.margin,
         padding: const EdgeInsets.symmetric(horizontal: 5),
         alignment: Alignment.center,
-        constraints:
-            BoxConstraints(maxWidth: widget.width, maxHeight: widget.height),
+       
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
