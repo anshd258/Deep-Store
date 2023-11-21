@@ -7,6 +7,7 @@ import 'package:partner/UI/screens/auth/login.screen.dart';
 
 import 'package:partner/UI/screens/auth/otp.screen.dart';
 import 'package:partner/UI/screens/guest/checkInGuestDetails.dart';
+import 'package:partner/UI/screens/guest/updateGuestDetails.dart';
 import 'package:partner/UI/screens/partners/Food/partner.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.edit.dart';
@@ -59,6 +60,10 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) =>
                 CheckInGuestDetails());
+                case '/CheckInGuestDetailsEdit':
+        return MaterialPageRoute(
+            builder: (_) =>
+                GuestDetailsForm());
                 
       case '/home':
         return MaterialPageRoute(builder: (_) => const ScreenSetup());

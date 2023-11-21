@@ -32,7 +32,7 @@ class _FoodRequestState extends State<FoodRequest> {
             'Food Requests',
             textAlign: TextAlign.center,
             style: GoogleFonts.lato(
-              color:const Color(0xFF565656),
+              color: const Color(0xFF565656),
               fontSize: 20,
               fontWeight: FontWeight.w700,
               letterSpacing: -0.28,
@@ -76,7 +76,7 @@ class _FoodRequestState extends State<FoodRequest> {
                                     "567");
                           },
                           child: SingleChildScrollView(
-                            physics:const AlwaysScrollableScrollPhysics(),
+                            physics: const AlwaysScrollableScrollPhysics(),
                             child: ConstrainedBox(
                                 constraints: BoxConstraints(
                                     minHeight: constraints.minHeight,
@@ -104,7 +104,14 @@ class _FoodRequestState extends State<FoodRequest> {
                             .map(
                               (e) => InkWell(
                                 onTap: () {
-                                  IteamDisplayDialog(context, e, (){},(){});
+                                  IteamDisplayDialog(
+                                    context: context,
+                                    acceptFunction: () {},
+                                    declineFunction: () {},
+                                    e: e,
+                                    acceptTitle: "Mark complete",
+                                    declineTitle: "Cancel request",
+                                  );
                                 },
                                 child: OwnerRequestcard(
                                     heading1: "Guest name",

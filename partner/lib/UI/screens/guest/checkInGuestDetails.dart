@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:common/common.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:partner/Constants/filterEnum.dart';
+import 'package:partner/UI/widget/Aleartdialog/teamdisplay.dialog.dart';
+
 import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 import 'package:partner/UI/widget/Profile.container.dart';
@@ -357,7 +358,19 @@ class CheckInGuestDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               OutlinedDeclineButton(
-                  function: () {},
+                  function: () {
+                    IteamDisplayDialog(
+                        context: context,
+                        acceptFunction: () {},
+                        declineFunction: () {
+                          Navigator.maybePop(context);
+                        },
+                        heading: "Checkout “${"Alice lee"}” from room ${103} ?",
+                        subHeading:
+                            "Checked out guests, will be automatically logged out of the customer app and can no longer use services.",
+                        acceptTitle: "Yes",
+                        declineTitle: "No");
+                  },
                   color: const Color(0xFFC25C5C),
                   icon: Icons.logout_outlined,
                   height: 42,
@@ -366,7 +379,9 @@ class CheckInGuestDetails extends StatelessWidget {
                   lable: "Checkout",
                   width: 158),
               GradientCommonButton(
-                  function: () async {},
+                  function: () async {
+                    Navigator.pushNamed(context, "/CheckInGuestDetailsEdit");
+                  },
                   height: 42,
                   margin: const EdgeInsets.all(2),
                   borderradius: 8,
