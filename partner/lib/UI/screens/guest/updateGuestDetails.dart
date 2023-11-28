@@ -213,6 +213,7 @@ class _GuestDetailsFormState extends State<GuestDetailsForm> {
           OutlinedDeclineButton(
               color: const Color.fromRGBO(34, 150, 199, 1),
               function: () {
+                Navigator.pushNamed(context, "/qrlogin");
                 setState(() {
                   data.add(User());
                 });

@@ -9,6 +9,7 @@ import 'package:partner/middleware/HistoryCubit/history_filter_cubit.dart';
 import 'package:partner/middleware/HistoryCubit/rental_history_cubit.dart';
 import 'package:partner/middleware/HistoryCubit/ride_history_cubit.dart';
 import 'package:partner/middleware/Repository/AuthRepo.dart';
+import 'package:partner/middleware/ServicesCubit/services_cubit.dart';
 import 'package:partner/middleware/guestcubits/available_rooms_cubit.dart';
 import 'package:partner/middleware/guestcubits/checked_in_rooms_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -82,6 +83,11 @@ class MainApp extends StatelessWidget {
           create: (context) => AcceptedRideRequestCubit(
               RepositoryProvider.of<Authrepository>(context)),
         ),
+         BlocProvider(
+          create: (context) => ServicesCubit(
+              RepositoryProvider.of<Authrepository>(context)),
+        ),
+        
           BlocProvider(
           create: (context) => CheckedInRoomsCubit(
               RepositoryProvider.of<Authrepository>(context)),

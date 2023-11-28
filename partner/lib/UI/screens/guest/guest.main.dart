@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:partner/UI/screens/guest/avilableRoombody.dart';
+import 'package:partner/UI/screens/guest/checkInRooms.dart';
 import 'package:partner/UI/util/utilwidget.dart';
-import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
+
 import 'package:partner/UI/widget/rides.tabe.dart';
-import 'package:partner/UI/widget/tiles/checkintiles.dart';
+
 import 'package:partner/middleware/guestcubits/available_rooms_cubit.dart';
 import 'package:partner/middleware/guestcubits/checked_in_rooms_cubit.dart';
 import 'package:partner/middleware/incomingRequestCubit/incoming_rental_request_cubit.dart';
@@ -174,153 +176,6 @@ class _GuestMainState extends State<GuestMain>
   }
 }
 
-class CheckedInRooms extends StatelessWidget {
-  CheckedInRooms({
-    super.key,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: double.infinity,
-      child: LiquidPullToRefresh(
-        onRefresh: () async {
-          context.read<IncomingRentalRequestCubit>().getIncomingRequest();
-        },
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: val
-                .map((e) => InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, "/CheckInGuestDetails");
-                      },
-                      child: CheckedInTiles(
-                        bill: "3,124",
-                        name: "Alice lee",
-                        room_no: "103",
-                      ),
-                    ))
-                .toList(),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
-class AvailableRooms extends StatelessWidget {
-  AvailableRooms({
-    super.key,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: double.infinity,
-      child: LiquidPullToRefresh(
-        onRefresh: () async {
-          context.read<IncomingRideRequestCubit>().getIncomingRequest();
-        },
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: val.map((e) {
-              var s = "103";
-              var standerd = 'Standard room';
-              var src =
-                  "https://imgs.search.brave.com/0FHO0363glxmwRe5Pwe2n9IrUcBKf9ri5MzIiAazCuM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9pbnRlcmlvci1z/cGFjZS1iaWctYmVk/LXJvb20tbHV4dXJ5/LWhvdGVsXzExMTIt/NzEzMS5qcGc_c2l6/ZT02MjYmZXh0PWpw/Zw";
-              var function2 = () {};
-              return AvailableRoomTiiles(
-                  src: src, s: s, standerd: standerd, function2: function2);
-            }).toList(),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AvailableRoomTiiles extends StatelessWidget {
-  const AvailableRoomTiiles({
-    super.key,
-    required this.src,
-    required this.s,
-    required this.standerd,
-    required this.function2,
-  });
-
-  final String src;
-  final String s;
-  final String standerd;
-  final Null Function() function2;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      width: double.infinity,
-      padding: EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.16),
-            spreadRadius: 0,
-            blurRadius: 12,
-            offset: Offset(0, 4), // changes position of shadow
-          ),
-        ],
-      ),
-      child: LayoutBuilder(builder: (context, constrain) {
-        return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                  flex: 10,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      src,
-                      width: constrain.maxWidth - 10,
-                      fit: BoxFit.cover,
-                    ),
-                  )),
-              Expanded(
-                  flex: 4,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text("Room ${s}",
-                              style: GoogleFonts.lato(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold)),
-                          Text("${standerd}",
-                              style: GoogleFonts.lato(
-                                  color: Colors.grey.shade700,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500))
-                        ],
-                      ),
-                      GradientCommonButton(
-                          function: function2,
-                          height: 40,
-                          margin: EdgeInsets.all(0),
-                          borderradius: 8,
-                          lable: "Check-In guest",
-                          width: 150)
-                    ],
-                  ))
-            ]);
-      }),
-    );
-  }
-}
