@@ -58,11 +58,11 @@ class CheckedInTiles extends StatelessWidget {
                   ),
                 ),
                 Flexible(
+                    flex: 1,
+                    fit: FlexFit.loose,
                     child: SizedBox(
                       height: 5,
-                    ),
-                    flex: 1,
-                    fit: FlexFit.loose),
+                    )),
                 Expanded(
                   flex: 3,
                   child: SizedBox(

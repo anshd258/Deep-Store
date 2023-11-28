@@ -71,10 +71,10 @@ class ProfileContainer extends StatelessWidget {
           ),
           if (index != null) ...[
             Positioned(
-              child: textwidget(
-                  "${index}/", length.toString(), 10, FontWeight.w500),
               top: 5,
               right: 5,
+              child: textwidget(
+                  "${index}/", length.toString(), 10, FontWeight.w500),
             )
           ]
         ],
