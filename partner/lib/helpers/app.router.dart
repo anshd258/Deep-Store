@@ -18,7 +18,7 @@ import 'package:partner/UI/screens/partners/Ride/ridepartner.additem.dart';
 import 'package:partner/UI/screens/partners/Ride/ridepartner.edit.dart';
 import 'package:partner/UI/screens/partners/Ride/ridepartner.items.dart';
 import 'package:partner/UI/screens/services/servicesMain.dart';
-import 'package:partner/UI/widget/editPage.FormField.dart';
+
 import 'package:partner/helpers/models/user.dart';
 
 class AppRouter {
@@ -69,7 +69,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const QrLoginScreen());
       case '/services':
         return MaterialPageRoute(builder: (_) => const ServicesMain());
-      
+
       default:
         return MaterialPageRoute(builder: (_) => const ScreenSetup());
     }

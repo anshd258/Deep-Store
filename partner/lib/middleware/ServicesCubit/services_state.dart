@@ -2,12 +2,12 @@ part of 'services_cubit.dart';
 
 @immutable
 abstract class ServicesState {
-  FoodService? food;
-  TransportService? transport;
-  RentalService? rental;
-  HouseKeepingService? houseKeeping;
-  LaundryService? laundry;
-  ServicesState(
+ final FoodService? food;
+ final TransportService? transport;
+ final RentalService? rental;
+ final HouseKeepingService? houseKeeping;
+ final LaundryService? laundry;
+ const ServicesState(
       {this.food,
       this.houseKeeping,
       this.laundry,
@@ -20,7 +20,7 @@ class ServicesInitial extends ServicesState {}
 class ServicesLoading extends ServicesState {}
 
 class ServicesLoaded extends ServicesState {
-  ServicesLoaded(
+ const ServicesLoaded(
       {super.food,
       super.houseKeeping,
       super.laundry,
@@ -29,8 +29,8 @@ class ServicesLoaded extends ServicesState {
 }
 
 class ServicesError extends ServicesState {
-  String? message;
-  ServicesError({this.message});
+ final String? message;
+ const ServicesError({this.message});
 }
 
 abstract class ServiceModal {
