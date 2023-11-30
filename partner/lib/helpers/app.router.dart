@@ -6,6 +6,9 @@ import 'package:partner/UI/screens/Profile/terms.dart';
 import 'package:partner/UI/screens/auth/login.screen.dart';
 
 import 'package:partner/UI/screens/auth/otp.screen.dart';
+import 'package:partner/UI/screens/guest/checkInGuestDetails.dart';
+import 'package:partner/UI/screens/guest/qrLoginScreen.dart';
+import 'package:partner/UI/screens/guest/updateGuestDetails.dart';
 import 'package:partner/UI/screens/partners/Food/partner.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.add.dart';
 import 'package:partner/UI/screens/partners/Food/product.edit.dart';
@@ -14,7 +17,8 @@ import 'package:partner/UI/screens/partners/Rental/rental.edit.dart';
 import 'package:partner/UI/screens/partners/Ride/ridepartner.additem.dart';
 import 'package:partner/UI/screens/partners/Ride/ridepartner.edit.dart';
 import 'package:partner/UI/screens/partners/Ride/ridepartner.items.dart';
-import 'package:partner/UI/widget/editPage.FormField.dart';
+import 'package:partner/UI/screens/services/servicesMain.dart';
+
 import 'package:partner/helpers/models/user.dart';
 
 class AppRouter {
@@ -36,9 +40,9 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const RentalEditPage());
       case '/partner/ride/items':
         return MaterialPageRoute(builder: (_) => const PartnerRideItems());
-         case '/partner/ride/items/edit':
+      case '/partner/ride/items/edit':
         return MaterialPageRoute(builder: (_) => const PartnerVehicalEdit());
-         case '/partner/ride/edit':
+      case '/partner/ride/edit':
         return MaterialPageRoute(builder: (_) => const PartnerRideEdit());
 
       case '/history':
@@ -54,8 +58,18 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) =>
                 OtpScreen(phoneNumber: routeSettings.arguments! as String));
+      case '/CheckInGuestDetails':
+        return MaterialPageRoute(builder: (_) => CheckInGuestDetails());
+      case '/CheckInGuestDetailsEdit':
+        return MaterialPageRoute(builder: (_) => GuestDetailsForm());
+
       case '/home':
         return MaterialPageRoute(builder: (_) => const ScreenSetup());
+      case '/qrlogin':
+        return MaterialPageRoute(builder: (_) => const QrLoginScreen());
+      case '/services':
+        return MaterialPageRoute(builder: (_) => const ServicesMain());
+
       default:
         return MaterialPageRoute(builder: (_) => const ScreenSetup());
     }

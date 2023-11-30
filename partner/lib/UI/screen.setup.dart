@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:partner/UI/screens/Profile/Profile.page.dart';
-import 'package:partner/UI/screens/Rides/rides.request.dart';
+import 'package:partner/UI/screens/guest/guest.main.dart';
 import 'package:partner/UI/screens/partners/Partner.main.dart';
+import 'package:partner/UI/screens/services/servicesMain.dart';
 
 import 'package:partner/helpers/constants.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
@@ -15,7 +16,6 @@ import 'package:partner/middleware/incomingRequestCubit/incoming_rental_request_
 import 'package:partner/middleware/incomingRequestCubit/incoming_request_cubit.dart';
 import 'package:partner/middleware/incomingRequestCubit/incoming_ride_request_cubit.dart';
 
-import 'screens/Food/food.request.dart';
 import 'screens/home/home.dart';
 
 class ScreenSetup extends StatelessWidget {
@@ -31,8 +31,8 @@ class ScreenSetup extends StatelessWidget {
       backgroundColor: Colors.white,
       screens: [
         const Home(),
-        // const FoodRequest(),
-        const RidesRequest(),
+        const GuestMain(),
+        const ServicesMain(),
         PartnerMain(),
         ProfilePage(),
       ],
@@ -43,17 +43,17 @@ class ScreenSetup extends StatelessWidget {
           ),
           label: 'Home',
         ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(
-        //     NavBarIcons.burger,
-        //   ),
-        //   label: 'Food',
-        // ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.people_alt,
+          ),
+          label: 'Guest',
+        ),
         BottomNavigationBarItem(
           icon: Icon(
             NavBarIcons.ride,
           ),
-          label: 'Rides',
+          label: 'Services',
         ),
         BottomNavigationBarItem(
           icon: Icon(

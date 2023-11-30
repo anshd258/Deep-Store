@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/UI/util/utilwidget.dart';
-import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 import 'package:partner/middleware/auth_cubit.dart';
 import 'package:pinput/pinput.dart';

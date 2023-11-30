@@ -5,8 +5,8 @@ import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 
 class PartnreRideContainer extends StatelessWidget {
-  Function callback;
-  PartnreRideContainer({super.key, required this.callback});
+ final Function callback;
+ const PartnreRideContainer({super.key, required this.callback});
 
   @override
   Widget build(BuildContext context) {

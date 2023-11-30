@@ -7,7 +7,7 @@ class GradientCommonButton extends StatefulWidget {
   VoidCallback function;
   double height;
   double fontSize;
-  double width;
+  double? width;
   double borderradius;
   EdgeInsets margin;
 
@@ -19,7 +19,7 @@ class GradientCommonButton extends StatefulWidget {
       required this.borderradius,
       required this.lable,
       this.fontSize = 12,
-      required this.width});
+      this.width});
 
   @override
   State<GradientCommonButton> createState() => _GradientCommonButtonState();
@@ -56,6 +56,8 @@ class _GradientCommonButtonState extends State<GradientCommonButton>
         widget.function();
       },
       child: Container(
+        height: widget.height,
+        width: widget.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(widget.borderradius),
@@ -69,8 +71,6 @@ class _GradientCommonButtonState extends State<GradientCommonButton>
         margin: widget.margin,
         padding: const EdgeInsets.symmetric(horizontal: 5),
         alignment: Alignment.center,
-        constraints:
-            BoxConstraints(maxWidth: widget.width, maxHeight: widget.height),
         child: Center(
           child: Text(
             widget.lable,

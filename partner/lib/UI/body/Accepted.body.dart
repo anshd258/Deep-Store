@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:partner/UI/util/teamdisplay.dialog.dart';
+import 'package:partner/UI/widget/Aleartdialog/teamdisplay.dialog.dart';
 import 'package:partner/UI/widget/rentalCard.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
@@ -99,7 +99,14 @@ class _RidesBodyState extends State<RidesBody> {
                                             InkWell(
                                                 onTap: () {
                                                   IteamDisplayDialog(
-                                                      context, e);
+                                                      context: context,
+                                                      acceptFunction: () {},
+                                                      declineFunction: () {},
+                                                      e: e,
+                                                      acceptTitle:
+                                                          "Mark complete",
+                                                      declineTitle:
+                                                          "Cancel request");
                                                 },
                                                 child: RidesCard(
                                                   heading1: "Guest name",
@@ -268,14 +275,14 @@ class _RidesBodyState extends State<RidesBody> {
                             Column(
                                 children: state.rentalRequest!.rentals!
                                     .map((e) => ownerOngoingcards(
-                                          contact: e.user!.contact!,
-                                          user: e.user!.username!,
+                                          contact: e.user!.contact ?? "null",
+                                          user: e.user!.username ?? "null",
                                           imgLink: e.rental!.image,
-                                          name: e.rental!.name!,
+                                          name: e.rental!.name ?? "null",
                                           quantitiy:
-                                              e.rental!.quantity!.toString(),
+                                              e.rental!.quantity.toString(),
                                           total:
-                                              "${e.rental!.price} /- per hour",
+                                              "${e.rental!.price ?? "null"} /- per hour",
                                         ))
                                     .toList()),
                           ],

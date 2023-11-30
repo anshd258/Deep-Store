@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class FoodRequest {
   List<Orders>? orders;
 
@@ -96,13 +98,13 @@ class Orders {
 
 class User {
   int? id;
-
+  File? img;
   String? contact;
   String? otp;
   String? username;
   String? room;
 
-  User({this.id, this.contact, this.otp, this.username, this.room});
+  User({this.id, this.contact, this.otp, this.username, this.room, this.img});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];

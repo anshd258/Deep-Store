@@ -174,8 +174,8 @@ class _RidesRequestState extends State<RidesRequest>
 }
 
 class RentalRequest extends StatelessWidget {
-  RentalRequest({super.key, required this.data});
-  IncomingRentalRequestCompleted data;
+ const  RentalRequest({super.key, required this.data});
+final  IncomingRentalRequestCompleted data;
 
   @override
   Widget build(BuildContext context) {
@@ -210,8 +210,8 @@ class RentalRequest extends StatelessWidget {
 }
 
 class RideRequest extends StatelessWidget {
-  RideRequest({super.key, required this.data});
-  IncomingRideRequestLoaded data;
+ const RideRequest({super.key, required this.data});
+ final IncomingRideRequestLoaded data;
 
   @override
   Widget build(BuildContext context) {

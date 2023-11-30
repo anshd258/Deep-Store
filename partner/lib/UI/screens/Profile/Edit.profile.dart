@@ -7,7 +7,6 @@ import 'package:partner/UI/widget/editPage.FormField.dart';
 import 'package:partner/UI/widget/editpage.image.dart';
 import 'package:partner/helpers/models/user.dart';
 import 'package:partner/middleware/auth_cubit.dart';
-import 'package:pinput/pinput.dart';
 
 class EditProfilePage extends StatefulWidget {
   UserModal data;

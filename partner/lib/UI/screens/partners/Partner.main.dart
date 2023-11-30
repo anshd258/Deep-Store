@@ -16,7 +16,7 @@ class PartnerMain extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             FilterWidget(type: "partner"),
-            Expanded(flex: 4, child: const PartnerBody())
+            Expanded(flex: 4, child:  PartnerBody())
           ],
         ),
       ),

@@ -14,8 +14,7 @@ class Tabes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 115,
-      height: 50,
+      height: 60,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,

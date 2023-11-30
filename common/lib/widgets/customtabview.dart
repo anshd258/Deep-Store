@@ -28,12 +28,14 @@ class _CustomTabViewState extends State<CustomTabView>
         bottomNavigationBar: Container(
             padding: EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
+                color: Colors.white,
                 border: Border(
                     top: BorderSide(
                         color: Color.fromRGBO(229, 229, 229, 1), width: 1))),
             child: BottomNavigationBar(
                 elevation: 0,
                 iconSize: 18,
+                backgroundColor: Colors.white,
                 selectedFontSize: 14,
                 unselectedFontSize: 14,
                 onTap: (value) {
