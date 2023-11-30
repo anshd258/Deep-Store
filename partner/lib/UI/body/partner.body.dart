@@ -43,7 +43,8 @@ class _PartnerBodyState extends State<PartnerBody> {
                 child: Column(
                   children: _dummyValues
                       .map(
-                        (e) => const PartnerFoodContainer(),
+                        (e) => const PartnerFoodContainer(
+                            buttonTitle: "", title1: "", title2: "", title3: ""),
                       )
                       .toList(),
                 ),
@@ -97,7 +98,11 @@ class _PartnerBodyState extends State<PartnerBody> {
                   child: Column(
                     children: _dummyValues
                         .map(
-                          (e) => const PartnerRentalContainer(),
+                          (e) => const PartnerRentalContainer(
+                              title1: "Joginer singh",
+                              title2: "+91 8686845848",
+                              url:
+                                  "https://media.wired.co.uk/photos/63e15d1d8867ad9df8cc4ef2/master/w_1600,c_limit/Rolls-Royce-Spectre-EV-First-Drive-2-Gear.jpg"),
                         )
                         .toList(),
                   ),

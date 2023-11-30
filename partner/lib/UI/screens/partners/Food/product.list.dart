@@ -43,7 +43,7 @@ class _PartnerFoodEditPageState extends State<PartnerFoodEditPage> {
           child: Column(
             children: dummyValues
                 .map((e) => InkWell(
-                      child: const PartnerFoodContainer(),
+                      child: const PartnerFoodContainer( buttonTitle: "", title1: "", title2: "", title3: "",),
                       onTap: () {
                         Navigator.pushNamed(context, "/partner/food/edit");
                       },

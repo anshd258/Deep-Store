@@ -36,7 +36,7 @@ class _ServicesMainState extends State<ServicesMain> {
         backgroundColor: Colors.white,
         elevation: 0,
         bottom: PreferredSize(
-          preferredSize: Size(double.infinity, 32),
+          preferredSize: const Size(double.infinity, 32),
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(5),
