@@ -5,10 +5,8 @@ import 'package:partner/Constants/filterEnum.dart';
 import 'package:partner/UI/util/utilwidget.dart';
 import 'package:partner/UI/widget/Partner.rental.container.dart';
 import 'package:partner/UI/widget/partner.food.container.dart';
-import 'package:partner/UI/widget/partner.ride.container.dart';
 import 'package:partner/UI/widget/partner.vehical.container.dart';
 import 'package:partner/middleware/ServicesCubit/services_cubit.dart';
-import 'package:partner/middleware/partnercubit/partner_ride_cubit.dart';
 
 class ServicesBody extends StatelessWidget {
   final Services tab;
