@@ -5,7 +5,7 @@ class UserModal {
 
   UserModal.fromJson(Map<String, dynamic> json) {
     userdata = json['userdata'] != null
-        ? new Userdata.fromJson(json['userdata'])
+        ? Userdata.fromJson(json['userdata'])
         : null;
   }
 }
@@ -28,7 +28,7 @@ class Userdata {
 
   Userdata.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
     contact = json['contact'];
     username = json['username'];
     room = json['room'].toString();
