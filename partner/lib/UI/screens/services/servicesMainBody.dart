@@ -40,6 +40,7 @@ class ServicesBody extends StatelessWidget {
             },
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(bottom: 75),
               child: Column(
                 children: [
                   if (tab == Services.FOOD && state.food != null)

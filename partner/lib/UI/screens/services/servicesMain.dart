@@ -1,3 +1,5 @@
+import 'dart:ffi' as fi;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:outline_gradient_button/outline_gradient_button.dart';
 import 'package:partner/Constants/filterEnum.dart';
 import 'package:partner/UI/screens/services/servicesMainBody.dart';
+import 'package:partner/UI/widget/Switches/selectionSwitch.dart';
 import 'package:partner/middleware/ServicesCubit/services_cubit.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
@@ -17,6 +20,7 @@ class ServicesMain extends StatefulWidget {
 
 class _ServicesMainState extends State<ServicesMain> {
   Services selected = Services.FOOD;
+
   @override
   void initState() {
     context.read<ServicesCubit>().onRefresh("route", selected);
@@ -35,49 +39,77 @@ class _ServicesMainState extends State<ServicesMain> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        bottom: PreferredSize(
-          preferredSize: const Size(double.infinity, 32),
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 200,
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                    child: Text(
-                      "In-house services",
-                      style: GoogleFonts.lato(
-                          fontSize: 18, fontWeight: FontWeight.w700),
-                    ),
+        toolbarHeight: 90,
+        flexibleSpace: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 200,
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                  child: Text(
+                    "In-house services",
+                    style: GoogleFonts.lato(
+                        fontSize: 18, fontWeight: FontWeight.w700),
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: Services.values.map((e) {
-                            return Ongoing(
-                              e: e,
-                              fun: changeTab,
-                              selected: selected,
-                            );
-                          }).toList(),
-                        )),
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: Services.values.map((e) {
+                          return Ongoing(
+                            e: e,
+                            fun: changeTab,
+                            selected: selected,
+                          );
+                        }).toList(),
+                      )),
+                ),
+              ],
             ),
           ),
         ),
+        bottom: selected == Services.FOOD
+            ? PreferredSize(
+                preferredSize: Size.fromHeight(30),
+                child: SelectionSwitch(
+                  fun1: () {
+                    print(0);
+                  },
+                  fun2: () {
+                    print(1);
+                  },
+                  image1: "assets/non-veg.png",
+                  image2: "assets/veg.png",
+                  switchTitle1: "Veg Only",
+                  switchTitle2: "Non-veg Only",
+                ))
+            : selected == Services.RENTALS
+                ? PreferredSize(
+                    preferredSize: Size.fromHeight(30),
+                    child: SelectionSwitch(
+                      fun1: () {
+                        print(3);
+                      },
+                      fun2: () {
+                        print(2);
+                      },
+                      switchTitle1: "Two Wheeler",
+                      switchTitle2: "Four wheeler",
+                    ))
+                : null,
       ),
       backgroundColor: Colors.white,
       body: ServicesBody(
         tab: selected,
       ),
+      extendBody: true,
       bottomNavigationBar: SizedBox(
         height: 60,
         width: 328,
@@ -97,7 +129,7 @@ class _ServicesMainState extends State<ServicesMain> {
                 Color.fromRGBO(34, 150, 199, 1)
               ], begin: Alignment.topLeft, end: Alignment.bottomRight),
               strokeWidth: 2,
-              backgroundColor: Colors.transparent,
+              backgroundColor: Colors.white,
               child: Center(
                 child: GradientText("+ Add new ${record.title}",
                     colors: const [
