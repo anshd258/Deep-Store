@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:partner/helpers/constants.dart';
+import 'package:partner/Constants/constants.dart';
 
 Future getData({
   QueryType queryType = QueryType.get,

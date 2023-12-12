@@ -4,7 +4,7 @@ import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 
 import 'package:partner/UI/widget/rentalCard.dart';
-import 'package:partner/helpers/constants.dart';
+import 'package:partner/Constants/constants.dart';
 import 'package:partner/middleware/incomingRequestCubit/incoming_rental_request_cubit.dart';
 import 'package:partner/middleware/incomingRequestCubit/incoming_request_cubit.dart';
 import 'package:partner/middleware/incomingRequestCubit/incoming_ride_request_cubit.dart';
