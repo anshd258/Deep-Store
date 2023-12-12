@@ -1,7 +1,9 @@
-import 'package:customer/presentation/screens/orders/order.setup.dart';
+import 'package:customer/presentation/screens/home/timeline.dart';
 import 'package:customer/presentation/screens/rentals/rentals.setup.dart';
 import 'package:customer/presentation/screens/taxi/taxi.setup.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../middleware/blocs/orders/orders_bloc.dart';
 import 'widgets/customtabview.dart';
 import '../constants/nav_bar_icons_icons.dart';
 import 'screens/food/foodselect.dart';
@@ -12,47 +14,55 @@ class ScreenSetup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return const CustomTabView(
-      screens: [Home(), TaxiSetup(), FoodSelect(), RentalSetup(), ProfilePage()],
-      items: [
-        BottomNavigationBarItem(
-
-          activeIcon: Icon(NavBarIcons.home),
-          icon: Icon(
-            NavBarIcons.home,
+    return BlocProvider(
+      /// as soon as bloc gets created we are firing a event to fetch all orders
+      create: (context) => OrdersBloc()..add(GetOrders()),
+      child: const CustomTabView(
+        screens: [
+          Timeline(),
+          TaxiSetup(),
+          FoodSelect(),
+          RentalSetup(),
+          ProfilePage()
+        ],
+        items: [
+          BottomNavigationBarItem(
+            activeIcon: Icon(NavBarIcons.home),
+            icon: Icon(
+              NavBarIcons.home,
+            ),
+            label: 'Home',
           ),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          activeIcon: Icon(NavBarIcons.ride),
-          icon: Icon(
-            NavBarIcons.ride,
+          BottomNavigationBarItem(
+            activeIcon: Icon(NavBarIcons.ride),
+            icon: Icon(
+              NavBarIcons.ride,
+            ),
+            label: 'Taxi',
           ),
-          label: 'Taxi',
-        ),
-        BottomNavigationBarItem(
-          activeIcon: Icon(NavBarIcons.burger),
-          icon: Icon(
-            NavBarIcons.burger,
+          BottomNavigationBarItem(
+            activeIcon: Icon(NavBarIcons.burger),
+            icon: Icon(
+              NavBarIcons.burger,
+            ),
+            label: 'Food',
           ),
-          label: 'Food',
-        ),
-        BottomNavigationBarItem(
-          activeIcon: Icon(NavBarIcons.bike),
-          icon: Icon(
-            NavBarIcons.bike,
+          BottomNavigationBarItem(
+            activeIcon: Icon(NavBarIcons.bike),
+            icon: Icon(
+              NavBarIcons.bike,
+            ),
+            label: 'Rental',
           ),
-          label: 'Rental',
-        ),
-        BottomNavigationBarItem(
-          activeIcon: Icon(NavBarIcons.account),
-          icon: Icon(
-            NavBarIcons.account,
+          BottomNavigationBarItem(
+            activeIcon: Icon(NavBarIcons.account),
+            icon: Icon(
+              NavBarIcons.account,
+            ),
+            label: 'Account',
           ),
-          label: 'Account',
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:partner/helpers/api.service.dart';
-import 'package:partner/helpers/constants.dart';
+import 'package:partner/Constants/constants.dart';
 import 'package:partner/helpers/models/user.dart';
 import 'package:partner/middleware/Repository/AuthRepo.dart';
 

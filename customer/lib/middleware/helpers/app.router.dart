@@ -17,7 +17,7 @@ class AppRouter {
       case '/otp':
         return MaterialPageRoute(builder: (_) => const OtpScreen());
       case '/checkin':
-        return MaterialPageRoute(builder: (_) =>  CheckIn());
+        return MaterialPageRoute(builder: (_) =>  const CheckIn());
       case '/history':
         return MaterialPageRoute(builder: (_) => const History());
       case '/editprofile':

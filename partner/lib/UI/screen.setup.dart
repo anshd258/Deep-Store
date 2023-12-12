@@ -7,7 +7,7 @@ import 'package:partner/UI/screens/guest/guest.main.dart';
 import 'package:partner/UI/screens/partners/Partner.main.dart';
 import 'package:partner/UI/screens/services/servicesMain.dart';
 
-import 'package:partner/helpers/constants.dart';
+import 'package:partner/Constants/constants.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_rental_request_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_requests_cubit.dart';
 import 'package:partner/middleware/AcceptedRequestCubit/accepted_ride_request_cubit.dart';

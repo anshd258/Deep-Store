@@ -39,15 +39,13 @@ class _GradientCommonButtonState extends State<CommonButton>
         }
       },
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(widget.borderradius),
+        decoration: ShapeDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment(0.71, -0.71),
+            end: Alignment(-0.71, 0.71),
+            colors: [Color(0xFF20AA9A), Color(0xFF2296C6)],
           ),
-          color: Colors.grey,
-          gradient: const LinearGradient(colors: [
-            Color.fromRGBO(32, 171, 154, 1),
-            Color.fromRGBO(34, 150, 199, 1)
-          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
         margin: widget.margin,
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
