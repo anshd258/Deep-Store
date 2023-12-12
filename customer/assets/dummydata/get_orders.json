@@ -1,0 +1,58 @@
+
+
+{
+  "service_orders":{
+    "i56urty456645" : {
+      "type": "FOOD",
+      "date_time": 1700482717000,
+      "total_amount": 3300,
+      "ordered_by": "Hemant",
+      "details":{
+        "items": [
+          {
+            "food_id":790,
+            "name":"samosa",
+            "price":30,
+            "quantity":7
+          },
+          {
+            "food_id":221,
+            "name":"chai",
+            "price":20,
+            "quantity":3
+          }
+        ]
+      }
+    },
+    "dfg456456teg5" : {
+      "type": "RENTAL",
+      "date_time": 1699668877000,
+      "total_amount": 900,
+      "ordered_by": "Shubho",
+      "details":{
+          "name": "Yamaha FZS-FI",
+          "rate":1500,
+          "quantity": 2
+      }
+    },
+    "y45yrtyh5678u" : {
+      "type": "TAXI",
+      "date_time": 1700396317000,
+      "total_amount": 400,
+      "ordered_by": "Mohit",
+      "details":{
+        "pickup":"Hotel Grand",
+        "destination":"Central Park"
+      }
+    },
+    "34h54456ry467" : {
+      "type": "LAUNDRY",
+      "date_time": 1699755277000,
+      "total_amount": 125,
+      "ordered_by": "Anshdeep",
+      "details":{
+        "cloths_count":5
+      }
+    }
+  }
+}

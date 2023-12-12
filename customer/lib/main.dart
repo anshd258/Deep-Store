@@ -22,10 +22,10 @@ Future<void> main() async {
     print(accessToken);
   }
 
-  /// no need for this location. 
-    LocalStorage.write(key: LocalStorageKeys.location, value: 'manali');
 
-  /// global bloc initialization.
+  /// no need for this location. 
+    LocalStorage.write(key: LocalStorageKeys.location, value: 'manali');  
+
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(create: (context) => AuthCubit()),
@@ -53,8 +53,8 @@ Future<void> main() async {
         ],
       ),
       theme: CustomTheme.appTheme(),
-      // initialRoute: '/', 
-      initialRoute: accessToken == null ? '/login' : '/',
+      initialRoute: '/', 
+      // initialRoute: accessToken == null ? '/login' : '/',
       onGenerateRoute: (settings) => AppRouter().onGenerateRoute(settings),
     ),
   ));

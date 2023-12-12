@@ -59,23 +59,23 @@ class RentalCubit extends Cubit<RentalState> {
   }
 
   Future<bool> createRentalRequest(String rentalId, int quantity) async {
-    String location =
-        await LocalStorage.read(key: LocalStorageKeys.location) ?? '';
+    // String location =
+    //     await LocalStorage.read(key: LocalStorageKeys.location) ?? '';
 
-    Map<String, dynamic> body = {
-      "rental_id": rentalId,
-      "start_location": location,
-      "end_location": 'mount abu',
-      'start_coordinates': '123456',
-      'end_coordinates': '78910',
-      'quantity': quantity,
-      'start_time': DateTime.now().toString()
-    };
+    // Map<String, dynamic> body = {
+    //   "rental_id": rentalId,
+    //   "start_location": location,
+    //   "end_location": 'mount abu',
+    //   'start_coordinates': '123456',
+    //   'end_coordinates': '78910',
+    //   'quantity': quantity,
+    //   'start_time': DateTime.now().toString()
+    // };
     try {
-      Map<String, dynamic>? response = await ApiService.post(
-        endpoint: ApiEndpoints.createRentalRequest,
-        body: body,
-      );
+      // Map<String, dynamic>? response = await ApiService.post(
+      //   endpoint: ApiEndpoints.createRentalRequest,
+      //   body: body,
+      // );
 
       fetchAllRentalRequests();
       return true;

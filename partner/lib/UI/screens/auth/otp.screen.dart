@@ -121,7 +121,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                   },
                                   child: const Icon(
                                     Icons.edit_outlined,
-                                    color: const Color(0xB2555555),
+                                    color: Color(0xB2555555),
                                     size: 20,
                                   ),
                                 )

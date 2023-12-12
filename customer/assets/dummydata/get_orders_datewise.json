@@ -1,0 +1,90 @@
+
+
+{
+    "service_orders":{
+        "24/11/2023" : [
+            {
+            "id":"1234poiu",
+              "type": "FOOD",
+              "date_time": 1700482717000,
+              "total_amount": 3300,
+              "ordered_by": "Hemant",
+              "details":{
+                "items": [
+                  {
+                    "food_id":790,
+                    "name":"Samosa",
+                    "price":30,
+                    "quantity":7
+                  },
+                  {
+                    "food_id":221,
+                    "name":"Chai",
+                    "price":20,
+                    "quantity":3
+                  }
+                ]
+              }
+            },
+            {
+              "id":"1234asdf",
+                "type": "TAXI",
+                "date_time": 1700396317000,
+                "total_amount": 400,
+                "ordered_by": "Mohit",
+                "details":{
+                  "pickup":"Hotel Grand",
+                  "destination":"Central Park"
+                }
+              },
+          {
+          "id":"1234zxcv",
+            "type": "RENTAL",
+            "date_time": 1699668877000,
+            "total_amount": 900,
+            "ordered_by": "Shubho",
+            "details":[
+              {
+                "name": "Yamaha FZS-FI",
+                "start_date":"13/11/2023",
+                "end_date":"15/11/2023",
+                "rate":1500,
+                "quantity": 2
+            },
+              {
+                "name": "Tesla Y",
+                "start_date":"13/11/2023",
+                "end_date":"15/11/2023",
+                "rate":15000,
+                "quantity": 1
+            }
+          ]
+          }
+        ],
+        "21/11/2023":[
+        {
+        "id":"1234asdf",
+          "type": "TAXI",
+          "date_time": 1700396317000,
+          "total_amount": 400,
+          "ordered_by": "Mohit",
+          "details":{
+            "pickup":"Hotel Grand",
+            "destination":"Central Park"
+          }
+        }
+        ],
+        "20/11/2023": [
+        {
+            "id":"1234qwer",
+            "type": "LAUNDRY",
+            "date_time": 1699755277000,
+            "total_amount": 125,
+            "ordered_by": "Anshdeep",
+            "details":{
+            "cloths_count":5
+            }
+        }
+        ]
+    }
+  }

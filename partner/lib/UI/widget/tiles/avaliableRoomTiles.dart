@@ -67,7 +67,7 @@ class AvailableRoomTiiles extends StatelessWidget {
                                     color: Colors.black,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold)),
-                            Text("${standerd}",
+                            Text(standerd,
                                 style: GoogleFonts.lato(
                                     color: Colors.grey.shade700,
                                     fontSize: 14,

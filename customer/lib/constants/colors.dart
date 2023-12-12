@@ -14,6 +14,8 @@ class CustomColors {
   static const Color gradientColor1 = Color.fromRGBO(49, 207, 221, 1);
   static const Color gradientColor2 = Color.fromRGBO(49, 221, 204, 1);
 
+  static const Color link = Color(0xFF20AB9A);
+
   static const LinearGradient gradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
