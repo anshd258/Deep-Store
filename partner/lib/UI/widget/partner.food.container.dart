@@ -8,6 +8,7 @@ import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
 class PartnerFoodContainer extends StatelessWidget {
   final String buttonTitle;
   final String title1;
+  final Function? acceptCallBack;
   final String title2;
   final String title3;
   final Services? tab;
@@ -18,6 +19,7 @@ class PartnerFoodContainer extends StatelessWidget {
       required this.title1,
       required this.title3,
       required this.title2,
+      this.acceptCallBack,
       this.tab,
       this.veg});
 
@@ -83,8 +85,9 @@ class PartnerFoodContainer extends StatelessWidget {
                             child: textwidget("", title2, 12, FontWeight.w400,
                                 color: Colors.grey.shade600),
                           ),
-                          if (tab != null &&
-                              tab == Services.FOOD &&
+                          if ((tab != null &&
+                                  tab == Services.FOOD &&
+                                  veg != null) ||
                               veg != null) ...[
                             Stack(
                               alignment: Alignment.center,
@@ -166,9 +169,12 @@ class PartnerFoodContainer extends StatelessWidget {
                       width: 146),
                   GradientCommonButton(
                       function: () {
-                        Navigator.of(context).pushNamed(
-                          "/partner/food/list",
-                        );
+                        if (acceptCallBack != null) {
+                        } else {
+                          Navigator.of(context).pushNamed(
+                            "/partner/food/list",
+                          );
+                        }
                       },
                       height: 34,
                       margin: const EdgeInsets.symmetric(

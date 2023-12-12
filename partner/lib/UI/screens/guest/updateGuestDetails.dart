@@ -213,7 +213,7 @@ class _GuestDetailsFormState extends State<GuestDetailsForm> {
           OutlinedDeclineButton(
               color: const Color.fromRGBO(34, 150, 199, 1),
               function: () {
-                Navigator.pushNamed(context, "/qrlogin");
+              
                 setState(() {
                   data.add(User());
                 });
@@ -224,7 +224,9 @@ class _GuestDetailsFormState extends State<GuestDetailsForm> {
               lable: "Add another Guest",
               width: 158),
           GradientCommonButton(
-              function: () {},
+              function: () {
+                  Navigator.pushNamed(context, "/qrlogin");
+              },
               height: 44,
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               borderradius: 8,

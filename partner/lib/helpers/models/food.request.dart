@@ -131,6 +131,7 @@ class Items {
   int? id;
   String? name;
   String? desc;
+  File? image;
   String? providerId;
   String? providerName;
   String? option;
@@ -145,6 +146,7 @@ class Items {
     this.id,
     this.name,
     this.desc,
+    this.image,
     this.providerId,
     this.providerName,
     this.option,

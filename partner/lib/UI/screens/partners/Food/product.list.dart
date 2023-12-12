@@ -43,7 +43,15 @@ class _PartnerFoodEditPageState extends State<PartnerFoodEditPage> {
           child: Column(
             children: dummyValues
                 .map((e) => InkWell(
-                      child: const PartnerFoodContainer( buttonTitle: "", title1: "", title2: "", title3: "",),
+                      child: PartnerFoodContainer(
+                        buttonTitle: "Hide",
+                        title1: "Ladakh Special Tea ",
+                        title2:
+                            "(Tea brewed out of fresh tea leaves from farm)",
+                        title3: "133",
+                        veg: true,
+                        acceptCallBack: () {},
+                      ),
                       onTap: () {
                         Navigator.pushNamed(context, "/partner/food/edit");
                       },

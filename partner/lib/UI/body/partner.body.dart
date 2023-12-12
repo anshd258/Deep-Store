@@ -44,7 +44,12 @@ class _PartnerBodyState extends State<PartnerBody> {
                   children: _dummyValues
                       .map(
                         (e) => const PartnerFoodContainer(
-                            buttonTitle: "", title1: "", title2: "", title3: ""),
+                          buttonTitle: "items",
+                          title1: "Ladakh Tea House",
+                          title2:
+                              "(Tea brewed out of fresh tea leaves from farm)",
+                          title3: "9 Items",
+                        ),
                       )
                       .toList(),
                 ),

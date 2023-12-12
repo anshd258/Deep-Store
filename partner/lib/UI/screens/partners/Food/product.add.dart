@@ -1,22 +1,35 @@
 import 'dart:io';
-
+import 'package:card_swiper/card_swiper.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/UI/widget/Buttons/OutlinedDeclineButton.dart';
 import 'package:partner/UI/widget/Buttons/graedient.common.button.dart';
-
 import 'package:partner/UI/widget/editPage.FormField.dart';
-
+import 'package:partner/helpers/models/food.request.dart';
 
 class FoodProductAdd extends StatefulWidget {
-  const FoodProductAdd({super.key});
+  final List<Items>? data;
+  const FoodProductAdd({super.key, this.data});
 
   @override
   State<FoodProductAdd> createState() => _FoodProductAddState();
 }
 
 class _FoodProductAddState extends State<FoodProductAdd> {
+  List<Items> data = [
+    Items(image: null),
+  ];
+  @override
+  void initState() {
+    data = widget.data ??
+        [
+          Items(image: null),
+        ];
+
+    super.initState();
+  }
+
   bool value = false;
 
   bool value3 = false;
@@ -40,20 +53,12 @@ class _FoodProductAddState extends State<FoodProductAdd> {
     String title = "Add New item";
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         leading: const BackButton(
           color: Color.fromRGBO(86, 86, 86, 1),
         ),
         backgroundColor: Colors.white,
         centerTitle: true,
-        actions: [
-          Center(
-            child: Text("1/1",
-                style: GoogleFonts.lato(
-                    color: const Color.fromRGBO(86, 86, 86, 1),
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600)),
-          )
-        ],
         title: Text(title,
             style: GoogleFonts.lato(
                 color: const Color.fromRGBO(86, 86, 86, 1),
@@ -63,217 +68,265 @@ class _FoodProductAddState extends State<FoodProductAdd> {
       backgroundColor: Colors.white,
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 200,
-                  width: 328,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: file != null
-                          ? DecorationImage(
-                              image: FileImage(file!), fit: BoxFit.cover)
-                          : null,
-                      color: const Color.fromRGBO(86, 86, 86, 0.2)),
-                  child: file != null
-                      ? Align(
-                          alignment: Alignment.topRight,
-                          child: IconButton(
-                            onPressed: () {
-                              _getFromGallery();
-                            },
-                            splashColor: Colors.white,
-                            iconSize: 18,
-                            alignment: Alignment.topRight,
-                            icon: const Icon(
-                              Icons.mode_edit_outline_outlined,
-                              color: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 0),
+          child: LayoutBuilder(builder: (context, constrains) {
+            return SizedBox(
+              height: constrains.maxHeight - 40,
+              child: Swiper(
+                  loop: false,
+                  itemCount: data.length,
+                  viewportFraction: 0.85,
+                  scale: 1,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color.fromRGBO(0, 0, 0, 0.30),
+                              spreadRadius: 0,
+                              blurRadius: 10,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
                             ),
-                          ),
-                        )
-                      : Center(
-                          child: GradientCommonButton(
-                              function: () {
-                                _getFromGallery();
-                              },
-                              height: 36,
-                              margin: const EdgeInsets.all(0),
-                              borderradius: 100,
-                              lable: "+ Add Image",
-                              width: 111)),
-                ),
-                const SizedBox(
-                  height: 7,
-                ),
-                ProfileEditFormField(
-                  function: (value) {
-                    return null;
-                  },
-                  keyBoardtype: TextInputType.name,
-                  hintText: "Chicken Tandoori",
-                  maxlength: 200,
-                  name: "Name",
-                ),
-                ProfileEditFormField(
-                  function: (value) {
-                    return null;
-                  },
-                  keyBoardtype: TextInputType.number,
-                  hintText: "325",
-                  maxlength: 200,
-                  name: "Price",
-                ),
-                ProfileEditFormField(
-                  function: (value) {
-                    return null;
-                  },
-                  keyBoardtype: TextInputType.multiline,
-                  hintText:
-                      "marinated in home made spices and delicious traditional soup",
-                  maxlength: 200,
-                  maxLines: 2,
-                  name: "Description (optional)",
-                ),
-                SizedBox(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          ]),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 5),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Select Food Type*",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFF555555),
-                                fontSize: 16,
-                                fontFamily: 'Lato',
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: -0.48,
-                              ),
+                            Container(
+                              height: 200,
+                              width: 328,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  image: file != null
+                                      ? DecorationImage(
+                                          image: FileImage(file!),
+                                          fit: BoxFit.cover)
+                                      : null,
+                                  color: const Color.fromRGBO(86, 86, 86, 0.2)),
+                              child: file != null
+                                  ? Align(
+                                      alignment: Alignment.topRight,
+                                      child: IconButton(
+                                        onPressed: () {
+                                          _getFromGallery();
+                                        },
+                                        splashColor: Colors.white,
+                                        iconSize: 18,
+                                        alignment: Alignment.topRight,
+                                        icon: const Icon(
+                                          Icons.mode_edit_outline_outlined,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  : Center(
+                                      child: GradientCommonButton(
+                                          function: () {
+                                            _getFromGallery();
+                                          },
+                                          height: 36,
+                                          margin: const EdgeInsets.all(0),
+                                          borderradius: 100,
+                                          lable: "+ Add Image",
+                                          width: 111)),
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            ProfileEditFormField(
+                              function: (value) {
+                                return null;
+                              },
+                              keyBoardtype: TextInputType.name,
+                              hintText: "Chicken Tandoori",
+                              maxlength: 200,
+                              name: "Name",
+                            ),
+                            ProfileEditFormField(
+                              function: (value) {
+                                return null;
+                              },
+                              keyBoardtype: TextInputType.number,
+                              hintText: "325",
+                              maxlength: 200,
+                              name: "Price",
+                            ),
+                            ProfileEditFormField(
+                              function: (value) {
+                                return null;
+                              },
+                              keyBoardtype: TextInputType.multiline,
+                              hintText:
+                                  "marinated in home made spices and delicious traditional soup",
+                              maxlength: 200,
+                              maxLines: 2,
+                              name: "Description (optional)",
+                            ),
+                            SizedBox(
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Select Food Type*",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Color(0xFF555555),
+                                            fontSize: 16,
+                                            fontFamily: 'Lato',
+                                            fontWeight: FontWeight.w600,
+                                            letterSpacing: -0.48,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      child: Row(
+                                        children: [
+                                          Checkbox.adaptive(
+                                            checkColor: Colors.green,
+                                            fillColor: MaterialStateProperty
+                                                .resolveWith<Color>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.disabled)) {
+                                                return Colors.transparent
+                                                    .withOpacity(.32);
+                                              }
+                                              return Colors.transparent;
+                                            }),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
+                                            value: value,
+                                            onChanged: (val) {
+                                              setState(() {
+                                                value = val ?? true;
+                                              });
+                                            },
+                                          ),
+                                          const Text(
+                                            "Veg",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Color(0xFF555555),
+                                              fontSize: 16,
+                                              fontFamily: 'Lato',
+                                              fontWeight: FontWeight.w600,
+                                              letterSpacing: -0.48,
+                                            ),
+                                          ),
+                                          const Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.crop_square_sharp,
+                                                color: Colors.green,
+                                                size: 36,
+                                              ),
+                                              Icon(Icons.circle,
+                                                  color: Colors.green,
+                                                  size: 14),
+                                            ],
+                                          ),
+                                          Checkbox.adaptive(
+                                            checkColor: Colors.red,
+                                            fillColor: MaterialStateProperty
+                                                .resolveWith<Color>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                              if (states.contains(
+                                                  MaterialState.disabled)) {
+                                                return Colors.transparent
+                                                    .withOpacity(.32);
+                                              }
+                                              return Colors.transparent;
+                                            }),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
+                                            value: value3,
+                                            onChanged: (val) {
+                                              setState(() {
+                                                value3 = val ?? true;
+                                              });
+                                            },
+                                          ),
+                                          const Text(
+                                            "Non-veg",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Color(0xFF555555),
+                                              fontSize: 16,
+                                              fontFamily: 'Lato',
+                                              fontWeight: FontWeight.w600,
+                                              letterSpacing: -0.48,
+                                            ),
+                                          ),
+                                          const Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.crop_square_sharp,
+                                                color: Colors.red,
+                                                size: 36,
+                                              ),
+                                              Icon(Icons.circle,
+                                                  color: Colors.red, size: 14),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ]),
                             ),
                           ],
                         ),
-                        SizedBox(
-                          child: Row(
-                            children: [
-                              Checkbox.adaptive(
-                                checkColor: Colors.green,
-                                fillColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                        (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.disabled)) {
-                                    return Colors.transparent.withOpacity(.32);
-                                  }
-                                  return Colors.transparent;
-                                }),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(4)),
-                                value: value,
-                                onChanged: (val) {
-                                  setState(() {
-                                    value = val ?? true;
-                                  });
-                                },
-                              ),
-                              const Text(
-                                "Veg",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFF555555),
-                                  fontSize: 16,
-                                  fontFamily: 'Lato',
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: -0.48,
-                                ),
-                              ),
-                              const Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.crop_square_sharp,
-                                    color: Colors.green,
-                                    size: 36,
-                                  ),
-                                  Icon(Icons.circle,
-                                      color: Colors.green, size: 14),
-                                ],
-                              ),
-                              Checkbox.adaptive(
-                                checkColor: Colors.red,
-                                fillColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                        (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.disabled)) {
-                                    return Colors.transparent.withOpacity(.32);
-                                  }
-                                  return Colors.transparent;
-                                }),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(4)),
-                                value: value3,
-                                onChanged: (val) {
-                                  setState(() {
-                                    value3 = val ?? true;
-                                  });
-                                },
-                              ),
-                              const Text(
-                                "Non-veg",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFF555555),
-                                  fontSize: 16,
-                                  fontFamily: 'Lato',
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: -0.48,
-                                ),
-                              ),
-                              const Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.crop_square_sharp,
-                                    color: Colors.red,
-                                    size: 36,
-                                  ),
-                                  Icon(Icons.circle,
-                                      color: Colors.red, size: 14),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ]),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    OutlinedDeclineButton(
-                        color: const Color.fromRGBO(34, 150, 199, 1),
-                        function: () {},
-                        height: 44,
-                        margin: const EdgeInsets.all(0),
-                        borderradius: 8,
-                        lable: "Add another item",
-                        width: 158),
-                    GradientCommonButton(
-                        function: () {},
-                        height: 44,
-                        margin:
-                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        borderradius: 8,
-                        lable: "Save",
-                        width: 158),
-                  ],
-                )
-              ],
-            ),
-          ),
+                      ),
+                    );
+                  }),
+            );
+          }),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            OutlinedDeclineButton(
+                color: const Color.fromRGBO(34, 150, 199, 1),
+                function: () {
+                  setState(() {
+                    data.add(Items());
+                  });
+                },
+                height: 44,
+                margin: const EdgeInsets.all(0),
+                borderradius: 8,
+                lable: "Add another item",
+                width: 158),
+            GradientCommonButton(
+                function: () {},
+                height: 44,
+                margin: const EdgeInsets.all(0),
+                borderradius: 8,
+                lable: "Save",
+                width: 158),
+          ],
         ),
       ),
     );

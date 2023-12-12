@@ -131,6 +131,15 @@ class _RentalEditPageState extends State<RentalEditPage> {
                 maxlength: 50,
                 name: "Vehicle number *",
               ),
+              ProfileEditFormField(
+                function: (value) {
+                  return null;
+                },
+                keyBoardtype: TextInputType.number,
+                hintText: "12 %",
+                maxlength: 10,
+                name: "Commission",
+              ),
             ],
           ),
         ),
